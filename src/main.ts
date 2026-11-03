@@ -41,14 +41,14 @@ function boot(): void {
     scene: [BootScene, WorldScene, HouseScene],
     callbacks: { preBoot: (g) => g.registry.set(CTX_KEY, ctx) },
   });
-  new Controller(game, ctx);
+  const controller = new Controller(game, ctx);
   hud.setVisible(false);
   joystick.setVisible(false);
   (window as unknown as { __tq: unknown }).__tq = { game, ctx, bus };
-  titleScreen(ctx);
+  titleScreen(ctx, controller);
 }
 
-function titleScreen(ctx: GameContext): void {
+function titleScreen(ctx: GameContext, controller: Controller): void {
   const started = ctx.save.data.started;
   const start = (look?: Look): void => {
     if (look) ctx.save.data.look = look;
@@ -58,6 +58,7 @@ function titleScreen(ctx: GameContext): void {
     ctx.modal = false;
     ctx.hud.setVisible(true);
     ctx.joystick.setVisible(true);
+    void controller.begin();
   };
   const girl = el('button', 'btn primary', 'מתלמדת');
   const boy = el('button', 'btn primary', 'מתלמד');

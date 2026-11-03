@@ -1,17 +1,41 @@
 /** Hearth village (כפר האח): the demo area. All coordinates are world pixels. */
+import type { CharKey } from '../scenes/BootScene';
+
 export const WORLD = { w: 2600, h: 1900 } as const;
+export const BUILDING_SCALE = 1.15;
 
 export interface BuildingDef {
   id: string;
-  kind: 'cottage_a' | 'cottage_b' | 'cottage_c' | 'tower';
-  x: number; // bottom-centre of the sprite
+  frame: 'cottage_a' | 'cottage_b' | 'cottage_c';
+  /** Ground contact point of the sprite. */
+  x: number;
   y: number;
+  scale: number;
+  tint?: number;
+  /** Walkable door spot; null for buildings the player cannot enter. */
   door: { x: number; y: number };
   label: string;
 }
 
-export interface NpcDef { id: string; x: number; y: number; speaker: string; label: string }
-export interface PickupDef { id: string; x: number; y: number; kind: 'card' | 'page' | 'curio' }
+export interface NpcDef {
+  id: string;
+  x: number;
+  y: number;
+  speaker: string;
+  label: string;
+  char: CharKey;
+  tint?: number;
+  scale?: number;
+}
+
+export interface PickupDef {
+  id: string;
+  x: number;
+  y: number;
+  kind: 'card' | 'diary' | 'curio';
+  /** Only shown once this story flag is set. */
+  requires?: string;
+}
 
 export type FaultType = 'cut' | 'tangled' | 'loose' | 'overloaded';
 
@@ -29,28 +53,43 @@ export interface FaultDef {
 
 export interface ThreadDef { id: string; a: { x: number; y: number }; b: { x: number; y: number }; faultId?: string }
 
+export interface DecorDef { frame: string; x: number; y: number; scale?: number; block?: number }
+
+export interface SpotDef { id: string; x: number; y: number; label: string; range?: number }
+
 export const BUILDINGS: BuildingDef[] = [
-  { id: 'house-grandma', kind: 'cottage_a', x: 760, y: 880, door: { x: 760, y: 892 }, label: 'כניסה לבית' },
-  { id: 'house-clinic', kind: 'cottage_b', x: 1280, y: 760, door: { x: 1280, y: 772 }, label: 'כניסה למרפאה' },
-  { id: 'house-bakery', kind: 'cottage_c', x: 1780, y: 900, door: { x: 1780, y: 912 }, label: 'כניסה למאפייה' },
-  { id: 'tower', kind: 'tower', x: 2180, y: 560, door: { x: 2180, y: 574 }, label: 'מגדל האורגים' },
+  { id: 'house-grandma', frame: 'cottage_a', x: 760, y: 880, scale: BUILDING_SCALE, door: { x: 760, y: 900 }, label: 'כניסה לבית סבתא שושנה' },
+  { id: 'house-clinic', frame: 'cottage_b', x: 1280, y: 760, scale: BUILDING_SCALE, door: { x: 1280, y: 780 }, label: 'כניסה למרפאה' },
+  { id: 'house-print', frame: 'cottage_b', x: 560, y: 1440, scale: BUILDING_SCALE, tint: 0xe6d2ff, door: { x: 560, y: 1460 }, label: 'כניסה לבית הדפוס' },
+  { id: 'bakery', frame: 'cottage_a', x: 1780, y: 900, scale: BUILDING_SCALE, tint: 0xffe0b8, door: { x: 1780, y: 920 }, label: 'המאפייה' },
+  { id: 'mill', frame: 'cottage_b', x: 2180, y: 1440, scale: BUILDING_SCALE, tint: 0xffe9c8, door: { x: 2180, y: 1460 }, label: 'הטחנה' },
+  { id: 'tower', frame: 'cottage_c', x: 2180, y: 560, scale: 1.55, door: { x: 2150, y: 590 }, label: 'מגדל האורגים' },
 ];
 
 export const NPCS: NpcDef[] = [
-  { id: 'baker', x: 1700, y: 990, speaker: 'baker', label: 'לדבר עם הנחתום' },
-  { id: 'villager1', x: 1040, y: 1010, speaker: 'villager1', label: 'לדבר' },
-  { id: 'child', x: 1440, y: 1130, speaker: 'child', label: 'לדבר עם הילד' },
-  { id: 'hubGrandpa', x: 1250, y: 1330, speaker: 'hubGrandpa', label: 'לדבר עם סבא הד' },
-  { id: 'dvora', x: 2120, y: 650, speaker: 'dvora', label: 'לדבר עם דבורה' },
+  { id: 'baker', x: 1700, y: 1000, speaker: 'baker', label: 'לדבר עם הנחתום', char: 'apprentice_boy', tint: 0xffd9a0 },
+  { id: 'villager1', x: 1030, y: 1060, speaker: 'villager1', label: 'לדבר עם התושב', char: 'apprentice_boy', tint: 0xb8d8ff },
+  { id: 'villager2', x: 1510, y: 1020, speaker: 'villager2', label: 'לדבר עם התושבת', char: 'apprentice_girl', tint: 0xd8ffd0 },
+  { id: 'villager3', x: 930, y: 1190, speaker: 'villager3', label: 'לדבר עם התושב', char: 'apprentice_boy', tint: 0xffc8d8 },
+  { id: 'child', x: 1450, y: 1150, speaker: 'child', label: 'לדבר עם הילד', char: 'apprentice_boy', tint: 0xfff0b0, scale: 0.72 },
+  { id: 'hubGrandpa', x: 1250, y: 1330, speaker: 'hubGrandpa', label: 'לדבר עם סבא הד', char: 'dvora', tint: 0xc8d890 },
+  { id: 'miller', x: 2090, y: 1500, speaker: 'miller', label: 'לדבר עם הטוחן', char: 'apprentice_boy', tint: 0xe8e0d0 },
+  { id: 'dvora', x: 2110, y: 650, speaker: 'dvora', label: 'לדבר עם דבורה', char: 'dvora' },
 ];
 
 export const PICKUPS: PickupDef[] = [
-  { id: 'card-network', x: 520, y: 1180, kind: 'card' },
-  { id: 'card-host', x: 980, y: 540, kind: 'card' },
-  { id: 'card-medium', x: 1560, y: 520, kind: 'card' },
-  { id: 'page-1', x: 330, y: 760, kind: 'page' },
-  { id: 'curio-1', x: 1960, y: 1240, kind: 'curio' },
-  { id: 'curio-2', x: 640, y: 1500, kind: 'curio' },
+  { id: 'card_network', x: 1130, y: 1110, kind: 'card' },
+  { id: 'card_lan_preview', x: 1060, y: 1170, kind: 'card' },
+  { id: 'cur_bell', x: 1130, y: 870, kind: 'curio' },
+  { id: 'card_client', x: 1740, y: 1050, kind: 'card' },
+  { id: 'diary_2', x: 1880, y: 1000, kind: 'diary' },
+  { id: 'cur_sock', x: 1920, y: 910, kind: 'curio' },
+  { id: 'cur_spoon', x: 1680, y: 870, kind: 'curio' },
+  { id: 'cur_sleep_messenger', x: 1840, y: 1050, kind: 'curio' },
+  { id: 'card_live', x: 2090, y: 1420, kind: 'card' },
+  { id: 'cur_red_spool', x: 2060, y: 690, kind: 'curio' },
+  { id: 'diary_4', x: 1320, y: 1400, kind: 'diary' },
+  { id: 'diary_5', x: 2010, y: 1330, kind: 'diary', requires: 'clue1_clean_cut' },
 ];
 
 export const FAULTS: FaultDef[] = [
@@ -67,11 +106,32 @@ export const THREADS: ThreadDef[] = [
   { id: 't5', a: { x: 1280, y: 580 }, b: { x: 1250, y: 1200 } },
 ];
 
-/** Footprints (world px) that block walking: [x, y, w, h]. */
-export const WALLS: Array<[number, number, number, number]> = [
-  [660, 800, 200, 82], [1170, 690, 220, 72], [1670, 820, 220, 82], [2100, 440, 160, 120],
+export const DECOR: DecorDef[] = [
+  { frame: 'well', x: 1400, y: 1110, scale: 1.1, block: 36 },
+  { frame: 'market_stall', x: 1090, y: 1130, scale: 1.1, block: 44 },
+  { frame: 'lamppost', x: 1190, y: 1000, scale: 1.1 },
+  { frame: 'lamppost', x: 1380, y: 1000, scale: 1.1 },
+  { frame: 'lamppost', x: 1700, y: 1000, scale: 1.1 },
+  { frame: 'lamppost', x: 1280, y: 1250, scale: 1.1 },
+  { frame: 'signpost', x: 1000, y: 1000, scale: 1.1 },
+  { frame: 'signpost', x: 2000, y: 900, scale: 1.1 },
+  { frame: 'fence', x: 640, y: 960, scale: 1.1 },
+  { frame: 'fence', x: 860, y: 960, scale: 1.1 },
+  { frame: 'fence', x: 1700, y: 970, scale: 1.1 },
 ];
 
-/** Where the player stands after arriving by thread storm (in front of the tower door). */
-export const TOWER_SPAWN = { x: 2180, y: 640 };
-export const START_SPAWN = { x: 1280, y: 1000 };
+/** Story spots that are not objects: the bridge over the stream where the first clue waits. */
+export const SPOTS: SpotDef[] = [
+  { id: 'bridge', x: 1960, y: 1290, label: 'להסתכל על החוט שעל הגשר', range: 110 },
+];
+
+/** Footprints (world px) that block walking: [x, y, w, h]. Derived from the buildings' ground area. */
+export function wallRects(): Array<[number, number, number, number]> {
+  return BUILDINGS.map((b) => {
+    const half = b.frame === 'cottage_c' ? 120 * (b.scale / 1.55) * 1.2 : 128 * (b.scale / BUILDING_SCALE);
+    return [b.x - half, b.y - 70, half * 2, 80] as [number, number, number, number];
+  });
+}
+
+export const TOWER_SPAWN = { x: 2130, y: 640 };
+export const START_SPAWN = { x: 1280, y: 1040 };

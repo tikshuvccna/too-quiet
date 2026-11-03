@@ -5,6 +5,7 @@ export class Hud {
   private readonly bar = el('div', 'hud');
   private readonly timer = el('div', 'pill');
   private readonly coins = el('div', 'pill');
+  private readonly objective = el('div', 'pill objective');
   private readonly sight = el('button', 'btn', 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
   private readonly interact = el('button', 'btn primary interact');
@@ -15,7 +16,7 @@ export class Hud {
 
   constructor() {
     this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.cards, this.sight);
-    uiRoot().append(this.bar, this.interact, this.toasts);
+    uiRoot().append(this.bar, this.objective, this.interact, this.toasts);
     this.sight.addEventListener('click', () => this.toggleSight());
     this.cards.addEventListener('click', () => this.onCollection());
     this.interact.addEventListener('click', () => this.use());
@@ -30,8 +31,14 @@ export class Hud {
     });
   }
 
+  setObjective(text: string): void {
+    this.objective.textContent = text;
+    this.objective.style.display = text ? '' : 'none';
+  }
+
   setVisible(v: boolean): void {
     this.bar.style.display = v ? '' : 'none';
+    this.objective.style.visibility = v ? 'visible' : 'hidden';
     if (!v) this.interact.classList.remove('show');
   }
 

@@ -1,102 +1,109 @@
 import Phaser from 'phaser';
+import { HOUSES, HOUSE_FOR_BUILDING } from '../content';
 import { bus } from '../core/bus';
+import { createActor, updateActor, type Actor } from '../game/actors';
 import { CTX_KEY, type GameContext } from '../game/context';
 
-export interface HouseObject { id: string; x: number; y: number; label: string; color: number; w: number; h: number }
+interface Palette { floor: number; wall: number; accent: number }
 
-/** Placeholder rooms until the houses.json content arrives. Dollhouse cutaway: back walls, floor, open front. */
-export const ROOMS: Record<string, { title: string; floor: number; wall: number; objects: HouseObject[] }> = {
-  'house-grandma': {
-    title: 'הבית של סבתא',
-    floor: 0x8a6a4c,
-    wall: 0xc9a98b,
-    objects: [
-      { id: 'table', x: 460, y: 360, label: 'לבדוק את השולחן', color: 0x7a4f35, w: 110, h: 60 },
-      { id: 'desk', x: 700, y: 310, label: 'לבדוק את המכתבים', color: 0x5b3a2a, w: 90, h: 70 },
-    ],
-  },
-  'house-clinic': {
-    title: 'המרפאה',
-    floor: 0xb9c2c0,
-    wall: 0xdfe6e0,
-    objects: [
-      { id: 'cabinet', x: 440, y: 300, label: 'לבדוק את ארון התיקים', color: 0x6b7a8a, w: 90, h: 90 },
-      { id: 'bench', x: 720, y: 380, label: 'לבדוק את הספסל', color: 0x7a5a3a, w: 130, h: 40 },
-    ],
-  },
-  'house-bakery': {
-    title: 'המאפייה',
-    floor: 0xa88860,
-    wall: 0xe0c08a,
-    objects: [
-      { id: 'oven', x: 450, y: 300, label: 'לבדוק את התנור', color: 0x5a3a30, w: 110, h: 90 },
-      { id: 'flour', x: 730, y: 370, label: 'לבדוק את שקי הקמח', color: 0xe8e0cc, w: 90, h: 60 },
-    ],
-  },
+const PALETTES: Record<string, Palette> = {
+  house_grandma: { floor: 0x8a6a4c, wall: 0xc9a98b, accent: 0x7a4f35 },
+  house_clinic: { floor: 0xa9b4b2, wall: 0xdfe6e0, accent: 0x5b7a8a },
+  house_print: { floor: 0x7e6a58, wall: 0xcdbfd8, accent: 0x5a4a6a },
 };
 
+interface Placed { id: string; name: string; x: number; y: number; w: number; h: number }
+
+/** Dollhouse cutaway: back walls, floor, open front. Objects come from houses.json. */
 export class HouseScene extends Phaser.Scene {
   private ctx!: GameContext;
-  private houseId = '';
-  private player!: Phaser.GameObjects.Image;
+  private buildingId = '';
+  private contentId = '';
+  private player!: Actor;
+  private px = 0;
+  private py = 0;
+  private bounds = { x1: 0, x2: 0, y1: 0, y2: 0 };
+  private doorX = 0;
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private offs: Array<() => void> = [];
   private last: string | null = null;
-  private objs: Array<HouseObject & { sprite: Phaser.GameObjects.GameObject }> = [];
+  private objs: Placed[] = [];
 
   constructor() {
     super('House');
   }
 
   init(data: { houseId: string }): void {
-    this.houseId = data.houseId;
+    this.buildingId = data.houseId;
+    this.contentId = HOUSE_FOR_BUILDING[data.houseId] ?? '';
   }
 
   create(): void {
     this.ctx = this.registry.get(CTX_KEY) as GameContext;
-    const room = ROOMS[this.houseId] ?? ROOMS['house-grandma'];
-    if (!room) return;
+    const def = HOUSES.find((h) => h.id === this.contentId);
+    if (!def) return;
+    const pal = PALETTES[def.id] ?? PALETTES.house_grandma!;
     this.cameras.main.setBackgroundColor(0x0d0f1f);
     const cx = this.scale.width / 2;
     const cy = this.scale.height / 2;
-    const W = 720;
-    const H = 420;
+    const W = Math.min(760, this.scale.width - 80);
+    const H = Math.min(430, this.scale.height - 250);
     const ox = cx - W / 2;
-    const oy = cy - H / 2 + 20;
+    const oy = cy - H / 2 + 36;
     const g = this.add.graphics();
-    // back wall
-    g.fillStyle(room.wall, 1); g.fillRect(ox, oy - 150, W, 150);
-    g.fillStyle(0x000000, 0.18); g.fillRect(ox, oy - 150, W, 12);
-    // left side wall (oblique)
-    g.fillStyle(room.wall, 1); g.fillPoints([new Phaser.Geom.Point(ox - 70, oy - 80), new Phaser.Geom.Point(ox, oy - 150), new Phaser.Geom.Point(ox, oy), new Phaser.Geom.Point(ox - 70, oy + 70)], true);
-    g.fillStyle(0x000000, 0.22); g.fillPoints([new Phaser.Geom.Point(ox - 70, oy - 80), new Phaser.Geom.Point(ox, oy - 150), new Phaser.Geom.Point(ox, oy), new Phaser.Geom.Point(ox - 70, oy + 70)], true);
+    // back wall with a window
+    g.fillStyle(pal.wall, 1);
+    g.fillRect(ox, oy - 140, W, 140);
+    g.fillStyle(0x000000, 0.16);
+    g.fillRect(ox, oy - 140, W, 10);
+    g.fillStyle(0xffe3a0, 0.95);
+    g.fillRoundedRect(cx - 52, oy - 112, 104, 76, 8);
+    g.lineStyle(4, 0x3a2a35, 1);
+    g.strokeRoundedRect(cx - 52, oy - 112, 104, 76, 8);
+    g.lineBetween(cx, oy - 112, cx, oy - 36);
+    // left wall (oblique)
+    const left = [new Phaser.Geom.Point(ox - 64, oy - 76), new Phaser.Geom.Point(ox, oy - 140), new Phaser.Geom.Point(ox, oy), new Phaser.Geom.Point(ox - 64, oy + 64)];
+    g.fillStyle(pal.wall, 1);
+    g.fillPoints(left, true);
+    g.fillStyle(0x000000, 0.24);
+    g.fillPoints(left, true);
     // floor
-    g.fillStyle(room.floor, 1); g.fillRect(ox, oy, W, H);
+    g.fillStyle(pal.floor, 1);
+    g.fillRect(ox, oy, W, H);
     g.lineStyle(2, 0x000000, 0.12);
     for (let x = ox; x <= ox + W; x += 60) g.lineBetween(x, oy, x, oy + H);
     for (let y = oy; y <= oy + H; y += 60) g.lineBetween(ox, y, ox + W, y);
-    g.lineStyle(6, 0x2a1a14, 1); g.strokeRect(ox, oy, W, H);
-    // window glow
-    g.fillStyle(0xffe3a0, 0.9); g.fillRoundedRect(ox + W / 2 - 50, oy - 120, 100, 80, 8);
-    g.lineStyle(4, 0x3a2a35, 1); g.strokeRoundedRect(ox + W / 2 - 50, oy - 120, 100, 80, 8);
-    this.add.text(cx, oy - 175, room.title, { fontFamily: 'Segoe UI, Arial', fontSize: '26px', color: '#ffcf6b', rtl: true }).setOrigin(0.5);
-    // exit door mat
-    g.fillStyle(0x5b3a2a, 1); g.fillRoundedRect(cx - 40, oy + H - 18, 80, 28, 6);
-    this.add.text(cx, oy + H + 28, 'דלת יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '16px', color: '#a9b0d6', rtl: true }).setOrigin(0.5);
+    g.lineStyle(6, 0x2a1a14, 1);
+    g.strokeRect(ox, oy, W, H);
+    this.add.text(cx, oy - 175, def.name, { fontFamily: 'Segoe UI, Arial', fontSize: '26px', color: '#ffcf6b', rtl: true }).setOrigin(0.5);
+    // door mat
+    this.doorX = cx;
+    g.fillStyle(0x5b3a2a, 1);
+    g.fillRoundedRect(cx - 44, oy + H - 16, 88, 28, 6);
+    this.add.text(cx, oy + H + 30, 'דלת יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '16px', color: '#a9b0d6', rtl: true }).setOrigin(0.5);
 
     this.objs = [];
-    for (const o of room.objects) {
-      const r = this.add.rectangle(ox + o.x - 400 + W / 2 - 0, oy + o.y - 280, o.w, o.h, o.color).setStrokeStyle(3, 0x2a1a14);
-      this.add.ellipse(r.x, r.y + o.h / 2, o.w * 1.05, 14, 0x000000, 0.25).setDepth(r.depth - 1);
-      this.objs.push({ ...o, x: r.x, y: r.y, sprite: r });
-    }
+    const cols = [0.17, 0.5, 0.83];
+    def.objects.forEach((o, i) => {
+      const x = ox + W * (cols[i % 3] as number);
+      const y = oy + (i < 3 ? 62 : 190) + (i % 2) * 22;
+      const w = 118;
+      const h = 56;
+      this.add.ellipse(x, y + h / 2 + 4, w * 1.05, 16, 0x000000, 0.25).setDepth(y);
+      this.add.rectangle(x, y, w, h, pal.accent).setStrokeStyle(3, 0x2a1a14).setDepth(y + 1);
+      this.add.text(x, y, o.name, { fontFamily: 'Segoe UI, Arial', fontSize: '14px', color: '#f3ecdc', align: 'center', wordWrap: { width: w - 10 }, rtl: true }).setOrigin(0.5).setDepth(y + 2);
+      this.objs.push({ id: o.id, name: o.name, x, y, w, h });
+    });
 
-    const key = this.ctx.save.data.look === 'boy' ? 'player_boy_ph' : 'player_ph';
-    this.player = this.add.image(cx, oy + H - 70, key).setOrigin(0.5, 1);
+    this.bounds = { x1: ox + 30, x2: ox + W - 30, y1: oy + 70, y2: oy + H - 2 };
+    const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
+    this.px = cx;
+    this.py = oy + H - 40;
+    this.player = createActor(this, char, this.px, this.py, undefined, 1.5);
+    updateActor(this.player, this.px, this.py, 0, 0);
+    this.player.sprite.setDepth(2000 + this.py);
     this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
 
-    const bounds = { x1: ox + 30, x2: ox + W - 30, y1: oy + 80, y2: oy + H - 4 };
-    this.registry.set('houseBounds', bounds);
     this.offs.push(bus.on('interact:use', ({ id }) => this.onUse(id)));
     this.events.once('shutdown', () => {
       this.offs.forEach((o) => o());
@@ -105,21 +112,24 @@ export class HouseScene extends Phaser.Scene {
     });
     this.ctx.hud.setVisible(true);
     this.ctx.joystick.setVisible(true);
+    this.last = null;
     bus.emit('interact:available', null);
+    bus.emit('house:entered', { houseId: this.contentId });
   }
 
   private onUse(id: string): void {
     if (this.ctx.modal || !this.scene.isActive()) return;
-    if (id === 'exit') bus.emit('world:exit-house', { houseId: this.houseId });
+    if (id === 'exit') bus.emit('world:exit-house', { houseId: this.buildingId });
   }
 
   update(_t: number, dtMs: number): void {
+    if (!this.player) return;
     const dt = Math.min(dtMs, 50) / 1000;
     const c = this.ctx;
     if (!c.modal) c.session.tick(dt);
     c.hud.setTimer(c.session.remaining, c.session.phase !== 'free');
     c.hud.setCoins(c.save.data.coins);
-    const b = this.registry.get('houseBounds') as { x1: number; x2: number; y1: number; y2: number };
+    const b = this.bounds;
     let vx = 0;
     let vy = 0;
     if (!c.modal) {
@@ -132,18 +142,21 @@ export class HouseScene extends Phaser.Scene {
         vy /= len;
       }
     }
-    this.player.x = Phaser.Math.Clamp(this.player.x + vx * 170 * dt, b.x1, b.x2);
-    this.player.y = Phaser.Math.Clamp(this.player.y + vy * 170 * dt, b.y1, b.y2);
-    if (vx !== 0) this.player.setFlipX(vx < 0);
-    this.player.setDepth(this.player.y + 1000);
+    this.px = Phaser.Math.Clamp(this.px + vx * 170 * dt, b.x1, b.x2);
+    this.py = Phaser.Math.Clamp(this.py + vy * 170 * dt, b.y1, b.y2);
+    updateActor(this.player, this.px, this.py, vx, vy);
+    this.player.sprite.setDepth(2000 + this.py);
 
     let best: { id: string; label: string } | null = null;
-    let bd = 95;
+    let bd = 105;
     for (const o of this.objs) {
-      const d = Math.hypot(o.x - this.player.x, o.y - this.player.y);
-      if (d < bd) { bd = d; best = { id: `obj:${this.houseId}:${o.id}`, label: o.label }; }
+      const d = Math.hypot(o.x - this.px, o.y + 30 - this.py);
+      if (d < bd) {
+        bd = d;
+        best = { id: `obj:${this.contentId}:${o.id}`, label: o.name };
+      }
     }
-    if (!best && this.player.y > b.y2 - 110 && Math.abs(this.player.x - this.scale.width / 2) < 120) best = { id: 'exit', label: 'לצאת מהבית' };
+    if (!best && this.py > b.y2 - 110 && Math.abs(this.px - this.doorX) < 130) best = { id: 'exit', label: 'לצאת מהבית' };
     const id = best?.id ?? null;
     if (id !== this.last) {
       this.last = id;

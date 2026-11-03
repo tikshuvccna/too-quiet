@@ -1,0 +1,256 @@
+{
+ "frames": {
+  "cottage_a": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "sourceSize": {
+    "w": 288,
+    "h": 288
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.75
+   }
+  },
+  "cottage_b": {
+   "frame": {
+    "x": 288,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "sourceSize": {
+    "w": 288,
+    "h": 288
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.75
+   }
+  },
+  "cottage_c": {
+   "frame": {
+    "x": 576,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 288,
+    "h": 288
+   },
+   "sourceSize": {
+    "w": 288,
+    "h": 288
+   },
+   "anchor": {
+    "x": 0.4513888888888889,
+    "y": 0.7847222222222222
+   }
+  },
+  "tree_round": {
+   "frame": {
+    "x": 864,
+    "y": 0,
+    "w": 192,
+    "h": 256
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 192,
+    "h": 256
+   },
+   "sourceSize": {
+    "w": 192,
+    "h": 256
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8828125
+   }
+  },
+  "tree_pine": {
+   "frame": {
+    "x": 1056,
+    "y": 0,
+    "w": 160,
+    "h": 288
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 288
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 288
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8958333333333334
+   }
+  },
+  "fence": {
+   "frame": {
+    "x": 1216,
+    "y": 0,
+    "w": 160,
+    "h": 96
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 96
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 96
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7916666666666666
+   }
+  },
+  "signpost": {
+   "frame": {
+    "x": 1376,
+    "y": 0,
+    "w": 96,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 96,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 96,
+    "h": 144
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8611111111111112
+   }
+  },
+  "lamppost": {
+   "frame": {
+    "x": 0,
+    "y": 288,
+    "w": 112,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 192
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8958333333333334
+   }
+  },
+  "well": {
+   "frame": {
+    "x": 112,
+    "y": 288,
+    "w": 160,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 192
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8541666666666666
+   }
+  },
+  "market_stall": {
+   "frame": {
+    "x": 272,
+    "y": 288,
+    "w": 224,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 192
+   },
+   "anchor": {
+    "x": 0.4642857142857143,
+    "y": 0.875
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "version": "1.0",
+  "image": "props.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1536,
+   "h": 480
+  },
+  "scale": "1",
+  "note": "frames[*].anchor = ground contact point (normalised) -> setOrigin(anchor.x, anchor.y)"
+ }
+}

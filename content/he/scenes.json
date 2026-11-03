@@ -1,0 +1,735 @@
+{
+ "prologue": {
+  "title": "ההגעה לעמק",
+  "where": "הכניסה לכפר האח",
+  "steps": [
+   {
+    "cutscene": "cs_valley_arrival"
+   },
+   {
+    "line": "r1.p0.narrator.0001"
+   },
+   {
+    "line": "r1.p0.narrator.0002"
+   },
+   {
+    "line": "r1.p0.narrator.0003"
+   },
+   {
+    "line": "r1.p0.narrator.0004"
+   },
+   {
+    "line": "r1.p0.player.0001"
+   },
+   {
+    "line": "r1.p0.villager1.0001"
+   },
+   {
+    "line": "r1.p0.player.0002"
+   },
+   {
+    "line": "r1.p0.villager1.0002"
+   },
+   {
+    "line": "r1.p0.villager2.0001"
+   },
+   {
+    "line": "r1.p0.villager3.0001"
+   },
+   {
+    "line": "r1.p0.narrator.0005"
+   },
+   {
+    "line": "r1.p0.player.0003"
+   },
+   {
+    "flag": "met_villagers"
+   },
+   {
+    "line": "r1.p0.narrator.0006"
+   },
+   {
+    "line": "r1.p0.hubGrandpa.0001"
+   },
+   {
+    "line": "r1.p0.player.0004"
+   },
+   {
+    "line": "r1.p0.hubGrandpa.0002"
+   },
+   {
+    "line": "r1.p0.player.0005"
+   },
+   {
+    "line": "r1.p0.hubGrandpa.0003"
+   },
+   {
+    "line": "r1.p0.hubGrandpa.0004"
+   },
+   {
+    "flag": "met_hubGrandpa"
+   },
+   {
+    "line": "r1.p0.narrator.0007"
+   },
+   {
+    "line": "r1.p0.narrator.0008"
+   }
+  ],
+  "next": "village_meet"
+ },
+ "village_meet": {
+  "title": "הכפר מציג את עצמו",
+  "where": "כיכר כפר האח",
+  "steps": [
+   {
+    "line": "r1.p0.narrator.0009"
+   },
+   {
+    "line": "r1.p0.child.0001"
+   },
+   {
+    "line": "r1.p0.player.0006"
+   },
+   {
+    "line": "r1.p0.child.0002"
+   },
+   {
+    "line": "r1.p0.grandma.0001"
+   },
+   {
+    "line": "r1.p0.clinicDoctor.0001"
+   },
+   {
+    "line": "r1.p0.baker.0001"
+   },
+   {
+    "line": "r1.p0.narrator.0010"
+   },
+   {
+    "choice": {
+     "prompt": "לאן הולכים קודם?",
+     "options": [
+      {
+       "text": "להציץ בבתים הפתוחים",
+       "goto": "village_houses"
+      },
+      {
+       "text": "למאפייה, לפני שהכול נשרף",
+       "goto": "bakery_chaos"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "village_houses": {
+  "title": "שלושה בתים פתוחים",
+  "where": "כפר האח, הבתים",
+  "steps": [
+   {
+    "line": "r1.p0.narrator.0011"
+   },
+   {
+    "line": "r1.p0.grandma.0002"
+   },
+   {
+    "line": "r1.p0.clinicDoctor.0002"
+   },
+   {
+    "line": "r1.p0.narrator.0012"
+   },
+   {
+    "flag": "houses_unlocked"
+   }
+  ],
+  "next": "bakery_chaos"
+ },
+ "village_idle_barks": {
+  "title": "שיחות רקע בכפר",
+  "where": "כפר האח (מילוי)",
+  "steps": [
+   {
+    "line": "r1.p0.villager1.0003"
+   },
+   {
+    "line": "r1.p0.villager2.0002"
+   },
+   {
+    "line": "r1.p0.villager3.0002"
+   },
+   {
+    "line": "r1.p0.grandma.0003"
+   },
+   {
+    "line": "r1.p0.clinicDoctor.0003"
+   },
+   {
+    "line": "r1.p0.baker.0002"
+   },
+   {
+    "line": "r1.p0.miller.0001"
+   },
+   {
+    "line": "r1.p0.child.0003"
+   },
+   {
+    "line": "r1.p0.hubGrandpa.0005"
+   }
+  ]
+ },
+ "bakery_chaos": {
+  "title": "בלאגן במאפייה",
+  "where": "המאפייה, כפר האח",
+  "steps": [
+   {
+    "cutscene": "cs_bakery_chaos"
+   },
+   {
+    "line": "r1.p1.narrator.0001"
+   },
+   {
+    "line": "r1.p1.baker.0001"
+   },
+   {
+    "line": "r1.p1.narrator.0002"
+   },
+   {
+    "line": "r1.p1.miller.0001"
+   },
+   {
+    "line": "r1.p1.baker.0002"
+   },
+   {
+    "line": "r1.p1.miller.0002"
+   },
+   {
+    "line": "r1.p1.baker.0003"
+   },
+   {
+    "line": "r1.p1.villager1.0001"
+   },
+   {
+    "line": "r1.p1.villager2.0001"
+   },
+   {
+    "line": "r1.p1.villager3.0001"
+   },
+   {
+    "line": "r1.p1.child.0001"
+   },
+   {
+    "line": "r1.p1.grandma.0001"
+   },
+   {
+    "line": "r1.p1.narrator.0003"
+   },
+   {
+    "line": "r1.p1.player.0001"
+   },
+   {
+    "line": "r1.p1.baker.0004"
+   },
+   {
+    "choice": {
+     "prompt": "מה עושים?",
+     "options": [
+      {
+       "text": "להחזיק את המחט ולהסתכל על החוטים",
+       "goto": "bakery_needle_blur"
+      },
+      {
+       "text": "לשאול את השכנים מה קורה",
+       "goto": "bakery_neighbours"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "bakery_needle_blur": {
+  "title": "המחט רואה רק כתם",
+  "where": "המאפייה",
+  "steps": [
+   {
+    "line": "r1.p1.narrator.0004"
+   },
+   {
+    "line": "r1.p1.player.0002"
+   },
+   {
+    "line": "r1.p1.narrator.0005"
+   },
+   {
+    "line": "r1.p1.narrator.0006"
+   },
+   {
+    "flag": "needle_blur_seen"
+   }
+  ],
+  "next": "tower_dvora"
+ },
+ "bakery_neighbours": {
+  "title": "השכנים מושכים בכתפיים",
+  "where": "המאפייה",
+  "steps": [
+   {
+    "line": "r1.p1.player.0003"
+   },
+   {
+    "line": "r1.p1.villager1.0002"
+   },
+   {
+    "line": "r1.p1.villager2.0002"
+   },
+   {
+    "line": "r1.p1.villager3.0002"
+   },
+   {
+    "line": "r1.p1.baker.0005"
+   },
+   {
+    "line": "r1.p1.child.0002"
+   },
+   {
+    "line": "r1.p1.narrator.0007"
+   },
+   {
+    "flag": "neighbours_asked"
+   }
+  ],
+  "next": "tower_dvora"
+ },
+ "tower_dvora": {
+  "title": "דבורה במגדל האורגים",
+  "where": "מגדל האורגים, הכיתה",
+  "steps": [
+   {
+    "line": "r1.p1.narrator.0008"
+   },
+   {
+    "line": "r1.p1.dvora.0001"
+   },
+   {
+    "line": "r1.p1.dvora.0002"
+   },
+   {
+    "line": "r1.p1.dvora.0003"
+   },
+   {
+    "line": "r1.p1.player.0004"
+   },
+   {
+    "line": "r1.p1.dvora.0004"
+   },
+   {
+    "choice": {
+     "prompt": "מה שואלים?",
+     "options": [
+      {
+       "text": "מי למד כאן לפניי?",
+       "goto": "tower_noam"
+      },
+      {
+       "text": "בואו נתחיל ללמוד",
+       "goto": "tower_start"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "tower_noam": {
+  "title": "דבורה שותקת",
+  "where": "מגדל האורגים",
+  "steps": [
+   {
+    "line": "r1.p1.player.0005"
+   },
+   {
+    "line": "r1.p1.dvora.0005"
+   },
+   {
+    "line": "r1.p1.narrator.0009"
+   },
+   {
+    "line": "r1.p1.dvora.0006"
+   }
+  ],
+  "next": "tower_start"
+ },
+ "tower_start": {
+  "title": "מתחילים שיעור",
+  "where": "מגדל האורגים",
+  "steps": [
+   {
+    "line": "r1.p1.dvora.0007"
+   },
+   {
+    "line": "r1.p1.dvora.0008"
+   },
+   {
+    "line": "r1.p1.player.0006"
+   },
+   {
+    "line": "r1.p1.dvora.0009"
+   },
+   {
+    "flag": "start_lesson01"
+   }
+  ]
+ },
+ "return_after_lesson": {
+  "title": "חוזרים מהשיעור",
+  "where": "מגדל האורגים",
+  "steps": [
+   {
+    "line": "r1.p1.narrator.0010"
+   },
+   {
+    "line": "r1.p1.dvora.0010"
+   },
+   {
+    "line": "r1.p1.player.0007"
+   },
+   {
+    "line": "r1.p1.dvora.0011"
+   },
+   {
+    "line": "r1.p1.dvora.0012"
+   },
+   {
+    "flag": "lesson01_done"
+   }
+  ],
+  "next": "fix_grandma"
+ },
+ "fix_grandma": {
+  "title": "התיקון: בית הסבתא",
+  "where": "בית הסבתא",
+  "steps": [
+   {
+    "line": "r1.p1.narrator.0011"
+   },
+   {
+    "line": "r1.p1.grandma.0002"
+   },
+   {
+    "choice": {
+     "prompt": "איזו רשת מתאימה לשני מכשירים שווים, בין שני בתים?",
+     "options": [
+      {
+       "text": "עמית לעמית: המכשירים שווים ומדברים ישירות. זול ופשוט",
+       "goto": "fix_grandma_ok"
+      },
+      {
+       "text": "לקוח-שרת: להקים שרת חזק ויקר במרכז הכפר",
+       "goto": "fix_grandma_hint"
+      },
+      {
+       "text": "בלי רשת: שליח עם פתק כל שעה",
+       "goto": "fix_grandma_hint"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_grandma_hint": {
+  "title": "רמז מהמחט",
+  "where": "בית הסבתא",
+  "steps": [
+   {
+    "line": "r1.p1.dvora.0013"
+   },
+   {
+    "choice": {
+     "prompt": "לנסות שוב?",
+     "options": [
+      {
+       "text": "כן, לנסות שוב",
+       "goto": "fix_grandma"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_grandma_ok": {
+  "title": "סבתא רואה את הנכדים",
+  "where": "בית הסבתא",
+  "steps": [
+   {
+    "line": "r1.p1.grandma.0003"
+   },
+   {
+    "line": "r1.p1.narrator.0012"
+   },
+   {
+    "flag": "fix_grandma_done"
+   }
+  ],
+  "next": "fix_clinic"
+ },
+ "fix_clinic": {
+  "title": "התיקון: המרפאה",
+  "where": "המרפאה",
+  "steps": [
+   {
+    "line": "r1.p1.clinicDoctor.0001"
+   },
+   {
+    "choice": {
+     "prompt": "איזו רשת מתאימה למרפאה?",
+     "options": [
+      {
+       "text": "לקוח-שרת: מחשב חזק אחד שומר את התיקים, והאחרים מבקשים ממנו",
+       "goto": "fix_clinic_ok"
+      },
+      {
+       "text": "עמית לעמית: כל אחד שומר עותק ומעתיק לאחרים",
+       "goto": "fix_clinic_hint"
+      },
+      {
+       "text": "בלי רשת: להדפיס כל תיק מחדש בכל פעם",
+       "goto": "fix_clinic_hint"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_clinic_hint": {
+  "title": "רמז מהמחט",
+  "where": "המרפאה",
+  "steps": [
+   {
+    "line": "r1.p1.dvora.0014"
+   },
+   {
+    "choice": {
+     "prompt": "לנסות שוב?",
+     "options": [
+      {
+       "text": "כן, לנסות שוב",
+       "goto": "fix_clinic"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_clinic_ok": {
+  "title": "תיק אחד, מקום אחד",
+  "where": "המרפאה",
+  "steps": [
+   {
+    "line": "r1.p1.clinicDoctor.0002"
+   },
+   {
+    "line": "r1.p1.narrator.0013"
+   },
+   {
+    "flag": "fix_clinic_done"
+   }
+  ],
+  "next": "fix_mill"
+ },
+ "fix_mill": {
+  "title": "התיקון: הטוחן",
+  "where": "הטחנה, מעבר לנחל",
+  "steps": [
+   {
+    "line": "r1.p1.miller.0003"
+   },
+   {
+    "line": "r1.p1.narrator.0014"
+   },
+   {
+    "choice": {
+     "prompt": "איך מסדרים הזמנות לטוחן אחד, מכל הכפר?",
+     "options": [
+      {
+       "text": "לוח הזמנות מרכזי אצל הטוחן: כולם מבקשים ממנו והוא מרכז הכול",
+       "goto": "fix_mill_ok"
+      },
+      {
+       "text": "כל קונה מדבר עם כל קונה אחר, והם מסדרים ביניהם",
+       "goto": "fix_mill_hint"
+      },
+      {
+       "text": "עוד שליחים. הרבה יותר שליחים",
+       "goto": "fix_mill_hint"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_mill_hint": {
+  "title": "רמז מהמחט",
+  "where": "הטחנה",
+  "steps": [
+   {
+    "line": "r1.p1.dvora.0015"
+   },
+   {
+    "choice": {
+     "prompt": "לנסות שוב?",
+     "options": [
+      {
+       "text": "כן, לנסות שוב",
+       "goto": "fix_mill"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "fix_mill_ok": {
+  "title": "לוח ההזמנות",
+  "where": "הטחנה",
+  "steps": [
+   {
+    "line": "r1.p1.miller.0004"
+   },
+   {
+    "line": "r1.p1.narrator.0015"
+   },
+   {
+    "flag": "fix_mill_done"
+   }
+  ],
+  "next": "bakery_fixed"
+ },
+ "bakery_fixed": {
+  "title": "הקמח מגיע",
+  "where": "המאפייה",
+  "steps": [
+   {
+    "cutscene": "cs_bakery_fixed"
+   },
+   {
+    "line": "r1.p1.narrator.0016"
+   },
+   {
+    "line": "r1.p1.baker.0006"
+   },
+   {
+    "line": "r1.p1.baker.0007"
+   },
+   {
+    "line": "r1.p1.child.0003"
+   },
+   {
+    "line": "r1.p1.grandma.0004"
+   },
+   {
+    "line": "r1.p1.narrator.0017"
+   },
+   {
+    "flag": "bakery_fixed"
+   }
+  ],
+  "next": "ending_clue"
+ },
+ "ending_clue": {
+  "title": "הרמז הראשון",
+  "where": "הגשר שעל הנחל",
+  "steps": [
+   {
+    "cutscene": "cs_clue_cut"
+   },
+   {
+    "line": "r1.p1.narrator.0018"
+   },
+   {
+    "line": "r1.p1.player.0008"
+   },
+   {
+    "line": "r1.p1.miller.0005"
+   },
+   {
+    "line": "r1.p1.narrator.0019"
+   },
+   {
+    "line": "r1.p1.narrator.0020"
+   },
+   {
+    "line": "r1.p1.player.0009"
+   },
+   {
+    "line": "r1.p1.dvora.0016"
+   },
+   {
+    "line": "r1.p1.dvora.0017"
+   },
+   {
+    "line": "r1.p1.player.0010"
+   },
+   {
+    "line": "r1.p1.dvora.0018"
+   },
+   {
+    "flag": "clue1_clean_cut"
+   },
+   {
+    "flag": "clue1_two_turn_knot"
+   },
+   {
+    "line": "r1.p1.narrator.0021"
+   },
+   {
+    "line": "r1.p1.hubGrandpa.0001"
+   },
+   {
+    "flag": "p1_complete"
+   }
+  ]
+ },
+ "thread_storm_warning": {
+  "title": "אזהרה: סערת חוטים",
+  "where": "בכל מקום בעולם הפתוח (דקה 8)",
+  "steps": [
+   {
+    "line": "r1.p1.narrator.0022"
+   },
+   {
+    "line": "r1.p1.dvora.0019"
+   },
+   {
+    "line": "r1.p1.villager1.0003"
+   },
+   {
+    "flag": "storm_warned"
+   }
+  ]
+ },
+ "thread_storm_teleport": {
+  "title": "סערת החוטים",
+  "where": "בכל מקום בעולם הפתוח (דקה 10), נגמר במגדל האורגים",
+  "steps": [
+   {
+    "cutscene": "cs_thread_storm"
+   },
+   {
+    "line": "r1.p1.narrator.0023"
+   },
+   {
+    "line": "r1.p1.hubGrandpa.0002"
+   },
+   {
+    "line": "r1.p1.dvora.0020"
+   },
+   {
+    "line": "r1.p1.dvora.0021"
+   },
+   {
+    "line": "r1.p1.narrator.0024"
+   },
+   {
+    "flag": "teleported_to_tower"
+   }
+  ]
+ }
+}

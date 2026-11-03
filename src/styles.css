@@ -60,3 +60,13 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 @keyframes rise { from { transform: translateY(8px); opacity: 0; } }
 @keyframes pulse { 50% { box-shadow: 0 0 14px rgba(255,207,107,.7); } }
 @media (prefers-reduced-motion: reduce) { .dialogue.show, .toast, .pill.warn { animation: none; } }
+
+.pill.objective { position: absolute; top: calc(max(10px, env(safe-area-inset-top)) + 46px); inset-inline-start: 12px; max-width: min(520px, 70vw); white-space: normal; border-color: var(--gold); color: var(--gold); pointer-events: none; }
+.cutscene .cs-card { text-align: center; }
+.cutscene .cs-tag { color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+.cutscene .cs-id { color: var(--mute); font-size: .85rem; direction: ltr; }
+.col-tabs .btn.on { border-color: var(--teal); box-shadow: 0 0 10px rgba(92,240,208,.5); }
+.col-count { color: var(--mute); margin: 10px 0 6px; }
+.col-item { display: grid; gap: 2px; padding: 10px 12px; margin: 8px 0; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
+.col-item b { color: var(--gold); }
+.col-item.missing { opacity: .55; }

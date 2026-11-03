@@ -4,8 +4,10 @@ export interface GameEvents {
   'interact:use': { id: string };
   'world:enter-house': { houseId: string };
   'world:exit-house': { houseId: string };
+  'house:entered': { houseId: string };
   'sight:toggle': { on: boolean };
   'fault:fixed': { id: string; evidence: 'natural' | 'hand' };
+  'item:collected': { id: string };
   'session:warning': undefined;
   'session:storm': undefined;
   'ui:pause': { paused: boolean };

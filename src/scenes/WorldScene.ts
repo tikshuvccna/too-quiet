@@ -1,13 +1,22 @@
 import Phaser from 'phaser';
 import { bus } from '../core/bus';
+import { createActor, setIdleFacing, updateActor, type Actor } from '../game/actors';
 import { CTX_KEY, type GameContext } from '../game/context';
 import {
-  BUILDINGS, FAULTS, NPCS, PICKUPS, START_SPAWN, THREADS, WALLS, WORLD, type FaultDef, type ThreadDef,
+  BUILDINGS, DECOR, FAULTS, NPCS, PICKUPS, SPOTS, START_SPAWN, THREADS, WORLD, wallRects,
+  type FaultDef, type PickupDef, type ThreadDef,
 } from '../world/layout';
 
 const SPEED = 190;
 const INTERACT_RANGE = 78;
 const PLAYER_R = 16;
+
+/** Ground-contact anchors of the prop frames (from art/pipeline props.json). */
+const ANCHOR: Record<string, [number, number]> = {
+  cottage_a: [0.5, 0.75], cottage_b: [0.5, 0.75], cottage_c: [0.4514, 0.7847], tree_round: [0.5, 0.8828],
+  tree_pine: [0.5, 0.8958], fence: [0.5, 0.7917], signpost: [0.5, 0.8611], lamppost: [0.5, 0.8958],
+  well: [0.5, 0.8542], market_stall: [0.4643, 0.875],
+};
 
 interface Target { id: string; x: number; y: number; label: string; range?: number }
 
@@ -20,9 +29,12 @@ function closestOnSegment(a: { x: number; y: number }, b: { x: number; y: number
 
 export class WorldScene extends Phaser.Scene {
   private ctx!: GameContext;
-  private player!: Phaser.GameObjects.Image;
+  private player!: Actor;
+  private px = 0;
+  private py = 0;
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
-  private trees: Array<{ x: number; y: number; r: number }> = [];
+  private blockers: Array<{ x: number; y: number; r: number }> = [];
+  private walls = wallRects();
   private pickups = new Map<string, Phaser.GameObjects.Image>();
   private dim!: Phaser.GameObjects.Rectangle;
   private sightG!: Phaser.GameObjects.Graphics;
@@ -30,8 +42,9 @@ export class WorldScene extends Phaser.Scene {
   private faultLabels = new Map<string, Phaser.GameObjects.Text>();
   private dots: Phaser.GameObjects.Image[] = [];
   private offs: Array<() => void> = [];
-  private spawn = START_SPAWN;
+  private spawn: { x: number; y: number } = START_SPAWN;
   private lastTarget: string | null = null;
+  private pickupClock = 0;
 
   constructor() {
     super('World');
@@ -44,20 +57,20 @@ export class WorldScene extends Phaser.Scene {
   create(): void {
     this.ctx = this.registry.get(CTX_KEY) as GameContext;
     this.sightOn = false;
-    this.trees = [];
+    this.blockers = [];
     this.pickups.clear();
     this.faultLabels.clear();
     this.dots = [];
     this.buildGround();
     this.buildProps();
     this.buildNpcs();
-    this.buildPickups();
+    this.refreshPickups();
     this.buildPlayer();
     this.buildSight();
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, WORLD.w, WORLD.h);
-    cam.startFollow(this.player, true, 0.12, 0.12);
+    cam.startFollow(this.player.sprite, true, 0.12, 0.12, 0, -40);
     this.applyZoom();
     this.scale.on('resize', () => this.applyZoom());
 
@@ -81,22 +94,39 @@ export class WorldScene extends Phaser.Scene {
   private applyZoom(): void {
     const w = this.scale.width;
     const h = this.scale.height;
-    this.cameras.main.setZoom(Phaser.Math.Clamp(Math.min(w / 1100, h / 700), 0.62, 1.5));
+    this.cameras.main.setZoom(Phaser.Math.Clamp(Math.min(w / 1000, h / 640), 0.62, 1.5));
   }
 
   private buildGround(): void {
     this.add.tileSprite(0, 0, WORLD.w, WORLD.h, 'grass').setOrigin(0).setDepth(-1000);
     const g = this.add.graphics().setDepth(-900);
-    const road = (pts: Array<[number, number]>, w: number): void => {
-      g.lineStyle(w + 14, 0x6b5a45, 1);
-      g.beginPath(); pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.strokePath();
-      g.lineStyle(w, 0xc6aa7c, 1);
-      g.beginPath(); pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y))); g.strokePath();
+    const stroke = (pts: Array<[number, number]>, w: number, col: number): void => {
+      g.lineStyle(w, col, 1);
+      g.beginPath();
+      pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
+      g.strokePath();
     };
+    const road = (pts: Array<[number, number]>, w: number): void => {
+      stroke(pts, w + 14, 0x6b5a45);
+      stroke(pts, w, 0xc6aa7c);
+    };
+    // the stream first, so roads and the bridge lie on top
+    const stream: Array<[number, number]> = [[1830, 1080], [1960, 1290], [2060, 1500], [2000, 1760]];
+    stroke(stream, 78, 0x2c5a72);
+    stroke(stream, 62, 0x3f86a6);
+    stroke(stream, 20, 0x7fc4de);
     road([[760, 910], [760, 1010], [1280, 1010], [1280, 790]], 74);
+    road([[760, 1010], [560, 1010], [560, 1470]], 64);
     road([[1280, 1010], [1780, 1010], [1780, 930]], 74);
     road([[1280, 1010], [1250, 1380]], 74);
-    road([[1780, 1010], [2100, 900], [2180, 620]], 64);
+    road([[1780, 1010], [1900, 1200], [2100, 1400], [2180, 1480]], 64);
+    road([[1780, 1010], [2100, 900], [2150, 620]], 64);
+    // bridge planks across the stream
+    g.fillStyle(0x7a5a3a, 1);
+    g.fillRoundedRect(1900, 1262, 120, 56, 6);
+    g.lineStyle(3, 0x3a2a1a, 1);
+    g.strokeRoundedRect(1900, 1262, 120, 56, 6);
+    for (let x = 1914; x < 2020; x += 18) g.lineBetween(x, 1264, x, 1316);
     // flowers and tufts, deterministic
     let s = 11;
     const r = (): number => ((s = (s * 16807) % 2147483647) / 2147483647);
@@ -108,39 +138,61 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
+  private prop(frame: string, x: number, y: number, scale = 1, tint?: number): Phaser.GameObjects.Image {
+    const a = ANCHOR[frame] ?? [0.5, 0.9];
+    const img = this.add.image(x, y, 'props', frame).setOrigin(a[0], a[1]).setScale(scale).setDepth(y);
+    if (tint !== undefined) img.setTint(tint);
+    return img;
+  }
+
   private buildProps(): void {
     for (const b of BUILDINGS) {
-      const img = this.add.image(b.x, b.y, b.kind).setOrigin(0.5, 1).setDepth(b.y);
-      void img;
+      this.add.image(b.x, b.y - 4, 'blob').setScale(b.scale * 5.2, b.scale * 2.4).setAlpha(0.8).setDepth(b.y - 1);
+      this.prop(b.frame, b.x, b.y, b.scale, b.tint);
+    }
+    for (const d of DECOR) {
+      this.add.image(d.x, d.y - 3, 'blob').setScale((d.scale ?? 1) * 1.2).setDepth(d.y - 1);
+      this.prop(d.frame, d.x, d.y, d.scale ?? 1);
+      if (d.block) this.blockers.push({ x: d.x, y: d.y - 6, r: d.block });
     }
     // trees around the edge and a few inside, seeded
     let s = 3;
     const r = (): number => ((s = (s * 16807) % 2147483647) / 2147483647);
     const keepClear = (x: number, y: number): boolean =>
-      BUILDINGS.some((b) => Math.abs(b.x - x) < 230 && y > b.y - 40 && y < b.y + 240) || (x > 900 && x < 1900 && y > 880 && y < 1500) || Math.hypot(x - 2180, y - 640) < 300;
-    for (let i = 0; i < 170; i++) {
+      BUILDINGS.some((b) => Math.abs(b.x - x) < 260 && y > b.y - 200 && y < b.y + 260) ||
+      (x > 900 && x < 1900 && y > 880 && y < 1500) || (x > 1800 && x < 2150 && y > 1000 && y < 1800) || (x > 480 && x < 1000 && y > 960 && y < 1560);
+    for (let i = 0; i < 190; i++) {
       const edge = r() < 0.7;
       const x = edge ? (r() < 0.5 ? r() * 320 : WORLD.w - r() * 320) : 160 + r() * (WORLD.w - 320);
       const y = edge && r() < 0.5 ? (r() < 0.5 ? r() * 260 : WORLD.h - r() * 260) : 160 + r() * (WORLD.h - 320);
       if (keepClear(x, y)) continue;
-      const sc = 0.8 + r() * 0.5;
-      this.add.image(x, y, 'tree').setOrigin(0.5, 1).setScale(sc).setDepth(y);
-      this.trees.push({ x, y: y - 8, r: 18 * sc });
+      const sc = 0.75 + r() * 0.4;
+      const frame = r() < 0.65 ? 'tree_round' : 'tree_pine';
+      this.add.image(x, y - 2, 'blob').setScale(sc * 1.4).setDepth(y - 1);
+      this.prop(frame, x, y, sc);
+      this.blockers.push({ x, y: y - 6, r: 20 * sc });
     }
   }
 
   private buildNpcs(): void {
     for (const n of NPCS) {
-      const key = n.id === 'dvora' ? 'npc_dvora' : n.id === 'hubGrandpa' ? 'npc_hub' : 'npc_ph';
-      const img = this.add.image(n.x, n.y, key).setOrigin(0.5, 1).setDepth(n.y);
-      this.tweens.add({ targets: img, scaleY: 1.025, duration: 1100 + (n.x % 300), yoyo: true, repeat: -1, ease: 'sine.inOut' });
+      const a = createActor(this, n.char, n.x, n.y, n.tint, n.scale ?? 1);
+      updateActor(a, n.x, n.y, 0, 0);
+      setIdleFacing(a, n.x > 1500 ? 'SW' : 'SE');
+      this.blockers.push({ x: n.x, y: n.y - 4, r: 20 });
     }
   }
 
-  private buildPickups(): void {
+  private pickupAllowed(p: PickupDef): boolean {
+    if (this.ctx.save.data.collected[p.id]) return false;
+    return !p.requires || this.ctx.save.hasFlag(p.requires);
+  }
+
+  /** Spawn pickups whose story requirement has just been met. */
+  private refreshPickups(): void {
     for (const p of PICKUPS) {
-      if (this.ctx.save.data.collected[p.id]) continue;
-      const key = p.kind === 'card' ? 'dot_gold' : p.kind === 'page' ? 'dot_pink' : 'dot_teal';
+      if (this.pickups.has(p.id) || !this.pickupAllowed(p)) continue;
+      const key = p.kind === 'card' ? 'dot_gold' : p.kind === 'diary' ? 'dot_pink' : 'dot_teal';
       const img = this.add.image(p.x, p.y - 10, key).setDepth(p.y).setScale(1.2);
       this.tweens.add({ targets: img, y: p.y - 22, duration: 900, yoyo: true, repeat: -1, ease: 'sine.inOut' });
       this.pickups.set(p.id, img);
@@ -148,8 +200,11 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private buildPlayer(): void {
-    const key = this.ctx.save.data.look === 'boy' ? 'player_boy_ph' : 'player_ph';
-    this.player = this.add.image(this.spawn.x, this.spawn.y, key).setOrigin(0.5, 1);
+    const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
+    this.px = this.spawn.x;
+    this.py = this.spawn.y;
+    this.player = createActor(this, char, this.px, this.py);
+    updateActor(this.player, this.px, this.py, 0, 0);
   }
 
   private buildSight(): void {
@@ -179,11 +234,17 @@ export class WorldScene extends Phaser.Scene {
 
   private targets(): Target[] {
     const out: Target[] = [];
-    for (const b of BUILDINGS) out.push({ id: `door:${b.id}`, x: b.door.x, y: b.door.y, label: b.label, range: 70 });
+    for (const b of BUILDINGS) {
+      if (b.id.startsWith('house-') || b.id === 'tower') out.push({ id: `door:${b.id}`, x: b.door.x, y: b.door.y, label: b.label, range: 70 });
+    }
     for (const n of NPCS) out.push({ id: `npc:${n.id}`, x: n.x, y: n.y, label: n.label });
     for (const p of PICKUPS) if (this.pickups.has(p.id)) out.push({ id: `pickup:${p.id}`, x: p.x, y: p.y, label: 'לאסוף' });
+    const save = this.ctx.save;
+    for (const s of SPOTS) {
+      if (s.id === 'bridge' && save.hasFlag('bakery_fixed') && !save.hasFlag('p1_complete')) out.push({ id: `spot:${s.id}`, x: s.x, y: s.y, label: s.label, range: s.range });
+    }
     if (this.sightOn) {
-      const power = this.ctx.save.data.power;
+      const power = save.data.power;
       for (const f of FAULTS) {
         if (!this.isFixed(f)) out.push({ id: `fault:${f.id}`, x: f.x, y: f.y, label: power >= f.needsPower ? 'לתקן את החוט' : 'לבדוק את הכתם', range: 110 });
       }
@@ -204,7 +265,8 @@ export class WorldScene extends Phaser.Scene {
       this.ctx.save.save();
       this.tweens.add({ targets: img, scale: 2.4, alpha: 0, duration: 260, onComplete: () => img.destroy() });
       bus.emit('interact:available', null);
-      this.events.emit('collected', pid);
+      this.lastTarget = null;
+      bus.emit('item:collected', { id: pid });
     } else if (id.startsWith('fault:')) {
       this.tryFix(FAULTS.find((f) => f.id === id.slice(6)));
     }
@@ -226,10 +288,10 @@ export class WorldScene extends Phaser.Scene {
 
   private blocked(x: number, y: number): boolean {
     if (x < 30 || y < 30 || x > WORLD.w - 30 || y > WORLD.h - 30) return true;
-    for (const [rx, ry, rw, rh] of WALLS) {
+    for (const [rx, ry, rw, rh] of this.walls) {
       if (x > rx - PLAYER_R && x < rx + rw + PLAYER_R && y > ry - 6 && y < ry + rh + 6) return true;
     }
-    for (const t of this.trees) if (Math.hypot(x - t.x, y - t.y) < t.r + PLAYER_R) return true;
+    for (const t of this.blockers) if (Math.hypot(x - t.x, y - t.y) < t.r + PLAYER_R * 0.8) return true;
     return false;
   }
 
@@ -258,15 +320,17 @@ export class WorldScene extends Phaser.Scene {
       }
     }
     const speed = SPEED * (this.sightOn ? 0.8 : 1);
-    const nx = this.player.x + vx * speed * dt;
-    const ny = this.player.y + vy * speed * dt;
-    if (!this.blocked(nx, this.player.y)) this.player.x = nx;
-    if (!this.blocked(this.player.x, ny)) this.player.y = ny;
-    if (vx !== 0) this.player.setFlipX(vx < 0);
-    this.player.setDepth(this.player.y);
-    const bob = vx !== 0 || vy !== 0 ? Math.sin(this.time.now / 70) * 2 : 0;
-    this.player.setScale(1, 1 + bob * 0.01);
+    const nx = this.px + vx * speed * dt;
+    const ny = this.py + vy * speed * dt;
+    if (!this.blocked(nx, this.py)) this.px = nx;
+    if (!this.blocked(this.px, ny)) this.py = ny;
+    updateActor(this.player, this.px, this.py, vx, vy);
 
+    this.pickupClock += dt;
+    if (this.pickupClock > 0.6) {
+      this.pickupClock = 0;
+      this.refreshPickups();
+    }
     this.updateTarget();
     if (this.sightOn) this.drawSight();
   }
@@ -280,7 +344,7 @@ export class WorldScene extends Phaser.Scene {
     let best: Target | null = null;
     let bd = Infinity;
     for (const t of this.targets()) {
-      const d = Math.hypot(t.x - this.player.x, t.y - this.player.y);
+      const d = Math.hypot(t.x - this.px, t.y - this.py);
       if (d < (t.range ?? INTERACT_RANGE) && d < bd) {
         best = t;
         bd = d;
@@ -293,7 +357,7 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
-  private threadPath(th: ThreadDef, time: number, gap?: { x: number; y: number; t: number }): Array<{ x: number; y: number }> {
+  private threadPath(th: ThreadDef, time: number): Array<{ x: number; y: number }> {
     const pts: Array<{ x: number; y: number }> = [];
     const n = 28;
     const len = Math.hypot(th.b.x - th.a.x, th.b.y - th.a.y);
@@ -304,7 +368,6 @@ export class WorldScene extends Phaser.Scene {
       const w = Math.sin(t * Math.PI * 3 + time * 2) * 5 * Math.sin(t * Math.PI);
       pts.push({ x: th.a.x + (th.b.x - th.a.x) * t + nx * w, y: th.a.y + (th.b.y - th.a.y) * t + ny * w });
     }
-    void gap;
     return pts;
   }
 
@@ -341,7 +404,7 @@ export class WorldScene extends Phaser.Scene {
         const dot = this.dots[di++];
         if (!dot) break;
         let t = (time * 0.18 + k / 3 + (th.a.x % 7) / 7) % 1;
-        if (gapAt) t = (t * gapAt.t * 0.92);
+        if (gapAt) t = t * gapAt.t * 0.92;
         dot.setVisible(true).setPosition(th.a.x + (th.b.x - th.a.x) * t, th.a.y + (th.b.y - th.a.y) * t);
       }
     }
@@ -353,7 +416,7 @@ export class WorldScene extends Phaser.Scene {
         label?.setVisible(false);
         continue;
       }
-      const near = Math.hypot(f.x - this.player.x, f.y - this.player.y) < 190;
+      const near = Math.hypot(f.x - this.px, f.y - this.py) < 190;
       const known = power >= f.needsPower;
       const pulse = 1 + Math.sin(time * 5) * 0.12;
       g.fillStyle(known ? 0xff6b7d : 0x9aa0c8, 0.5);
