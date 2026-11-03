@@ -30,7 +30,16 @@ function boot(): void {
   const dialogue = new DialogueUI();
   dialogue.subtitles = save.data.settings.subtitles;
   const joystick = new Joystick();
-  const ctx: GameContext = { save, session, hud, dialogue, joystick, art: new Set(), modal: true };
+  let modal = true;
+  const ctx: GameContext = {
+    save, session, hud, dialogue, joystick, art: new Set(),
+    get modal() { return modal; },
+    set modal(v: boolean) {
+      modal = v;
+      document.body.classList.toggle('modal', v);
+    },
+  };
+  document.body.classList.add('modal');
 
   const game = new Phaser.Game({
     type: Phaser.AUTO,

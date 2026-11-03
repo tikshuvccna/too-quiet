@@ -196,7 +196,7 @@ export const atmToy: Mount<AtmSpec> = (host, spec, api) => {
   const lineM = mkLine(pos.metula);
   const lineE = mkLine(pos.eilat);
   const cut = svg('text', { x: 80, y: 56, class: 'lw-cut' });
-  cut.textContent = '✕ אין רשת';
+  cut.textContent = '× אין רשת';
   const scene = el('div', 'lw-scene lw-scene-c', '', [svg('svg', { viewBox: `0 0 ${W} ${H}`, class: 'lw-svg' }, [lineM, lineE, cut, envLayer])]);
 
   const bal = (cls: string): HTMLElement => el('span', `lw-money ${cls}`);

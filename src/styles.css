@@ -37,7 +37,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
 /* ---- HUD ---- */
-.hud { position: absolute; top: max(10px, env(safe-area-inset-top)); inset-inline: 12px; display: flex; gap: 8px; align-items: center; pointer-events: none; }
+.hud { position: absolute; top: max(10px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right)); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; pointer-events: none; }
 .hud > * { pointer-events: auto; }
 .pill {
   display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 99px; font-size: .95rem; white-space: nowrap;
@@ -70,10 +70,10 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), inset 0 -2px 0 rgba(0, 80, 60, .35), 0 3px 0 #0a6a56, 0 8px 18px rgba(0, 0, 0, .35), 0 0 16px rgba(92, 240, 208, .3);
 }
 .btn.on { border-color: var(--teal); box-shadow: 0 0 20px rgba(92, 240, 208, .7), inset 0 1px 0 rgba(255, 255, 255, .2); }
-.interact { position: absolute; bottom: max(26px, env(safe-area-inset-bottom)); inset-inline-end: 20px; min-width: 130px; min-height: 66px; border-radius: 34px; font-size: 1.08rem; display: none; animation: glow 1.8s ease-in-out infinite; }
+.interact { position: absolute; bottom: max(26px, env(safe-area-inset-bottom)); right: max(18px, env(safe-area-inset-right)); min-width: 130px; max-width: calc(100vw - 230px); min-height: 66px; border-radius: 34px; font-size: 1.08rem; display: none; animation: glow 1.8s ease-in-out infinite; }
 .interact.show { display: block; }
 
-.joy { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: 24px; width: 150px; height: 150px; border-radius: 50%; display: none; touch-action: none;
+.joy { position: absolute; bottom: max(24px, env(safe-area-inset-bottom)); left: max(20px, env(safe-area-inset-left)); width: 150px; height: 150px; border-radius: 50%; display: none; touch-action: none;
   background: radial-gradient(circle, rgba(92, 240, 208, .08) 0 40%, rgba(20, 19, 46, .5) 41%); border: 2px solid rgba(255, 210, 122, .4); box-shadow: inset 0 0 20px rgba(0, 0, 0, .5), 0 0 16px rgba(92, 240, 208, .12); }
 .joy.show { display: block; }
 .joy i { position: absolute; width: 64px; height: 64px; border-radius: 50%; left: 43px; top: 43px; pointer-events: none;
@@ -97,12 +97,12 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 }
 .dialogue .txt { font-size: 1.2rem; line-height: 1.65; min-height: 3.3em; text-shadow: 0 1px 0 rgba(0, 0, 0, .5); }
 .dialogue .hint { color: var(--gold); font-size: .85rem; text-align: end; margin-top: 4px; opacity: .85; }
-.dialogue .hint::before { content: '◆ '; color: var(--teal); animation: blink 1.2s infinite; }
+.dialogue .hint::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-inline-end: 7px; background: var(--teal); transform: rotate(45deg); animation: blink 1.2s infinite; }
 .dialogue .choices { display: grid; gap: 9px; margin-top: 12px; }
 .dialogue .choices .btn { text-align: start; padding-inline-start: 22px; border-inline-start: 4px solid var(--teal); }
 
 /* ---- toasts: ribbons ---- */
-.toast-box { position: absolute; top: 96px; inset-inline: 0; display: flex; flex-direction: column; align-items: center; gap: 7px; pointer-events: none; }
+.toast-box { position: absolute; top: calc(var(--hud-h, 96px) + 10px); inset-inline: 0; display: flex; flex-direction: column; align-items: center; gap: 7px; pointer-events: none; }
 .toast {
   padding: 8px 22px; font-weight: 650; max-width: 90vw; text-align: center; animation: rise .25s ease-out;
   background: linear-gradient(180deg, rgba(36, 34, 82, .96), rgba(16, 15, 40, .96)), var(--weave);
@@ -142,7 +142,9 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 .storm .msg { opacity: 0; transition: opacity 1s .6s; font-size: 1.5rem; text-align: center; max-width: 560px; line-height: 1.7; color: var(--gold); text-shadow: 0 0 22px rgba(255, 210, 122, .5); }
 .storm.on .msg { opacity: 1; }
 
-.pill.objective { position: absolute; top: calc(max(10px, env(safe-area-inset-top)) + 46px); inset-inline-start: 12px; max-width: min(520px, 70vw); white-space: normal; border-color: var(--gold); color: var(--gold); pointer-events: none; border-radius: 16px; }
+.pill.objective { flex: 0 1 auto; max-width: min(560px, 100%); white-space: normal; border-color: var(--gold); color: var(--gold); pointer-events: none; border-radius: 16px; }
+.hud .objective { order: 5; }
+.hud::after { content: ''; flex-basis: 0; }
 .cutscene .cs-card { text-align: center; }
 .cutscene .cs-tag { color: var(--teal); letter-spacing: 3px; margin-bottom: 6px; font-size: .85rem; }
 .cutscene .cs-id { color: var(--mute); font-size: .8rem; direction: ltr; opacity: .6; }
@@ -158,3 +160,22 @@ button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 @keyframes blink { 50% { opacity: .25; } }
 @keyframes drift { from { transform: rotate(-4deg) translateY(-14px); } to { transform: rotate(-1deg) translateY(14px); } }
 @media (prefers-reduced-motion: reduce) { .dialogue.show, .toast, .pill.warn, .interact, .title::after, .dialogue .hint::before { animation: none; } .btn { transition: none; } }
+
+/* while a dialogue, lesson or menu owns the screen, the on-screen controls get out of the way */
+body.modal .joy, body.modal .interact { display: none !important; }
+
+@media (max-width: 520px) {
+  .pill { padding: 5px 10px; font-size: .85rem; gap: 5px; }
+  .btn { padding: 8px 12px; }
+  .hud { gap: 6px; }
+  .interact { min-width: 108px; min-height: 58px; font-size: .98rem; }
+  .joy { width: 132px; height: 132px; }
+  .joy i { width: 56px; height: 56px; left: 38px; top: 38px; }
+  .dialogue { padding: 24px 16px 10px; }
+  .dialogue .txt { font-size: 1.08rem; }
+}
+@media (max-height: 460px) {
+  .joy { width: 116px; height: 116px; bottom: 12px; }
+  .joy i { width: 50px; height: 50px; left: 33px; top: 33px; }
+  .interact { bottom: 14px; min-height: 52px; }
+}

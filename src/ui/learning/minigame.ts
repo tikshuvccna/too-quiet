@@ -33,7 +33,7 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
   hearts.setAttribute('aria-label', 'חיים');
   const points = el('span', 'lrn-points', '0');
   const streak = el('span', 'lrn-streak', '');
-  const closeBtn = el('button', 'lrn-x', '✕');
+  const closeBtn = el('button', 'lrn-x', '×');
   closeBtn.type = 'button';
   closeBtn.setAttribute('aria-label', 'יציאה מהמשחקון');
   const timerFill = el('i', 'lrn-timer-fill');
@@ -258,7 +258,7 @@ export function openMinigameMenu(data: MinigameData, save: SaveStore, opts: { on
   let closed = false;
   let child: (() => void) | null = null;
 
-  const closeBtn = el('button', 'lrn-x', '✕');
+  const closeBtn = el('button', 'lrn-x', '×');
   closeBtn.type = 'button';
   closeBtn.setAttribute('aria-label', 'סגירה');
   const head = el('header', 'lrn-head', '', [el('div', 'lrn-head-main', '', [el('h1', 'lrn-title', data.title)]), closeBtn]);

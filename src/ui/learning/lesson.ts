@@ -20,7 +20,7 @@ export function openLesson(data: LessonData, save: SaveStore, opts: { onClose(do
 
   const title = el('h1', 'lrn-title', data.title);
   const dots = el('div', 'lrn-dots');
-  const closeBtn = el('button', 'lrn-x', '✕');
+  const closeBtn = el('button', 'lrn-x', '×');
   closeBtn.type = 'button';
   closeBtn.setAttribute('aria-label', 'יציאה מהשיעור');
   const head = el('header', 'lrn-head', '', [el('div', 'lrn-head-main', '', [title, dots]), closeBtn]);

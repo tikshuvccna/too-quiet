@@ -1,12 +1,12 @@
 import { bus } from '../core/bus';
-import { el, mmss, uiRoot } from './dom';
+import { el, isTouchDevice, mmss, uiRoot } from './dom';
 
 export class Hud {
   private readonly bar = el('div', 'hud');
   private readonly timer = el('div', 'pill timer');
   private readonly coins = el('div', 'pill coins');
   private readonly objective = el('div', 'pill objective');
-  private readonly sight = el('button', 'btn', 'ראיית חוטים (Q)');
+  private readonly sight = el('button', 'btn', isTouchDevice() ? 'ראיית חוטים' : 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
   private readonly interact = el('button', 'btn primary interact');
   private readonly toasts = el('div', 'toast-box');
@@ -15,8 +15,13 @@ export class Hud {
   onCollection: () => void = () => {};
 
   constructor() {
-    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.cards, this.sight);
-    uiRoot().append(this.bar, this.objective, this.interact, this.toasts);
+    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.cards, this.sight, this.objective);
+    uiRoot().append(this.bar, this.interact, this.toasts);
+    // toasts sit just under the HUD, whatever height it wraps to (small phones use two or three rows)
+    const measure = (): void => document.documentElement.style.setProperty('--hud-h', `${Math.ceil(this.bar.getBoundingClientRect().bottom)}px`);
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(measure).observe(this.bar);
+    window.addEventListener('resize', measure);
+    requestAnimationFrame(measure);
     this.sight.addEventListener('click', () => this.toggleSight());
     this.cards.addEventListener('click', () => this.onCollection());
     this.interact.addEventListener('click', () => this.use());

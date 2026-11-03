@@ -17,7 +17,7 @@ export function openQuiz(data: QuizData, save: SaveStore, opts: { onClose(result
 
   const title = el('h1', 'lrn-title', data.title);
   const meta = el('span', 'lrn-meta', '');
-  const closeBtn = el('button', 'lrn-x', '✕');
+  const closeBtn = el('button', 'lrn-x', '×');
   closeBtn.type = 'button';
   closeBtn.setAttribute('aria-label', 'יציאה מהחידון');
   const bar = el('i', 'lrn-bar-fill');
@@ -157,7 +157,7 @@ export function openQuiz(data: QuizData, save: SaveStore, opts: { onClose(result
     const rows = qs.map((q, i) => {
       const o = outcomes[i] ?? 'miss';
       return el('li', `lrn-sum ${o}`, '', [
-        el('span', 'lrn-sum-ic', o === 'miss' ? '✕' : '✓'),
+        el('span', 'lrn-sum-ic', o === 'miss' ? '×' : '✓'),
         el('span', 'lrn-sum-q', q.q),
         el('span', 'lrn-sum-pts', o === 'retry' ? `${pointsFor(q.difficulty, o)} (ניסיון שני)` : String(pointsFor(q.difficulty, o))),
       ]);

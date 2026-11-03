@@ -58,6 +58,8 @@ export class HouseScene extends Phaser.Scene {
   private ox = 0;
   private oy = 0;
   private blockers: Array<[number, number, number, number]> = [];
+  /** Hebrew object names come from the bundled story content, never from a fetched file. */
+  private names = new Map<string, string>();
 
   constructor() {
     super('House');
@@ -88,6 +90,7 @@ export class HouseScene extends Phaser.Scene {
     const meta = this.cache.json.get(`objmeta:${id}`) as AtlasMeta;
     this.cameras.main.setBackgroundColor(0x0b0c1c);
     this.truthImgs = [];
+    this.names = new Map(def.objects.map((o) => [o.id, o.name]));
     this.glows.clear();
     this.blockers = [];
     this.sight = false;
@@ -115,7 +118,7 @@ export class HouseScene extends Phaser.Scene {
     }
 
     this.add.text(W / 2, this.oy - 34, def.name, { fontFamily: 'Segoe UI, Arial', fontSize: '26px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 5 }).setOrigin(0.5).setDepth(5000);
-    const door = this.add.text(this.ox + (sw / 2) * k, this.oy + (sh - 6) * k, '▼ יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '18px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 4 }).setOrigin(0.5, 0).setDepth(5000);
+    const door = this.add.text(this.ox + (sw / 2) * k, this.oy + (sh - 6) * k, 'יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '18px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 4 }).setOrigin(0.5, 0).setDepth(5000);
     this.tweens.add({ targets: door, y: door.y + 6, duration: 700, yoyo: true, repeat: -1, ease: 'sine.inOut' });
 
     const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
@@ -205,7 +208,7 @@ export class HouseScene extends Phaser.Scene {
       const near = d < 95;
       const glow = this.glows.get(o.id);
       if (glow) glow.outerStrength = near ? 3 + Math.sin(this.time.now / 180) : 0;
-      if (near && (!best || d < best.d)) best = { id: `obj:${this.contentId}:${o.id}`, label: o.nameHe, d };
+      if (near && (!best || d < best.d)) best = { id: `obj:${this.contentId}:${o.id}`, label: this.names.get(o.id) ?? o.nameHe, d };
     }
     const [sw, sh] = this.layout.shellSize;
     const atDoor = this.py > sh * 0.84 && Math.abs(this.px - sw / 2) < 120;
