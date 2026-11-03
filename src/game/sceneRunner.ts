@@ -15,6 +15,8 @@ export interface RunnerHooks {
 
 /** Plays a scene from scenes.json: lines, choices that jump to other scenes, flags and cutscene cards. */
 export class SceneRunner {
+  private catchphrases = 0;
+
   constructor(
     private readonly dialogue: DialogueUI,
     private readonly save: SaveStore,
@@ -54,8 +56,8 @@ export class SceneRunner {
       if ('line' in st) {
         const l = lineOf(st.line);
         const text = this.save.data.look === 'girl' && l.textF ? l.textF : l.text;
-        // every time someone repeats the catchphrase, the truth shows through for a moment
-        if (text.includes('הכול בסדר')) bus.emit('truth:flash', { ms: 700 });
+        // only now and then, when someone repeats the catchphrase, the truth shows through for a moment
+        if (text.includes('הכול בסדר') && ++this.catchphrases % 3 === 2) bus.emit('truth:flash', { ms: 450 });
         await this.dialogue.say([{ id: st.line, speaker: l.speaker, text }]);
       } else if ('flag' in st) {
         this.save.setFlag(st.flag);

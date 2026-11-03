@@ -55,7 +55,8 @@ export class TruthLayer {
       else if (n.baseTint !== undefined) a.sprite.setTint(n.baseTint);
       else a.sprite.clearTint();
       a.sprite.x = truth > 0.3 ? n.def.x + this.twitch : n.def.x;
-      if (!on || n.def.id === 'dvora') continue;
+      // the puppet strings appear only once the truth is clear enough (after the first lesson)
+      if (truth < 0.5 || n.def.id === 'dvora') continue;
       const hx = n.def.x;
       const hy = n.def.y - 100 * (n.def.scale ?? 1);
       // a small control bar above the head, like a puppeteer's cross

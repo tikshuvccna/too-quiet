@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 /** How much of the "truth" the needle can show, by the number of lessons learned. */
 export function truthLevel(power: number): number {
-  if (power <= 0) return 0.55;
+  if (power <= 0) return 0.3; // before the first lesson the needle only hints
   return Math.min(1, 0.8 + 0.1 * (power - 1));
 }
 

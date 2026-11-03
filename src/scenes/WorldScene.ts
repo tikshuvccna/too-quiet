@@ -46,7 +46,7 @@ export class WorldScene extends Phaser.Scene {
   private swaps: Swappable[] = [];
   private truthBuildings: Phaser.GameObjects.Image[] = [];
   private atmos!: Atmosphere;
-  private nextFlash = 60 + Math.random() * 50;
+  private nextFlash = 240 + Math.random() * 60;
   private sightG!: Phaser.GameObjects.Graphics;
   private sightOn = false;
   private faultLabels = new Map<string, Phaser.GameObjects.Text>();
@@ -351,8 +351,8 @@ export class WorldScene extends Phaser.Scene {
     if (!c.modal) {
       this.nextFlash -= dt;
       if (this.nextFlash <= 0) {
-        this.nextFlash = 70 + Math.random() * 70;
-        this.fx.flash(650);
+        this.nextFlash = 150 + Math.random() * 120;
+        this.fx.flash(450);
       }
     }
     this.fx.update(dtMs);
