@@ -1,4 +1,6 @@
+import { bus } from '../core/bus';
 import { el, uiRoot } from './dom';
+import { frameStyle, loadPortrait, moodFor, portraitFor, type PortraitSheet } from './portraits';
 
 export interface Line {
   id?: string;
@@ -16,9 +18,10 @@ export interface VoicePlayer {
   stop(): void;
 }
 
-/** Subtitle box. Click, tap, Space or Enter advances. Each line may carry an id so a voice recording can play. */
+/** Subtitle box with a speaker portrait. Click, tap, Space or Enter advances. Lines may carry an id for a voice recording. */
 export class DialogueUI {
   private readonly box = el('div', 'dialogue');
+  private readonly portrait = el('div', 'portrait');
   private readonly who = el('div', 'who');
   private readonly txt = el('div', 'txt');
   private readonly choices = el('div', 'choices');
@@ -27,12 +30,16 @@ export class DialogueUI {
   private typing: number | null = null;
   private full = '';
   private open = false;
+  private current: { name: string; mood: string; sheet: PortraitSheet } | null = null;
+  private truthUntil = 0;
+  private blinkTimer: number | null = null;
   subtitles = true;
   voice: VoicePlayer | null = null;
   names: Record<string, string> = {};
+  look: 'girl' | 'boy' = 'girl';
 
   constructor() {
-    this.box.append(this.who, this.txt, this.choices, this.hint);
+    this.box.append(this.portrait, this.who, this.txt, this.choices, this.hint);
     uiRoot().append(this.box);
     this.box.addEventListener('pointerdown', () => this.advance());
     window.addEventListener('keydown', (e) => {
@@ -41,6 +48,12 @@ export class DialogueUI {
         e.preventDefault();
         this.advance();
       }
+    });
+    // when the truth flickers through, the speaker's face changes with it
+    bus.on('truth:flash', ({ ms }) => {
+      this.truthUntil = performance.now() + ms;
+      this.paintPortrait();
+      window.setTimeout(() => this.paintPortrait(), ms + 30);
     });
   }
 
@@ -76,7 +89,9 @@ export class DialogueUI {
   close(): void {
     this.open = false;
     this.voice?.stop();
-    this.box.classList.remove('show');
+    this.box.classList.remove('show', 'has-portrait');
+    if (this.blinkTimer !== null) window.clearInterval(this.blinkTimer);
+    this.blinkTimer = null;
   }
 
   private showLine(l: Line): Promise<void> {
@@ -92,6 +107,7 @@ export class DialogueUI {
     this.who.textContent = this.names[l.speaker] ?? l.speaker;
     this.who.style.display = l.speaker ? '' : 'none';
     this.full = l.text;
+    void this.setPortrait(l);
     if (l.id) this.voice?.play(l.id);
     if (this.typing !== null) clearInterval(this.typing);
     this.typing = null;
@@ -109,6 +125,40 @@ export class DialogueUI {
         this.typing = null;
       }
     }, 22);
+  }
+
+  private async setPortrait(l: Line): Promise<void> {
+    const name = portraitFor(l.speaker, this.look);
+    if (!name) {
+      this.current = null;
+      this.box.classList.remove('has-portrait');
+      return;
+    }
+    const sheet = await loadPortrait(name);
+    if (!sheet || !this.open) {
+      this.box.classList.remove('has-portrait');
+      return;
+    }
+    this.current = { name, mood: moodFor(l.speaker, l.text), sheet };
+    this.box.classList.add('has-portrait');
+    this.paintPortrait();
+    if (this.blinkTimer === null) {
+      this.blinkTimer = window.setInterval(() => {
+        if (!this.current || performance.now() < this.truthUntil) return;
+        this.paintPortrait('blink');
+        window.setTimeout(() => this.paintPortrait(), 130);
+      }, 3800);
+    }
+  }
+
+  private paintPortrait(override?: string): void {
+    const c = this.current;
+    if (!c) return;
+    const size = this.portrait.clientWidth || 150;
+    const truth = performance.now() < this.truthUntil && c.sheet.frames[`${c.name}_truth`];
+    const frame = override ?? (truth ? 'truth' : c.mood);
+    const s = frameStyle(c.sheet, c.name, frame, size) ?? frameStyle(c.sheet, c.name, 'neutral', size);
+    if (s) Object.assign(this.portrait.style, s);
   }
 
   private advance(): void {

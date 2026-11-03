@@ -28,7 +28,7 @@ EXPR = {
 
 def head_mesh(name, R, parent, loc, prm, material):
     """prm: jaw, cheek, nose, chin, brow, flat."""
-    jaw, cheek, nose, chin = prm.get('jaw', 0.18), prm.get('cheek', 0.05), prm.get('nose', 0.10), prm.get('chin', 0.05)
+    jaw, cheek, nose, chin = prm.get('jaw', 0.3), prm.get('cheek', 0.05), prm.get('nose', 0.10), prm.get('chin', 0.05)
     nose_w = prm.get('nose_w', 0.11)
     nose_z = prm.get('nose_z', -0.16)
     flat = prm.get('flat', 0.93)
@@ -131,6 +131,8 @@ class Face:
 
     def build(self, expr='neutral', closed=False):
         sp = self.sp
+        if sp.get('noface'):
+            return
         E = dict(EXPR[expr])
         E.update(sp.get('expr_over', {}).get(expr, {}))
         truth = expr == 'truth'

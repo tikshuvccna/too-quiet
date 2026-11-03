@@ -1,0 +1,119 @@
+{
+ "frames": {
+  "the_head_benevolent_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 1024,
+    "h": 512
+   }
+  },
+  "the_head_benevolent_1": {
+   "frame": {
+    "x": 1024,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 1024,
+    "h": 512
+   }
+  },
+  "the_head_truth_0": {
+   "frame": {
+    "x": 0,
+    "y": 512,
+    "w": 1024,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 1024,
+    "h": 512
+   }
+  },
+  "the_head_truth_1": {
+   "frame": {
+    "x": 1024,
+    "y": 512,
+    "w": 1024,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 1024,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 1024,
+    "h": 512
+   }
+  }
+ },
+ "anims": {
+  "benevolent": {
+   "frames": [
+    "the_head_benevolent_0",
+    "the_head_benevolent_1"
+   ],
+   "frameRate": 0.5,
+   "repeat": -1,
+   "yoyo": true
+  },
+  "truth": {
+   "frames": [
+    "the_head_truth_0",
+    "the_head_truth_1"
+   ],
+   "frameRate": 0.5,
+   "repeat": -1,
+   "yoyo": true
+  }
+ },
+ "meta": {
+  "image": "the_head.png",
+  "size": {
+   "w": 2048,
+   "h": 1024
+  },
+  "scale": "1",
+  "name_he": "הראש",
+  "origin": {
+   "x": 0.5,
+   "y": 0.5
+  },
+  "legend_he": "הראש הגדול מציץ מבין העננים ומחזיק בקצות אצבעותיו חוטי אור. מלמטה הוא נראה רגוע וטוב. מי שרואה בראיית חוטים מגלה שהחוטים יורדים אל כל אנשי העמק.",
+  "note": "Sky element, 1024x512 per frame. Frame 1 = slow half-blink. Row 0 benevolent facade, row 1 colder truth (thread sight). Strings run off the bottom edge: place it so they reach the village."
+ }
+}

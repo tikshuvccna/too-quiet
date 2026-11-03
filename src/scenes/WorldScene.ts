@@ -4,6 +4,8 @@ import { createActor, setIdleFacing, updateActor, type Actor } from '../game/act
 import { TruthFx, truthLevel } from '../game/truthFx';
 import { drawRoads } from '../world/roads';
 import { Atmosphere } from '../world/atmosphere';
+import { CreatureManager } from '../world/creatures';
+import { CREATURES } from '../content';
 import { TruthLayer, type Swappable } from '../world/truthLayer';
 import { CTX_KEY, type GameContext } from '../game/context';
 import {
@@ -46,6 +48,7 @@ export class WorldScene extends Phaser.Scene {
   private swaps: Swappable[] = [];
   private truthBuildings: Phaser.GameObjects.Image[] = [];
   private atmos!: Atmosphere;
+  private creatures!: CreatureManager;
   private nextFlash = 240 + Math.random() * 60;
   private sightG!: Phaser.GameObjects.Graphics;
   private sightOn = false;
@@ -82,6 +85,7 @@ export class WorldScene extends Phaser.Scene {
     this.buildSight();
     this.truthLayer = new TruthLayer(this, this.npcRefs, this.swaps, { x: 2180, y: 420 });
     const bmeta = (this.cache.json.get('buildings:meta') as { frames: Record<string, { anchor: { x: number; y: number }; smoke?: Array<{ x: number; y: number }>; hub?: { x: number; y: number } }> }).frames;
+    this.creatures = new CreatureManager(this);
     this.atmos = new Atmosphere(this, (this.registry.get('tod') as number | undefined) ?? 0.4, bmeta);
 
     const cam = this.cameras.main;
@@ -197,10 +201,10 @@ export class WorldScene extends Phaser.Scene {
 
   private buildNpcs(): void {
     for (const n of NPCS) {
-      const a = createActor(this, n.char, n.x, n.y, n.tint, n.scale ?? 1);
+      const a = createActor(this, n.char, n.x, n.y, undefined, n.scale ?? 1);
       updateActor(a, n.x, n.y, 0, 0);
       setIdleFacing(a, n.x > 1500 ? 'SW' : 'SE');
-      this.npcRefs.push({ actor: a, def: n, baseTint: n.tint });
+      this.npcRefs.push({ actor: a, def: n, baseTint: undefined });
       this.blockers.push({ x: n.x, y: n.y - 4, r: 20 });
     }
   }
@@ -259,8 +263,15 @@ export class WorldScene extends Phaser.Scene {
     for (const n of NPCS) out.push({ id: `npc:${n.id}`, x: n.x, y: n.y, label: n.label });
     for (const p of PICKUPS) if (this.pickups.has(p.id)) out.push({ id: `pickup:${p.id}`, x: p.x, y: p.y, label: 'לאסוף' });
     const save = this.ctx.save;
+    for (const c of this.creatures.targets(this.atmos.tod)) {
+      const info = CREATURES[c.key];
+      if (!info) continue;
+      const met = !!save.data.collected[`creature_${c.key}`];
+      out.push({ id: `creature:${c.key}`, x: c.x, y: c.y, label: met ? `להסתכל על ${info.name_he}` : c.legendary ? `להתבונן: ${info.name_he}` : `להכיר: ${info.name_he}`, range: c.legendary ? 150 : 84 });
+    }
     for (const s of SPOTS) {
       if (s.id === 'bridge' && save.hasFlag('bakery_fixed') && !save.hasFlag('p1_complete')) out.push({ id: `spot:${s.id}`, x: s.x, y: s.y, label: s.label, range: s.range });
+      if (s.id === 'sky') out.push({ id: `spot:${s.id}`, x: s.x, y: s.y, label: s.label, range: s.range });
     }
     if (this.sightOn) {
       const power = save.data.power;
@@ -288,6 +299,8 @@ export class WorldScene extends Phaser.Scene {
       bus.emit('item:collected', { id: pid });
     } else if (id.startsWith('fault:')) {
       this.tryFix(FAULTS.find((f) => f.id === id.slice(6)));
+    } else if (id.startsWith('creature:')) {
+      bus.emit('creature:met', { key: id.slice(9) });
     }
   }
 
@@ -360,6 +373,8 @@ export class WorldScene extends Phaser.Scene {
     const tv = this.fx.value;
     for (const tb of this.truthBuildings) tb.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
     this.atmos.update(dtMs, tv, this.px, this.py);
+    this.creatures.update(dtMs, this.atmos.tod);
+    this.ctx.head.setTruth(tv, dt);
 
     this.pickupClock += dt;
     if (this.pickupClock > 0.6) {

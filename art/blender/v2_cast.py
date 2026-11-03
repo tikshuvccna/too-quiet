@@ -16,7 +16,7 @@ SKIN = dict(a="#f2c6a2", b="#c68a62", c="#e7b894", d="#a8714e", e="#dca27a", f="
 # ====================================================================== heroes
 def apprentice_girl(variant='hat'):
     sp = dict(skin=SKIN['a'], R=0.25, iris="#5a7a3a", brow_col="#5a3020", lip="#c0565a", blush_amt=0.5,
-              head=dict(jaw=0.2, cheek=0.05, nose=0.07, chin=0.04), eye_h=0.16, flick=1.2)
+              head=dict(jaw=0.3, cheek=0.05, nose=0.07, chin=0.05), eye_h=0.16, flick=1.2)
     h = Human(sp)
     hair = "#6a3a24"
     h.feet_only(shoe="#5a3420")
@@ -27,18 +27,16 @@ def apprentice_girl(variant='hat'):
     h.satchel(side=1)
     h.head()
     if variant == 'hat':
-        h.hair_cap(hair, hairline=0.45, back_len=-0.55)
-        h.fringe(hair, n=7, z=0.47, spread=0.78, length=0.26, curl=0.08)
+        h.hair_cap(hair, hairline=0.5, back_len=-0.6, sides=-0.3, fringe=(4, 0.2))
         # two braids over the shoulders
         for s in (-1, 1):
-            pts = [(s * 0.72, 0.25, -0.35), (s * 0.82, 0.05, -0.75), (s * 0.85, -0.12, -1.15), (s * 0.82, -0.2, -1.5)]
-            h.lock(pts, 0.22, 0.17, hair, flat=0.8, P=dict(nu=6, fv=30))
-            h.lock([(s * 0.8, -0.22, -1.5), (s * 0.81, -0.24, -1.62)], 0.13, 0.12, "#2f7d6f", flat=0.6)
+            pts = [(s * 0.78, 0.3, -0.4), (s * 0.9, 0.12, -0.8), (s * 0.92, -0.05, -1.2), (s * 0.88, -0.12, -1.5)]
+            h.braid(pts, 0.2, hair, tie="#2f7d6f")
         h.wide_hat("#e1b865", "#2f7d6f", band2="#e8b04a", crown_h=0.52, brim=1.9, tilt=-0.16, flower=None, bow=True,
                    droop=0.06, z=0.52)
     else:
         h.headscarf("#3e7d8a", color2="#f2d27a", pat='flowers', P=dict(nu=22, fv=30, rad=0.3), z_front=0.5)
-        h.fringe(hair, n=4, z=0.44, spread=0.5, length=0.14, curl=0.05, r=0.12)
+
     h.needle(h.P['handR'])
     h.flags = dict(kind='dress', stride=1.0, hold='R')
     return h
@@ -46,7 +44,7 @@ def apprentice_girl(variant='hat'):
 
 def apprentice_boy(variant='cap'):
     sp = dict(skin=SKIN['b'], R=0.25, iris="#4a2e1e", brow_col="#2a1a14", lip="#9a4a44", blush_amt=0.35,
-              head=dict(jaw=0.16, cheek=0.04, nose=0.09, chin=0.06), eye_h=0.14, lash_w=0.045, flick=0.3)
+              head=dict(jaw=0.3, cheek=0.04, nose=0.09, chin=0.07), eye_h=0.14, lash_w=0.045, flick=0.3)
     h = Human(sp)
     hair = "#2e2020"
     h.legs("#5b4a6a", shoe="#5e3a22", cuff="#3f3350", pat='weave', P=dict(nu=24, fv=70), boots=True)
@@ -55,8 +53,7 @@ def apprentice_boy(variant='cap'):
     h.arms("#2f7d6f", cuff="#e8b04a", P=dict(nu=18, fv=70))
     h.satchel(side=1)
     h.head(ears=1.0)
-    h.hair_cap(hair, hairline=0.5, back_len=-0.5)
-    h.fringe(hair, n=6, z=0.48, spread=0.7, length=0.2, curl=0.12, r=0.15)
+    h.hair_cap(hair, hairline=0.56, back_len=-0.5, sides=-0.1, fringe=(7, 0.22), part=0.1)
     if variant == 'cap':
         h.flat_cap("#d68f3a", color2="#a8702c", tilt=-0.1, z=0.46)
     else:
@@ -69,7 +66,7 @@ def apprentice_boy(variant='cap'):
 
 def dvora():
     sp = dict(skin=SKIN['c'], R=0.24, iris="#4a6a7a", brow_col="#b8aeb0", lip="#a05a5a", blush_amt=0.35,
-              head=dict(jaw=0.22, cheek=0.07, nose=0.1, chin=0.03), eye_h=0.12, eye_w=0.12, wrinkles=True,
+              head=dict(jaw=0.32, cheek=0.08, nose=0.11, chin=0.04), eye_h=0.12, eye_w=0.12, wrinkles=True,
               lash_w=0.04, flick=0.2, brow_w=0.05)
     h = Human(dict(sp, H=0.97, W=1.05, torso_k=0.95))
     grey = "#d8d2d6"
@@ -94,8 +91,7 @@ def dvora():
     ym = mat("#35b39a", pat='spiral', color2="#2a8a78", P=dict(nu=8, fv=40), var=0.25, bump=0.6)
     ellipsoid("yarn", 0.08, ym, h.P['handL'], loc=(0.0, -0.06, -0.03), seg=20, rings=14)
     h.head()
-    h.hair_cap(grey, hairline=0.5, back_len=-0.45, P=dict(nu=70, wave=0.6))
-    h.fringe(grey, n=5, z=0.5, spread=0.7, length=0.12, curl=0.05, r=0.12)
+    h.hair_cap(grey, hairline=0.6, back_len=-0.45, sides=-0.05, fringe=(3, 0.1), P=dict(nu=70, wave=0.6))
     R = h.R
     ellipsoid("bun", R * 0.38, mat(grey, pat='hair', kind='hair', P=dict(nu=40), var=0.3), h.P['head'],
               loc=(0, R * 0.92, -R * 0.15), seg=20, rings=14)
@@ -173,6 +169,10 @@ def pose(h, anim, i, n):
             P['arm' + side].rotation_euler = (-0.35 + (0.08 * math.sin(ph) if anim == 'walk' else 0.02 * math.sin(ph)),
                                               0, 0.12 if side == 'L' else -0.12)
             P['elbow' + side].rotation_euler = (-0.9, 0, 0)
+    hp_ = F.get('head_pitch', 0.0)
+    if hp_:
+        r = head.rotation_euler
+        head.rotation_euler = (r[0] + hp_, r[1], r[2])
     for k, v in arm_rest.items():
         P[k].rotation_euler = v
     if 'pose_fn' in F:

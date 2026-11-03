@@ -1,5 +1,4 @@
 /** Hearth village (כפר האח): the demo area. All coordinates are world pixels. */
-import type { CharKey } from '../scenes/BootScene';
 
 export const WORLD = { w: 2600, h: 1900 } as const;
 
@@ -25,8 +24,8 @@ export interface NpcDef {
   y: number;
   speaker: string;
   label: string;
-  char: CharKey;
-  tint?: number;
+  /** Texture key of the villager sheet (npc_<name>). */
+  char: string;
   scale?: number;
 }
 
@@ -69,15 +68,18 @@ export const BUILDINGS: BuildingDef[] = [
 ];
 
 export const NPCS: NpcDef[] = [
-  { id: 'baker', x: 1700, y: 1000, speaker: 'baker', label: 'לדבר עם הנחתום', char: 'apprentice_boy', tint: 0xffd9a0 },
-  { id: 'villager1', x: 1030, y: 1060, speaker: 'villager1', label: 'לדבר עם התושב', char: 'apprentice_boy', tint: 0xb8d8ff },
-  { id: 'villager2', x: 1510, y: 1020, speaker: 'villager2', label: 'לדבר עם התושבת', char: 'apprentice_girl', tint: 0xd8ffd0 },
-  { id: 'villager3', x: 930, y: 1190, speaker: 'villager3', label: 'לדבר עם התושב', char: 'apprentice_boy', tint: 0xffc8d8 },
-  { id: 'child', x: 1450, y: 1150, speaker: 'child', label: 'לדבר עם הילד', char: 'apprentice_boy', tint: 0xfff0b0, scale: 0.72 },
-  { id: 'hubGrandpa', x: 1250, y: 1330, speaker: 'hubGrandpa', label: 'לדבר עם סבא הד', char: 'dvora', tint: 0xc8d890 },
-  { id: 'miller', x: 2090, y: 1500, speaker: 'miller', label: 'לדבר עם הטוחן', char: 'apprentice_boy', tint: 0xe8e0d0 },
-  { id: 'dvora', x: 2110, y: 650, speaker: 'dvora', label: 'לדבר עם דבורה', char: 'dvora' },
-];
+  { id: 'baker', x: 1700, y: 1000, speaker: 'baker', label: 'לדבר עם הנחתום', char: 'npc_hillel' },
+  { id: 'villager1', x: 1030, y: 1060, speaker: 'villager1', label: 'לדבר עם הגנן', char: 'npc_gardener' },
+  { id: 'villager2', x: 1510, y: 1020, speaker: 'villager2', label: 'לדבר עם המורה', char: 'npc_teacher' },
+  { id: 'villager3', x: 930, y: 1190, speaker: 'villager3', label: 'לדבר עם מדליק הפנסים', char: 'npc_lamplighter' },
+  { id: 'child', x: 1450, y: 1150, speaker: 'child', label: 'לדבר עם אסף', char: 'npc_asaf' },
+  { id: 'hubGrandpa', x: 1250, y: 1330, speaker: 'hubGrandpa', label: 'לדבר עם סבא הד', char: 'npc_hed' },
+  { id: 'miller', x: 2090, y: 1500, speaker: 'miller', label: 'לדבר עם הטוחן', char: 'npc_miller' },
+  { id: 'dvora', x: 2110, y: 650, speaker: 'dvora', label: 'לדבר עם דבורה', char: 'npc_dvora' },
+  // atmosphere only (no lines yet): they make the village feel inhabited
+  { id: 'shepherd', x: 960, y: 1480, speaker: 'villager1', label: 'לדבר עם הרועה', char: 'npc_shepherd' },
+  { id: 'fisherman', x: 1860, y: 1390, speaker: 'villager3', label: 'לדבר עם הדייג', char: 'npc_fisherman' },
+] ;
 
 export const PICKUPS: PickupDef[] = [
   { id: 'card_network', x: 1130, y: 1110, kind: 'card' },
@@ -124,6 +126,7 @@ export const DECOR: DecorDef[] = [
 
 /** Story spots that are not objects: the bridge over the stream where the first clue waits. */
 export const SPOTS: SpotDef[] = [
+  { id: 'sky', x: 1500, y: 1130, label: 'להסתכל בשמיים', range: 90 },
   { id: 'bridge', x: 1960, y: 1290, label: 'להסתכל על החוט שעל הגשר', range: 110 },
 ];
 

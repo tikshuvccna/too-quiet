@@ -179,3 +179,25 @@ body.modal .joy, body.modal .interact { display: none !important; }
   .joy i { width: 50px; height: 50px; left: 33px; top: 33px; }
   .interact { bottom: 14px; min-height: 52px; }
 }
+
+/* ---- dialogue portrait: the speaker rises out of the top corner of the panel ---- */
+.dialogue .portrait { display: none; position: absolute; bottom: calc(100% - 22px); inset-inline-start: 10px; width: 150px; height: 150px; background-repeat: no-repeat; pointer-events: none; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .55)); }
+.dialogue.has-portrait .portrait { display: block; }
+.dialogue.has-portrait { padding-top: 34px; }
+.dialogue.has-portrait .who { inset-inline-start: 168px; }
+@media (max-width: 520px) {
+  .dialogue .portrait { width: 104px; height: 104px; bottom: calc(100% - 18px); }
+  .dialogue.has-portrait .who { inset-inline-start: 120px; }
+  .dialogue.has-portrait { padding-top: 30px; }
+}
+@media (max-height: 460px) {
+  .dialogue .portrait { width: 84px; height: 84px; }
+  .dialogue.has-portrait .who { inset-inline-start: 100px; }
+}
+
+/* ---- the Head: a face in the clouds, visible only when the truth shows ---- */
+.sky-head { position: absolute; top: -3vh; left: 50%; width: min(96vw, 900px); aspect-ratio: 2 / 1; transform: translateX(-50%); background-repeat: no-repeat; pointer-events: none !important; opacity: 0; z-index: 0; mix-blend-mode: screen; }
+
+.col-item.has-thumb { grid-template-columns: 72px 1fr; column-gap: 12px; align-items: center; }
+.col-item.has-thumb b, .col-item.has-thumb span { grid-column: 2; }
+.col-thumb { grid-column: 1; grid-row: 1 / span 2; width: 72px; height: 72px; background-repeat: no-repeat; border-radius: 10px; }

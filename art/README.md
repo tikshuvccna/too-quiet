@@ -65,3 +65,60 @@ Truth clues: grandma = clean-cut teal thread on the scarf, blank rectangle on th
 
 ## Known limitations (environment art)
 Procedural textures are visible but not hand-painted; interior objects are small (true 56 px/unit scale), so fine detail like text is not legible (note/calendar text are ink-line patterns, not Hebrew words). The cloud shapes are single soft lobes rather than layered puffs, the smoke frames are plain soft discs. Roofs dominate the exteriors because of the 35 degree camera. Window states in the truth set are chosen by a counter, not per window by design.
+
+
+# v2 characters, portraits and creatures (storybook toon with volume)
+
+Built independently of v1 (v1 files untouched; this does not use or change `build_all.py`). Rebuild everything:
+```
+python art/build_characters_v2.py                 # about 6-8 min: portraits, hero sprites, NPCs, creatures, THE HEAD, pack, preview
+python art/build_characters_v2.py npcs pack       # or single stages: portraits | sprites | npcs | creatures | head | pack
+```
+Single renders: `blender -b --python art/blender/v2_render.py -- <portrait|sprite|npc> <name[,name]|all> <ABSOLUTE rawdir> [exprs|quick]`
+(use an absolute raw dir: a relative one resolves against Blender's cwd), `v2_creatures.py -- <name|all|small|legend> <rawdir>`,
+`v2_head.py -- <rawdir>`, then `python art/pack_v2.py <characters|npcs|portraits|creatures|head> <rawdir>` and `python art/make_preview_v2.py`.
+Raw frames: `art/_raw/v2` (git-ignored). Contact sheet: `art/preview_characters_v2.png` (true scale and enlarged).
+
+## Files
+- `blender/v2lib.py`: toon material (diffuse -> Shader-to-RGB -> luminance x3.3 gain -> soft multi-stop ramp of colour multipliers:
+  violet shadow, warm terminator on skin for a subsurface feel, warm light) x ambient occlusion (AO node), plus a crisp amber rim on the
+  right/top silhouette (camera-space normal). Procedural patterns drive albedo and bump: weave, knit, straw, hair strands, leather, fur,
+  wool, plaid, stripes, dots, flowers, flour, stone/moss patches, wood, spiral thread. Inner lines = inverted hull (solidify, flipped
+  normals, back-face culling, invisible to shadow rays) in a dark tint of each part's colour; the pack step adds the 1 px dark violet
+  silhouette after 4x supersampling. Lights: warm key from upper left, cool fill from the right, soft back light, world 0.16.
+  `STATE['truth']` desaturates and cools every material (truth look). No ground shadow is baked (draw a blob shadow in the game).
+- `blender/v2_face.py`: sculpted head mesh (jaw, cheeks, nose, chin, brow) plus features projected onto it with a BVH ray cast (sclera,
+  two-tone iris, pupil, two highlights, lash line with flick, lower lash, lid crease, brows, nostril, mouth shapes, teeth/tongue,
+  wrinkles, crow's feet). Expressions are parameter sets in `EXPR` (neutral happy worried surprised sad truth cheeky blink). A face
+  rebuild takes milliseconds, so blinks and portraits just swap the feature meshes. Cheek blush and freckles are baked into the skin shader.
+- `blender/v2_parts.py`: `Human` skeleton (pivots: root > body > legs/knees/feet, skirt, upper > arms/elbows/hands, neck > head), lofted
+  garments with drapery folds, aprons, hems with running stitches, hair shells with a smooth scalloped hairline, braids, wide-brim hat,
+  flat cap, headscarf with knot and tails, hooded cloak, needle with glowing thread, satchel.
+- `blender/v2_cast.py` (heroes + posing), `v2_cast_npc.py` (portrait cast, NPC types, the Warden, props), `v2_cast_t3.py` (6 more
+  villagers), `v2_render.py` (driver), `v2_creatures.py`, `v2_head.py`, `art/pack_v2.py`, `art/make_preview_v2.py`, `art/build_characters_v2.py`.
+
+## Outputs, naming, anchors
+- `public/assets/characters_v2/<hero>.png|json` for `apprentice_girl` (wide round-brim straw hat), `apprentice_girl_scarf`,
+  `apprentice_boy` (flat cap), `apprentice_boy_hat` (wide felt hat), `dvora`. **Same layout and JSON structure as v1**: 1024x2048,
+  128 px cells, rows 0-7 idle (4 frames) S SW W NW N NE E SE, rows 8-15 walk (8); frames `<anim>_<DIR>_<i>`, `anims` block included.
+  Ground contact (64,110): `setOrigin(0.5, 110/128)`. Idle frame 3 is a blink. Same camera as v1 (ortho, 35 deg, 56 px/unit).
+- `public/assets/characters_v2/npcs/<type>.png|json` + `index.json`: 512x640 sheets, idle only, 4 frames (breathing, frame 3 = blink),
+  rows S, SE, E, SW, W (NE/NW: flipX of SE/SW; N: use S or SE). 20-37 KB each (quantised). Types: baker `hillel`, `miller`, doctor
+  `miriam`, child boy `asaf`, `child_girl`, grandma `shoshana`, Grandpa `hed`, `shepherd`, `fisherman`, `bell_ringer`, `spool_gatherer`,
+  `innkeeper`, travelling `merchant`, `bard`, `warden`, plus `dvora`, `noam` and tranche 3: `messenger`, `gardener`, `teacher`,
+  `lamplighter`, `potter`, `elder_cane`. Same ground contact (64,110).
+- `public/assets/portraits/<name>.png|json` + `index.json`: 512x512 busts, transparent, soft fade at the bottom edge, body turned about
+  25 deg to the viewer's left (flipX to face right). Frames `<name>_<expr>`: neutral happy worried surprised sad blink, plus `truth`
+  for dvora shoshana miriam hillel miller asaf hed, and `diary` (sepia) for noam. Heroes (all 4 variants): neutral happy worried surprised blink.
+- `public/assets/creatures/<name>.png|json` + `index.json` + `codex.png|json`: 12 small creatures, 128 px cells, idle 4 + walk 6 in
+  S SE E N (W and SW = flipX of E and SE). Rendered at 1.5x world scale (84 px/unit) so they read: `setScale(0.667)` gives exact world
+  size. Origin (64,110); flyers hover above it. JSON meta has `name_he`, `concept_he` (the networking idea), `movement`.
+  Legendaries `thread_serpent` 384x384, `cloud_whale` 384x256, `echo_giant` 256x384: one facing, idle 4 (yoyo), `legend_he`.
+  `codex.png`: 256x256 collection-card render per creature. `the_head.png|json`: THE HEAD, 1024x512 frames, row 0 benevolent,
+  row 1 truth, frame 1 = slow half-blink.
+
+## Known limitations (v2)
+- Bodies are still lofted primitives (Playmobil-like proportions); hands are mittens; garments do not simulate cloth.
+- Wide brims shade the face at 128 px. Hats are tipped back per facing in sprites (`sprite_hat_tilt`), so N views show more crown.
+- Fine textures (weave, knit, straw) only show in portraits; at sprite scale they read as gentle grain, while stripes, plaid and dots still read.
+- Portraits use one 3/4 angle; there are no lip-sync mouth shapes beyond the expression set.

@@ -3,6 +3,20 @@ import Phaser from 'phaser';
 export const CHARS = ['apprentice_girl', 'apprentice_boy', 'dvora'] as const;
 export type CharKey = (typeof CHARS)[number];
 
+/** Villager sheets (idle only, 5 directions, frame 3 is a blink). */
+export const NPC_SHEETS = [
+  'asaf', 'bard', 'bell_ringer', 'child_girl', 'dvora', 'elder_cane', 'fisherman', 'gardener', 'hed', 'hillel', 'innkeeper',
+  'lamplighter', 'merchant', 'messenger', 'miller', 'miriam', 'noam', 'potter', 'shepherd', 'shoshana', 'spool_gatherer',
+  'teacher', 'warden',
+] as const;
+export const NPC_DIRS = ['S', 'SE', 'E', 'SW', 'W'] as const;
+
+export const CREATURE_KEYS = [
+  'ant_swarm', 'cloud_sheep', 'echo_parrot', 'gargar_cat', 'glow_worm', 'lantern_moth', 'librarian_owl', 'paper_crane',
+  'slow_snail', 'spinner_spider', 'spool_hedgehog', 'trail_fox',
+] as const;
+export const LEGENDARY_KEYS = ['thread_serpent', 'cloud_whale', 'echo_giant'] as const;
+
 interface AnimDef { frames: string[]; frameRate: number; repeat: number }
 
 type Draw = (c: CanvasRenderingContext2D, w: number, h: number) => void;
@@ -51,9 +65,15 @@ export class BootScene extends Phaser.Scene {
   preload(): void {
     const base = import.meta.env.BASE_URL;
     for (const k of CHARS) {
-      this.load.atlas(k, `${base}assets/characters/${k}.png`, `${base}assets/characters/${k}.json`);
-      this.load.json(`${k}:anims`, `${base}assets/characters/${k}.json`);
+      this.load.atlas(k, `${base}assets/characters_v2/${k}.png`, `${base}assets/characters_v2/${k}.json`);
+      this.load.json(`${k}:anims`, `${base}assets/characters_v2/${k}.json`);
     }
+    for (const k of NPC_SHEETS) this.load.atlas(`npc_${k}`, `${base}assets/characters_v2/npcs/${k}.png`, `${base}assets/characters_v2/npcs/${k}.json`);
+    for (const k of [...CREATURE_KEYS, ...LEGENDARY_KEYS]) {
+      this.load.atlas(`cr_${k}`, `${base}assets/creatures/${k}.png`, `${base}assets/creatures/${k}.json`);
+      this.load.json(`cr_${k}:anims`, `${base}assets/creatures/${k}.json`);
+    }
+    this.load.atlas('the_head', `${base}assets/creatures/the_head.png`, `${base}assets/creatures/the_head.json`);
     this.load.atlas('props', `${base}assets/props/props.png`, `${base}assets/props/props.json`);
     this.load.atlas('buildings', `${base}assets/buildings/buildings.png`, `${base}assets/buildings/buildings.json`);
     this.load.json('buildings:meta', `${base}assets/buildings/buildings.json`);
@@ -74,6 +94,27 @@ export class BootScene extends Phaser.Scene {
         if (this.anims.exists(key)) continue;
         this.anims.create({ key, frames: a.frames.map((f) => ({ key: k, frame: f })), frameRate: a.frameRate, repeat: a.repeat });
       }
+    }
+    // villagers: breathing and a blink on the last frame
+    for (const k of NPC_SHEETS) {
+      for (const d of NPC_DIRS) {
+        const key = `npc_${k}:idle_${d}`;
+        if (this.anims.exists(key)) continue;
+        const seq = [0, 1, 2, 1, 0, 0, 0, 0, 3].map((i) => ({ key: `npc_${k}`, frame: `idle_${d}_${i}` }));
+        this.anims.create({ key, frames: seq, frameRate: 4, repeat: -1 });
+      }
+    }
+    for (const k of [...CREATURE_KEYS, ...LEGENDARY_KEYS]) {
+      const data = this.cache.json.get(`cr_${k}:anims`) as { anims?: Record<string, AnimDef> } | undefined;
+      for (const [name, a] of Object.entries(data?.anims ?? {})) {
+        const key = `cr_${k}:${name}`;
+        if (this.anims.exists(key)) continue;
+        const frames = name === 'idle' ? [...a.frames, ...a.frames.slice(1, -1).reverse()] : a.frames;
+        this.anims.create({ key, frames: frames.map((f) => ({ key: `cr_${k}`, frame: f })), frameRate: a.frameRate, repeat: -1 });
+      }
+    }
+    for (const [name, frames] of [['benevolent', ['the_head_benevolent_0', 'the_head_benevolent_1']], ['truth', ['the_head_truth_0', 'the_head_truth_1']]] as const) {
+      this.anims.create({ key: `the_head:${name}`, frames: frames.map((f) => ({ key: 'the_head', frame: f })), frameRate: 0.5, repeat: -1, yoyo: true });
     }
     this.scene.start('World');
   }

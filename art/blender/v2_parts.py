@@ -16,6 +16,35 @@ from v2lib import _MAT, _col4
 from v2_face import head_mesh, skin_mat, Face
 
 
+def _smooth(e0, e1, x):
+    t = max(0.0, min(1.0, (x - e0) / (e1 - e0)))
+    return t * t * (3 - 2 * t)
+
+
+def hair_deform(hairline, back_len, sides, fringe, part, shrink=0.3):
+    """Sphere -> hair shell: everything below the (scalloped) hairline is pulled inside the skull,
+    which gives a smooth natural hairline and pointed fringe clumps."""
+    def f(p):
+        x, y, z = p.x, p.y, p.z
+        if fringe:
+            n, depth = fringe
+            zl = hairline - depth * (0.5 + 0.5 * math.cos(n * math.pi * (x + part) / 1.6)) ** 2 - 0.3 * x * x
+        else:
+            zl = hairline - 0.4 * x * x
+        front = _smooth(-0.1, -0.5, y)
+        back = _smooth(0.0, 0.4, y)
+        zcut = zl * front + sides * (1 - front)
+        zcut = zcut * (1 - back) + back_len * back
+        k = _smooth(-0.015, 0.05, zcut - z)
+        return p * (1 - shrink * k)
+    return f
+
+
+def _catmull_pts(pts, sub):
+    from v2lib import _catmull
+    return _catmull(pts, sub)
+
+
 def darker(h, k=0.7):
     return lin2hex(tuple(c * k for c in hexlin(h)))
 
@@ -176,9 +205,9 @@ class Human:
 
         def ring(t, rx, ry, dy=0.0):
             return (th * t, rx * W * b, ry * W * b, 0, dy)
-        rings = [ring(-0.06, 0.19, 0.15), ring(0.15, 0.195 + belly * 0.5, 0.155 + belly, -belly * 0.4),
-                 ring(0.45, 0.2 + belly * 0.4, 0.16 + belly * 0.8, -belly * 0.3), ring(0.75, 0.2, 0.15),
-                 ring(0.9, 0.18, 0.13), ring(0.98, 0.12, 0.095), ring(1.03, 0.075, 0.07)]
+        rings = [ring(-0.06, 0.185, 0.15), ring(0.15, 0.19 + belly * 0.5, 0.155 + belly, -belly * 0.4),
+                 ring(0.45, 0.195 + belly * 0.4, 0.16 + belly * 0.8, -belly * 0.3), ring(0.68, 0.19, 0.15),
+                 ring(0.8, 0.175, 0.135), ring(0.9, 0.14, 0.11), ring(0.97, 0.095, 0.08), ring(1.01, 0.07, 0.065)]
         loft("torso", rings, m, up, seg=40, cap_top=True)
         self.chest_r = 0.2 * W * b
         if vest:
@@ -210,8 +239,8 @@ class Human:
                  var=0.05, rim=0.4)
         ua, fa = 0.2 * H, 0.18 * H
         for nm, sx in (("L", 1), ("R", -1)):
-            sh = pivot("arm" + nm, (sx * self.shoulder_w, 0, self.torso_h * 0.86), up)
-            ellipsoid("shoulder", r * W * 1.25 * puff, sm, sh, scale=(1, 1, 0.95), seg=20, rings=12)
+            sh = pivot("arm" + nm, (sx * self.shoulder_w * 0.86, 0, self.torso_h * 0.76), up)
+            ellipsoid("shoulder", r * W * 1.1 * puff, sm, sh, loc=(-sx * 0.012, 0, 0.01), scale=(1.15, 1, 0.9), seg=20, rings=12)
             loft("upperarm", [(0.0, r * W * 1.15 * puff, r * W * 1.1 * puff), (-ua * 0.5, r * W * 1.0, r * W * 0.98),
                               (-ua, r * W * 0.92, r * W * 0.9)], sm, sh, seg=18)
             el = pivot("elbow" + nm, (0, 0, -ua), sh)
@@ -232,9 +261,9 @@ class Human:
         R = self.R
         up = self.P['upper']
         if neck:
-            loft("neck", [(self.torso_h * 0.9, 0.065, 0.06), (self.torso_h * 1.0 + 0.1, 0.06, 0.056)],
+            loft("neck", [(self.torso_h * 0.9, 0.062, 0.058), (self.torso_h * 1.0 + 0.12, 0.056, 0.054)],
                  mat(sp['skin'], kind='skin', rim=0.2), up, seg=16, line=False)
-        hz = self.torso_h * 1.0 + 0.04 + R * 0.78
+        hz = self.torso_h * 1.0 + 0.06 + R * 0.8
         hp = pivot("head", (0, -0.01, hz), up)
         sm = skin_mat(sp['skin'], sp.get('blush', "#e6827a"), sp.get('blush_amt', 0.45), R,
                       freckles=sp.get('freckles', False))
@@ -254,31 +283,13 @@ class Human:
         return hp
 
     # ------------------------------------------------------------ hair
-    def hair_cap(self, color, hairline=0.42, back_len=-0.35, sides=-0.05, scale=1.045, pat='hair', P=None, part=0.0):
+    def hair_cap(self, color, hairline=0.42, back_len=-0.35, sides=-0.05, scale=1.05, pat='hair', P=None, part=0.0,
+                 fringe=(7, 0.16)):
         R = self.R
         hm = mat(color, pat=pat, P=P or dict(nu=90, wave=1.0), kind='hair', var=0.32, bump=0.5)
 
-        def deform(p):
-            return p
-        o = blob("hair", R * scale, hm, self.P['head'], loc=(0, R * 0.02, R * 0.02), scale=(1.0, 1.0, 1.0), seg=56, rings=40)
-        # delete the face region
-        import bmesh as _bm
-        bm = _bm.new()
-        bm.from_mesh(o.data)
-        kill = []
-        for f in bm.faces:
-            c = f.calc_center_median() / (R * scale)
-            front = c.y < -0.15
-            if front and c.z < hairline - 0.25 * (c.x ** 2) * 2.0 + part * c.x:
-                kill.append(f)
-            elif c.z < back_len and c.y > -0.15:
-                kill.append(f)
-            elif abs(c.x) > 0.55 and c.z < sides and c.y < 0.35:
-                kill.append(f)
-        _bm.ops.delete(bm, geom=kill, context='FACES')
-        bm.to_mesh(o.data)
-        bm.free()
-        o.data.update()
+        o = blob("hair", R * scale, hm, self.P['head'], loc=(0, R * 0.02, R * 0.02), seg=112, rings=72,
+                 deform=hair_deform(hairline, back_len, sides, fringe, part))
         o["line_k"] = 0.9
         return o
 
@@ -287,6 +298,27 @@ class Human:
         R = self.R
         return tube(name, [Vector(p) * R for p in pts], [r0 * R, r1 * R * 1.2, r1 * R * 0.5], hm, self.P['head'],
                     seg=10, sub=5, flat=flat)
+
+    def braid(self, pts, r, color, tie=None):
+        """Segmented braid: overlapping tilted lobes along a path (head-local, units of R)."""
+        R = self.R
+        hm = mat(color, pat='hair', kind='hair', P=dict(nu=30), var=0.3, bump=0.5)
+        C = _catmull_pts([Vector(p) * R for p in pts], 4)
+        L = sum((C[i + 1] - C[i]).length for i in range(len(C) - 1))
+        n = max(3, int(L / (r * R * 1.1)))
+        acc, k = 0.0, 0
+        for i in range(n):
+            t = i / (n - 1)
+            pos = C[min(len(C) - 1, int(t * (len(C) - 1)))]
+            rr = r * R * (1 - 0.35 * t)
+            o = ellipsoid("braid", rr, hm, self.P['head'], loc=pos, scale=(1.0, 0.8, 1.25),
+                          rot=(0, 0.45 * (1 if i % 2 else -1), 0), seg=14, rings=10)
+        if tie:
+            ellipsoid("tie", r * R * 0.55, mat(tie, pat='weave'), self.P['head'], loc=C[-1] + Vector((0, 0, -0.01)),
+                      scale=(1.3, 1.3, 0.6), seg=12, rings=8)
+            for s_ in (-1, 1):
+                tube("tietail", [C[-1], C[-1] + Vector((s_ * 0.03, -0.01, -0.05))], [0.012, 0.008],
+                     mat(tie, pat='weave'), self.P['head'], seg=6, sub=1, flat=0.4)
 
     def fringe(self, color, n=7, z=0.52, spread=0.8, length=0.3, curl=0.1, y=-0.9, flat=0.5, r=0.13):
         for i in range(n):
@@ -368,38 +400,34 @@ class Human:
             tube("seam", pts, [0.006 * R / 0.25], sm, cap, seg=5, sub=3, line=False)
         # visor
         vm = mat(darker(color, 0.85), pat='weave', P=dict(nu=30, fv=60), var=0.1)
-        vis = loft("visor", [(0, R * 0.7 * visor, R * 0.42 * visor, 0, -R * 1.0), (-0.035 * R, R * 0.72 * visor, R * 0.46 * visor, 0, -R * 1.02)],
-                   vm, cap, seg=36, arc=(math.pi + 0.15, TAU - 0.15), cap_top=False)
-        vis.rotation_euler = (0.25, 0, 0)
-        vis.location = (0, -0.05 * R, 0.0)
+        vis = blob("visor", R, vm, cap, loc=(0, -R * 0.92, -0.02 * R), scale=(0.72 * visor, 0.5 * visor, 0.07),
+                   deform=lambda p: Vector((p.x, min(p.y, 0.25), p.z)), rot=(-0.12, 0, 0), seg=32, rings=12)
         if button:
             ellipsoid("capbtn", R * 0.09, cm, cap, loc=(0, -0.04 * R, 0.6 * R), scale=(1, 1, 0.5), seg=12, rings=8)
         self.P['hat'] = cap
         return cap
 
     def headscarf(self, color, color2=None, pat='flowers', P=None, knot=True, tails=True, z_front=0.52,
-                  band=None, scale=1.1):
+                  band=None, scale=1.15):
         R = self.R
         hp = self.P['head']
         sm = mat(color, pat=pat, color2=color2, P=P or dict(nu=26, fv=34, rad=0.32), var=0.12, bump=0.35)
-        o = blob("scarf", R * scale, sm, hp, loc=(0, R * 0.06, R * 0.04), scale=(1.0, 1.02, 1.0), seg=56, rings=40,
-                 deform=lambda p: Vector((p.x * (1 + 0.05 * max(0, -p.z)), p.y, p.z)))
-        import bmesh as _bm
-        bm = _bm.new()
-        bm.from_mesh(o.data)
-        kill = []
-        for f in bm.faces:
-            c = f.calc_center_median() / (R * scale)
-            if c.y < -0.05 and c.z < z_front - 0.35 * c.x * c.x:
-                kill.append(f)
-            elif c.z < -0.62:
-                kill.append(f)
-            elif c.y < 0.25 and c.z < -0.3 and abs(c.x) > 0.3:
-                kill.append(f)
-        _bm.ops.delete(bm, geom=kill, context='FACES')
-        bm.to_mesh(o.data)
-        bm.free()
-        o.data.update()
+        def deform(p):
+            x, y, z = p.x, p.y, p.z
+            front = _smooth(-0.05, -0.45, y)
+            zcut = (z_front - 0.35 * x * x) * front + (-0.62) * (1 - front)
+            k = _smooth(-0.015, 0.05, zcut - z)
+            q = p * (1 - 0.35 * k)
+            a = math.atan2(y, x)
+            q *= 1 + 0.035 * math.sin(7 * a + 2 * z) * (1 - k) * max(0.0, 0.6 - z)
+            q.x *= 1 + 0.1 * max(0.0, -z)
+            if y > 0.0:
+                q.y += 0.16 * y * max(0.0, z + 0.6)
+            if z > 0.4:
+                q.z += 0.05 * (z - 0.4)
+            return q
+        o = blob("scarf", R * scale, sm, hp, loc=(0, R * 0.06, R * 0.04), scale=(1.0, 1.02, 1.0), seg=112, rings=72,
+                 deform=deform)
         # rolled front band following the cut edge
         bmat = mat(band or darker(color, 0.85), pat=pat if not band else 'weave', color2=color2, P=P or dict(nu=26, fv=34, rad=0.32))
         pts = []
@@ -410,11 +438,15 @@ class Human:
             pts.append(Vector((x * R * scale, y * R * scale + R * 0.06 + 0.02 * R, (z + 0.03) * R * scale + R * 0.04)))
         tube("scarfband", pts, [R * 0.07], bmat, hp, seg=10, sub=2)
         if knot:
-            ellipsoid("knot", R * 0.2, sm, hp, loc=(0, R * 1.12, -R * 0.42), scale=(1.0, 0.8, 0.8), seg=16, rings=10)
+            kx = R * 0.55
+            ellipsoid("knot", R * 0.2, sm, hp, loc=(kx, R * 1.0, -R * 0.4), scale=(1.0, 0.85, 0.8), seg=16, rings=10)
+            for k in (-1, 1):
+                ellipsoid("knotloop", R * 0.17, sm, hp, loc=(kx + k * R * 0.17, R * 1.02, -R * 0.33), scale=(1.1, 0.5, 0.6),
+                          rot=(0, k * 0.5, 0), seg=14, rings=8)
             if tails:
-                for s in (-1, 1):
-                    tube("tail", [Vector((s * R * 0.08, R * 1.15, -R * 0.45)), Vector((s * R * 0.2, R * 1.2, -R * 0.8)),
-                                  Vector((s * R * 0.24, R * 1.08, -R * 1.25))], [R * 0.13, R * 0.11, R * 0.07], sm, hp,
+                for k in (-1, 1):
+                    tube("tail", [Vector((kx + k * R * 0.05, R * 1.0, -R * 0.45)), Vector((kx + R * 0.12 + k * R * 0.1, R * 0.85, -R * 0.85)),
+                                  Vector((kx + R * 0.2 + k * R * 0.12, R * 0.6, -R * 1.3))], [R * 0.13, R * 0.12, R * 0.09], sm, hp,
                          seg=10, flat=0.3)
         self.P['hat'] = o
         return o
@@ -476,5 +508,5 @@ class Human:
         pts = [Vector((x, -0.02, z * H + 0.02)), Vector((-side * 0.05 * W, -0.165 * W - 0.012, th * 0.55)),
                Vector((-side * 0.14 * W, -0.11 * W, th * 0.92)), Vector((-side * 0.16 * W, 0.04, th * 0.98)),
                Vector((-side * 0.04 * W, 0.16 * W + 0.01, th * 0.6)), Vector((x * 0.9, 0.06, z * H + 0.03))]
-        tube("strap", pts, [0.014], sm, up, seg=6, sub=4, flat=0.35)
+        tube("strap", pts, [0.009], sm, up, seg=6, sub=4, flat=0.4)
         return bag

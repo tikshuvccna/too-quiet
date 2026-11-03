@@ -9,6 +9,8 @@ export interface GameEvents {
   'fault:fixed': { id: string; evidence: 'natural' | 'hand' };
   'item:collected': { id: string };
   'truth:flash': { ms: number };
+  'creature:met': { key: string };
+  'head:seen': undefined;
   'session:warning': undefined;
   'session:storm': undefined;
   'ui:pause': { paused: boolean };

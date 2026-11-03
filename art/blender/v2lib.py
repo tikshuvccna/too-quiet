@@ -234,14 +234,14 @@ def _pattern(nb, kind, P):
 # ===================================================================== materials
 RAMPS = {
     # (pos, multiplier rgb) stops
-    'cloth': [(0.0, (0.40, 0.34, 0.62)), (0.22, (0.46, 0.40, 0.68)), (0.48, (0.80, 0.74, 0.88)),
-              (0.62, (1.0, 0.98, 0.98)), (0.92, (1.13, 1.08, 0.98))],
-    'skin': [(0.0, (0.58, 0.40, 0.52)), (0.22, (0.66, 0.44, 0.50)), (0.44, (0.92, 0.70, 0.68)),
-             (0.60, (1.0, 0.95, 0.93)), (0.92, (1.08, 1.05, 1.0))],
-    'hair': [(0.0, (0.40, 0.34, 0.60)), (0.30, (0.55, 0.46, 0.70)), (0.58, (1.0, 0.97, 0.96)),
-             (0.86, (1.25, 1.17, 1.05))],
-    'soft': [(0.0, (0.62, 0.58, 0.80)), (0.35, (0.74, 0.70, 0.88)), (0.65, (1.0, 1.0, 1.0)), (0.95, (1.08, 1.06, 1.02))],
-    'flat': [(0.0, (0.80, 0.78, 0.90)), (0.5, (0.95, 0.94, 0.98)), (1.0, (1.03, 1.02, 1.0))],
+    'cloth': [(0.0, (0.42, 0.36, 0.64)), (0.2, (0.50, 0.44, 0.72)), (0.36, (0.74, 0.68, 0.86)),
+              (0.52, (0.97, 0.95, 0.97)), (0.8, (1.06, 1.03, 0.98)), (1.0, (1.16, 1.1, 0.98))],
+    'skin': [(0.0, (0.62, 0.42, 0.54)), (0.2, (0.70, 0.47, 0.52)), (0.34, (0.90, 0.66, 0.64)),
+             (0.5, (1.0, 0.92, 0.9)), (0.8, (1.04, 1.01, 0.98)), (1.0, (1.1, 1.06, 1.0))],
+    'hair': [(0.0, (0.40, 0.34, 0.60)), (0.25, (0.52, 0.45, 0.70)), (0.45, (0.95, 0.92, 0.94)),
+             (0.78, (1.08, 1.04, 1.0)), (0.9, (1.3, 1.22, 1.08))],
+    'soft': [(0.0, (0.66, 0.62, 0.82)), (0.3, (0.78, 0.74, 0.9)), (0.55, (1.0, 1.0, 1.0)), (1.0, (1.08, 1.06, 1.02))],
+    'flat': [(0.0, (0.84, 0.82, 0.92)), (0.5, (0.96, 0.95, 0.98)), (1.0, (1.03, 1.02, 1.0))],
 }
 RIM_COLOR = "#ffb35c"
 
@@ -250,6 +250,9 @@ def mat(color, pat=None, color2=None, kind='cloth', rim=0.5, ao=0.55, bump=0.35,
         line=True, metal=False, P=None, name=None, emit=0.0):
     """Main toon material. pat = pattern kind, var = albedo variation from pattern height."""
     P = P or {}
+    if pat == 'weave':
+        var *= 0.45
+        bump *= 0.35
     truth = STATE['truth']
     c1 = color if color.startswith('#') else color
     c2 = color2
@@ -279,7 +282,8 @@ def mat(color, pat=None, color2=None, kind='cloth', rim=0.5, ao=0.55, bump=0.35,
     s2r = nb.n("ShaderNodeShaderToRGB")
     nb.link(diff.outputs[0], s2r.inputs[0])
     lum = nb.n("ShaderNodeRGBToBW", Color=s2r.outputs['Color'])
-    ramp = nb.n("ShaderNodeValToRGB", Fac=lum.outputs[0])
+    lumv = nb.m('MULTIPLY', lum.outputs[0], STATE.get('gain', 3.3))
+    ramp = nb.n("ShaderNodeValToRGB", Fac=lumv)
     stops = RAMPS[kind if kind in RAMPS else 'cloth']
     el = ramp.color_ramp.elements
     el[0].position, el[0].color = stops[0][0], (*stops[0][1], 1)
@@ -291,8 +295,8 @@ def mat(color, pat=None, color2=None, kind='cloth', rim=0.5, ao=0.55, bump=0.35,
     if metal:   # brass/glass: bright facing core + hard highlight
         lw = nb.n("ShaderNodeLayerWeight", Blend=0.5)
         f = nb.m('POWER', lw.outputs['Facing'], 1.0)
-        core = nb.m('MULTIPLY_ADD', nb.m('SUBTRACT', 1.0, f), 0.9, 0.45)
-        hl = nb.m('MULTIPLY', nb.m('GREATER_THAN', lum.outputs[0], 0.82), 0.6)
+        core = nb.m('MULTIPLY_ADD', nb.m('SUBTRACT', 1.0, f), 0.8, 0.45)
+        hl = nb.m('MULTIPLY', nb.m('GREATER_THAN', lumv, 0.9), 0.6)
         v = nb.m('ADD', core, hl)
         shade = nb.mix(1.0, shade, nb.n("ShaderNodeCombineXYZ", X=v, Y=v, Z=v).outputs[0], 'MULTIPLY')
     col = nb.mix(1.0, albedo, shade, 'MULTIPLY')
@@ -308,9 +312,9 @@ def mat(color, pat=None, color2=None, kind='cloth', rim=0.5, ao=0.55, bump=0.35,
         nb.link(vt.outputs[0], d.inputs[0])
         d.inputs[1].default_value = Vector((0.82, 0.45, 0.0)).normalized()
         lw = nb.n("ShaderNodeLayerWeight", Blend=0.5)
-        fr = nb.m('POWER', nb.m('SUBTRACT', 1.0, lw.outputs['Facing']), 2.2)
+        fr = nb.m('POWER', lw.outputs['Facing'], 1.5)
         mask = nb.m('MULTIPLY', nb.m('MAXIMUM', d.outputs['Value'], 0.0), fr)
-        mask = nb.m('MULTIPLY', nb.m('GREATER_THAN', mask, 0.16), 1.0)  # crisp toon rim
+        mask = nb.m('SMOOTH_MAX' if False else 'MULTIPLY', nb.m('GREATER_THAN', mask, P.get('rim_thr', 0.42)), 1.0)
         mask = nb.m('MULTIPLY', mask, rim * (0.55 if truth else 1.0))
         rc = RIM_COLOR if not truth else "#7fe0d0"
         col = nb.mix(mask, col, nb.mix(0.55, col, _col4(rc), 'SCREEN'))
@@ -341,7 +345,7 @@ def glow(color, strength=3.0, alpha=1.0, soft=False, name=None):
         fac = alpha
         if soft:
             lw = nb.n("ShaderNodeLayerWeight", Blend=0.5)
-            fac = nb.m('MULTIPLY', nb.m('POWER', lw.outputs['Facing'], 2.0), alpha)
+            fac = nb.m('MULTIPLY', nb.m('POWER', nb.m('SUBTRACT', 1.0, lw.outputs['Facing']), 2.0), alpha)
         nb.set(mx.inputs['Fac'], fac)
         nb.link(tr.outputs[0], mx.inputs[1])
         nb.link(em.outputs[0], mx.inputs[2])
@@ -766,7 +770,7 @@ def world_and_lights(mood='day'):
     w.use_nodes = True
     bg = w.node_tree.nodes["Background"]
     bg.inputs["Color"].default_value = (*hexlin("#8a80b8"), 1)
-    bg.inputs["Strength"].default_value = 0.5
+    bg.inputs["Strength"].default_value = 0.16
     sc.world = w
 
     def sun(name, frm, color, energy, angle):
@@ -780,13 +784,13 @@ def world_and_lights(mood='day'):
         o.rotation_quaternion = (-Vector(frm)).to_track_quat('-Z', 'Y')
         return o
     if mood == 'truth':
-        sun("key", (-0.7, -0.9, 1.0), "#c8d6e8", 2.6, 0.35)
-        sun("fill", (1.0, -0.5, 0.2), "#6fd8c8", 0.7, 0.8)
-        sun("back", (0.6, 1.0, 0.6), "#9fe8ff", 0.6, 0.5)
+        sun("key", (-0.7, -0.9, 1.0), "#c8d6e8", 0.95, 0.35)
+        sun("fill", (1.0, -0.5, 0.2), "#6fd8c8", 0.28, 0.8)
+        sun("back", (0.6, 1.0, 0.6), "#9fe8ff", 0.2, 0.5)
     else:
-        sun("key", (-0.85, -0.85, 1.15), "#ffd29a", 3.0, 0.32)
-        sun("fill", (1.0, -0.55, 0.25), "#9bb0ff", 0.85, 0.9)
-        sun("back", (0.6, 1.0, 0.6), "#ffcf9a", 0.5, 0.5)
+        sun("key", (-1.0, -0.45, 0.85), "#ffd29a", 1.05, 0.3)
+        sun("fill", (0.9, -0.7, 0.1), "#9bb0ff", 0.12, 0.9)
+        sun("back", (0.6, 1.0, 0.6), "#ffcf9a", 0.18, 0.5)
 
 
 def render_setup(samples=32):

@@ -1,5 +1,5 @@
 import type Phaser from 'phaser';
-import { HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
+import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
 import { openCollection } from '../ui/collection';
 import { el, uiRoot } from '../ui/dom';
@@ -37,6 +37,12 @@ export class Controller {
     bus.on('session:storm', () => void this.storm());
     bus.on('fault:fixed', ({ evidence }) => this.faultFixed(evidence));
     bus.on('item:collected', ({ id }) => void this.onCollected(id));
+    bus.on('creature:met', ({ key }) => void this.meetCreature(key));
+    bus.on('head:seen', () => {
+      // unlocked quietly: the player is not told what they saw
+      ctx.save.data.collected['creature_the_head'] = true;
+      ctx.save.save();
+    });
     bus.on('interact:use', ({ id }) => this.onUse(id));
     ctx.hud.onCollection = () => void this.collection();
     this.refreshObjective();
@@ -140,6 +146,7 @@ export class Controller {
     if (this.ctx.modal || this.busy) return;
     if (id.startsWith('npc:')) void this.talk(id.slice(4));
     else if (id === 'door:tower') void this.tower();
+    else if (id === 'spot:sky') void this.meetCreature('cloud_whale');
     else if (id === 'spot:bridge') void this.withModal(async () => {
       await this.runScene('ending_clue');
       this.refreshObjective();
@@ -243,6 +250,20 @@ export class Controller {
       if (house?.threadSightClue) this.ctx.hud.toast('המחט מראה משהו חדש בבית הזה. (ראיית חוטים: Q)', 'clue', 5200);
     });
     this.refreshObjective();
+  }
+
+  private async meetCreature(key: string): Promise<void> {
+    const info = key === 'the_head' ? HEAD_INFO : CREATURES[key];
+    if (!info) return;
+    const first = !this.ctx.save.data.collected[`creature_${key}`];
+    await this.withModal(async () => {
+      this.ctx.save.data.collected[`creature_${key}`] = true;
+      this.ctx.save.save();
+      const lines = [{ speaker: '', text: `${info.name_he}. ${info.concept_he}` }];
+      if (info.legend_he) lines.unshift({ speaker: '', text: info.legend_he });
+      await this.ctx.dialogue.say(lines);
+      if (first) this.ctx.hud.toast(`נוסף לאוסף: ${info.name_he}`, 'good', 3600);
+    });
   }
 
   private async onCollected(id: string): Promise<void> {

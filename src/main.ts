@@ -12,6 +12,7 @@ import { DialogueUI } from './ui/dialogue';
 import { el, uiRoot } from './ui/dom';
 import { Hud } from './ui/hud';
 import { Joystick } from './ui/joystick';
+import { SkyHead } from './ui/skyHead';
 
 function boot(): void {
   const params = new URLSearchParams(location.search);
@@ -29,10 +30,13 @@ function boot(): void {
   const hud = new Hud();
   const dialogue = new DialogueUI();
   dialogue.subtitles = save.data.settings.subtitles;
+  dialogue.look = save.data.look;
+  const head = new SkyHead();
+  head.onSeen = () => bus.emit('head:seen', undefined);
   const joystick = new Joystick();
   let modal = true;
   const ctx: GameContext = {
-    save, session, hud, dialogue, joystick, art: new Set(),
+    save, session, hud, dialogue, joystick, head, art: new Set(),
     get modal() { return modal; },
     set modal(v: boolean) {
       modal = v;
@@ -61,6 +65,7 @@ function titleScreen(ctx: GameContext, controller: Controller): void {
   const started = ctx.save.data.started;
   const start = (look?: Look): void => {
     if (look) ctx.save.data.look = look;
+    ctx.dialogue.look = ctx.save.data.look;
     ctx.save.data.started = true;
     ctx.save.save();
     screen.remove();

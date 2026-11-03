@@ -1,0 +1,102 @@
+{
+ "apprentice_boy": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "apprentice_boy_hat": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "apprentice_girl": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "apprentice_girl_scarf": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "asaf": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "dvora": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "hed": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "hillel": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "miller": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "miriam": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ],
+ "noam": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "diary"
+ ],
+ "shoshana": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "sad",
+  "blink",
+  "truth"
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "asaf": {
+  "image": "asaf.png",
+  "json": "asaf.json",
+  "kb": 20
+ },
+ "bard": {
+  "image": "bard.png",
+  "json": "bard.json",
+  "kb": 31
+ },
+ "bell_ringer": {
+  "image": "bell_ringer.png",
+  "json": "bell_ringer.json",
+  "kb": 30
+ },
+ "child_girl": {
+  "image": "child_girl.png",
+  "json": "child_girl.json",
+  "kb": 28
+ },
+ "dvora": {
+  "image": "dvora.png",
+  "json": "dvora.json",
+  "kb": 31
+ },
+ "elder_cane": {
+  "image": "elder_cane.png",
+  "json": "elder_cane.json",
+  "kb": 31
+ },
+ "fisherman": {
+  "image": "fisherman.png",
+  "json": "fisherman.json",
+  "kb": 24
+ },
+ "gardener": {
+  "image": "gardener.png",
+  "json": "gardener.json",
+  "kb": 37
+ },
+ "hed": {
+  "image": "hed.png",
+  "json": "hed.json",
+  "kb": 24
+ },
+ "hillel": {
+  "image": "hillel.png",
+  "json": "hillel.json",
+  "kb": 28
+ },
+ "innkeeper": {
+  "image": "innkeeper.png",
+  "json": "innkeeper.json",
+  "kb": 26
+ },
+ "lamplighter": {
+  "image": "lamplighter.png",
+  "json": "lamplighter.json",
+  "kb": 27
+ },
+ "merchant": {
+  "image": "merchant.png",
+  "json": "merchant.json",
+  "kb": 32
+ },
+ "messenger": {
+  "image": "messenger.png",
+  "json": "messenger.json",
+  "kb": 23
+ },
+ "miller": {
+  "image": "miller.png",
+  "json": "miller.json",
+  "kb": 23
+ },
+ "miriam": {
+  "image": "miriam.png",
+  "json": "miriam.json",
+  "kb": 29
+ },
+ "noam": {
+  "image": "noam.png",
+  "json": "noam.json",
+  "kb": 22
+ },
+ "potter": {
+  "image": "potter.png",
+  "json": "potter.json",
+  "kb": 24
+ },
+ "shepherd": {
+  "image": "shepherd.png",
+  "json": "shepherd.json",
+  "kb": 28
+ },
+ "shoshana": {
+  "image": "shoshana.png",
+  "json": "shoshana.json",
+  "kb": 37
+ },
+ "spool_gatherer": {
+  "image": "spool_gatherer.png",
+  "json": "spool_gatherer.json",
+  "kb": 34
+ },
+ "teacher": {
+  "image": "teacher.png",
+  "json": "teacher.json",
+  "kb": 29
+ },
+ "warden": {
+  "image": "warden.png",
+  "json": "warden.json",
+  "kb": 28
+ }
+}

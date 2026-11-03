@@ -1,0 +1,125 @@
+{
+ "frames": {
+  "idle_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 256
+   }
+  },
+  "idle_1": {
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 256
+   }
+  },
+  "idle_2": {
+   "frame": {
+    "x": 768,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 256
+   }
+  },
+  "idle_3": {
+   "frame": {
+    "x": 1152,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 256
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 256
+   }
+  }
+ },
+ "anims": {
+  "idle": {
+   "frames": [
+    "idle_0",
+    "idle_1",
+    "idle_2",
+    "idle_3"
+   ],
+   "frameRate": 3,
+   "repeat": -1,
+   "yoyo": true
+  }
+ },
+ "meta": {
+  "cell": [
+   384,
+   256
+  ],
+  "origin": {
+   "x": 0.5,
+   "y": 0.9375
+  },
+  "world_scale": 1.0,
+  "note": "Legendary: one facing, idle only (yoyo). origin = ground point under it (whale: point under its belly).",
+  "app": "too-quiet art pipeline v2",
+  "image": "cloud_whale.png",
+  "size": {
+   "w": 1536,
+   "h": 256
+  },
+  "scale": "1",
+  "name_he": "לוויתן הענן",
+  "concept_he": "רשת רחבה (WAN): הוא שט בשמים מעל כל העמקים ומחבר בין מקומות רחוקים.",
+  "legend_he": "פעם בשנה לוויתן הענן עובר מעל העמק, ועל גבו כוכבים של כל ההודעות שלא הגיעו. מי שרואה אותו, יודע שעוד יש דרך החוצה.",
+  "movement": null,
+  "legendary": true,
+  "codex": {
+   "atlas": "codex.png",
+   "frame": "cloud_whale"
+  }
+ }
+}

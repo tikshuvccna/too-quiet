@@ -20,6 +20,9 @@ import v2_cast
 from v2_cast import pose
 
 PORTRAIT_RES = 512
+TRUTH_CHARS = ('dvora', 'shoshana', 'miriam', 'hillel', 'miller', 'asaf', 'hed')
+PORTRAIT_CHARS = ('apprentice_girl', 'apprentice_girl_scarf', 'apprentice_boy', 'apprentice_boy_hat', 'dvora', 'shoshana',
+                  'miriam', 'hillel', 'miller', 'asaf', 'hed', 'noam')
 PORTRAIT_SSAA = 2
 
 
@@ -28,8 +31,10 @@ def all_cast():
     try:
         import v2_cast_npc
         d.update(v2_cast_npc.CAST)
-    except ImportError:
-        pass
+        import v2_cast_t3
+        d.update(v2_cast_t3.CAST)
+    except ImportError as e:
+        print("cast import failed", e)
     return d
 
 
@@ -53,15 +58,21 @@ def do_portrait(name, rawdir, exprs=None):
     meta = all_cast()[name]
     probe = build(name)
     info = getattr(probe, 'portrait', {})
-    exprs = exprs or info.get('exprs', ['neutral', 'happy', 'worried', 'surprised', 'sad', 'blink'])
+    base = ['neutral', 'happy', 'worried', 'surprised', 'sad', 'blink']
+    if name.startswith('apprentice'):
+        base = ['neutral', 'happy', 'worried', 'surprised', 'blink']
+    if name in TRUTH_CHARS:
+        base = base + ['truth']
+    exprs = exprs or info.get('exprs', base)
     want_truth = 'truth' in exprs
     exprs = [e for e in exprs if e != 'truth']
     od = os.path.join(rawdir, "portraits")
     os.makedirs(od, exist_ok=True)
 
     def setup_and_shoot(h, elist, truth):
+        h.flags['hold'] = info.get('hold')
         pose(h, 'idle', 0, 4)
-        yaw = info.get('yaw', -16)
+        yaw = info.get('yaw', -26)
         h.P['root'].rotation_euler = (0, 0, math.radians(yaw))
         bpy.context.view_layer.update()
         hw = head_world(h)
@@ -90,6 +101,11 @@ def do_portrait(name, rawdir, exprs=None):
 def do_sprite(name, rawdir, quick=False, anims=(('idle', 4), ('walk', 8)), dirs=None, ssaa=4, expr='neutral',
               sub='characters_v2'):
     h = build(name, line_t=0.011)
+    # game camera looks down 35 deg: tip hats back and lift the face so it stays readable
+    hat = h.P['hat'] if ('hat' in h.P and h.P['hat'].type == 'EMPTY') else None
+    hat_x0 = hat.rotation_euler.x if hat else 0.0
+    tilt = getattr(h, 'sprite_hat_tilt', -0.22)
+    h.flags.setdefault('head_pitch', -0.16)
     add_lines()
     od = os.path.join(rawdir, sub, name)
     os.makedirs(od, exist_ok=True)
@@ -116,6 +132,8 @@ def do_sprite(name, rawdir, quick=False, anims=(('idle', 4), ('walk', 8)), dirs=
                 for o in closed_objs:
                     o.hide_render = not blink
                 h.P['root'].rotation_euler = (0, 0, math.radians(deg))
+                if hat:   # tip the brim away from the camera in every facing
+                    hat.rotation_euler.x = hat_x0 + tilt * math.cos(math.radians(deg))
                 bpy.context.view_layer.update()
                 render_to(os.path.join(od, f"{anim}_{dname}_{i}.png"))
                 count += 1
@@ -130,7 +148,7 @@ def main():
     mode, which, rawdir = a[0], a[1], a[2]
     extra = a[3] if len(a) > 3 else None
     cast = all_cast()
-    names = list(cast) if which == 'all' else which.split(',')
+    names = (list(PORTRAIT_CHARS) if mode == 'portrait' else list(cast)) if which == 'all' else which.split(',')
     for nm in names:
         t0 = time.time()
         if mode == 'portrait':

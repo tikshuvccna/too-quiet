@@ -1922,9 +1922,9 @@
   }
  },
  "meta": {
-  "app": "too-quiet art pipeline",
-  "version": "1.0",
-  "image": "apprentice_boy.png",
+  "app": "too-quiet art pipeline v2",
+  "version": "2.0",
+  "image": "apprentice_boy_hat.png",
   "format": "RGBA8888",
   "size": {
    "w": 1024,
@@ -1935,7 +1935,7 @@
    "x": 0.5,
    "y": 0.859375
   },
-  "note": "ground contact at (64,110) of each 128px frame; use setOrigin(0.5, 0.859)"
+  "note": "Same layout as v1: rows 0-7 idle (4 frames, frame 3 = blink) S SW W NW N NE E SE, rows 8-15 walk (8). Ground contact (64,110): setOrigin(0.5, 0.859)."
  },
  "anims": {
   "idle_S": {

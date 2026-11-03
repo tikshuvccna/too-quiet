@@ -2,6 +2,7 @@ import linesJson from '../../content/he/lines.json';
 import scenesJson from '../../content/he/scenes.json';
 import housesJson from '../../content/he/houses.json';
 import collectiblesJson from '../../content/he/collectibles.json';
+import creaturesJson from '../../public/assets/creatures/index.json';
 
 export interface LineDef { speaker: string; text: string; textF?: string }
 
@@ -96,3 +97,16 @@ export function lineOf(id: string): LineDef {
   if (!l) throw new Error(`missing line ${id}`);
   return l;
 }
+
+export interface CreatureInfo { name_he: string; concept_he: string; legend_he: string | null; legendary: boolean }
+
+/** The creature collection: small ones (each embodies a networking idea) and three legends. */
+export const CREATURES = creaturesJson as unknown as Record<string, CreatureInfo>;
+
+/** The Head is not a card in the codex sheet; it is unlocked quietly the first time the truth shows it. */
+export const HEAD_INFO: CreatureInfo = {
+  name_he: 'הראש',
+  concept_he: 'משהו גדול מביט מלמעלה, ומחזיק בקצות אצבעותיו חוטי אור.',
+  legend_he: null,
+  legendary: true,
+};

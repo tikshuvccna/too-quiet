@@ -198,6 +198,7 @@ export class HouseScene extends Phaser.Scene {
     // the truth: same grade as the village, plus cross-faded truth art
     this.fx.set(this.sight ? truthLevel(c.save.data.power) : 0);
     this.fx.update(dtMs);
+    c.head.setTruth(0, dt);
     const tv = this.fx.value;
     for (const t of this.truthImgs) t.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
 

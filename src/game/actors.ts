@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import type { CharKey } from '../scenes/BootScene';
 
 /** The sprite sheets list directions in this order. */
 export const DIRS = ['S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE'] as const;
@@ -21,10 +20,10 @@ export interface Actor {
   shadow: Phaser.GameObjects.Image;
   facing: Dir;
   moving: boolean;
-  char: CharKey;
+  char: string;
 }
 
-export function createActor(scene: Phaser.Scene, char: CharKey, x: number, y: number, tint?: number, scale = 1): Actor {
+export function createActor(scene: Phaser.Scene, char: string, x: number, y: number, tint?: number, scale = 1): Actor {
   const shadow = scene.add.image(x, y, 'blob').setScale(1.1 * scale, 0.9 * scale).setAlpha(0.9);
   const sprite = scene.add.sprite(x, y, char, 'idle_S_0').setOrigin(0.5, FOOT_Y).setScale(scale);
   if (tint !== undefined) sprite.setTint(tint);
