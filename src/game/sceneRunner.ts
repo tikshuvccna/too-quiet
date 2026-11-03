@@ -1,4 +1,5 @@
 import { SCENES, SPEAKER_NAMES, lineOf, type SceneDef } from '../content';
+import { bus } from '../core/bus';
 import type { SaveStore } from '../core/save';
 import type { DialogueUI } from '../ui/dialogue';
 import { el, uiRoot } from '../ui/dom';
@@ -53,6 +54,8 @@ export class SceneRunner {
       if ('line' in st) {
         const l = lineOf(st.line);
         const text = this.save.data.look === 'girl' && l.textF ? l.textF : l.text;
+        // every time someone repeats the catchphrase, the truth shows through for a moment
+        if (text.includes('הכול בסדר')) bus.emit('truth:flash', { ms: 700 });
         await this.dialogue.say([{ id: st.line, speaker: l.speaker, text }]);
       } else if ('flag' in st) {
         this.save.setFlag(st.flag);

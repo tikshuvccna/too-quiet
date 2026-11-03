@@ -1,6 +1,9 @@
 import Phaser from 'phaser';
 import { bus } from '../core/bus';
 import { createActor, setIdleFacing, updateActor, type Actor } from '../game/actors';
+import { TruthFx, truthLevel } from '../game/truthFx';
+import { drawRoads } from '../world/roads';
+import { TruthLayer } from '../world/truthLayer';
 import { CTX_KEY, type GameContext } from '../game/context';
 import {
   BUILDINGS, DECOR, FAULTS, NPCS, PICKUPS, SPOTS, START_SPAWN, THREADS, WORLD, wallRects,
@@ -36,7 +39,11 @@ export class WorldScene extends Phaser.Scene {
   private blockers: Array<{ x: number; y: number; r: number }> = [];
   private walls = wallRects();
   private pickups = new Map<string, Phaser.GameObjects.Image>();
-  private dim!: Phaser.GameObjects.Rectangle;
+  private fx!: TruthFx;
+  private truthLayer!: TruthLayer;
+  private npcRefs: Array<{ actor: Actor; def: (typeof NPCS)[number]; baseTint: number | undefined }> = [];
+  private treeImgs: Phaser.GameObjects.Image[] = [];
+  private nextFlash = 60 + Math.random() * 50;
   private sightG!: Phaser.GameObjects.Graphics;
   private sightOn = false;
   private faultLabels = new Map<string, Phaser.GameObjects.Text>();
@@ -61,16 +68,20 @@ export class WorldScene extends Phaser.Scene {
     this.pickups.clear();
     this.faultLabels.clear();
     this.dots = [];
+    this.npcRefs = [];
+    this.treeImgs = [];
     this.buildGround();
     this.buildProps();
     this.buildNpcs();
     this.refreshPickups();
     this.buildPlayer();
     this.buildSight();
+    this.truthLayer = new TruthLayer(this, this.npcRefs, this.treeImgs, { x: 2180, y: 420 });
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, WORLD.w, WORLD.h);
     cam.startFollow(this.player.sprite, true, 0.12, 0.12, 0, -40);
+    this.fx = new TruthFx(cam);
     this.applyZoom();
     this.scale.on('resize', () => this.applyZoom());
 
@@ -80,6 +91,7 @@ export class WorldScene extends Phaser.Scene {
     this.offs.push(
       bus.on('interact:use', ({ id }) => this.onUse(id)),
       bus.on('sight:toggle', ({ on }) => this.setSight(on)),
+      bus.on('truth:flash', ({ ms }) => this.fx.flash(ms)),
     );
     this.events.once('shutdown', () => {
       this.offs.forEach((o) => o());
@@ -110,23 +122,19 @@ export class WorldScene extends Phaser.Scene {
       stroke(pts, w + 14, 0x6b5a45);
       stroke(pts, w, 0xc6aa7c);
     };
-    // the stream first, so roads and the bridge lie on top
-    const stream: Array<[number, number]> = [[1830, 1080], [1960, 1290], [2060, 1500], [2000, 1760]];
-    stroke(stream, 78, 0x2c5a72);
-    stroke(stream, 62, 0x3f86a6);
-    stroke(stream, 20, 0x7fc4de);
-    road([[760, 910], [760, 1010], [1280, 1010], [1280, 790]], 74);
-    road([[760, 1010], [560, 1010], [560, 1470]], 64);
-    road([[1280, 1010], [1780, 1010], [1780, 930]], 74);
-    road([[1280, 1010], [1250, 1380]], 74);
-    road([[1780, 1010], [1900, 1200], [2100, 1400], [2180, 1480]], 64);
-    road([[1780, 1010], [2100, 900], [2150, 620]], 64);
-    // bridge planks across the stream
-    g.fillStyle(0x7a5a3a, 1);
-    g.fillRoundedRect(1900, 1262, 120, 56, 6);
-    g.lineStyle(3, 0x3a2a1a, 1);
-    g.strokeRoundedRect(1900, 1262, 120, 56, 6);
-    for (let x = 1914; x < 2020; x += 18) g.lineBetween(x, 1264, x, 1316);
+    // the stream crosses the south-east road at the bridge (perpendicular, so it reads as a crossing)
+    const stream: Array<[number, number]> = [[2300, 1080], [2140, 1190], [1968, 1292], [1830, 1380], [1740, 1520], [1700, 1780]];
+    stroke(stream, 84, 0x2c5a72);
+    stroke(stream, 66, 0x3f86a6);
+    stroke(stream, 22, 0x7fc4de);
+    drawRoads(g);
+    // wooden bridge along the road direction
+    const ang = Math.atan2(1382 - 1292, 2060 - 1968);
+    this.add.rectangle(1968, 1292, 150, 70, 0x3a2a1a).setRotation(ang).setDepth(-850);
+    this.add.rectangle(1968, 1292, 140, 60, 0x8a6a46).setRotation(ang).setDepth(-849);
+    for (let i = -6; i <= 6; i++) {
+      this.add.rectangle(1968 + Math.cos(ang) * i * 10, 1292 + Math.sin(ang) * i * 10, 3, 58, 0x4a331f).setRotation(ang).setDepth(-848);
+    }
     // flowers and tufts, deterministic
     let s = 11;
     const r = (): number => ((s = (s * 16807) % 2147483647) / 2147483647);
@@ -169,7 +177,7 @@ export class WorldScene extends Phaser.Scene {
       const sc = 0.75 + r() * 0.4;
       const frame = r() < 0.65 ? 'tree_round' : 'tree_pine';
       this.add.image(x, y - 2, 'blob').setScale(sc * 1.4).setDepth(y - 1);
-      this.prop(frame, x, y, sc);
+      this.treeImgs.push(this.prop(frame, x, y, sc));
       this.blockers.push({ x, y: y - 6, r: 20 * sc });
     }
   }
@@ -179,6 +187,7 @@ export class WorldScene extends Phaser.Scene {
       const a = createActor(this, n.char, n.x, n.y, n.tint, n.scale ?? 1);
       updateActor(a, n.x, n.y, 0, 0);
       setIdleFacing(a, n.x > 1500 ? 'SW' : 'SE');
+      this.npcRefs.push({ actor: a, def: n, baseTint: n.tint });
       this.blockers.push({ x: n.x, y: n.y - 4, r: 20 });
     }
   }
@@ -208,8 +217,6 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private buildSight(): void {
-    this.dim = this.add.rectangle(0, 0, 8000, 6000, 0x05061a, 0).setOrigin(0).setDepth(4000);
-    this.dim.setPosition(-2000, -2000);
     this.sightG = this.add.graphics().setDepth(4500).setBlendMode(Phaser.BlendModes.ADD);
     for (let i = 0; i < THREADS.length * 3; i++) this.dots.push(this.add.image(0, 0, 'dot_gold').setDepth(4501).setVisible(false).setBlendMode(Phaser.BlendModes.ADD));
     for (const f of FAULTS) {
@@ -220,7 +227,6 @@ export class WorldScene extends Phaser.Scene {
 
   private setSight(on: boolean): void {
     this.sightOn = on;
-    this.tweens.add({ targets: this.dim, fillAlpha: on ? 0.58 : 0, duration: 350 });
     if (!on) {
       this.sightG.clear();
       this.dots.forEach((d) => d.setVisible(false));
@@ -325,6 +331,19 @@ export class WorldScene extends Phaser.Scene {
     if (!this.blocked(nx, this.py)) this.px = nx;
     if (!this.blocked(this.px, ny)) this.py = ny;
     updateActor(this.player, this.px, this.py, vx, vy);
+
+    // the two faces of the valley
+    const power = c.save.data.power;
+    this.fx.set(this.sightOn ? truthLevel(power) : 0);
+    if (!c.modal) {
+      this.nextFlash -= dt;
+      if (this.nextFlash <= 0) {
+        this.nextFlash = 70 + Math.random() * 70;
+        this.fx.flash(650);
+      }
+    }
+    this.fx.update(dtMs);
+    this.truthLayer.update(this.time.now, this.fx.value);
 
     this.pickupClock += dt;
     if (this.pickupClock > 0.6) {

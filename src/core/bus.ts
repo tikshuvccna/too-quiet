@@ -8,6 +8,7 @@ export interface GameEvents {
   'sight:toggle': { on: boolean };
   'fault:fixed': { id: string; evidence: 'natural' | 'hand' };
   'item:collected': { id: string };
+  'truth:flash': { ms: number };
   'session:warning': undefined;
   'session:storm': undefined;
   'ui:pause': { paused: boolean };
