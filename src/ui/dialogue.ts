@@ -1,0 +1,126 @@
+import { el, uiRoot } from './dom';
+
+export interface Line {
+  id?: string;
+  speaker: string;
+  text: string;
+}
+
+export interface Choice {
+  text: string;
+  value: string;
+}
+
+export interface VoicePlayer {
+  play(lineId: string): void;
+  stop(): void;
+}
+
+/** Subtitle box. Click, tap, Space or Enter advances. Each line may carry an id so a voice recording can play. */
+export class DialogueUI {
+  private readonly box = el('div', 'dialogue');
+  private readonly who = el('div', 'who');
+  private readonly txt = el('div', 'txt');
+  private readonly choices = el('div', 'choices');
+  private readonly hint = el('div', 'hint', 'לחצו להמשך');
+  private resolve: (() => void) | null = null;
+  private typing: number | null = null;
+  private full = '';
+  private open = false;
+  subtitles = true;
+  voice: VoicePlayer | null = null;
+  names: Record<string, string> = {};
+
+  constructor() {
+    this.box.append(this.who, this.txt, this.choices, this.hint);
+    uiRoot().append(this.box);
+    this.box.addEventListener('pointerdown', () => this.advance());
+    window.addEventListener('keydown', (e) => {
+      if (!this.open || this.choices.childElementCount) return;
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.advance();
+      }
+    });
+  }
+
+  get isOpen(): boolean {
+    return this.open;
+  }
+
+  /** Plays lines one after another; resolves when the last one is dismissed. */
+  async say(lines: Line[]): Promise<void> {
+    for (const l of lines) await this.showLine(l);
+    this.close();
+  }
+
+  async choose(prompt: Line | null, options: Choice[]): Promise<string> {
+    if (prompt) this.fillLine(prompt, false);
+    else this.fillLine({ speaker: '', text: '' }, false);
+    this.hint.style.display = 'none';
+    this.choices.replaceChildren();
+    return new Promise((res) => {
+      for (const o of options) {
+        const b = el('button', 'btn', o.text);
+        b.addEventListener('pointerdown', (e) => e.stopPropagation());
+        b.addEventListener('click', () => {
+          this.choices.replaceChildren();
+          this.hint.style.display = '';
+          res(o.value);
+        });
+        this.choices.append(b);
+      }
+    });
+  }
+
+  close(): void {
+    this.open = false;
+    this.voice?.stop();
+    this.box.classList.remove('show');
+  }
+
+  private showLine(l: Line): Promise<void> {
+    this.fillLine(l, true);
+    return new Promise((res) => {
+      this.resolve = res;
+    });
+  }
+
+  private fillLine(l: Line, typewriter: boolean): void {
+    this.open = true;
+    this.box.classList.add('show');
+    this.who.textContent = this.names[l.speaker] ?? l.speaker;
+    this.who.style.display = l.speaker ? '' : 'none';
+    this.full = l.text;
+    if (l.id) this.voice?.play(l.id);
+    if (this.typing !== null) clearInterval(this.typing);
+    this.typing = null;
+    if (!typewriter || !this.subtitles) {
+      this.txt.textContent = this.subtitles ? l.text : '';
+      return;
+    }
+    let i = 0;
+    this.txt.textContent = '';
+    this.typing = window.setInterval(() => {
+      i += 2;
+      this.txt.textContent = this.full.slice(0, i);
+      if (i >= this.full.length && this.typing !== null) {
+        clearInterval(this.typing);
+        this.typing = null;
+      }
+    }, 22);
+  }
+
+  private advance(): void {
+    if (!this.resolve) return;
+    if (this.typing !== null) {
+      clearInterval(this.typing);
+      this.typing = null;
+      this.txt.textContent = this.full;
+      return;
+    }
+    const r = this.resolve;
+    this.resolve = null;
+    r();
+  }
+}
