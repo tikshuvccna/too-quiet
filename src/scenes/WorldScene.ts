@@ -3,7 +3,8 @@ import { bus } from '../core/bus';
 import { createActor, setIdleFacing, updateActor, type Actor } from '../game/actors';
 import { TruthFx, truthLevel } from '../game/truthFx';
 import { drawRoads } from '../world/roads';
-import { TruthLayer } from '../world/truthLayer';
+import { Atmosphere } from '../world/atmosphere';
+import { TruthLayer, type Swappable } from '../world/truthLayer';
 import { CTX_KEY, type GameContext } from '../game/context';
 import {
   BUILDINGS, DECOR, FAULTS, NPCS, PICKUPS, SPOTS, START_SPAWN, THREADS, WORLD, wallRects,
@@ -42,7 +43,9 @@ export class WorldScene extends Phaser.Scene {
   private fx!: TruthFx;
   private truthLayer!: TruthLayer;
   private npcRefs: Array<{ actor: Actor; def: (typeof NPCS)[number]; baseTint: number | undefined }> = [];
-  private treeImgs: Phaser.GameObjects.Image[] = [];
+  private swaps: Swappable[] = [];
+  private truthBuildings: Phaser.GameObjects.Image[] = [];
+  private atmos!: Atmosphere;
   private nextFlash = 60 + Math.random() * 50;
   private sightG!: Phaser.GameObjects.Graphics;
   private sightOn = false;
@@ -69,14 +72,17 @@ export class WorldScene extends Phaser.Scene {
     this.faultLabels.clear();
     this.dots = [];
     this.npcRefs = [];
-    this.treeImgs = [];
+    this.swaps = [];
+    this.truthBuildings = [];
     this.buildGround();
     this.buildProps();
     this.buildNpcs();
     this.refreshPickups();
     this.buildPlayer();
     this.buildSight();
-    this.truthLayer = new TruthLayer(this, this.npcRefs, this.treeImgs, { x: 2180, y: 420 });
+    this.truthLayer = new TruthLayer(this, this.npcRefs, this.swaps, { x: 2180, y: 420 });
+    const bmeta = (this.cache.json.get('buildings:meta') as { frames: Record<string, { anchor: { x: number; y: number }; smoke?: Array<{ x: number; y: number }>; hub?: { x: number; y: number } }> }).frames;
+    this.atmos = new Atmosphere(this, (this.registry.get('tod') as number | undefined) ?? 0.4, bmeta);
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, WORLD.w, WORLD.h);
@@ -94,6 +100,8 @@ export class WorldScene extends Phaser.Scene {
       bus.on('truth:flash', ({ ms }) => this.fx.flash(ms)),
     );
     this.events.once('shutdown', () => {
+      this.registry.set('tod', this.atmos.tod);
+      this.atmos.destroy();
       this.offs.forEach((o) => o());
       this.offs = [];
       bus.emit('interact:available', null);
@@ -154,13 +162,18 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private buildProps(): void {
+    const meta = (this.cache.json.get('buildings:meta') as { frames: Record<string, { anchor: { x: number; y: number } }> }).frames;
     for (const b of BUILDINGS) {
-      this.add.image(b.x, b.y - 4, 'blob').setScale(b.scale * 5.2, b.scale * 2.4).setAlpha(0.8).setDepth(b.y - 1);
-      this.prop(b.frame, b.x, b.y, b.scale, b.tint);
+      const a = meta[b.frame]?.anchor ?? { x: 0.5, y: 0.75 };
+      this.add.image(b.x, b.y - 6, 'blob').setScale((b.foot.w / 64) * 1.5, (b.foot.h / 32) * 1.6).setAlpha(0.85).setDepth(b.y - 1);
+      this.add.image(b.x, b.y, 'buildings', b.frame).setOrigin(a.x, a.y).setScale(b.scale).setDepth(b.y);
+      const truth = this.add.image(b.x, b.y, 'buildings_truth', `${b.frame}_truth`).setOrigin(a.x, a.y).setScale(b.scale).setDepth(b.y + 0.5).setAlpha(0).setVisible(false);
+      this.truthBuildings.push(truth);
     }
     for (const d of DECOR) {
       this.add.image(d.x, d.y - 3, 'blob').setScale((d.scale ?? 1) * 1.2).setDepth(d.y - 1);
-      this.prop(d.frame, d.x, d.y, d.scale ?? 1);
+      const di = this.prop(d.frame, d.x, d.y, d.scale ?? 1);
+      if (d.frame === 'lamppost') this.swaps.push({ img: di, frame: d.frame, atlas: 'props' });
       if (d.block) this.blockers.push({ x: d.x, y: d.y - 6, r: d.block });
     }
     // trees around the edge and a few inside, seeded
@@ -177,7 +190,7 @@ export class WorldScene extends Phaser.Scene {
       const sc = 0.75 + r() * 0.4;
       const frame = r() < 0.65 ? 'tree_round' : 'tree_pine';
       this.add.image(x, y - 2, 'blob').setScale(sc * 1.4).setDepth(y - 1);
-      this.treeImgs.push(this.prop(frame, x, y, sc));
+      this.swaps.push({ img: this.prop(frame, x, y, sc), frame, atlas: 'props' });
       this.blockers.push({ x, y: y - 6, r: 20 * sc });
     }
   }
@@ -344,6 +357,9 @@ export class WorldScene extends Phaser.Scene {
     }
     this.fx.update(dtMs);
     this.truthLayer.update(this.time.now, this.fx.value);
+    const tv = this.fx.value;
+    for (const tb of this.truthBuildings) tb.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
+    this.atmos.update(dtMs, tv, this.px, this.py);
 
     this.pickupClock += dt;
     if (this.pickupClock > 0.6) {

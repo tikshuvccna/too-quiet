@@ -1,0 +1,339 @@
+{
+ "house": "house_grandma",
+ "name": "בית סבתא שושנה",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  680.0,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "g_photos",
+   "interactive": true,
+   "nameHe": "קיר תמונות",
+   "frame": "g_photos",
+   "frameTruth": "g_photos_truth",
+   "place": {
+    "x": 310.4,
+    "y": 199.9
+   },
+   "world": {
+    "x": -3.6,
+    "y": 4.45,
+    "z": 1.9
+   },
+   "wall": true,
+   "sortY": 199.9,
+   "footprintPx": null
+  },
+  {
+   "id": "g_window",
+   "interactive": true,
+   "nameHe": "החלון לכיכר",
+   "frame": "g_window",
+   "frameTruth": "g_window_truth",
+   "place": {
+    "x": 680.0,
+    "y": 227.2
+   },
+   "world": {
+    "x": 3.0,
+    "y": 4.2,
+    "z": 1.48
+   },
+   "wall": true,
+   "sortY": 227.2,
+   "footprintPx": null
+  },
+  {
+   "id": "g_tablet",
+   "interactive": true,
+   "nameHe": "טאבלט על כן",
+   "frame": "g_tablet",
+   "frameTruth": "g_tablet_truth",
+   "place": {
+    "x": 254.4,
+    "y": 346.5
+   },
+   "world": {
+    "x": -4.6,
+    "y": 2.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 346.5,
+   "footprintPx": [
+    34,
+    14
+   ]
+  },
+  {
+   "id": "g_scarf",
+   "interactive": true,
+   "nameHe": "צעיף כחול חצי סרוג",
+   "frame": "g_scarf",
+   "frameTruth": "g_scarf_truth",
+   "place": {
+    "x": 366.4,
+    "y": 449.3
+   },
+   "world": {
+    "x": -2.6,
+    "y": -0.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 449.3,
+   "footprintPx": [
+    45,
+    16
+   ]
+  },
+  {
+   "id": "g_cookies",
+   "interactive": true,
+   "nameHe": "צנצנת עוגיות",
+   "frame": "g_cookies",
+   "frameTruth": "g_cookies_truth",
+   "place": {
+    "x": 814.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": 5.4,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    28,
+    11
+   ]
+  },
+  {
+   "id": "g_cat",
+   "interactive": true,
+   "nameHe": "גרגר, החתול",
+   "frame": "g_cat",
+   "frameTruth": "g_cat_truth",
+   "place": {
+    "x": 646.4,
+    "y": 481.4
+   },
+   "world": {
+    "x": 2.4,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    39,
+    14
+   ]
+  },
+  {
+   "id": "x_armchair",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_armchair",
+   "frameTruth": "x_armchair_truth",
+   "place": {
+    "x": 209.6,
+    "y": 417.2
+   },
+   "world": {
+    "x": -5.4,
+    "y": 0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 417.2,
+   "footprintPx": [
+    50,
+    22
+   ]
+  },
+  {
+   "id": "x_wool_basket",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_wool_basket",
+   "frameTruth": "x_wool_basket_truth",
+   "place": {
+    "x": 293.6,
+    "y": 519.9
+   },
+   "world": {
+    "x": -3.9,
+    "y": -2.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 519.9,
+   "footprintPx": [
+    31,
+    13
+   ]
+  },
+  {
+   "id": "x_spinning_wheel",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_spinning_wheel",
+   "frameTruth": "x_spinning_wheel_truth",
+   "place": {
+    "x": 803.2,
+    "y": 481.4
+   },
+   "world": {
+    "x": 5.2,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    45,
+    14
+   ]
+  },
+  {
+   "id": "x_floor_lamp",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_floor_lamp",
+   "frameTruth": "x_floor_lamp_truth",
+   "place": {
+    "x": 859.2,
+    "y": 320.8
+   },
+   "world": {
+    "x": 6.2,
+    "y": 3.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 320.8,
+   "footprintPx": [
+    17,
+    6
+   ]
+  },
+  {
+   "id": "x_tea_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_tea_table",
+   "frameTruth": "x_tea_table_truth",
+   "place": {
+    "x": 523.2,
+    "y": 311.2
+   },
+   "world": {
+    "x": 0.2,
+    "y": 3.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 311.2,
+   "footprintPx": [
+    36,
+    14
+   ]
+  },
+  {
+   "id": "x_plant",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_plant",
+   "frameTruth": "x_plant_truth",
+   "place": {
+    "x": 164.8,
+    "y": 314.4
+   },
+   "world": {
+    "x": -6.2,
+    "y": 3.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 314.4,
+   "footprintPx": [
+    28,
+    11
+   ]
+  },
+  {
+   "id": "x_bookshelf",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bookshelf",
+   "frameTruth": "x_bookshelf_truth",
+   "place": {
+    "x": 411.2,
+    "y": 298.3
+   },
+   "world": {
+    "x": -1.8,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    56,
+    11
+   ]
+  },
+  {
+   "id": "x_footstool",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_footstool",
+   "frameTruth": "x_footstool_truth",
+   "place": {
+    "x": 288.0,
+    "y": 436.4
+   },
+   "world": {
+    "x": -4.0,
+    "y": -0.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 436.4,
+   "footprintPx": [
+    22,
+    10
+   ]
+  }
+ ]
+}

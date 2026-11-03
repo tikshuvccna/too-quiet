@@ -3,18 +3,42 @@ import { HOUSES, HOUSE_FOR_BUILDING } from '../content';
 import { bus } from '../core/bus';
 import { createActor, updateActor, type Actor } from '../game/actors';
 import { CTX_KEY, type GameContext } from '../game/context';
+import { TruthFx, truthLevel } from '../game/truthFx';
 
-interface Palette { floor: number; wall: number; accent: number }
+interface RoomObject {
+  id: string;
+  interactive: boolean;
+  nameHe: string;
+  frame: string;
+  frameTruth: string;
+  place: { x: number; y: number };
+  wall: boolean;
+  sortY: number;
+  footprintPx: [number, number] | null;
+}
 
-const PALETTES: Record<string, Palette> = {
-  house_grandma: { floor: 0x8a6a4c, wall: 0xc9a98b, accent: 0x7a4f35 },
-  house_clinic: { floor: 0xa9b4b2, wall: 0xdfe6e0, accent: 0x5b7a8a },
-  house_print: { floor: 0x7e6a58, wall: 0xcdbfd8, accent: 0x5a4a6a },
-};
+interface RoomLayout {
+  shellSize: [number, number];
+  floorPolygonPx: Array<[number, number]>;
+  objects: RoomObject[];
+}
 
-interface Placed { id: string; name: string; x: number; y: number; w: number; h: number }
+interface AtlasMeta { frames: Record<string, { anchor?: { x: number; y: number } }> }
 
-/** Dollhouse cutaway: back walls, floor, open front. Objects come from houses.json. */
+function pointInPolygon(x: number, y: number, poly: Array<[number, number]>): boolean {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i] as [number, number];
+    const [xj, yj] = poly[j] as [number, number];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
+/**
+ * Dollhouse cutaway built from the Blender room: a shell image, one sprite per object (so each can glow
+ * when the player stands near it), and a "truth" shell and truth objects cross-faded in by the needle.
+ */
 export class HouseScene extends Phaser.Scene {
   private ctx!: GameContext;
   private buildingId = '';
@@ -22,12 +46,18 @@ export class HouseScene extends Phaser.Scene {
   private player!: Actor;
   private px = 0;
   private py = 0;
-  private bounds = { x1: 0, x2: 0, y1: 0, y2: 0 };
-  private doorX = 0;
+  private layout!: RoomLayout;
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private offs: Array<() => void> = [];
   private last: string | null = null;
-  private objs: Placed[] = [];
+  private fx!: TruthFx;
+  private sight = false;
+  private truthImgs: Phaser.GameObjects.Image[] = [];
+  private glows = new Map<string, Phaser.FX.Glow>();
+  private scaleK = 1;
+  private ox = 0;
+  private oy = 0;
+  private blockers: Array<[number, number, number, number]> = [];
 
   constructor() {
     super('House');
@@ -38,78 +68,75 @@ export class HouseScene extends Phaser.Scene {
     this.contentId = HOUSE_FOR_BUILDING[data.houseId] ?? '';
   }
 
+  preload(): void {
+    const id = this.contentId;
+    const base = `${import.meta.env.BASE_URL}assets/interiors/${id}`;
+    this.load.image(`shell:${id}`, `${base}/shell.png`);
+    this.load.image(`shellT:${id}`, `${base}/shell_truth.png`);
+    this.load.atlas(`objs:${id}`, `${base}/objects.png`, `${base}/objects.json`);
+    this.load.atlas(`objsT:${id}`, `${base}/objects_truth.png`, `${base}/objects_truth.json`);
+    this.load.json(`layout:${id}`, `${base}/layout.json`);
+    this.load.json(`objmeta:${id}`, `${base}/objects.json`);
+  }
+
   create(): void {
     this.ctx = this.registry.get(CTX_KEY) as GameContext;
-    const def = HOUSES.find((h) => h.id === this.contentId);
+    const id = this.contentId;
+    const def = HOUSES.find((h) => h.id === id);
     if (!def) return;
-    const pal = PALETTES[def.id] ?? PALETTES.house_grandma!;
-    this.cameras.main.setBackgroundColor(0x0d0f1f);
-    const cx = this.scale.width / 2;
-    const cy = this.scale.height / 2;
-    const W = Math.min(760, this.scale.width - 80);
-    const H = Math.min(430, this.scale.height - 250);
-    const ox = cx - W / 2;
-    const oy = cy - H / 2 + 36;
-    const g = this.add.graphics();
-    // back wall with a window
-    g.fillStyle(pal.wall, 1);
-    g.fillRect(ox, oy - 140, W, 140);
-    g.fillStyle(0x000000, 0.16);
-    g.fillRect(ox, oy - 140, W, 10);
-    g.fillStyle(0xffe3a0, 0.95);
-    g.fillRoundedRect(cx - 52, oy - 112, 104, 76, 8);
-    g.lineStyle(4, 0x3a2a35, 1);
-    g.strokeRoundedRect(cx - 52, oy - 112, 104, 76, 8);
-    g.lineBetween(cx, oy - 112, cx, oy - 36);
-    // left wall (oblique)
-    const left = [new Phaser.Geom.Point(ox - 64, oy - 76), new Phaser.Geom.Point(ox, oy - 140), new Phaser.Geom.Point(ox, oy), new Phaser.Geom.Point(ox - 64, oy + 64)];
-    g.fillStyle(pal.wall, 1);
-    g.fillPoints(left, true);
-    g.fillStyle(0x000000, 0.24);
-    g.fillPoints(left, true);
-    // floor
-    g.fillStyle(pal.floor, 1);
-    g.fillRect(ox, oy, W, H);
-    g.lineStyle(2, 0x000000, 0.12);
-    for (let x = ox; x <= ox + W; x += 60) g.lineBetween(x, oy, x, oy + H);
-    for (let y = oy; y <= oy + H; y += 60) g.lineBetween(ox, y, ox + W, y);
-    g.lineStyle(6, 0x2a1a14, 1);
-    g.strokeRect(ox, oy, W, H);
-    this.add.text(cx, oy - 175, def.name, { fontFamily: 'Segoe UI, Arial', fontSize: '26px', color: '#ffcf6b', rtl: true }).setOrigin(0.5);
-    // door mat
-    this.doorX = cx;
-    g.fillStyle(0x5b3a2a, 1);
-    g.fillRoundedRect(cx - 44, oy + H - 16, 88, 28, 6);
-    this.add.text(cx, oy + H + 30, 'דלת יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '16px', color: '#a9b0d6', rtl: true }).setOrigin(0.5);
+    this.layout = this.cache.json.get(`layout:${id}`) as RoomLayout;
+    const meta = this.cache.json.get(`objmeta:${id}`) as AtlasMeta;
+    this.cameras.main.setBackgroundColor(0x0b0c1c);
+    this.truthImgs = [];
+    this.glows.clear();
+    this.blockers = [];
+    this.sight = false;
 
-    this.objs = [];
-    const cols = [0.17, 0.5, 0.83];
-    def.objects.forEach((o, i) => {
-      const x = ox + W * (cols[i % 3] as number);
-      const y = oy + (i < 3 ? 62 : 190) + (i % 2) * 22;
-      const w = 118;
-      const h = 56;
-      this.add.ellipse(x, y + h / 2 + 4, w * 1.05, 16, 0x000000, 0.25).setDepth(y);
-      this.add.rectangle(x, y, w, h, pal.accent).setStrokeStyle(3, 0x2a1a14).setDepth(y + 1);
-      this.add.text(x, y, o.name, { fontFamily: 'Segoe UI, Arial', fontSize: '14px', color: '#f3ecdc', align: 'center', wordWrap: { width: w - 10 }, rtl: true }).setOrigin(0.5).setDepth(y + 2);
-      this.objs.push({ id: o.id, name: o.name, x, y, w, h });
-    });
+    const [sw, sh] = this.layout.shellSize;
+    const W = this.scale.width;
+    const H = this.scale.height;
+    this.scaleK = Phaser.Math.Clamp(Math.min((W - 24) / sw, (H - 150) / sh), 0.5, 1.5);
+    this.ox = (W - sw * this.scaleK) / 2;
+    this.oy = (H - sh * this.scaleK) / 2 + 28;
+    const k = this.scaleK;
 
-    this.bounds = { x1: ox + 30, x2: ox + W - 30, y1: oy + 70, y2: oy + H - 2 };
+    this.add.image(this.ox, this.oy, `shell:${id}`).setOrigin(0).setScale(k).setDepth(0);
+    this.truthImgs.push(this.add.image(this.ox, this.oy, `shellT:${id}`).setOrigin(0).setScale(k).setDepth(1).setAlpha(0).setVisible(false));
+
+    for (const o of this.layout.objects) {
+      const a = meta.frames[o.frame]?.anchor ?? { x: 0.5, y: 0.9 };
+      const x = this.ox + o.place.x * k;
+      const y = this.oy + o.place.y * k;
+      const depth = 10 + o.sortY * k;
+      const img = this.add.image(x, y, `objs:${id}`, o.frame).setOrigin(a.x, a.y).setScale(k).setDepth(depth);
+      this.truthImgs.push(this.add.image(x, y, `objsT:${id}`, o.frameTruth).setOrigin(a.x, a.y).setScale(k).setDepth(depth + 0.2).setAlpha(0).setVisible(false));
+      if (o.interactive && img.postFX) this.glows.set(o.id, img.postFX.addGlow(0xffd27a, 0, 0, false, 0.1, 10));
+      if (!o.wall && o.footprintPx) this.blockers.push([o.place.x - o.footprintPx[0] / 2, o.place.y - o.footprintPx[1], o.footprintPx[0], o.footprintPx[1]]);
+    }
+
+    this.add.text(W / 2, this.oy - 34, def.name, { fontFamily: 'Segoe UI, Arial', fontSize: '26px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 5 }).setOrigin(0.5).setDepth(5000);
+    const door = this.add.text(this.ox + (sw / 2) * k, this.oy + (sh - 6) * k, '▼ יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '18px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 4 }).setOrigin(0.5, 0).setDepth(5000);
+    this.tweens.add({ targets: door, y: door.y + 6, duration: 700, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+
     const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
-    this.px = cx;
-    this.py = oy + H - 40;
-    this.player = createActor(this, char, this.px, this.py, undefined, 1.5);
-    updateActor(this.player, this.px, this.py, 0, 0);
-    this.player.sprite.setDepth(2000 + this.py);
+    this.px = sw / 2;
+    this.py = 548;
+    this.player = createActor(this, char, this.ox + this.px * k, this.oy + this.py * k, undefined, k);
+    this.placePlayer(0, 0);
     this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
 
-    this.offs.push(bus.on('interact:use', ({ id }) => this.onUse(id)));
+    this.fx = new TruthFx(this.cameras.main);
+    this.offs.push(
+      bus.on('interact:use', ({ id: use }) => this.onUse(use)),
+      bus.on('sight:toggle', ({ on }) => (this.sight = on)),
+      bus.on('truth:flash', ({ ms }) => this.fx.flash(ms)),
+    );
     this.events.once('shutdown', () => {
       this.offs.forEach((o) => o());
       this.offs = [];
       bus.emit('interact:available', null);
     });
+    if (this.ctx.hud.isSightOn) this.sight = true;
     this.ctx.hud.setVisible(true);
     this.ctx.joystick.setVisible(true);
     this.last = null;
@@ -117,19 +144,35 @@ export class HouseScene extends Phaser.Scene {
     bus.emit('house:entered', { houseId: this.contentId });
   }
 
+  private placePlayer(vx: number, vy: number): void {
+    const k = this.scaleK;
+    updateActor(this.player, this.ox + this.px * k, this.oy + this.py * k, vx, vy);
+    this.player.sprite.setScale(k);
+    this.player.sprite.setDepth(10 + this.py * k);
+    this.player.shadow.setDepth(10 + this.py * k - 1);
+  }
+
   private onUse(id: string): void {
     if (this.ctx.modal || !this.scene.isActive()) return;
     if (id === 'exit') bus.emit('world:exit-house', { houseId: this.buildingId });
   }
 
+  private walkable(x: number, y: number): boolean {
+    if (!pointInPolygon(x, y, this.layout.floorPolygonPx)) return false;
+    for (const [bx, by, bw, bh] of this.blockers) {
+      if (x > bx - 10 && x < bx + bw + 10 && y > by - 4 && y < by + bh + 4) return false;
+    }
+    return true;
+  }
+
   update(_t: number, dtMs: number): void {
-    if (!this.player) return;
+    if (!this.player || !this.layout) return;
     const dt = Math.min(dtMs, 50) / 1000;
     const c = this.ctx;
     if (!c.modal) c.session.tick(dt);
     c.hud.setTimer(c.session.remaining, c.session.phase !== 'free');
     c.hud.setCoins(c.save.data.coins);
-    const b = this.bounds;
+
     let vx = 0;
     let vy = 0;
     if (!c.modal) {
@@ -142,25 +185,35 @@ export class HouseScene extends Phaser.Scene {
         vy /= len;
       }
     }
-    this.px = Phaser.Math.Clamp(this.px + vx * 170 * dt, b.x1, b.x2);
-    this.py = Phaser.Math.Clamp(this.py + vy * 170 * dt, b.y1, b.y2);
-    updateActor(this.player, this.px, this.py, vx, vy);
-    this.player.sprite.setDepth(2000 + this.py);
+    const speed = 190;
+    const nx = this.px + vx * speed * dt;
+    const ny = this.py + vy * speed * dt;
+    if (this.walkable(nx, this.py)) this.px = nx;
+    if (this.walkable(this.px, ny)) this.py = ny;
+    this.placePlayer(vx, vy);
 
-    let best: { id: string; label: string } | null = null;
-    let bd = 105;
-    for (const o of this.objs) {
-      const d = Math.hypot(o.x - this.px, o.y + 30 - this.py);
-      if (d < bd) {
-        bd = d;
-        best = { id: `obj:${this.contentId}:${o.id}`, label: o.name };
-      }
+    // the truth: same grade as the village, plus cross-faded truth art
+    this.fx.set(this.sight ? truthLevel(c.save.data.power) : 0);
+    this.fx.update(dtMs);
+    const tv = this.fx.value;
+    for (const t of this.truthImgs) t.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
+
+    let best: { id: string; label: string; d: number } | null = null;
+    for (const o of this.layout.objects) {
+      if (!o.interactive) continue;
+      const d = Math.hypot(o.place.x - this.px, o.place.y - this.py + 20);
+      const near = d < 95;
+      const glow = this.glows.get(o.id);
+      if (glow) glow.outerStrength = near ? 3 + Math.sin(this.time.now / 180) : 0;
+      if (near && (!best || d < best.d)) best = { id: `obj:${this.contentId}:${o.id}`, label: o.nameHe, d };
     }
-    if (!best && this.py > b.y2 - 110 && Math.abs(this.px - this.doorX) < 130) best = { id: 'exit', label: 'לצאת מהבית' };
-    const id = best?.id ?? null;
+    const [sw, sh] = this.layout.shellSize;
+    const atDoor = this.py > sh * 0.84 && Math.abs(this.px - sw / 2) < 120;
+    const pick = best ?? (atDoor ? { id: 'exit', label: 'לצאת מהבית' } : null);
+    const id = pick?.id ?? null;
     if (id !== this.last) {
       this.last = id;
-      bus.emit('interact:available', best);
+      bus.emit('interact:available', pick ? { id: pick.id, label: pick.label } : null);
     }
   }
 }

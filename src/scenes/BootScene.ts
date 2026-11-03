@@ -55,6 +55,10 @@ export class BootScene extends Phaser.Scene {
       this.load.json(`${k}:anims`, `${base}assets/characters/${k}.json`);
     }
     this.load.atlas('props', `${base}assets/props/props.png`, `${base}assets/props/props.json`);
+    this.load.atlas('buildings', `${base}assets/buildings/buildings.png`, `${base}assets/buildings/buildings.json`);
+    this.load.json('buildings:meta', `${base}assets/buildings/buildings.json`);
+    this.load.atlas('buildings_truth', `${base}assets/buildings/buildings_truth.png`, `${base}assets/buildings/buildings_truth.json`);
+    this.load.atlas('fx', `${base}assets/fx/fx.png`, `${base}assets/fx/fx.json`);
   }
 
   create(): void {

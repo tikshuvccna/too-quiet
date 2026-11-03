@@ -1,0 +1,326 @@
+{
+ "frames": {
+  "c_cabinet": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 147
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 147
+   },
+   "sourceSize": {
+    "w": 84,
+    "h": 147
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9116
+   }
+  },
+  "c_notes": {
+   "frame": {
+    "x": 0,
+    "y": 149,
+    "w": 44,
+    "h": 47
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 44,
+    "h": 47
+   },
+   "sourceSize": {
+    "w": 44,
+    "h": 47
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8723
+   }
+  },
+  "c_clock": {
+   "frame": {
+    "x": 538,
+    "y": 0,
+    "w": 56,
+    "h": 89
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 89
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 89
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.5506
+   }
+  },
+  "c_drawer": {
+   "frame": {
+    "x": 196,
+    "y": 0,
+    "w": 78,
+    "h": 109
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 109
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 109
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8807
+   }
+  },
+  "c_password": {
+   "frame": {
+    "x": 596,
+    "y": 0,
+    "w": 65,
+    "h": 88
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 65,
+    "h": 88
+   },
+   "sourceSize": {
+    "w": 65,
+    "h": 88
+   },
+   "anchor": {
+    "x": 0.4923,
+    "y": 0.8864
+   }
+  },
+  "c_bed": {
+   "frame": {
+    "x": 276,
+    "y": 0,
+    "w": 134,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 101
+   },
+   "anchor": {
+    "x": 0.5224,
+    "y": 0.6139
+   }
+  },
+  "x_herb_shelf": {
+   "frame": {
+    "x": 796,
+    "y": 0,
+    "w": 94,
+    "h": 61
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 61
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 61
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7869
+   }
+  },
+  "x_desk": {
+   "frame": {
+    "x": 86,
+    "y": 0,
+    "w": 108,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 108,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 108,
+    "h": 125
+   },
+   "anchor": {
+    "x": 0.5648,
+    "y": 0.672
+   }
+  },
+  "x_stool": {
+   "frame": {
+    "x": 978,
+    "y": 0,
+    "w": 40,
+    "h": 50
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 40,
+    "h": 50
+   },
+   "sourceSize": {
+    "w": 40,
+    "h": 50
+   },
+   "anchor": {
+    "x": 0.475,
+    "y": 0.76
+   }
+  },
+  "x_trolley": {
+   "frame": {
+    "x": 663,
+    "y": 0,
+    "w": 64,
+    "h": 76
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 76
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 76
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8421
+   }
+  },
+  "x_screen": {
+   "frame": {
+    "x": 412,
+    "y": 0,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 124,
+    "h": 99
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9293
+   }
+  },
+  "x_planter": {
+   "frame": {
+    "x": 892,
+    "y": 0,
+    "w": 84,
+    "h": 51
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 51
+   },
+   "sourceSize": {
+    "w": 84,
+    "h": 51
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8235
+   }
+  },
+  "x_basin": {
+   "frame": {
+    "x": 729,
+    "y": 0,
+    "w": 65,
+    "h": 71
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 65,
+    "h": 71
+   },
+   "sourceSize": {
+    "w": 65,
+    "h": 71
+   },
+   "anchor": {
+    "x": 0.6154,
+    "y": 0.8451
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall; g_window: centre of the sill)"
+ }
+}

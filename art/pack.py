@@ -16,13 +16,13 @@ DIRS = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]
 OUTLINE = (44, 26, 66)
 
 
-def finish(path, ssaa=4, outline_px=1.0):
+def finish(path, ssaa=4, outline_px=1.0, thr=24):
     im = Image.open(path).convert("RGBA")
     a = im.getchannel("A")
     # binarise-ish alpha so the dilation is crisp, then dilate by outline_px (at final res)
     r = int(round(outline_px * ssaa))
     size = 2 * r + 1
-    dil = a.point(lambda v: 255 if v > 24 else 0).filter(ImageFilter.MaxFilter(size))
+    dil = a.point(lambda v: 255 if v > thr else 0).filter(ImageFilter.MaxFilter(size))
     ol = Image.new("RGBA", im.size, OUTLINE + (0,))
     ol.putalpha(dil)
     comp = Image.alpha_composite(ol, im)

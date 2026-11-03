@@ -1,0 +1,326 @@
+{
+ "frames": {
+  "c_cabinet_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 155
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 155
+   },
+   "sourceSize": {
+    "w": 84,
+    "h": 155
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8645
+   }
+  },
+  "c_notes_truth": {
+   "frame": {
+    "x": 0,
+    "y": 157,
+    "w": 44,
+    "h": 47
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 44,
+    "h": 47
+   },
+   "sourceSize": {
+    "w": 44,
+    "h": 47
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8723
+   }
+  },
+  "c_clock_truth": {
+   "frame": {
+    "x": 540,
+    "y": 0,
+    "w": 56,
+    "h": 89
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 89
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 89
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.5506
+   }
+  },
+  "c_drawer_truth": {
+   "frame": {
+    "x": 196,
+    "y": 0,
+    "w": 78,
+    "h": 109
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 109
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 109
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8807
+   }
+  },
+  "c_password_truth": {
+   "frame": {
+    "x": 598,
+    "y": 0,
+    "w": 65,
+    "h": 88
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 65,
+    "h": 88
+   },
+   "sourceSize": {
+    "w": 65,
+    "h": 88
+   },
+   "anchor": {
+    "x": 0.4923,
+    "y": 0.8864
+   }
+  },
+  "c_bed_truth": {
+   "frame": {
+    "x": 276,
+    "y": 0,
+    "w": 136,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 136,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 136,
+    "h": 106
+   },
+   "anchor": {
+    "x": 0.5147,
+    "y": 0.6321
+   }
+  },
+  "x_herb_shelf_truth": {
+   "frame": {
+    "x": 884,
+    "y": 0,
+    "w": 94,
+    "h": 61
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 61
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 61
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7869
+   }
+  },
+  "x_desk_truth": {
+   "frame": {
+    "x": 86,
+    "y": 0,
+    "w": 108,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 108,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 108,
+    "h": 125
+   },
+   "anchor": {
+    "x": 0.5648,
+    "y": 0.672
+   }
+  },
+  "x_stool_truth": {
+   "frame": {
+    "x": 980,
+    "y": 0,
+    "w": 40,
+    "h": 50
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 40,
+    "h": 50
+   },
+   "sourceSize": {
+    "w": 40,
+    "h": 50
+   },
+   "anchor": {
+    "x": 0.475,
+    "y": 0.76
+   }
+  },
+  "x_trolley_truth": {
+   "frame": {
+    "x": 665,
+    "y": 0,
+    "w": 64,
+    "h": 76
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 76
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 76
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8421
+   }
+  },
+  "x_screen_truth": {
+   "frame": {
+    "x": 414,
+    "y": 0,
+    "w": 124,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 124,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 124,
+    "h": 99
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9293
+   }
+  },
+  "x_planter_truth": {
+   "frame": {
+    "x": 798,
+    "y": 0,
+    "w": 84,
+    "h": 65
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 65
+   },
+   "sourceSize": {
+    "w": 84,
+    "h": 65
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8615
+   }
+  },
+  "x_basin_truth": {
+   "frame": {
+    "x": 731,
+    "y": 0,
+    "w": 65,
+    "h": 71
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 65,
+    "h": 71
+   },
+   "sourceSize": {
+    "w": 65,
+    "h": 71
+   },
+   "anchor": {
+    "x": 0.6154,
+    "y": 0.8451
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall; g_window: centre of the sill)"
+ }
+}

@@ -2,19 +2,21 @@
 import type { CharKey } from '../scenes/BootScene';
 
 export const WORLD = { w: 2600, h: 1900 } as const;
-export const BUILDING_SCALE = 1.15;
+
+export type BuildingFrame = 'cottage_shoshana' | 'clinic' | 'print_house' | 'bakery' | 'mill' | 'tower';
 
 export interface BuildingDef {
   id: string;
-  frame: 'cottage_a' | 'cottage_b' | 'cottage_c';
-  /** Ground contact point of the sprite. */
+  frame: BuildingFrame;
+  /** Ground contact point (footprint centre) of the sprite. */
   x: number;
   y: number;
   scale: number;
-  tint?: number;
-  /** Walkable door spot; null for buildings the player cannot enter. */
+  /** Walkable spot in front of the door. */
   door: { x: number; y: number };
   label: string;
+  /** Size of the blocked footprint, in world px. */
+  foot: { w: number; h: number };
 }
 
 export interface NpcDef {
@@ -58,12 +60,12 @@ export interface DecorDef { frame: string; x: number; y: number; scale?: number;
 export interface SpotDef { id: string; x: number; y: number; label: string; range?: number }
 
 export const BUILDINGS: BuildingDef[] = [
-  { id: 'house-grandma', frame: 'cottage_a', x: 760, y: 880, scale: BUILDING_SCALE, door: { x: 760, y: 900 }, label: 'כניסה לבית סבתא שושנה' },
-  { id: 'house-clinic', frame: 'cottage_b', x: 1280, y: 760, scale: BUILDING_SCALE, door: { x: 1280, y: 780 }, label: 'כניסה למרפאה' },
-  { id: 'house-print', frame: 'cottage_b', x: 560, y: 1440, scale: BUILDING_SCALE, tint: 0xe6d2ff, door: { x: 560, y: 1460 }, label: 'כניסה לבית הדפוס' },
-  { id: 'bakery', frame: 'cottage_a', x: 1780, y: 900, scale: BUILDING_SCALE, tint: 0xffe0b8, door: { x: 1780, y: 920 }, label: 'המאפייה' },
-  { id: 'mill', frame: 'cottage_b', x: 2180, y: 1440, scale: BUILDING_SCALE, tint: 0xffe9c8, door: { x: 2180, y: 1460 }, label: 'הטחנה' },
-  { id: 'tower', frame: 'cottage_c', x: 2180, y: 560, scale: 1.55, door: { x: 2150, y: 590 }, label: 'מגדל האורגים' },
+  { id: 'house-grandma', frame: 'cottage_shoshana', x: 760, y: 870, scale: 1, door: { x: 742, y: 936 }, label: 'כניסה לבית סבתא שושנה', foot: { w: 270, h: 70 } },
+  { id: 'house-clinic', frame: 'clinic', x: 1280, y: 750, scale: 1, door: { x: 1268, y: 818 }, label: 'כניסה למרפאה', foot: { w: 290, h: 72 } },
+  { id: 'house-print', frame: 'print_house', x: 560, y: 1430, scale: 1, door: { x: 556, y: 1500 }, label: 'כניסה לבית הדפוס', foot: { w: 270, h: 72 } },
+  { id: 'bakery', frame: 'bakery', x: 1780, y: 890, scale: 1, door: { x: 1756, y: 956 }, label: 'המאפייה', foot: { w: 290, h: 70 } },
+  { id: 'mill', frame: 'mill', x: 2180, y: 1430, scale: 1, door: { x: 2172, y: 1498 }, label: 'הטחנה', foot: { w: 200, h: 70 } },
+  { id: 'tower', frame: 'tower', x: 2180, y: 560, scale: 0.9, door: { x: 2180, y: 626 }, label: 'מגדל האורגים', foot: { w: 170, h: 78 } },
 ];
 
 export const NPCS: NpcDef[] = [
@@ -125,12 +127,9 @@ export const SPOTS: SpotDef[] = [
   { id: 'bridge', x: 1960, y: 1290, label: 'להסתכל על החוט שעל הגשר', range: 110 },
 ];
 
-/** Footprints (world px) that block walking: [x, y, w, h]. Derived from the buildings' ground area. */
+/** Footprints (world px) that block walking: [x, y, w, h], from each building's ground area. */
 export function wallRects(): Array<[number, number, number, number]> {
-  return BUILDINGS.map((b) => {
-    const half = b.frame === 'cottage_c' ? 120 * (b.scale / 1.55) * 1.2 : 128 * (b.scale / BUILDING_SCALE);
-    return [b.x - half, b.y - 70, half * 2, 80] as [number, number, number, number];
-  });
+  return BUILDINGS.map((b) => [b.x - b.foot.w / 2, b.y - b.foot.h + 8, b.foot.w, b.foot.h] as [number, number, number, number]);
 }
 
 export const TOWER_SPAWN = { x: 2130, y: 640 };
