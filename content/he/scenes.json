@@ -10,18 +10,6 @@
     "line": "r1.p0.narrator.0001"
    },
    {
-    "line": "r1.p0.narrator.0002"
-   },
-   {
-    "line": "r1.p0.narrator.0003"
-   },
-   {
-    "line": "r1.p0.narrator.0004"
-   },
-   {
-    "line": "r1.p0.player.0001"
-   },
-   {
     "line": "r1.p0.villager1.0001"
    },
    {
@@ -29,18 +17,6 @@
    },
    {
     "line": "r1.p0.villager1.0002"
-   },
-   {
-    "line": "r1.p0.villager2.0001"
-   },
-   {
-    "line": "r1.p0.villager3.0001"
-   },
-   {
-    "line": "r1.p0.narrator.0005"
-   },
-   {
-    "line": "r1.p0.player.0003"
    },
    {
     "flag": "met_villagers"
@@ -58,19 +34,7 @@
     "line": "r1.p0.hubGrandpa.0002"
    },
    {
-    "line": "r1.p0.player.0005"
-   },
-   {
-    "line": "r1.p0.hubGrandpa.0003"
-   },
-   {
-    "line": "r1.p0.hubGrandpa.0004"
-   },
-   {
     "flag": "met_hubGrandpa"
-   },
-   {
-    "line": "r1.p0.narrator.0007"
    },
    {
     "line": "r1.p0.narrator.0008"
@@ -82,9 +46,6 @@
   "title": "הכפר מציג את עצמו",
   "where": "כיכר כפר האח",
   "steps": [
-   {
-    "line": "r1.p0.narrator.0009"
-   },
    {
     "line": "r1.p0.child.0001"
    },
@@ -98,13 +59,7 @@
     "line": "r1.p0.grandma.0001"
    },
    {
-    "line": "r1.p0.clinicDoctor.0001"
-   },
-   {
     "line": "r1.p0.baker.0001"
-   },
-   {
-    "line": "r1.p0.narrator.0010"
    },
    {
     "choice": {
@@ -192,9 +147,6 @@
     "line": "r1.p1.baker.0001"
    },
    {
-    "line": "r1.p1.narrator.0002"
-   },
-   {
     "line": "r1.p1.miller.0001"
    },
    {
@@ -204,25 +156,10 @@
     "line": "r1.p1.miller.0002"
    },
    {
-    "line": "r1.p1.baker.0003"
-   },
-   {
     "line": "r1.p1.villager1.0001"
    },
    {
-    "line": "r1.p1.villager2.0001"
-   },
-   {
-    "line": "r1.p1.villager3.0001"
-   },
-   {
     "line": "r1.p1.child.0001"
-   },
-   {
-    "line": "r1.p1.grandma.0001"
-   },
-   {
-    "line": "r1.p1.narrator.0003"
    },
    {
     "line": "r1.p1.player.0001"
@@ -258,9 +195,6 @@
     "line": "r1.p1.player.0002"
    },
    {
-    "line": "r1.p1.narrator.0005"
-   },
-   {
     "line": "r1.p1.narrator.0006"
    },
    {
@@ -283,13 +217,7 @@
     "line": "r1.p1.villager2.0002"
    },
    {
-    "line": "r1.p1.villager3.0002"
-   },
-   {
     "line": "r1.p1.baker.0005"
-   },
-   {
-    "line": "r1.p1.child.0002"
    },
    {
     "line": "r1.p1.narrator.0007"
@@ -366,9 +294,6 @@
     "line": "r1.p1.dvora.0007"
    },
    {
-    "line": "r1.p1.dvora.0008"
-   },
-   {
     "line": "r1.p1.player.0006"
    },
    {
@@ -394,9 +319,6 @@
    },
    {
     "line": "r1.p1.dvora.0011"
-   },
-   {
-    "line": "r1.p1.dvora.0012"
    },
    {
     "flag": "lesson01_done"
@@ -622,9 +544,6 @@
     "line": "r1.p1.child.0003"
    },
    {
-    "line": "r1.p1.grandma.0004"
-   },
-   {
     "line": "r1.p1.narrator.0017"
    },
    {
@@ -647,19 +566,10 @@
     "line": "r1.p1.player.0008"
    },
    {
-    "line": "r1.p1.miller.0005"
-   },
-   {
     "line": "r1.p1.narrator.0019"
    },
    {
-    "line": "r1.p1.narrator.0020"
-   },
-   {
     "line": "r1.p1.player.0009"
-   },
-   {
-    "line": "r1.p1.dvora.0016"
    },
    {
     "line": "r1.p1.dvora.0017"
@@ -678,9 +588,6 @@
    },
    {
     "line": "r1.p1.narrator.0021"
-   },
-   {
-    "line": "r1.p1.hubGrandpa.0001"
    },
    {
     "flag": "p1_complete"
@@ -720,12 +627,6 @@
    },
    {
     "line": "r1.p1.dvora.0020"
-   },
-   {
-    "line": "r1.p1.dvora.0021"
-   },
-   {
-    "line": "r1.p1.narrator.0024"
    },
    {
     "flag": "teleported_to_tower"
