@@ -18,9 +18,18 @@ export class Controller {
   private readonly runner: SceneRunner;
   private barkIndex = new Map<string, number>();
   private busy = false;
+  private pendingClassroom = false;
 
   constructor(private readonly game: Phaser.Game, private readonly ctx: GameContext) {
-    this.runner = new SceneRunner(ctx.dialogue, ctx.save, { toTower: () => this.teleportToTower() });
+    this.runner = new SceneRunner(ctx.dialogue, ctx.save, {
+      toTower: () => this.teleportToTower(),
+      onFlag: (name) => {
+        if (name === 'start_lesson01') this.pendingClassroom = true;
+        // the prologue ends with meeting Grandpa Hed: remember it at once, so a reload does not replay it
+        if (name === 'met_hubGrandpa') this.ctx.save.setFlag('prologue_done');
+        this.refreshObjective();
+      },
+    });
     bus.on('world:enter-house', ({ houseId }) => this.enterHouse(houseId));
     bus.on('world:exit-house', ({ houseId }) => this.exitHouse(houseId));
     bus.on('house:entered', ({ houseId }) => void this.onHouseEntered(houseId));
@@ -38,11 +47,20 @@ export class Controller {
     if (!this.ctx.save.hasFlag('prologue_done')) {
       await this.withModal(async () => {
         // the prologue continues into village_meet by itself
-        await this.runner.run('prologue');
+        await this.runScene('prologue');
         this.ctx.save.setFlag('prologue_done');
       });
     }
     this.refreshObjective();
+  }
+
+  /** Plays a scene; if it ended with "start the lesson", opens the classroom. */
+  private async runScene(id: string): Promise<void> {
+    await this.runner.run(id);
+    if (this.pendingClassroom) {
+      this.pendingClassroom = false;
+      await this.classroom();
+    }
   }
 
   // ---- state helpers ----
@@ -80,13 +98,19 @@ export class Controller {
     cam.once('camerafadeoutcomplete', then);
   }
 
+  /** Start a scene and fade it in once it has been created (a scene's camera does not exist before that). */
+  private startScene(key: string, data: object, fadeMs = 260): void {
+    const target = this.game.scene.getScene(key);
+    target.events.once('create', () => target.cameras.main.fadeIn(fadeMs, 8, 9, 20));
+    this.scene().start(key, data);
+  }
+
   private enterHouse(houseId: string): void {
     if (this.ctx.modal) return;
     this.ctx.modal = true;
     this.fade(() => {
       this.ctx.modal = false;
-      this.scene().start('House', { houseId });
-      this.game.scene.getScene('House').cameras.main.fadeIn(260, 8, 9, 20);
+      this.startScene('House', { houseId });
     });
   }
 
@@ -96,7 +120,7 @@ export class Controller {
     this.ctx.modal = true;
     this.fade(() => {
       this.ctx.modal = false;
-      this.scene().start('World', { spawn: b ? { x: b.door.x, y: b.door.y + 70 } : undefined });
+      this.startScene('World', { spawn: b ? { x: b.door.x, y: b.door.y + 70 } : undefined });
     });
   }
 
@@ -104,9 +128,7 @@ export class Controller {
   private teleportToTower(): Promise<void> {
     return new Promise((resolve) => {
       this.fade(() => {
-        this.scene().start('World', { spawn: TOWER_SPAWN });
-        const w = this.game.scene.getScene('World');
-        w.events.once('create', () => w.cameras.main.fadeIn(400, 8, 9, 20));
+        this.startScene('World', { spawn: TOWER_SPAWN }, 400);
         window.setTimeout(resolve, 550);
       });
     });
@@ -119,7 +141,7 @@ export class Controller {
     if (id.startsWith('npc:')) void this.talk(id.slice(4));
     else if (id === 'door:tower') void this.tower();
     else if (id === 'spot:bridge') void this.withModal(async () => {
-      await this.runner.run('ending_clue');
+      await this.runScene('ending_clue');
       this.refreshObjective();
     });
     else if (id.startsWith('obj:')) void this.inspect(id);
@@ -154,10 +176,10 @@ export class Controller {
     await this.withModal(async () => {
       if (npcId === 'dvora') return this.towerFlow();
       if (npcId === 'baker') {
-        if (FIXES.every((x) => this.has(x.flag)) && !this.has('bakery_fixed')) return this.runner.run('bakery_fixed');
-        if (!this.lessonDone() && !this.has('needle_blur_seen') && !this.has('neighbours_asked')) return this.runner.run('bakery_chaos');
+        if (FIXES.every((x) => this.has(x.flag)) && !this.has('bakery_fixed')) return this.runScene('bakery_fixed');
+        if (!this.lessonDone() && !this.has('needle_blur_seen') && !this.has('neighbours_asked')) return this.runScene('bakery_chaos');
       }
-      if (npcId === 'miller' && this.lessonDone() && !this.has('fix_mill_done')) return this.runner.run('fix_mill');
+      if (npcId === 'miller' && this.lessonDone() && !this.has('fix_mill_done')) return this.runScene('fix_mill');
       const id = this.nextBark(npcId === 'villager2' || npcId === 'villager3' ? npcId : npcId);
       const line = id ? lineOf(id) : null;
       if (line) await this.ctx.dialogue.say([{ id: id ?? undefined, speaker: line.speaker, text: line.text }]);
@@ -175,16 +197,17 @@ export class Controller {
   /** In the tower: first the story, then the classroom menu (lesson, quiz, mini-game). */
   private async towerFlow(): Promise<void> {
     if (!this.has('start_lesson01')) {
-      await this.runner.run('tower_dvora');
+      await this.runScene('tower_dvora');
+      return;
     }
-    if (this.has('start_lesson01')) await this.classroom();
+    await this.classroom();
   }
 
   /** Classroom menu: lesson, quiz, mini-game. Wired to the learning screens in `learningBridge`. */
   private async classroom(): Promise<void> {
     const { openClassroom } = await import('./learningBridge');
     await openClassroom(this.ctx, async () => {
-      if (this.lessonDone() && !this.has('lesson01_done')) await this.runner.run('return_after_lesson');
+      if (this.lessonDone() && !this.has('lesson01_done')) await this.runScene('return_after_lesson');
     });
     this.refreshObjective();
   }
@@ -215,7 +238,7 @@ export class Controller {
     const fix = { house_grandma: FIXES[0], house_clinic: FIXES[1] }[contentHouseId as 'house_grandma' | 'house_clinic'];
     if (!fix || this.has(fix.flag)) return;
     await this.withModal(async () => {
-      await this.runner.run(fix.scene);
+      await this.runScene(fix.scene);
       const house = HOUSES.find((h) => h.id === contentHouseId);
       if (house?.threadSightClue) this.ctx.hud.toast('המחט מראה משהו חדש בבית הזה. (ראיית חוטים: Q)', 'clue', 5200);
     });
@@ -250,7 +273,7 @@ export class Controller {
       this.ctx.hud.toast('העננים מתכנסים… סערת חוטים בקרוב.', 'clue', 6000);
       return;
     }
-    await this.withModal(() => this.runner.run('thread_storm_warning'));
+    await this.withModal(() => this.runScene('thread_storm_warning'));
   }
 
   private async storm(): Promise<void> {

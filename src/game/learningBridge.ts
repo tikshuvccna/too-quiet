@@ -1,29 +1,82 @@
+import { loadLessonContent, openLesson, openMinigameMenu, openQuiz } from '../ui/learning';
 import { el, uiRoot } from '../ui/dom';
 import type { GameContext } from './context';
 
-/** Temporary classroom until the lesson, quiz and mini-game screens are connected. */
-export function openClassroom(ctx: GameContext, after: () => Promise<void>): Promise<void> {
+const QUIZ_COINS = 15;
+
+/**
+ * Dvora's classroom: the lesson first, then the quiz and the three-level mini-game.
+ * `afterLesson` runs once, right after the lesson is finished (the story beat in the tower).
+ */
+export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>): Promise<void> {
+  const content = loadLessonContent();
+  const lessonId = 'lesson01';
   return new Promise((resolve) => {
-    const done = el('button', 'btn primary', 'סימנתי שלמדתי (בדיקה)');
-    const back = el('button', 'btn', 'חזרה לעולם');
-    const screen = el('div', 'screen', '', [
-      el('div', 'card', '', [
-        el('h2', '', 'הכיתה של דבורה'),
-        el('p', '', 'השיעורים בבנייה.'),
-        el('div', 'row', '', [done, back]),
-      ]),
-    ]);
-    const close = (): void => {
-      screen.remove();
-      void after().then(resolve);
+    let screen: HTMLElement | null = null;
+
+    const closeScreen = (): void => {
+      screen?.remove();
+      screen = null;
     };
-    done.addEventListener('click', () => {
-      ctx.save.lesson('lesson01').done = true;
-      ctx.save.recomputePower();
-      ctx.save.save();
-      close();
-    });
-    back.addEventListener('click', close);
-    uiRoot().append(screen);
+
+    const render = (): void => {
+      closeScreen();
+      const l = ctx.save.lesson(lessonId);
+      const best = Object.values(l.games).reduce((n, g) => Math.max(n, g.points), 0);
+      const passed = Object.values(l.games).filter((g) => g.passed).length;
+
+      const lessonBtn = el('button', 'btn primary', l.done ? 'לחזור על השיעור' : 'להתחיל את השיעור');
+      const quizBtn = el('button', 'btn', 'חידון');
+      const gameBtn = el('button', 'btn', 'משחקון בשלוש רמות');
+      const back = el('button', 'btn', 'חזרה לעולם');
+      quizBtn.disabled = !l.done;
+      gameBtn.disabled = !l.done;
+
+      lessonBtn.addEventListener('click', () => {
+        closeScreen();
+        openLesson(content.lesson, ctx.save, {
+          onClose: (done) => {
+            if (!done) return render();
+            void afterLesson().then(render);
+          },
+        });
+      });
+      quizBtn.addEventListener('click', () => {
+        closeScreen();
+        openQuiz(content.quiz, ctx.save, {
+          lessonId,
+          onClose: (r) => {
+            if (r.passed && !ctx.save.hasFlag('prize.quiz')) {
+              ctx.save.data.coins += QUIZ_COINS;
+              ctx.save.setFlag('prize.quiz');
+              ctx.hud.toast(`עברתם את החידון! +${QUIZ_COINS} מטבעות`, 'good');
+            }
+            render();
+          },
+        });
+      });
+      gameBtn.addEventListener('click', () => {
+        closeScreen();
+        openMinigameMenu(content.minigame, ctx.save, { onClose: render });
+      });
+      back.addEventListener('click', () => {
+        closeScreen();
+        resolve();
+      });
+
+      screen = el('div', 'screen', '', [
+        el('div', 'card', '', [
+          el('h2', '', 'הכיתה של דבורה'),
+          el('p', '', content.lesson.title),
+          el('p', 'class-status', l.done
+            ? `השיעור הושלם. חידון: ${l.quizPassed ? 'עבר' : 'עוד לא עבר'}. משחקון: ${passed} מתוך 3 רמות, שיא ${best} נקודות.`
+            : 'קודם לומדים, ואחר כך המחט מבינה את מה שהיא רואה. אחרי השיעור נפתחים החידון והמשחקון.'),
+          el('div', 'row', '', [lessonBtn, quizBtn, gameBtn, back]),
+        ]),
+      ]);
+      uiRoot().append(screen);
+    };
+
+    render();
   });
 }
