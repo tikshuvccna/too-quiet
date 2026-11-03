@@ -3,8 +3,8 @@ import { el, mmss, uiRoot } from './dom';
 
 export class Hud {
   private readonly bar = el('div', 'hud');
-  private readonly timer = el('div', 'pill');
-  private readonly coins = el('div', 'pill');
+  private readonly timer = el('div', 'pill timer');
+  private readonly coins = el('div', 'pill coins');
   private readonly objective = el('div', 'pill objective');
   private readonly sight = el('button', 'btn', 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
