@@ -143,7 +143,7 @@ export class HouseScene extends Phaser.Scene {
       const d = Math.hypot(o.x - this.player.x, o.y - this.player.y);
       if (d < bd) { bd = d; best = { id: `obj:${this.houseId}:${o.id}`, label: o.label }; }
     }
-    if (!best && this.player.y > b.y2 - 40 && Math.abs(this.player.x - this.scale.width / 2) < 70) best = { id: 'exit', label: 'לצאת מהבית' };
+    if (!best && this.player.y > b.y2 - 110 && Math.abs(this.player.x - this.scale.width / 2) < 120) best = { id: 'exit', label: 'לצאת מהבית' };
     const id = best?.id ?? null;
     if (id !== this.last) {
       this.last = id;
