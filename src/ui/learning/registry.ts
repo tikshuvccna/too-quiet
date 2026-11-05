@@ -1,5 +1,5 @@
 import type { GameDef } from './gameShell';
-import { sorterGame, topologyGame, hotspotGame, type HotspotData, type SorterData } from './lessonGames';
+import { journeyGame, sorterGame, topologyGame, hotspotGame, type HotspotData, type JourneyData, type SorterData } from './lessonGames';
 import { LESSON_PRIZES } from './prizesByLesson';
 import type { TopologyData } from './topologyLogic';
 import { simGame } from './simGame';
@@ -16,6 +16,7 @@ const wirings = import.meta.glob('../../../content/he/wiring0*.json', { eager: t
 const sorters = import.meta.glob('../../../content/he/sorter0*.json', { eager: true }) as Mod;
 const topologies = import.meta.glob('../../../content/he/topology0*.json', { eager: true }) as Mod;
 const hotspots = import.meta.glob('../../../content/he/hotspot0*.json', { eager: true }) as Mod;
+const journeys = import.meta.glob('../../../content/he/journey0*.json', { eager: true }) as Mod;
 const sims = import.meta.glob('../../../content/he/sim0*.json', { eager: true }) as Mod;
 
 /** "../../../content/he/lesson02.json" -> "02" */
@@ -33,6 +34,7 @@ const S = byNumber(sorters);
 const T = byNumber(topologies);
 const H = byNumber(hotspots);
 const SIM = byNumber(sims);
+const J = byNumber(journeys);
 
 export interface LessonBundle {
   /** "lesson02". */
@@ -41,12 +43,12 @@ export interface LessonBundle {
   quiz: QuizData;
   minigame: MinigameData;
   game: GameDef;
-  gameKind: 'wiring' | 'sorter' | 'topology' | 'hotspot' | 'sim';
+  gameKind: 'wiring' | 'sorter' | 'topology' | 'hotspot' | 'sim' | 'journey';
 }
 
 /** Lessons that have everything: the lesson, its summary questions and a mini-game. Sorted. */
 export function lessonIds(): string[] {
-  return [...L.keys()].filter((n) => Q.has(n) && (W.has(n) || S.has(n) || T.has(n) || H.has(n) || SIM.has(n))).sort().map((n) => `lesson${n}`);
+  return [...L.keys()].filter((n) => Q.has(n) && (W.has(n) || S.has(n) || T.has(n) || H.has(n) || SIM.has(n) || J.has(n))).sort().map((n) => `lesson${n}`);
 }
 
 function prizesFor(id: string, fallback?: MinigameData['prizes']): MinigameData['prizes'] {
@@ -73,6 +75,7 @@ export function loadBundle(id: string): LessonBundle | null {
   let title: string;
   let intro: string;
   if (W.has(n)) { kind = 'wiring'; const d = W.get(n) as WiringData; title = d.title; intro = d.intro; game = wiringGameFor(d, given, n); }
+  else if (J.has(n)) { kind = 'journey'; const d = J.get(n) as JourneyData; title = d.title; intro = d.intro; game = journeyGame(d); }
   else if (S.has(n)) { kind = 'sorter'; const d = S.get(n) as SorterData; title = d.title; intro = d.intro; game = sorterGame(d); }
   else if (T.has(n)) { kind = 'topology'; const d = T.get(n) as TopologyData; title = d.title; intro = d.intro; game = topologyGame(d); }
   else if (SIM.has(n)) { kind = 'sim'; const d = SIM.get(n) as SimData; title = d.title; intro = d.intro; game = simGame(d); }

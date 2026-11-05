@@ -3,6 +3,7 @@ import { lessonIds, loadBundle } from './registry';
 import { cutOff } from './topologyLogic';
 import type { SorterData, HotspotData } from './lessonGames';
 import type { TopologyData } from './topologyLogic';
+import type { JourneyData } from './lessonGames';
 
 const WIDGETS = new Set(['connect_threads', 'tap_to_classify', 'network_size_chooser', 'advantage_matcher', 'client_server_toy', 'atm_toy', 'p2p_vs_cs_toy', 'need_sorter']);
 const ids = lessonIds();
@@ -87,6 +88,17 @@ describe('game data integrity', () => {
       for (const [a, c] of r.links) { expect(nodeIds.has(a) && nodeIds.has(c), r.text).toBe(true); }
       if (r.failure.type === 'node') expect(nodeIds.has(r.failure.id), r.text).toBe(true);
       expect(Array.isArray(cutOff(r))).toBe(true);
+    }
+  });
+
+  it('journey paths alternate end, media, middle, media, end and use known labels', () => {
+    const mods = import.meta.glob('../../../content/he/journey0*.json', { eager: true }) as Record<string, { default: JourneyData }>;
+    for (const m of Object.values(mods)) for (const l of ['easy', 'medium', 'hard'] as const) for (const r of m.default.levels[l].rounds) {
+      const roles = m.default.roles;
+      expect(r.path.length % 2, r.text).toBe(1);
+      expect(roles[r.path[0] as string], r.text).toBe('end');
+      expect(roles[r.path[r.path.length - 1] as string], r.text).toBe('end');
+      r.path.slice(1, -1).forEach((lab, i) => expect(roles[lab], `${r.text}: ${lab}`).toBe(i % 2 === 0 ? 'media' : 'mid'));
     }
   });
 

@@ -293,3 +293,104 @@ function mountHotspotRound(round: HotspotRound, host: HTMLElement, api: RoundApi
   api.onTimeout(() => pick(null, null));
   return () => {};
 }
+
+/* ------------------------------------------------------------------ message journey ------------------------------------------------------------------ */
+
+export interface JourneyData {
+  id: string;
+  title: string;
+  intro: string;
+  howTo: string[];
+  /** label -> "end" | "mid" | "media" */
+  roles: Record<string, 'end' | 'mid' | 'media'>;
+  levels: Record<Level, LevelBase & { mistakes: number; rounds: Array<{ text: string; path: string[]; why: string }> }>;
+}
+
+type JourneyRole = 'source' | 'media' | 'mid' | 'dest';
+const JOURNEY_BUTTONS: Array<{ role: JourneyRole; label: string }> = [
+  { role: 'source', label: 'מקור' }, { role: 'media', label: 'מדיה' }, { role: 'mid', label: 'התקן אמצע' }, { role: 'dest', label: 'יעד' },
+];
+const JOURNEY_NAME: Record<JourneyRole, string> = { source: 'מקור', media: 'מדיה', mid: 'התקן אמצע', dest: 'יעד' };
+
+/** A message travels from a source to a destination; at every stop the player says what the stop is. */
+export function journeyGame(data: JourneyData): GameDef {
+  return {
+    title: data.title,
+    intro: data.intro,
+    howTo: data.howTo,
+    levels: (() => {
+      const out = {} as GameDef['levels'];
+      for (const lv of LEVELS_3) {
+        const l = data.levels[lv];
+        out[lv] = { count: l.rounds.length, lives: l.lives, timeLimit: l.timeLimitPerTaskSec, blurb: `${l.rounds.length} מסעות. ${l.timeLimitPerTaskSec ? `${l.timeLimitPerTaskSec} שניות לכל מסע. ` : 'בלי הגבלת זמן. '}מותר ${l.mistakes} טעויות בכל מסע.` };
+      }
+      return out;
+    })(),
+    mountRound: (level, index, host, api) => mountJourney(data, data.levels[level].mistakes, data.levels[level].rounds[index] as JourneyData['levels']['easy']['rounds'][number], host, api),
+  };
+}
+
+function mountJourney(data: JourneyData, allowed: number, round: { text: string; path: string[]; why: string }, host: HTMLElement, api: RoundApi): () => void {
+  const roleOf = (i: number): JourneyRole => (i === 0 ? 'source' : i === round.path.length - 1 ? 'dest' : data.roles[round.path[i] as string] === 'media' ? 'media' : 'mid');
+  let at = 0;
+  let mistakes = 0;
+  let done = false;
+  const chips = round.path.map((label) => el('div', 'jr-chip', label));
+  const lane = el('div', 'jr-lane', '', chips.flatMap((c, i) => (i ? [el('span', 'jr-arrow'), c] : [c])));
+  const msg = el('div', 'lrn-wire-msg', 'מה זה?');
+  const buttons = JOURNEY_BUTTONS.map((b) => {
+    const btn = el('button', 'btn jr-role', b.label);
+    btn.type = 'button';
+    btn.addEventListener('click', () => choose(b.role, btn));
+    return btn;
+  });
+  host.append(el('div', 'lrn-wire-banner', '', [el('p', '', round.text)]), lane, msg, el('div', 'npcg-row', '', buttons));
+  paint();
+
+  function paint(): void {
+    chips.forEach((c, i) => {
+      c.classList.toggle('jr-here', i === at && !done);
+      c.classList.toggle('jr-done', i < at);
+    });
+    chips[at]?.scrollIntoView?.({ block: 'nearest', inline: 'center' });
+  }
+
+  function choose(role: JourneyRole, btn: HTMLElement): void {
+    if (done) return;
+    const right = roleOf(at);
+    if (role === right) {
+      const c = chips[at] as HTMLElement;
+      c.append(el('small', 'jr-tag', JOURNEY_NAME[right]));
+      at++;
+      msg.className = 'lrn-wire-msg';
+      msg.textContent = 'מה זה?';
+      if (at >= round.path.length) {
+        done = true;
+        buttons.forEach((b) => (b.disabled = true));
+        paint();
+        api.resolve(true, `${mistakes ? 'סיימתם את המסע, עם כמה טעויות בדרך. ' : ''}${round.why}`);
+        return;
+      }
+      paint();
+      return;
+    }
+    mistakes++;
+    api.flash('bad');
+    btn.classList.add('wrong');
+    window.setTimeout(() => btn.classList.remove('wrong'), 500);
+    msg.className = 'lrn-wire-msg warn';
+    msg.textContent = `לא בדיוק: "${round.path[at]}" אינו ${JOURNEY_NAME[role]}.`;
+    if (mistakes > allowed) {
+      done = true;
+      buttons.forEach((b) => (b.disabled = true));
+      api.resolve(false, `"${round.path[at]}" הוא ${JOURNEY_NAME[right]}. ${round.why}`);
+    }
+  }
+  api.onTimeout(() => {
+    if (done) return;
+    done = true;
+    buttons.forEach((b) => (b.disabled = true));
+    api.resolve(false, `הזמן נגמר. ${round.why}`);
+  });
+  return () => {};
+}
