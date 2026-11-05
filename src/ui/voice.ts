@@ -4,7 +4,7 @@ import type { VoicePlayer } from './dialogue';
  * Plays a recorded line when assets/voice/<id>.mp3 exists and is listed in assets/voice/index.json
  * ({"ids": ["r1.p0.narrator.0001", ...]}). Lines that are not listed stay silent: the subtitles carry them.
  */
-export function createVoicePlayer(isOn: () => boolean, volume: () => number): VoicePlayer {
+export function createVoicePlayer(isOn: () => boolean, volume: () => number, duck: (on: boolean) => void = () => undefined): VoicePlayer {
   const base = `${import.meta.env.BASE_URL}assets/voice/`;
   let ids: Set<string> | null = null;
   const load = fetch(`${base}index.json`)
@@ -20,12 +20,17 @@ export function createVoicePlayer(isOn: () => boolean, volume: () => number): Vo
         const a = new Audio(`${base}${lineId}.mp3`);
         a.volume = Math.min(1, Math.max(0, volume()));
         current = a;
+        duck(true);
+        const release = (): void => { if (current === a || current === null) duck(false); };
+        a.addEventListener('ended', release);
+        a.addEventListener('error', release);
         void a.play().catch(() => { /* blocked until the first tap: the subtitles still show */ });
       });
     },
     stop(): void {
       current?.pause();
       current = null;
+      duck(false);
     },
   };
 }

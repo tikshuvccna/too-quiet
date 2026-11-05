@@ -47,3 +47,7 @@
 - E:\yt-tikshuv\episodes: 016-host-end-intermediary-media, 017-topologies, 018-packet-tracer-intro, 019-packet-tracer-demo, 020-internet-home-connection, 003-lan-wan-v2 (script/narration.txt).
 - קוד הלימוד: src/ui/learning/types.ts, widgetsA.ts, widgetLogic.ts, widgets.ts, וקבצי התוכן של שיעור 01 (lesson01, quiz01, minigame01, wiring01, README).
 - לא קראתי את specs/connected-valley/00_story_world_bible.md: מילון הסיפור (חוטים, שליחים) נלקח משיעור 01.
+
+
+## אישור מורה (2026-11-05)
+בעל הפרויקט, המורה, אישר את כל הפריטים שסומנו כאן ב-needsTeacher (כולל הנחות המשחק: למחשב חיבור אחד ולמתג 8 חיבורים, הפשטת LAN/WAN, ניסוח ״קסם״ ו״ראיית חוטים״). ביקורת תוכן מול הספר: ראו ../AUDIT_2026-11-05.md.

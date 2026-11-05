@@ -37,7 +37,7 @@ function boot(): void {
   const dialogue = new DialogueUI();
   dialogue.subtitles = save.data.settings.subtitles;
   dialogue.look = save.data.look;
-  dialogue.voice = createVoicePlayer(() => save.data.settings.sfxOn, () => save.data.settings.sfxVol);
+  dialogue.voice = createVoicePlayer(() => save.data.settings.sfxOn, () => save.data.settings.sfxVol, (on) => audio.duck(on));
   audio.configure({ musicOn: save.data.settings.musicOn, sfxOn: save.data.settings.sfxOn, musicVol: save.data.settings.musicVol, sfxVol: save.data.settings.sfxVol });
   // sound can start only after a tap: the first one anywhere does it; every button also clicks softly
   const unlock = (): void => audio.unlock();

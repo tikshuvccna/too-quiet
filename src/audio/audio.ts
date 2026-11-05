@@ -74,6 +74,7 @@ export class AudioHub {
   private sight = false;
   private boss = false;
   private held = false;
+  private ducked = false;
   /** Moods that have a recorded track in assets/music (listed in index.json); the rest use the generated score. */
   private recorded = new Set<string>();
 
@@ -124,7 +125,7 @@ export class AudioHub {
   private applyVolumes(): void {
     if (!this.ctx) return;
     const t = this.ctx.currentTime;
-    this.musicBus.gain.setTargetAtTime(this.settings.musicOn && !this.held ? this.settings.musicVol : 0, t, 0.1);
+    this.musicBus.gain.setTargetAtTime(this.settings.musicOn && !this.held ? this.settings.musicVol * (this.ducked ? 0.3 : 1) : 0, t, 0.15);
     this.sfxBus.gain.setTargetAtTime(this.settings.sfxOn ? this.settings.sfxVol : 0, t, 0.05);
   }
 
@@ -137,6 +138,8 @@ export class AudioHub {
   }
   setSight(on: boolean): void { this.sight = on; this.resolve(); }
   setBoss(on: boolean): void { this.boss = on; this.resolve(); }
+  /** Lower the music while a recorded voice line is playing. */
+  duck(on: boolean): void { this.ducked = on; this.applyVolumes(); }
   /** Silence the music while a video plays. */
   hold(on: boolean): void { this.held = on; this.applyVolumes(); }
 

@@ -366,6 +366,67 @@
 .dye-swatch.goal { border-radius: 18px; }
 .dye-bottle, .npcg-basket { border-width: 4px; }
 
+/* fireflies */
+.fly-pond { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; justify-items: center; padding: 16px; border-radius: 20px; background: radial-gradient(circle at 50% 40%, #1c2a4a, #0b1022); border: 2px solid var(--gold); }
+.fly-pond.n4 { grid-template-columns: repeat(2, 1fr); max-width: 260px; margin: 0 auto; width: 100%; }
+.fly { width: 64px; height: 64px; border-radius: 50%; border: 3px solid #5a6a3a; background: #2a3320; cursor: pointer; transition: background .15s, box-shadow .15s, border-color .15s; touch-action: manipulation; }
+.fly.lit { background: #fff3a0; border-color: #ffe45c; box-shadow: 0 0 28px 10px rgba(255, 228, 92, .65); }
+.fly-jarrow { display: flex; gap: 12px; align-items: center; justify-content: center; }
+.fly-jar { display: flex; gap: 8px; padding: 6px 12px; border-radius: 10px 10px 18px 18px; border: 2px solid var(--line); background: rgba(255, 255, 255, .06); }
+.fly-dot { width: 14px; height: 14px; border-radius: 50%; background: #3a3f55; }
+.fly-dot.full { background: #ffe45c; box-shadow: 0 0 10px 3px rgba(255, 228, 92, .6); }
+.fly-msg { min-height: 1.5em; }
+
+/* cake decoration */
+.cake-cols { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; text-align: center; }
+.cake-col { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.cake-box { display: grid; grid-template-columns: repeat(var(--cols, 4), 48px); gap: 8px; padding: 12px; border-radius: 18px; background: #f6e3c8; border: 3px solid #d9a066; transition: filter .3s; }
+.cake-box.mine { background: #fbe8ee; border-color: #e08aa3; }
+.cake-box.veiled { filter: blur(7px) brightness(.8); }
+.cake-slot { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border-radius: 50%; background: rgba(255, 255, 255, .7); border: 2px dashed #c9a27a; padding: 0; cursor: pointer; touch-action: manipulation; }
+.cake-slot.ref { cursor: default; border-style: solid; }
+.cake-pick { min-width: 60px; min-height: 56px; font-size: 1.6rem; padding: 0 10px; border-width: 3px; }
+.cake-pick.on { border-color: var(--gold); background: rgba(255, 215, 120, .25); }
+.cake-palette { margin-top: 6px; }
+
+/* bridge building */
+.bridge-wrap { width: 100%; max-width: 520px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); touch-action: none; user-select: none; }
+.bridge-svg { display: block; width: 100%; height: auto; max-height: min(46vh, 340px); }
+.bridge-link { stroke: rgba(255, 255, 255, .35); stroke-width: 3; stroke-dasharray: 6 6; stroke-linecap: round; }
+.bridge-link.on { stroke: #b07a3c; stroke-width: 9; stroke-dasharray: none; }
+.bridge-hit { stroke: transparent; stroke-width: 26; cursor: pointer; }
+.bridge-tag { cursor: pointer; }
+.bridge-tag circle { fill: #14203a; stroke: rgba(255, 255, 255, .5); stroke-width: 1.5; }
+.bridge-tag.on circle { fill: #7a4f22; stroke: #f3d9a0; }
+.bridge-tag text { fill: #fff; font-size: 13px; font-weight: 700; text-anchor: middle; pointer-events: none; }
+.bridge-house { font-size: 18px; text-anchor: middle; pointer-events: none; }
+.npcg-status.bad { color: #ff9a8a; }
+
+.npcg-split { display: flex; flex-direction: column; gap: 12px; }
+.npcg-side { display: flex; flex-direction: column; gap: 6px; }
+@media (max-width: 420px) {
+  .cake-box { grid-template-columns: repeat(var(--cols, 4), 40px); gap: 6px; padding: 8px; }
+  .cake-slot { width: 40px; height: 40px; font-size: 1.3rem; }
+  .cake-pick { min-height: 48px; }
+  .npcg-side .npcg-row { margin-top: 2px; }
+}
+
+/* short landscape screens: keep the little games on one screen */
+@media (max-height: 460px) {
+  .npcg-split { flex-direction: row; align-items: center; gap: 14px; }
+  .npcg-split > :first-child { flex: 0 1 58%; }
+  .npcg-side { flex: 1; }
+  .bridge-svg { max-height: 220px; }
+  .cake-box { grid-template-columns: repeat(var(--cols, 4), 34px); gap: 5px; padding: 8px; }
+  .cake-slot { width: 34px; height: 34px; font-size: 1.15rem; }
+  .cake-cols { gap: 10px; flex-wrap: nowrap; }
+  .cake-pick { min-height: 44px; min-width: 52px; font-size: 1.3rem; }
+  .fly { width: 46px; height: 46px; }
+  .fly-pond { gap: 8px; padding: 10px; }
+  .npcg-row { margin-top: 6px; }
+  .npcg-big { min-height: 44px; }
+}
+
 /* wiring mini-game */
 .lrn-wire { display: flex; flex-direction: column; gap: 10px; }
 .lrn-wire-banner { padding: 10px 14px; border-radius: 14px; background: rgba(8, 9, 24, .82); border: 1px solid var(--line); text-align: center; }
