@@ -36,7 +36,7 @@ function boot(): void {
   dialogue.subtitles = save.data.settings.subtitles;
   dialogue.look = save.data.look;
   const quality = new QualityManager(save);
-  const fpsMeter = new FpsMeter();
+  const fpsMeter = new FpsMeter(hud.row);
   fpsMeter.show(save.data.settings.showFps);
   const head = new SkyHead();
   head.onSeen = () => bus.emit('head:seen', undefined);

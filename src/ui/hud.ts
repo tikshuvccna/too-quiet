@@ -39,6 +39,11 @@ export class Hud {
     });
   }
 
+  /** A place in the top row for small readouts (the FPS counter). */
+  get row(): HTMLElement {
+    return this.bar;
+  }
+
   setObjective(text: string): void {
     this.objective.textContent = text;
     this.objective.style.display = text ? '' : 'none';

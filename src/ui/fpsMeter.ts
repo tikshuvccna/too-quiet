@@ -1,12 +1,13 @@
-import { el, uiRoot } from './dom';
+import { el } from './dom';
 
 /** A tiny frames-per-second badge, shown only when switched on in the settings. */
 export class FpsMeter {
-  private readonly node = el('div', 'fps-badge');
+  private readonly node = el('div', 'pill fps-badge');
 
-  constructor() {
+  /** The badge lives in the HUD row, so it can never cover another control. */
+  constructor(parent: HTMLElement) {
     this.node.style.display = 'none';
-    uiRoot().append(this.node);
+    parent.append(this.node);
   }
 
   show(on: boolean): void {
