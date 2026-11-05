@@ -109,10 +109,9 @@ export class Controller {
         { speaker: '', text: 'הצריח שקט. מלמעלה, ענן ענק של חוטים מביט למטה.' },
         { speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן.' },
       ]);
-      const { openGameShell } = await import('../ui/learning');
-      const { bossData, bossGame, BOSS_LEVEL } = await import('../ui/learning/bossGame');
+      const { openBossFight } = await import('../ui/learning/bossFight');
       const result = await new Promise<{ passed: boolean }>((resolve) => {
-        openGameShell(bossGame(), bossData(), BOSS_LEVEL, this.ctx.save, { onClose: (r) => resolve(r) });
+        openBossFight(this.ctx.save, { onClose: (r) => resolve(r) });
       });
       if (!result.passed) {
         await this.ctx.dialogue.say([{ speaker: '', text: 'הראש מחכה בסבלנות. אפשר לנסות שוב מתי שרוצים.' }]);

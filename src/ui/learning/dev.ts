@@ -4,7 +4,7 @@ import { SaveStore } from '../../core/save';
 import { NPC_GAMES, openNpcGame } from '../npcgames';
 import { openShop } from '../shop';
 import { hotspotGame, sorterGame, topologyGame } from './lessonGames';
-import { BOSS_LEVEL, bossData, bossGame } from './bossGame';
+import { openBossFight } from './bossFight';
 import { loadLessonContent, openLesson, openMinigame, openMinigameMenu, openQuiz, openGameShell, loadBundle } from './index';
 
 const q = new URLSearchParams(location.search);
@@ -42,7 +42,7 @@ if (screen === 'lesson') {
   const def = kind === 'topology' ? topologyGame(topo as never) : kind === 'hotspot' ? hotspotGame(hot as never) : sorterGame(sorter as never);
   if (b) openGameShell(def, b.minigame, 'easy', save, { onClose: (r: unknown) => out(r) });
 } else if (screen === 'boss') {
-  openGameShell(bossGame(), bossData(), BOSS_LEVEL, save, { onClose: (r: unknown) => out(r) });
+  openBossFight(save, { onClose: (r) => out(r) });
 } else if (screen === 'shop') {
   save.data.coins = 100;
   void openShop(save, { onChange: () => out('changed') });
