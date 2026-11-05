@@ -4,6 +4,7 @@ import { NPC_GAMES, openNpcGame } from '../ui/npcgames';
 import { openShop } from '../ui/shop';
 import { openSettings } from '../ui/settings';
 import { perksOf } from './perks';
+import { equippedSkin } from './skins';
 import { audio } from '../audio/audio';
 import { celebrate, type CelebrateKind } from '../ui/celebrate';
 import { playCutscene } from '../ui/cutscene';
@@ -325,6 +326,7 @@ export class Controller {
                 this.ctx.session.bonus = perksOf(save).timeBonus;
                 (this.scene().get('World') as unknown as { applyAura?: () => void } | null)?.applyAura?.();
                 void (this.scene().get('World') as unknown as { applySkin?: () => Promise<void> } | null)?.applySkin?.();
+                this.ctx.dialogue.playerSheet = equippedSkin(save)?.id ?? null;
               },
             });
           }

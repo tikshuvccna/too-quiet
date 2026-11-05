@@ -37,6 +37,8 @@ export class DialogueUI {
   voice: VoicePlayer | null = null;
   names: Record<string, string> = {};
   look: 'girl' | 'boy' = 'girl';
+  /** Portrait sheet of the outfit the player wears (e.g. skin_girl_sea); the original look is used when it is missing. */
+  playerSheet: string | null = null;
 
   constructor() {
     this.box.append(this.portrait, this.who, this.txt, this.choices, this.hint);
@@ -128,13 +130,18 @@ export class DialogueUI {
   }
 
   private async setPortrait(l: Line): Promise<void> {
-    const name = portraitFor(l.speaker, this.look);
+    let name = portraitFor(l.speaker, this.look);
     if (!name) {
       this.current = null;
       this.box.classList.remove('has-portrait');
       return;
     }
-    const sheet = await loadPortrait(name);
+    let sheet: PortraitSheet | null = null;
+    if (l.speaker === 'player' && this.playerSheet) {
+      sheet = await loadPortrait(this.playerSheet);
+      if (sheet) name = this.playerSheet;
+    }
+    sheet ??= await loadPortrait(name);
     if (!sheet || !this.open) {
       this.box.classList.remove('has-portrait');
       return;

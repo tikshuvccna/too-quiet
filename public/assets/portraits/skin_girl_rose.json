@@ -1,0 +1,115 @@
+{
+ "frames": {
+  "skin_girl_rose_neutral": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 512,
+    "h": 512
+   }
+  },
+  "skin_girl_rose_happy": {
+   "frame": {
+    "x": 512,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 512,
+    "h": 512
+   }
+  },
+  "skin_girl_rose_worried": {
+   "frame": {
+    "x": 1024,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 512,
+    "h": 512
+   }
+  },
+  "skin_girl_rose_surprised": {
+   "frame": {
+    "x": 1536,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 512,
+    "h": 512
+   }
+  },
+  "skin_girl_rose_blink": {
+   "frame": {
+    "x": 0,
+    "y": 512,
+    "w": 512,
+    "h": 512
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 512,
+    "h": 512
+   },
+   "sourceSize": {
+    "w": 512,
+    "h": 512
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline v2",
+  "image": "skin_girl_rose.png",
+  "size": {
+   "w": 2048,
+   "h": 1024
+  },
+  "scale": "1",
+  "facing": "body turned ~25 deg to the viewer's left; flipX to face right",
+  "note": "<name>_blink = neutral with closed eyes (swap for 120 ms)"
+ }
+}

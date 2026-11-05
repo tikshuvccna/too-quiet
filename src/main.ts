@@ -14,6 +14,7 @@ import { HouseScene } from './scenes/HouseScene';
 import { WorldScene } from './scenes/WorldScene';
 import { DialogueUI } from './ui/dialogue';
 import { createVoicePlayer } from './ui/voice';
+import { equippedSkin } from './game/skins';
 import { el, uiRoot } from './ui/dom';
 import { Hud } from './ui/hud';
 import { Joystick } from './ui/joystick';
@@ -37,6 +38,7 @@ function boot(): void {
   const dialogue = new DialogueUI();
   dialogue.subtitles = save.data.settings.subtitles;
   dialogue.look = save.data.look;
+  dialogue.playerSheet = equippedSkin(save)?.id ?? null;
   dialogue.voice = createVoicePlayer(() => save.data.settings.sfxOn, () => save.data.settings.sfxVol, (on) => audio.duck(on));
   audio.configure({ musicOn: save.data.settings.musicOn, sfxOn: save.data.settings.sfxOn, musicVol: save.data.settings.musicVol, sfxVol: save.data.settings.sfxVol });
   // sound can start only after a tap: the first one anywhere does it; every button also clicks softly

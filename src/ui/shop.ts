@@ -8,7 +8,7 @@ export interface ShopItem {
   name: string;
   desc: string;
   price: number;
-  kind: 'aura' | 'perk' | 'food' | 'skin';
+  kind: 'aura' | 'perk' | 'food' | 'skin' | 'keepsake';
   /** Outfits only: the look (girl or boy) that can wear it. */
   look?: 'girl' | 'boy';
   /** Glow colour for auras. */
@@ -45,6 +45,16 @@ export const SHOP_ITEMS: ShopItem[] = [
   { id: 'food_berries', name: 'פירות יער (3)', desc: 'אוכל ליצורים: שלוש חפנות.', price: 15, kind: 'food', food: { key: 'food_berries', n: 3 } },
   { id: 'food_grains', name: 'גרגירי דגן (3)', desc: 'אוכל ליצורים: שלוש כפות.', price: 15, kind: 'food', food: { key: 'food_grains', n: 3 } },
   { id: 'food_honey', name: 'דבש (3)', desc: 'אוכל ליצורים: שלוש כפיות, היצורים אוהבים.', price: 20, kind: 'food', food: { key: 'food_honey', n: 3 } },
+  // keepsakes won in the side games (price 0: they show up here once won). Worn ones glow like the cloaks; the rest are trophies.
+  { id: 'k_bell_scarf', name: 'צעיף פעמונים', desc: 'פרס מקצב הפעמון: זוהר זהוב שמצלצל בשקט.', price: 0, kind: 'aura', color: 0xffd36b, rewardFlag: 'cosmetic.bell_scarf' },
+  { id: 'k_cake_hat', name: 'כובע קונדיטור', desc: 'פרס מקישוט העוגות: זוהר ורוד מתוק.', price: 0, kind: 'aura', color: 0xffb3d1, rewardFlag: 'cosmetic.cake_hat' },
+  { id: 'k_dyed_scarf', name: 'מטפחת צבעונית', desc: 'פרס מצביעת הצמר: זוהר סגלגל.', price: 0, kind: 'aura', color: 0xc08cff, rewardFlag: 'cosmetic.dyed_scarf' },
+  { id: 'k_wool_coat', name: 'מעיל צמר', desc: 'פרס מדיג עם יונה: זוהר חם בצבע חמרה.', price: 0, kind: 'aura', color: 0xe8914f, rewardFlag: 'cosmetic.wool_coat' },
+  { id: 'k_wool_gloves', name: 'כפפות צמר', desc: 'פרס ממיון הסלילים: זוהר תכלכל רך.', price: 0, kind: 'aura', color: 0x8fd6e8, rewardFlag: 'cosmetic.wool_gloves' },
+  { id: 'k_small_bench', name: 'ספסל קטן לבית', desc: 'פרס ממרוץ הסירות: מזכרת לבית.', price: 0, kind: 'keepsake', rewardFlag: 'decor.small_bench' },
+  { id: 'k_little_bridge', name: 'גשר מיניאטורי', desc: 'פרס מבניית הגשר: מזכרת לבית.', price: 0, kind: 'keepsake', rewardFlag: 'decor.little_bridge' },
+  { id: 'k_firefly_jar', name: 'צנצנת אור', desc: 'פרס מהגחליליות: מזכרת לבית.', price: 0, kind: 'keepsake', rewardFlag: 'decor.firefly_jar' },
+  { id: 'k_wool_rug', name: 'שטיח צמר לבית', desc: 'פרס ממיון הסלילים: מזכרת לבית.', price: 0, kind: 'keepsake', rewardFlag: 'decor.wool_rug' },
   ...SKINS.map((k): ShopItem => ({ id: k.id, name: `לבוש: ${k.name}`, desc: k.look === 'girl' ? 'שמלה, כיסוי ראש וצבעים חדשים לדמות.' : 'מעיל, כיסוי ראש וצבעים חדשים לדמות.', price: k.price, kind: 'skin', look: k.look })),
 ];
 
@@ -137,6 +147,7 @@ export function openShop(save: SaveStore, opts: { onChange(): void }): Promise<v
         ...group('perk', 'עזרים'),
         ...group('aura', 'הילות'),
         ...group('food', 'אוכל ליצורים'),
+        ...group('keepsake', 'מזכרות'),
         el('p', 'lrn-sub', food.length ? `אוכל ליצורים אצלכם: ${food.map(([k, n]) => `${k.replace('food_', '')} x${n}`).join(', ')}` : 'עוד אין לכם אוכל ליצורים: מצאו אותו בעצים ובמשחקוני הצד.'),
       );
     }

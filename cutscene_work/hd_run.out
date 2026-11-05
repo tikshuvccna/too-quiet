@@ -1,0 +1,43 @@
+Traceback (most recent call last):
+  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 56, in <module>
+    v = thumb_id(page, i)
+  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 33, in thumb_id
+    open_videos(page)
+    ~~~~~~~~~~~^^^^^^
+  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 28, in open_videos
+    page.wait_for_selector(flowgen.PROMPT_BOX, timeout=45000)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\sync_api\_generated.py", line 9033, in wait_for_selector
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.wait_for_selector(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 427, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 394, in wait_for_selector
+    await self._channel.send(
+        "waitForSelector", self._timeout, locals_to_params(locals())
+    )
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+Call log:
+  - waiting for locator("div[data-slate-editor=\"true\"], [contenteditable=\"true\"]") to be visible
+    - waiting for "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fflow.google.com%2F" navigation to finish...
+    - navigated to "https://flow.google.com/?pli=1"
+

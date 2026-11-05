@@ -8,14 +8,14 @@ from v2_cast import SKIN
 # id: (he name, dress, hem, apron, hair, headwear kind, color, color2)
 GIRLS = {
     'amber': ("אמבר", "#d9822b", "#f0c45a", "#f6ecd2", "#3a2418", 'hat', "#e1b865", "#8a3b1e"),
-    'sea': ("ים", "#2f5f9a", "#d8e6f0", "#f3efe4", "#1e1a1a", 'scarf', "#e8f2f6", "#5a9ad0"),
+    'sea': ("ים", "#2f5f9a", "#d8e6f0", "#f3efe4", "#1e1a1a", 'scarf', "#5a9ad0", "#f2f6fa"),
     'rose': ("ורד", "#c25a7d", "#f5d6a0", "#fff3e0", "#c9a35a", 'hat', "#f0d9a8", "#c25a7d"),
     'forest': ("יער", "#3d7a4f", "#d9b660", "#efe6c8", "#9a4a22", 'hat', "#b89a5a", "#2d5a3a"),
     'violet': ("סגול", "#7a56b0", "#e8c8f0", "#f4ecf8", "#2a1a3a", 'scarf', "#b69be0", "#f6e6a8"),
     'sun': ("שמש", "#e8b82e", "#a8521e", "#fff6dc", "#5a3020", 'hat', "#f2d27a", "#a8521e"),
     'night': ("לילה", "#243a6a", "#9ab4e8", "#cfd8ec", "#101018", 'scarf', "#2c3f78", "#ffd86a"),
     'berry': ("פירות יער", "#8a2a4a", "#e8a0b0", "#f6e4dc", "#4a2016", 'hat', "#c8a070", "#8a2a4a"),
-    'snow': ("שלג", "#8fb6d9", "#ffffff", "#ffffff", "#d8d8e0", 'scarf', "#ffffff", "#8fb6d9"),
+    'snow': ("שלג", "#8fb6d9", "#ffffff", "#ffffff", "#d8d8e0", 'scarf', "#c4dcef", "#6f9cc4"),
     'poppy': ("פרג", "#c8402e", "#f6e0a0", "#fff0d8", "#3a2014", 'hat', "#e8c878", "#2a6a4a"),
 }
 # id: (he name, coat, trousers, hair, headwear kind, color, color2)

@@ -98,5 +98,145 @@
   "sad",
   "blink",
   "truth"
+ ],
+ "skin_boy_ash": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_ember": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_gold": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_moss": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_navy": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_plum": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_rust": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_sand": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_sky": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_boy_teal": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_amber": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_berry": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_forest": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_night": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_poppy": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_rose": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_sea": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_snow": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_sun": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
+ ],
+ "skin_girl_violet": [
+  "neutral",
+  "happy",
+  "worried",
+  "surprised",
+  "blink"
  ]
 }
