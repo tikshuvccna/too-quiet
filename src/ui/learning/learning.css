@@ -331,3 +331,48 @@
 @media (prefers-reduced-motion: reduce) {
   .lrn *, .lrn *::before, .lrn *::after { animation: none !important; transition: none !important; }
 }
+
+.lrn-short { margin-top: 18px; padding: 14px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); text-align: center; }
+.lrn-short h3 { margin: 0 0 10px; font-size: 1.05rem; color: var(--gold); }
+.lrn-video { max-height: 52vh; max-width: 100%; border-radius: 14px; background: #000; }
+
+/* gate-runner mini-game stage */
+.lrn-stage { position: relative; width: 100%; height: min(68vh, 560px); min-height: 360px; overflow: hidden; border-radius: 20px; border: 2px solid var(--gold); touch-action: none; user-select: none; background: #2a2468; }
+.lrn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lrn-banner { position: absolute; left: 10px; right: 10px; bottom: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(8, 9, 24, .82); border: 1px solid var(--line); text-align: center; z-index: 3; pointer-events: none; }
+.lrn-banner p { margin: 4px 0 0; font-size: 1.05rem; line-height: 1.4; }
+.lrn-banner-n { font-size: .8rem; color: var(--gold); }
+.lrn-gate { position: absolute; left: 0; right: 0; top: 0; display: flex; z-index: 2; pointer-events: none; will-change: transform; }
+.lrn-gate-cell { flex: 1; margin: 0 4px; padding: 6px 8px; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: clamp(.78rem, 2.6vw, 1rem); line-height: 1.2; color: #1a1440; background: var(--c); border: 3px solid #fff7; border-radius: 16px 16px 6px 6px; box-shadow: 0 6px 0 rgba(0,0,0,.35); overflow: hidden; }
+.lrn-gate-cell.right { outline: 4px solid #5cf0d0; box-shadow: 0 0 24px #5cf0d0; }
+.lrn-gate-cell.wrong { filter: grayscale(.8) brightness(.7); }
+.lrn-stage-hint { position: absolute; left: 0; right: 0; bottom: 96px; text-align: center; color: #fff; font-size: .9rem; text-shadow: 0 2px 6px #000; z-index: 2; pointer-events: none; transition: opacity .4s; }
+.lrn-stage-hint.gone { opacity: 0; }
+.lrn-stage-result { position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; padding: 14px; display: flex; flex-direction: column; gap: 10px; align-items: center; background: linear-gradient(transparent, rgba(8, 9, 24, .95) 25%); }
+.lrn-gate { direction: ltr; }
+.lrn-gate-cell { direction: rtl; }
+.lrn-stage-result { background: rgba(8, 9, 24, .96); border-top: 2px solid var(--gold); padding-top: 18px; }
+
+/* NPC mini-games */
+.npcg-stage { display: flex; flex-direction: column; gap: 12px; align-items: stretch; }
+.npcg-canvas-wrap { position: relative; width: 100%; min-height: 320px; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); touch-action: none; user-select: none; }
+.npcg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.npcg-row { margin-top: 14px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.npcg-big { min-width: 140px; min-height: 64px; font-size: 1.1rem; }
+.npcg-status { text-align: center; color: var(--mute); font-size: .95rem; }
+
+.dye-row { display: flex; gap: 24px; justify-content: center; align-items: flex-end; text-align: center; }
+.dye-swatch { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--gold); box-shadow: inset 0 -8px 16px rgba(0,0,0,.25); transition: background .25s; }
+.dye-swatch.goal { border-radius: 18px; }
+.dye-bottle, .npcg-basket { border-width: 4px; }
+
+/* wiring mini-game */
+.lrn-wire { display: flex; flex-direction: column; gap: 10px; }
+.lrn-wire-banner { padding: 10px 14px; border-radius: 14px; background: rgba(8, 9, 24, .82); border: 1px solid var(--line); text-align: center; }
+.lrn-wire-banner p { margin: 4px 0 0; font-size: 1.1rem; line-height: 1.4; }
+.lrn-wire-stage { position: relative; width: 100%; height: min(52vh, 440px); min-height: 300px; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); touch-action: none; user-select: none; }
+.lrn-wire-stage .lrn-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lrn-wire-msg { min-height: 3.2em; text-align: center; padding: 8px 12px; border-radius: 12px; background: rgba(8, 9, 24, .6); color: #fff; }
+.lrn-wire-msg.warn { border: 1px solid #ff6b7d; }
+.lrn-wire-msg.good { border: 1px solid #5cf0d0; }
+.lrn-wire-controls .btn { min-height: 52px; }

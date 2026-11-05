@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "w_gears": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 212,
+    "h": 174
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 212,
+    "h": 174
+   },
+   "sourceSize": {
+    "w": 212,
+    "h": 174
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8793
+   }
+  },
+  "w_note": {
+   "frame": {
+    "x": 904,
+    "y": 0,
+    "w": 58,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 60
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9333
+   }
+  },
+  "w_clocks": {
+   "frame": {
+    "x": 728,
+    "y": 0,
+    "w": 174,
+    "h": 72
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 174,
+    "h": 72
+   },
+   "sourceSize": {
+    "w": 174,
+    "h": 72
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.5556
+   }
+  },
+  "w_bench": {
+   "frame": {
+    "x": 529,
+    "y": 0,
+    "w": 112,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 83
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8193
+   }
+  },
+  "w_tester": {
+   "frame": {
+    "x": 316,
+    "y": 0,
+    "w": 119,
+    "h": 87
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 119,
+    "h": 87
+   },
+   "sourceSize": {
+    "w": 119,
+    "h": 87
+   },
+   "anchor": {
+    "x": 0.7311,
+    "y": 0.8506
+   }
+  },
+  "x_tool_rack": {
+   "frame": {
+    "x": 214,
+    "y": 0,
+    "w": 100,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 100,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 100,
+    "h": 124
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9677
+   }
+  },
+  "x_grinder": {
+   "frame": {
+    "x": 643,
+    "y": 0,
+    "w": 83,
+    "h": 74
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 83,
+    "h": 74
+   },
+   "sourceSize": {
+    "w": 83,
+    "h": 74
+   },
+   "anchor": {
+    "x": 0.5904,
+    "y": 0.8378
+   }
+  },
+  "x_gear_bin": {
+   "frame": {
+    "x": 0,
+    "y": 176,
+    "w": 69,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 69,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 69,
+    "h": 60
+   },
+   "anchor": {
+    "x": 0.4783,
+    "y": 0.75
+   }
+  },
+  "x_anvil": {
+   "frame": {
+    "x": 71,
+    "y": 176,
+    "w": 73,
+    "h": 59
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 73,
+    "h": 59
+   },
+   "sourceSize": {
+    "w": 73,
+    "h": 59
+   },
+   "anchor": {
+    "x": 0.3425,
+    "y": 0.7966
+   }
+  },
+  "x_parts_shelf": {
+   "frame": {
+    "x": 437,
+    "y": 0,
+    "w": 90,
+    "h": 87
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 90,
+    "h": 87
+   },
+   "sourceSize": {
+    "w": 90,
+    "h": 87
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8966
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

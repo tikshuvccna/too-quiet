@@ -1,0 +1,257 @@
+{
+ "npcs": [
+  {
+   "id": "npc_innkeeper",
+   "role": "owner",
+   "house": "inn",
+   "region": "market",
+   "speaker": "innkeeper",
+   "label": "לדבר עם גברת תמר",
+   "miniGame": null,
+   "look_he": "אישה בשנות החמישים, עגלגלה וחייכנית. שמלה ארוכה עד הקרסול, חולצה עם שרוולים ארוכים, סינר ומטפחת משובצת על הראש.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_bellKeeper",
+   "role": "owner",
+   "house": "bell_tower",
+   "region": "market",
+   "speaker": "bellKeeper",
+   "label": "לדבר עם מר אליהו",
+   "miniGame": null,
+   "look_he": "גבר מבוגר ורזה, מעיל צמר ארוך, מכנסיים ארוכים וכובע צמר. ידיים גדולות ומתות שמן.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_tailor",
+   "role": "owner",
+   "house": "tailor",
+   "region": "market",
+   "speaker": "tailor",
+   "label": "לדבר עם מר ברוך",
+   "miniGame": "coin_shop",
+   "look_he": "גבר בשנות הארבעים, מידה על הכתף, חולצה לבנה ארוכה, מכנסיים ארוכים, כובע קטן ועגול.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_teacher",
+   "role": "owner",
+   "house": "school",
+   "region": "market",
+   "speaker": "teacher",
+   "label": "לדבר עם המורה שרה",
+   "miniGame": null,
+   "look_he": "אישה צעירה, שמלה ארוכה עד הקרסול, שרוולים ארוכים, כיסוי ראש כחול, גיר בכיס.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_fisher",
+   "role": "owner",
+   "house": "fisher",
+   "region": "mill",
+   "speaker": "fisher",
+   "label": "לדבר עם הדייג יונה",
+   "miniGame": "fishing",
+   "look_he": "זקן עם זקן לבן, מעיל גשם ארוך, מכנסיים ארוכים וכובע רחב. ידו על חבל.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_mender",
+   "role": "owner",
+   "house": "workshop",
+   "region": "mill",
+   "speaker": "mender",
+   "label": "לדבר עם גברת אסתר",
+   "miniGame": null,
+   "look_he": "אישה חסונה בשנות הארבעים, סינר ארוך על שמלה עד הקרסול, שרוולים ארוכים עם כפפות, מטפחת על הראש.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_librarian",
+   "role": "owner",
+   "house": "library",
+   "region": "mill",
+   "speaker": "librarian",
+   "label": "לדבר עם גברת אסנת",
+   "miniGame": null,
+   "look_he": "אישה רזה בשנות החמישים, שמלה אפורה ארוכה לקרסול, שרוולים ארוכים, כיסוי ראש אפור וצעיף, משקפיים.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_astronomer",
+   "role": "owner",
+   "house": "observatory",
+   "region": "moor",
+   "speaker": "astronomer",
+   "label": "לדבר עם גברת אילנה",
+   "miniGame": null,
+   "look_he": "אישה בשנות השלושים, שמלה כחולה ארוכה, שרוולים ארוכים, כובע רחב עם סרט כחול, מחברת ביד.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_storyteller",
+   "role": "owner",
+   "house": "stories",
+   "region": "moor",
+   "speaker": "storyteller",
+   "label": "לדבר עם דוד אפרים",
+   "miniGame": null,
+   "look_he": "גבר מבוגר ותיאטרלי, מעיל ארוך וצעיף צבעוני, מכנסיים ארוכים, כובע רחב עם נוצה.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_farmer",
+   "role": "owner",
+   "house": "farm",
+   "region": "orchard",
+   "speaker": "farmer",
+   "label": "לדבר עם אברהם",
+   "miniGame": null,
+   "look_he": "גבר שמח וחסון, חולצה ארוכה, מכנסיים ארוכים, כובע קש רחב, מזלג חציר.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_oldShepherd",
+   "role": "owner",
+   "house": "shepherd",
+   "region": "orchard",
+   "speaker": "oldShepherd",
+   "label": "לדבר עם הרועה אלעזר",
+   "miniGame": null,
+   "look_he": "זקן שקט, מעיל צמר ארוך, מכנסיים ארוכים, כובע רחב, מקל הליכה פשוט וחליל תלוי בחגורה.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_herbalist",
+   "role": "owner",
+   "house": "herbs",
+   "region": "orchard",
+   "speaker": "herbalist",
+   "label": "לדבר עם גברת מרגלית",
+   "miniGame": null,
+   "look_he": "אישה שקטה בשנות הארבעים, שמלה ירוקה ארוכה, שרוולים ארוכים, מטפחת קשורה, סל עשבים.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_fairyKeeper",
+   "role": "owner",
+   "house": "fairy",
+   "region": "woods",
+   "speaker": "fairyKeeper",
+   "label": "לדבר עם גברת זהר",
+   "miniGame": null,
+   "look_he": "אישה קטנה וזריזה, שמלה ארוכה בצבע עלים, שרוולים ארוכים, כובע רחב עם פעמון קטן.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_guildMaster",
+   "role": "owner",
+   "house": "guild",
+   "region": "coast",
+   "speaker": "guildMaster",
+   "label": "לדבר עם מר מנחם",
+   "miniGame": null,
+   "look_he": "גבר מבוגר ורשמי, גלימה ארוכה, חולצה ארוכה, מכנסיים ארוכים, כובע מעוגל וסרט גילדה.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_lightKeeper",
+   "role": "owner",
+   "house": "lighthouse",
+   "region": "coast",
+   "speaker": "lightKeeper",
+   "label": "לדבר עם הפנסאי רחמים",
+   "miniGame": null,
+   "look_he": "גבר ישר גב, מעיל ימאים ארוך, מכנסיים ארוכים, כובע ימאים, שחף על הכתף.",
+   "placement_he": "ליד דלת הבית"
+  },
+  {
+   "id": "npc_bellBoy",
+   "role": "villager",
+   "house": null,
+   "region": "market",
+   "speaker": "bellBoy",
+   "label": "לדבר עם יוסי",
+   "miniGame": "bell_rhythm",
+   "look_he": "ילד בן עשר, מעיל ארוך, מכנסיים ארוכים, כובע צמר, פעמון קטן בידו.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_cakeLady",
+   "role": "villager",
+   "house": null,
+   "region": "market",
+   "speaker": "cakeLady",
+   "label": "לדבר עם גברת דליה",
+   "miniGame": "cake_decor",
+   "look_he": "אישה עגלגלה וחמה, שמלה ארוכה לקרסול, שרוולים ארוכים, סינר לבן ומטפחת ורודה.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_boatKid",
+   "role": "villager",
+   "house": null,
+   "region": "mill",
+   "speaker": "boatKid",
+   "label": "לדבר עם גדעון",
+   "miniGame": "paper_boats",
+   "look_he": "ילד בן תשע, בגדים ארוכים בצבע אדמה, כובע רחב, סירת נייר בידו.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_fireflyGirl",
+   "role": "villager",
+   "house": null,
+   "region": "moor",
+   "speaker": "fireflyGirl",
+   "label": "לדבר עם רותם",
+   "miniGame": "firefly_catch",
+   "look_he": "ילדה בת אחת-עשרה, שמלה כהה ארוכה, שרוולים ארוכים, כובע רחב וצנצנת זכוכית.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_dyer",
+   "role": "villager",
+   "house": null,
+   "region": "orchard",
+   "speaker": "dyer",
+   "label": "לדבר עם גברת יהודית",
+   "miniGame": "wool_dye",
+   "look_he": "אישה בשנות השישים, שמלה ארוכה מכתמים צבעוניים, שרוולים ארוכים, מטפחת כחולה.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_spoolWoman",
+   "role": "villager",
+   "house": null,
+   "region": "orchard",
+   "speaker": "spoolWoman",
+   "label": "לדבר עם גברת לאה",
+   "miniGame": "spool_sort",
+   "look_he": "אישה צעירה, שמלה ארוכה, שרוולים ארוכים, כיסוי ראש צהוב, סל סלילים.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_bridgeBuilder",
+   "role": "villager",
+   "house": null,
+   "region": "woods",
+   "speaker": "bridgeBuilder",
+   "label": "לדבר עם מר בנימין",
+   "miniGame": "bridge_build",
+   "look_he": "גבר חסון בשנות החמישים, חולצת עבודה ארוכה, מכנסיים ארוכים, כובע רחב, קרשים על הכתף.",
+   "placement_he": "בשביל בין הבתים באזור"
+  },
+  {
+   "id": "npc_dockHand",
+   "role": "villager",
+   "house": null,
+   "region": "coast",
+   "speaker": "dockHand",
+   "label": "לדבר עם מר צבי",
+   "miniGame": null,
+   "look_he": "גבר מבוגר, מעיל ימאים ארוך, מכנסיים ארוכים, כובע ימאים, חבל מגולגל על הכתף.",
+   "placement_he": "בשביל בין הבתים באזור"
+  }
+ ]
+}

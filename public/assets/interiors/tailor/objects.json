@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "t_shop": {
+   "frame": {
+    "x": 214,
+    "y": 0,
+    "w": 74,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 74,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 74,
+    "h": 134
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.3657
+   }
+  },
+  "t_list": {
+   "frame": {
+    "x": 645,
+    "y": 0,
+    "w": 48,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 70
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9429
+   }
+  },
+  "t_threads": {
+   "frame": {
+    "x": 695,
+    "y": 0,
+    "w": 56,
+    "h": 59
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 59
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 59
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7627
+   }
+  },
+  "t_mannequin": {
+   "frame": {
+    "x": 368,
+    "y": 0,
+    "w": 47,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 47,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 47,
+    "h": 112
+   },
+   "anchor": {
+    "x": 0.4681,
+    "y": 0.8571
+   }
+  },
+  "t_basket": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 54,
+    "h": 244
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 54,
+    "h": 244
+   },
+   "sourceSize": {
+    "w": 54,
+    "h": 244
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9918
+   }
+  },
+  "x_cloth_shelf": {
+   "frame": {
+    "x": 56,
+    "y": 0,
+    "w": 156,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 156,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 156,
+    "h": 144
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9236
+   }
+  },
+  "x_cutting_table": {
+   "frame": {
+    "x": 521,
+    "y": 0,
+    "w": 122,
+    "h": 77
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 77
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 77
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7792
+   }
+  },
+  "x_sewing": {
+   "frame": {
+    "x": 453,
+    "y": 0,
+    "w": 66,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 66,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 66,
+    "h": 80
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8625
+   }
+  },
+  "x_mirror": {
+   "frame": {
+    "x": 290,
+    "y": 0,
+    "w": 76,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 76,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 76,
+    "h": 131
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8626
+   }
+  },
+  "x_hat_stand": {
+   "frame": {
+    "x": 417,
+    "y": 0,
+    "w": 34,
+    "h": 95
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 95
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 95
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8842
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

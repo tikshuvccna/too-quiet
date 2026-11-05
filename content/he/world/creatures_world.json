@@ -1,0 +1,281 @@
+{
+ "note": "12 new small creatures and 2 new legendary ones. They do not repeat the 12 + 3 in public/assets/creatures/index.json. Fields name_he, concept_he, legend_he, legendary follow CreatureInfo in src/content/index.ts. Extra fields: id, idea_he, fact_he, region, habitat_he, timeOfDay, meet_he, food, patience_sec, truth_he, futureLesson, look_he. Befriending: no weapons, never a chase. Food comes from NPC mini-games or shops, fixed amounts, no randomness.",
+ "foods": {
+  "crumbs": "פירורי לחם",
+  "honey": "טיפת דבש",
+  "mint": "עלי נענע",
+  "apple": "פרוסת תפוח",
+  "seeds": "גרעינים",
+  "berries": "פירות יער",
+  "stream_water": "מי נחל בכד",
+  "light_seeds": "זרעי אור"
+ },
+ "creatures": {
+  "address_turtle": {
+   "name_he": "צב הכתובת",
+   "concept_he": "כתובת IP (IP address): על השריון שלו ארבעה מספרים, ולכן הדואר תמיד מוצא אותו.",
+   "idea_he": "כתובת",
+   "fact_he": "כתובת IPv4 מורכבת מארבעה מספרים בין 0 ל-255.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "mill",
+   "habitat_he": "גדת הנחל ליד בית הדייג",
+   "timeOfDay": "day",
+   "meet_he": "יושבים שקט על הגדה, ומניחים פרוסת תפוח. הוא בא לאט.",
+   "food": [
+    "apple"
+   ],
+   "patience_sec": 6,
+   "truth_he": "המספרים על השריון מתחלפים בלי הפסקה, כאילו הוא שוכח איפה גר.",
+   "futureLesson": 17,
+   "look_he": "צב ירוק קטן עם שריון עגול ועליו ארבעה מספרים חרוטים בזהב."
+  },
+  "bit_rabbit": {
+   "name_he": "ארנבון הביט",
+   "concept_he": "ביט (Bit): שתי אוזניים, או למעלה או למטה. שני מצבים בלבד, ומהם בונים הכול.",
+   "idea_he": "ביט",
+   "fact_he": "ביט הוא ספרה בינארית אחת: 0 או 1. שמונה ביטים הם בייט.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "moor",
+   "habitat_he": "הדשא שליד האבנים העומדות",
+   "timeOfDay": "dawn",
+   "meet_he": "באים עם שחר, מחכים בלי לזוז, ומניחים נענע על האבן.",
+   "food": [
+    "mint"
+   ],
+   "patience_sec": 8,
+   "truth_he": "שתי האוזניים קבועות כלפי מטה, והוא מביט אל השמיים בלי למצמץ.",
+   "futureLesson": 12,
+   "look_he": "ארנבון לבן קטן, אוזן אחת זוהרת באפס ואחת באחד, כשהן מתחלפות."
+  },
+  "gateway_doe": {
+   "name_he": "איילת השער",
+   "concept_he": "שער ברירת מחדל (Default gateway): היא עומדת בפתח הגדר, וכל מי שרוצה לצאת מהכפר עובר דרכה.",
+   "idea_he": "שער לעולם",
+   "fact_he": "כדי לצאת מהרשת המקומית, מכשיר שולח את ההודעה אל שער ברירת המחדל, בדרך כלל נתב.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "orchard",
+   "habitat_he": "הפתח בגדר ליד צריף הרועה",
+   "timeOfDay": "day",
+   "meet_he": "עומדים ליד הגדר, מניחים פירות יער בפתח, ומפנים אליה את הגב.",
+   "food": [
+    "berries"
+   ],
+   "patience_sec": 7,
+   "truth_he": "הפתח בגדר מוביל לקיר ערפל. היא עומדת ושומרת עליו, כמו שאומרים לה.",
+   "futureLesson": 21,
+   "look_he": "איילה שחומה ועדינה עם קשת כחולה על הצוואר, עומדת בפתח של שער עץ."
+  },
+  "queue_squirrel": {
+   "name_he": "סנאי התור",
+   "concept_he": "תור (Queue): הוא מסדר אצטרובלים בשורה ומעביר אחד אחד, כדי שלא יפלו.",
+   "idea_he": "תור וחציצה",
+   "fact_he": "כשהרבה הודעות מגיעות יחד, מכשיר מחזיק אותן בתור וטיפול בהן בסדר.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "market",
+   "habitat_he": "הענפים מעל שורת הדוכנים",
+   "timeOfDay": "day",
+   "meet_he": "עומדים בתור ליד הדוכן, ומניחים גרעינים. הוא בא כשיש סדר.",
+   "food": [
+    "seeds"
+   ],
+   "patience_sec": 5,
+   "truth_he": "האצטרובלים תקועים בשורה אחת ארוכה שלא זזה כבר שנים.",
+   "futureLesson": null,
+   "look_he": "סנאי חום עם זנב עבות, ושורה של אצטרובלים קטנים על ענף לפניו."
+  },
+  "stream_fish": {
+   "name_he": "דג הזרם",
+   "concept_he": "רוחב פס (Bandwidth): כמה דגים חולפים בשנייה תלוי ברוחב הנחל.",
+   "idea_he": "קצב העברה",
+   "fact_he": "רוחב פס מתאר כמה מידע אפשר להעביר בשנייה בחיבור.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "mill",
+   "habitat_he": "הנחל שליד טחנת המים",
+   "timeOfDay": "day",
+   "meet_he": "מניחים פירורי לחם בקצה הרציף ומחכים שיצטופף עם חבריו.",
+   "food": [
+    "crumbs"
+   ],
+   "patience_sec": 6,
+   "truth_he": "הנחל מצטמצם לחוט דק. הדג שוחה בו לבד.",
+   "futureLesson": null,
+   "look_he": "דג כחול מנצנץ עם סנפירים רחבים וקשקשים כמו מרצפות קטנות."
+  },
+  "thunder_frog": {
+   "name_he": "צפרדע הברק",
+   "concept_he": "השהיה (Latency): היא רואה את הברק, ורק אחרי רגע שומעת את הרעם. הזמן ביניהם הוא ההשהיה.",
+   "idea_he": "זמן עיכוב",
+   "fact_he": "השהיה היא הזמן שעובר מרגע השליחה עד הרגע שהמידע מגיע.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "coast",
+   "habitat_he": "הסלעים ליד הרציף, בערב",
+   "timeOfDay": "dusk",
+   "meet_he": "סופרים בקול עד שלוש, ומניחים טיפת דבש על העלה שלה.",
+   "food": [
+    "honey"
+   ],
+   "patience_sec": 5,
+   "truth_he": "הרעם מגיע לפני הברק. הצפרדע מבולבלת וקופצת לאחור.",
+   "futureLesson": null,
+   "look_he": "צפרדע ירוקה-צהובה עם בטן שמשנה צבע, יושבת על עלה גדול."
+  },
+  "handshake_dove": {
+   "name_he": "יונת הלחיצה",
+   "concept_he": "לחיצת יד (Handshake): היא אומרת שלום, מקבלת תשובה, ורק אז מתחילה לדבר.",
+   "idea_he": "שלושה צעדים לפני שמדברים",
+   "fact_he": "ב-TCP פותחים חיבור בשלושה צעדים לפני שמעבירים מידע.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "market",
+   "habitat_he": "גג מגדל הפעמון",
+   "timeOfDay": "dawn",
+   "meet_he": "אומרים שלום בקול רך, ממתינים לנקישה, ואז מניחים פירורי לחם.",
+   "food": [
+    "crumbs"
+   ],
+   "patience_sec": 6,
+   "truth_he": "היא אומרת שלום ולא מקבלת תשובה. שוב ושוב, בלי הפסקה.",
+   "futureLesson": null,
+   "look_he": "יונה לבנה עם טבעת כחולה על הרגל, מרימה כנף אחת בשלום."
+  },
+  "cocoon_worm": {
+   "name_he": "זחל הפקעות",
+   "concept_he": "עטיפה (Encapsulation): פקעת בתוך פקעת בתוך פקעת, ובכל פקעת כתובת אחרת.",
+   "idea_he": "שכבות עוטפות",
+   "fact_he": "בשליחה, כל שכבה מוסיפה לנתונים כותרת משלה.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "woods",
+   "habitat_he": "הענפים הנמוכים ליד בית העץ של הפיות",
+   "timeOfDay": "day",
+   "meet_he": "מניחים עלה נענע על הענף, ומביטים בפקעות שלו בשקט.",
+   "food": [
+    "mint"
+   ],
+   "patience_sec": 8,
+   "truth_he": "הפקעות סגורות כל כך חזק, שאי אפשר לדעת מה בפנים. גם הוא לא יודע.",
+   "futureLesson": 8,
+   "look_he": "זחל מעוגל וצהוב, עטוף בשלוש פקעות שקופות בצבעים שונים."
+  },
+  "count_butterfly": {
+   "name_he": "פרפר הספירה",
+   "concept_he": "זמן חיים (TTL): על כנפיו כמה ספרות. בכל תחנה הוא מאבד אחת, ובאפס הוא נעלם.",
+   "idea_he": "מספר קפיצות מרבי",
+   "fact_he": "הודעה ברשת נושאת מונה שקטן בכל נתב, כדי שלא תשוטט לנצח.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "woods",
+   "habitat_he": "קרחת היער עם קרני השמש",
+   "timeOfDay": "day",
+   "meet_he": "עומדים בקרן אור, מניחים פרוסת תפוח על אבן, ולא מזיזים יד.",
+   "food": [
+    "apple"
+   ],
+   "patience_sec": 7,
+   "truth_he": "המספר על כנפיו לא יורד. הוא מרחף תקוע על הספרה האחרונה.",
+   "futureLesson": 22,
+   "look_he": "פרפר בגודל כף יד עם כנפיים כחולות ועליהן ספרות זוהרות."
+  },
+  "backup_lizard": {
+   "name_he": "לטאת הגיבוי",
+   "concept_he": "גיבוי ונתיב חלופי (Redundancy): אם הזנב נקטע, יש עוד אחד שמחכה.",
+   "idea_he": "עמידות",
+   "fact_he": "בנתיב חלופי, כשחיבור אחד נופל, ההודעה עוברת בחיבור אחר.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "orchard",
+   "habitat_he": "קיר האבן ליד גן העשבים",
+   "timeOfDay": "day",
+   "meet_he": "מניחים פירות יער על האבן החמה, ומתיישבים צד אל צד עם הקיר.",
+   "food": [
+    "berries"
+   ],
+   "patience_sec": 6,
+   "truth_he": "יש לה רק זנב אחד, והיא מחזיקה אותו חזק ולא עוזבת.",
+   "futureLesson": null,
+   "look_he": "לטאה ירוקה קטנה עם שני זנבות קצרים, אחד זהוב ואחד כחול."
+  },
+  "bridge_beetle": {
+   "name_he": "חיפושית הגשר",
+   "concept_he": "התנגשות (Collision): שתי חיפושיות נפגשות באמצע גשר צר, מתרחקות, וממתינות זמן אקראי לפני שמנסות שוב.",
+   "idea_he": "מדיה משותפת והמתנה",
+   "fact_he": "כשכמה מכשירים חולקים אותו ערוץ, שידור בו-זמני גורם להתנגשות, וממתינים לפני ניסיון חוזר.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "mill",
+   "habitat_he": "הגשר הקטן שעל הנחל",
+   "timeOfDay": "day",
+   "meet_he": "מחכים בצד הגשר ומניחים גרעינים. נותנים לה לעבור ראשונה.",
+   "food": [
+    "seeds"
+   ],
+   "patience_sec": 5,
+   "truth_he": "שתיהן עומדות באמצע הגשר, והגשר הזה לא נגמר.",
+   "futureLesson": 16,
+   "look_he": "חיפושית עגולה אדומה עם נקודות כחולות, ולצידה חברה זהה."
+  },
+  "door_mouse": {
+   "name_he": "עכבר הדלתות",
+   "concept_he": "פתח (Port): בבית אחד הרבה דלתות, ולכל דלת מספר. לכל שירות דלת משלו.",
+   "idea_he": "מספר פתח",
+   "fact_he": "מספר פתח (port) קובע לאיזו תוכנה במחשב מיועדת ההודעה.",
+   "legend_he": null,
+   "legendary": false,
+   "region": "hearth",
+   "habitat_he": "הסמטאות שמאחורי בית הדפוס",
+   "timeOfDay": "night",
+   "meet_he": "יושבים בסמטה כשחשוך, מניחים פירורי לחם, ופונים אל הדלת, לא אליו.",
+   "food": [
+    "crumbs"
+   ],
+   "patience_sec": 8,
+   "truth_he": "רוב הדלתות סגורות ומדובקות. רק אחת פתוחה, והוא יושב לידה.",
+   "futureLesson": null,
+   "look_he": "עכבר אפור עם מעיל קטן וצרור מפתחות זעיר סביב הצוואר."
+  },
+  "glass_stag": {
+   "name_he": "איל הזכוכית",
+   "concept_he": "סיב אופטי (Fiber): אור שעובר בתוך חוט זכוכית דק, מהר ורחוק, כמעט בלי להתעייף.",
+   "idea_he": "אור בחוט",
+   "fact_he": "בסיב אופטי המידע עובר כאור בתוך סיב זכוכית או פלסטיק דק.",
+   "legend_he": "מספרים שהוא נולד ממגדלור כשהאור עבר דרך עין זכוכית. רץ בין חופים בלי להשאיר עקבות, ובקרניו נשאר אור ישן.",
+   "legendary": true,
+   "region": "coast",
+   "habitat_he": "הצוק שמאחורי המגדלור",
+   "timeOfDay": "night",
+   "meet_he": "מגיעים בלילה כשהאור פונה לים, מניחים זרעי אור על הצוק, ומחכים ללא תנועה.",
+   "food": [
+    "light_seeds"
+   ],
+   "patience_sec": 10,
+   "truth_he": "הקרניים שבורות, והאור שבהן נעצר באמצע ההולכה.",
+   "futureLesson": 10,
+   "look_he": "איל גבוה עם קרניים מזכוכית שקופה, שזוהרות מבפנים, פרווה חלבית."
+  },
+  "path_oak": {
+   "name_he": "אלון הנתיבים",
+   "concept_he": "נתיבים חלופיים (Alternate paths): אם ענף נשבר, יש עוד ענף ועוד דרך אל העלה.",
+   "idea_he": "היררכיה ועמידות",
+   "fact_he": "רשת בנויה בדרך כלל בהיררכיה, ובמקומות חשובים מוסיפים נתיב נוסף למקרה תקלה.",
+   "legend_he": "אלון עתיק שהולך כשאף אחד לא רואה. כל ענף נושא שביל, וכל שביל מגיע לכפר אחר. כשנחתך בו ענף, צמח אחר.",
+   "legendary": true,
+   "region": "woods",
+   "habitat_he": "קרחת ליד הגזע הענק, בלב יער הלחישות",
+   "timeOfDay": "dawn",
+   "meet_he": "מגיעים עם שחר, מגישים כד מי נחל אל שורשיו, ומתיישבים ליד.",
+   "food": [
+    "stream_water"
+   ],
+   "patience_sec": 10,
+   "truth_he": "ענף אחד חתוך חלק, והאלון מחזיק אותו בענף אחר ולא רוצה להרפות.",
+   "futureLesson": null,
+   "look_he": "אלון עצום עם פנים שקטים בגזע, ענפים כמו שבילים, ועלים בצבעי סתיו."
+  }
+ }
+}

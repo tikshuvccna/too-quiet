@@ -94,12 +94,35 @@ export class Atmosphere {
     }
   }
 
+  /** Chimney smoke for buildings that are not in the village layout (offsets in px from the anchor). */
+  addSmoke(x: number, y: number, offsets: Array<{ x: number; y: number }>): void {
+    for (const s of offsets) {
+      this.smokeTimers.push(this.scene.time.addEvent({ delay: 1000 + (x % 500), loop: true, callback: () => this.puff(x + s.x, y + s.y) }));
+    }
+  }
+
+  private smokeOn = true;
+  private motesMax = 46;
+  private cloudsMax = 7;
+  private raysOn = true;
+
+  /** Fewer clouds, rays, dust and smoke on weaker devices. */
+  setQuality(p: { clouds: number; rays: boolean; motes: number; smoke: boolean }): void {
+    this.smokeOn = p.smoke;
+    this.motesMax = p.motes;
+    this.cloudsMax = p.clouds;
+    this.raysOn = p.rays;
+    this.clouds.forEach((c, i) => { c.img.setVisible(i < p.clouds); c.shadow.setVisible(i < p.clouds); });
+    this.rays.forEach((r) => r.setVisible(p.rays));
+    this.lamps.forEach((l) => l.setVisible(true));
+  }
+
   private truthNow = 0;
 
   private puff(x: number, y: number): void {
     const cam = this.scene.cameras.main;
     const v = cam.worldView;
-    if (this.truthNow > 0.5 || x < v.x - 200 || x > v.right + 200 || y < v.y - 400 || y > v.bottom + 200) return;
+    if (!this.smokeOn || this.truthNow > 0.5 || x < v.x - 200 || x > v.right + 200 || y < v.y - 400 || y > v.bottom + 200) return;
     const p = this.scene.add.image(x, y, 'fx', `smoke_${Phaser.Math.Between(0, 9)}`).setScale(0.35).setAlpha(0.6).setDepth(y + 400);
     this.scene.tweens.add({
       targets: p, y: y - 110, x: x + 30 + Math.random() * 30, scale: 1.25, alpha: 0, duration: 3200, ease: 'sine.out',
@@ -115,16 +138,18 @@ export class Atmosphere {
     // the truth is always dim and cold: pull the sky towards a flat grey-blue
     this.tint.setFillStyle(lerpHex(skyColor(this.tod), 0xb8c0d8, Math.min(1, truth * 0.8)));
 
-    for (const c of this.clouds) {
+    for (const [ci, c] of this.clouds.entries()) {
+      if (ci >= this.cloudsMax) continue;
       c.img.x += c.speed * dt;
       if (c.img.x > WORLD.w + 500) c.img.x = -500;
       c.shadow.x = c.img.x + 160;
       c.img.setAlpha(0.34 - 0.12 * night).setTint(lerpHex(0xffffff, 0x4e5678, Math.min(1, truth * 0.9 + night * 0.5)));
       c.shadow.setAlpha(0.2 * (1 - night * 0.5));
     }
-    for (const r of this.rays) r.setAlpha(0.22 * (1 - night) * (1 - truth));
+    for (const r of this.rays) if (this.raysOn) r.setAlpha(0.22 * (1 - night) * (1 - truth));
     const t = this.scene.time.now / 1000;
-    for (const m of this.motes) {
+    for (const [mi, m] of this.motes.entries()) {
+      if (mi >= this.motesMax) { m.img.setVisible(false); continue; }
       const dx = Math.sin(t * 0.25 + m.ph) * 90;
       const dy = Math.cos(t * 0.21 + m.ph * 1.3) * 70;
       m.img.setPosition(m.ox + dx, m.oy + dy);

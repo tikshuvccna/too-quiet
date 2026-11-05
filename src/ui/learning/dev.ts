@@ -1,7 +1,9 @@
 // Dev harness for the learning screens: ?screen=lesson&step=3 | quiz | game&level=hard | menu
 import '../../styles.css';
 import { SaveStore } from '../../core/save';
-import { loadLessonContent, openLesson, openMinigame, openMinigameMenu, openQuiz } from './index';
+import { NPC_GAMES, openNpcGame } from '../npcgames';
+import { openShop } from '../shop';
+import { loadLessonContent, openLesson, openMinigame, openMinigameMenu, openQuiz, openGameShell, wiringGame } from './index';
 
 const q = new URLSearchParams(location.search);
 const save = new SaveStore(null);
@@ -18,7 +20,14 @@ if (screen === 'lesson') {
 } else if (screen === 'quiz') {
   openQuiz(content.quiz, save, { onClose: (r) => out(r) });
 } else if (screen === 'game') {
-  openMinigame(content.minigame, (q.get('level') ?? 'easy') as 'easy', save, { onClose: (r) => out(r) });
+  const lvl = (q.get('level') ?? 'easy') as 'easy';
+  if (content.minigame.wiring) openGameShell(wiringGame(content.minigame.wiring, content.minigame), content.minigame, lvl, save, { onClose: (r: unknown) => out(r) });
+  else openMinigame(content.minigame, lvl, save, { onClose: (r) => out(r) });
+} else if (screen === 'shop') {
+  save.data.coins = 100;
+  void openShop(save, { onChange: () => out('changed') });
+} else if (screen === 'npc') {
+  void openNpcGame(NPC_GAMES[q.get('id') ?? 'npc_bellBoy']!, save, q.has('calm'));
 } else {
   openMinigameMenu(content.minigame, save, { onClose: () => out('menu closed') });
 }

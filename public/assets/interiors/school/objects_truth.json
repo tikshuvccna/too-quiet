@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "s_board_truth": {
+   "frame": {
+    "x": 124,
+    "y": 0,
+    "w": 202,
+    "h": 165
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 202,
+    "h": 165
+   },
+   "sourceSize": {
+    "w": 202,
+    "h": 165
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9455
+   }
+  },
+  "s_drawings_truth": {
+   "frame": {
+    "x": 850,
+    "y": 0,
+    "w": 134,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 81
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.0247
+   }
+  },
+  "s_notes_truth": {
+   "frame": {
+    "x": 481,
+    "y": 0,
+    "w": 112,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 106
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8396
+   }
+  },
+  "s_globe_truth": {
+   "frame": {
+    "x": 716,
+    "y": 0,
+    "w": 74,
+    "h": 89
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 74,
+    "h": 89
+   },
+   "sourceSize": {
+    "w": 74,
+    "h": 89
+   },
+   "anchor": {
+    "x": 0.5135,
+    "y": 0.8652
+   }
+  },
+  "s_bench_truth": {
+   "frame": {
+    "x": 595,
+    "y": 0,
+    "w": 119,
+    "h": 94
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 119,
+    "h": 94
+   },
+   "sourceSize": {
+    "w": 119,
+    "h": 94
+   },
+   "anchor": {
+    "x": 0.4958,
+    "y": 0.8298
+   }
+  },
+  "x_desks_a_truth": {
+   "frame": {
+    "x": 0,
+    "y": 182,
+    "w": 122,
+    "h": 69
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 69
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 69
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7826
+   }
+  },
+  "x_desks_b_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 180
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 180
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 180
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9167
+   }
+  },
+  "x_bookcase_truth": {
+   "frame": {
+    "x": 385,
+    "y": 0,
+    "w": 94,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 121
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9174
+   }
+  },
+  "x_stove_truth": {
+   "frame": {
+    "x": 328,
+    "y": 0,
+    "w": 55,
+    "h": 133
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 55,
+    "h": 133
+   },
+   "sourceSize": {
+    "w": 55,
+    "h": 133
+   },
+   "anchor": {
+    "x": 0.3818,
+    "y": 0.9474
+   }
+  },
+  "x_easel_truth": {
+   "frame": {
+    "x": 792,
+    "y": 0,
+    "w": 56,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 83
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9518
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

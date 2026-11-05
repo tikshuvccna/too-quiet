@@ -2,11 +2,15 @@ import './learning.css';
 import lesson01 from '../../../content/he/lesson01.json';
 import quiz01 from '../../../content/he/quiz01.json';
 import minigame01 from '../../../content/he/minigame01.json';
+import wiring01 from '../../../content/he/wiring01.json';
+import type { WiringData } from './wiringLogic';
 import type { LessonContent, LessonData, MinigameData, QuizData } from './types';
 
 export { openLesson } from './lesson';
 export { openQuiz } from './quiz';
 export { openMinigame, openMinigameMenu } from './minigame';
+export { wiringGame } from './wiring';
+export { openGameShell } from './gameShell';
 export { applyPrize, prizeFor } from './prizes';
 export { mountWidget } from './widgets';
 export type {
@@ -18,6 +22,6 @@ export function loadLessonContent(): LessonContent {
   return {
     lesson: lesson01 as unknown as LessonData,
     quiz: quiz01 as unknown as QuizData,
-    minigame: minigame01 as unknown as MinigameData,
+    minigame: { ...(minigame01 as unknown as MinigameData), wiring: wiring01 as unknown as WiringData },
   };
 }

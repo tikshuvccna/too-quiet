@@ -1,0 +1,207 @@
+{
+ "frames": {
+  "fairy_door_tree_truth": {
+   "frame": {
+    "x": 0,
+    "y": 482,
+    "w": 252,
+    "h": 268
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 252,
+    "h": 268
+   },
+   "sourceSize": {
+    "w": 252,
+    "h": 268
+   },
+   "anchor": {
+    "x": 0.475,
+    "y": 0.8642
+   },
+   "cellBeforeTrim": [
+    288,
+    328
+   ],
+   "anchorPx": {
+    "x": 119.7,
+    "y": 231.6
+   }
+  },
+  "giant_tree_hollow_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 432,
+    "h": 480
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 432,
+    "h": 480
+   },
+   "sourceSize": {
+    "w": 432,
+    "h": 480
+   },
+   "anchor": {
+    "x": 0.4926,
+    "y": 0.854
+   },
+   "cellBeforeTrim": [
+    472,
+    568
+   ],
+   "anchorPx": {
+    "x": 212.8,
+    "y": 409.9
+   }
+  },
+  "lantern_post_b_truth": {
+   "frame": {
+    "x": 254,
+    "y": 482,
+    "w": 94,
+    "h": 172
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 172
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 172
+   },
+   "anchor": {
+    "x": 0.1521,
+    "y": 0.9471
+   },
+   "cellBeforeTrim": [
+    136,
+    216
+   ],
+   "anchorPx": {
+    "x": 14.3,
+    "y": 162.9
+   }
+  },
+  "flower_bush_truth": {
+   "frame": {
+    "x": 170,
+    "y": 752,
+    "w": 114,
+    "h": 69
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 114,
+    "h": 69
+   },
+   "sourceSize": {
+    "w": 114,
+    "h": 69
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8014
+   },
+   "cellBeforeTrim": [
+    152,
+    136
+   ],
+   "anchorPx": {
+    "x": 57.0,
+    "y": 55.3
+   }
+  },
+  "mushroom_ring_truth": {
+   "frame": {
+    "x": 0,
+    "y": 752,
+    "w": 168,
+    "h": 94
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 168,
+    "h": 94
+   },
+   "sourceSize": {
+    "w": 168,
+    "h": 94
+   },
+   "anchor": {
+    "x": 0.4982,
+    "y": 0.6362
+   },
+   "cellBeforeTrim": [
+    208,
+    144
+   ],
+   "anchorPx": {
+    "x": 83.7,
+    "y": 59.8
+   }
+  },
+  "reeds_truth": {
+   "frame": {
+    "x": 350,
+    "y": 482,
+    "w": 120,
+    "h": 119
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 119
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 119
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8008
+   },
+   "cellBeforeTrim": [
+    160,
+    168
+   ],
+   "anchorPx": {
+    "x": 60.0,
+    "y": 95.3
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "props2_truth.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 512,
+   "h": 847
+  },
+  "scale": "1",
+  "note": "anchor = ground contact point (normalised), like props.json: setOrigin(anchor.x, anchor.y). Truth frames exist for trees/lamp/plants only (<id>_truth)."
+ }
+}

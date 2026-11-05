@@ -26,11 +26,11 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
       const passed = Object.values(l.games).filter((g) => g.passed).length;
 
       const lessonBtn = el('button', 'btn primary', l.done ? 'לחזור על השיעור' : 'להתחיל את השיעור');
-      const quizBtn = el('button', 'btn', 'חידון');
-      const gameBtn = el('button', 'btn', 'משחקון בשלוש רמות');
+      const quizBtn = el('button', 'btn', 'שאלות סיכום');
+      const gameBtn = el('button', 'btn', l.quizPassed ? 'המשחקון (שלוש רמות)' : 'המשחקון (אחרי שאלות הסיכום)');
       const back = el('button', 'btn', 'חזרה לעולם');
       quizBtn.disabled = !l.done;
-      gameBtn.disabled = !l.done;
+      gameBtn.disabled = !l.done || !l.quizPassed;
 
       lessonBtn.addEventListener('click', () => {
         closeScreen();
@@ -49,7 +49,7 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
             if (r.passed && !ctx.save.hasFlag('prize.quiz')) {
               ctx.save.data.coins += QUIZ_COINS;
               ctx.save.setFlag('prize.quiz');
-              ctx.hud.toast(`עברתם את החידון! +${QUIZ_COINS} מטבעות`, 'good');
+              ctx.hud.toast(`עברתם את שאלות הסיכום! +${QUIZ_COINS} מטבעות`, 'good');
             }
             render();
           },
@@ -69,8 +69,8 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
           el('h2', '', 'הכיתה של דבורה'),
           el('p', '', content.lesson.title),
           el('p', 'class-status', l.done
-            ? `השיעור הושלם. חידון: ${l.quizPassed ? 'עבר' : 'עוד לא עבר'}. משחקון: ${passed} מתוך 3 רמות, שיא ${best} נקודות.`
-            : 'קודם לומדים, ואחר כך המחט מבינה את מה שהיא רואה. אחרי השיעור נפתחים החידון והמשחקון.'),
+            ? `השיעור הושלם. שאלות סיכום: ${l.quizPassed ? 'עברתם, והמשחקון פתוח' : 'עוד לא עברתם (צריך לעבור כדי לפתוח את המשחקון)'}. משחקון: ${passed} מתוך 3 רמות, שיא ${best} נקודות.`
+            : 'קודם לומדים, ואחר כך המחט מבינה את מה שהיא רואה. אחרי השיעור באות שאלות סיכום, ובסופן המשחקון.'),
           el('div', 'row', '', [lessonBtn, quizBtn, gameBtn, back]),
         ]),
       ]);

@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "fy_doors": {
+   "frame": {
+    "x": 383,
+    "y": 0,
+    "w": 206,
+    "h": 68
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 206,
+    "h": 68
+   },
+   "sourceSize": {
+    "w": 206,
+    "h": 68
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9118
+   }
+  },
+  "fy_blank": {
+   "frame": {
+    "x": 705,
+    "y": 0,
+    "w": 64,
+    "h": 57
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 64,
+    "h": 57
+   },
+   "sourceSize": {
+    "w": 64,
+    "h": 57
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8947
+   }
+  },
+  "fy_post": {
+   "frame": {
+    "x": 263,
+    "y": 0,
+    "w": 40,
+    "h": 86
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 40,
+    "h": 86
+   },
+   "sourceSize": {
+    "w": 40,
+    "h": 86
+   },
+   "anchor": {
+    "x": 0.45,
+    "y": 0.9302
+   }
+  },
+  "fy_lamps": {
+   "frame": {
+    "x": 118,
+    "y": 0,
+    "w": 143,
+    "h": 135
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 143,
+    "h": 135
+   },
+   "sourceSize": {
+    "w": 143,
+    "h": 135
+   },
+   "anchor": {
+    "x": 0.3776,
+    "y": 0.8889
+   }
+  },
+  "fy_stairs": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 116,
+    "h": 169
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 116,
+    "h": 169
+   },
+   "sourceSize": {
+    "w": 116,
+    "h": 169
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.929
+   }
+  },
+  "x_mushrooms_a": {
+   "frame": {
+    "x": 771,
+    "y": 0,
+    "w": 72,
+    "h": 54
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 72,
+    "h": 54
+   },
+   "sourceSize": {
+    "w": 72,
+    "h": 54
+   },
+   "anchor": {
+    "x": 0.5139,
+    "y": 0.8148
+   }
+  },
+  "x_mushrooms_b": {
+   "frame": {
+    "x": 845,
+    "y": 0,
+    "w": 72,
+    "h": 54
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 72,
+    "h": 54
+   },
+   "sourceSize": {
+    "w": 72,
+    "h": 54
+   },
+   "anchor": {
+    "x": 0.5139,
+    "y": 0.8148
+   }
+  },
+  "x_acorn_table": {
+   "frame": {
+    "x": 637,
+    "y": 0,
+    "w": 66,
+    "h": 62
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 66,
+    "h": 62
+   },
+   "sourceSize": {
+    "w": 66,
+    "h": 62
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7742
+   }
+  },
+  "x_leaf_chair": {
+   "frame": {
+    "x": 591,
+    "y": 0,
+    "w": 44,
+    "h": 64
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 44,
+    "h": 64
+   },
+   "sourceSize": {
+    "w": 44,
+    "h": 64
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9062
+   }
+  },
+  "x_fern": {
+   "frame": {
+    "x": 305,
+    "y": 0,
+    "w": 76,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 76,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 76,
+    "h": 73
+   },
+   "anchor": {
+    "x": 0.4868,
+    "y": 0.8904
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

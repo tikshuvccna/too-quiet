@@ -74,7 +74,7 @@ describe('SaveStore', () => {
   it('keeps older saves working when new fields appear', () => {
     const d = normalize({ coins: 3, settings: { subtitles: false } });
     expect(d.coins).toBe(3);
-    expect(d.settings).toEqual({ subtitles: false, sound: false });
+    expect(d.settings).toEqual({ subtitles: false, sound: false, quality: 'auto', showFps: false });
     expect(d.lessons).toEqual({});
   });
 

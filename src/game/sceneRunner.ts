@@ -22,7 +22,7 @@ export class SceneRunner {
     private readonly save: SaveStore,
     private readonly hooks: RunnerHooks,
   ) {
-    dialogue.names = SPEAKER_NAMES;
+    dialogue.names = { ...SPEAKER_NAMES, player: save.data.name || SPEAKER_NAMES.player || 'אני' };
   }
 
   async run(sceneId: string): Promise<void> {
@@ -55,7 +55,8 @@ export class SceneRunner {
     for (const st of scene.steps) {
       if ('line' in st) {
         const l = lineOf(st.line);
-        const text = this.save.data.look === 'girl' && l.textF ? l.textF : l.text;
+        const raw = this.save.data.look === 'girl' && l.textF ? l.textF : l.text;
+        const text = raw.split('{name}').join(this.save.data.name || 'אורח');
         // only now and then, when someone repeats the catchphrase, the truth shows through for a moment
         if (text.includes('הכול בסדר') && ++this.catchphrases % 3 === 2) bus.emit('truth:flash', { ms: 450 });
         await this.dialogue.say([{ id: st.line, speaker: l.speaker, text }]);

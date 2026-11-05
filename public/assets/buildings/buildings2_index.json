@@ -1,0 +1,98 @@
+{
+ "inn": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "inn",
+  "frameTruth": "inn_truth"
+ },
+ "bell_tower": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "bell_tower",
+  "frameTruth": "bell_tower_truth"
+ },
+ "tailor": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "tailor",
+  "frameTruth": "tailor_truth"
+ },
+ "school": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "school",
+  "frameTruth": "school_truth"
+ },
+ "fisher": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "fisher",
+  "frameTruth": "fisher_truth"
+ },
+ "workshop": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "workshop",
+  "frameTruth": "workshop_truth"
+ },
+ "library": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "library",
+  "frameTruth": "library_truth"
+ },
+ "observatory": {
+  "atlas": "buildings2a",
+  "atlasTruth": "buildings2a_truth",
+  "frame": "observatory",
+  "frameTruth": "observatory_truth"
+ },
+ "stories": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "stories",
+  "frameTruth": "stories_truth"
+ },
+ "farm": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "farm",
+  "frameTruth": "farm_truth"
+ },
+ "shepherd": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "shepherd",
+  "frameTruth": "shepherd_truth"
+ },
+ "herbs": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "herbs",
+  "frameTruth": "herbs_truth"
+ },
+ "fairy": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "fairy",
+  "frameTruth": "fairy_truth"
+ },
+ "guild": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "guild",
+  "frameTruth": "guild_truth"
+ },
+ "lighthouse": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "lighthouse",
+  "frameTruth": "lighthouse_truth"
+ },
+ "great_tower": {
+  "atlas": "buildings2b",
+  "atlasTruth": "buildings2b_truth",
+  "frame": "great_tower",
+  "frameTruth": "great_tower_truth"
+ }
+}

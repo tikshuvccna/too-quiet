@@ -47,6 +47,7 @@ export interface LessonStep {
   widget: WidgetDef;
   check: Check;
   recap?: string[];
+  video?: { src: string; title: string };
 }
 export interface LessonData { id: string; title: string; where?: string; estimatedMinutes?: number; steps: LessonStep[] }
 
@@ -74,6 +75,8 @@ export interface Prize {
   extra?: string;
 }
 export interface MinigameData {
+  /** When present, the level screen plays the wiring game built from this data instead of the question stage. */
+  wiring?: import('./wiringLogic').WiringData;
   id: string;
   title: string;
   story: string;

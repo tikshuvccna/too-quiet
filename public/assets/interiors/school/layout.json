@@ -1,0 +1,251 @@
+{
+ "house": "school",
+ "name": "בית הספר",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "s_board",
+   "interactive": true,
+   "nameHe": "הלוח",
+   "frame": "s_board",
+   "frameTruth": "s_board_truth",
+   "place": {
+    "x": 377.6,
+    "y": 232.0
+   },
+   "world": {
+    "x": -2.4,
+    "y": 4.45,
+    "z": 1.2
+   },
+   "wall": true,
+   "sortY": 232.0,
+   "footprintPx": null
+  },
+  {
+   "id": "s_drawings",
+   "interactive": true,
+   "nameHe": "ציורי השמיים",
+   "frame": "s_drawings",
+   "frameTruth": "s_drawings_truth",
+   "place": {
+    "x": 596.0,
+    "y": 199.9
+   },
+   "world": {
+    "x": 1.5,
+    "y": 4.45,
+    "z": 1.9
+   },
+   "wall": true,
+   "sortY": 199.9,
+   "footprintPx": null
+  },
+  {
+   "id": "s_notes",
+   "interactive": true,
+   "nameHe": "ערימת פתקים",
+   "frame": "s_notes",
+   "frameTruth": "s_notes_truth",
+   "place": {
+    "x": 377.6,
+    "y": 340.1
+   },
+   "world": {
+    "x": -2.4,
+    "y": 2.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 340.1,
+   "footprintPx": [
+    56,
+    16
+   ]
+  },
+  {
+   "id": "s_globe",
+   "interactive": true,
+   "nameHe": "גלובוס העמק",
+   "frame": "s_globe",
+   "frameTruth": "s_globe_truth",
+   "place": {
+    "x": 814.4,
+    "y": 349.7
+   },
+   "world": {
+    "x": 5.4,
+    "y": 2.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 349.7,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "s_bench",
+   "interactive": true,
+   "nameHe": "הספסל האחרון",
+   "frame": "s_bench",
+   "frameTruth": "s_bench_truth",
+   "place": {
+    "x": 680.0,
+    "y": 510.3
+   },
+   "world": {
+    "x": 3.0,
+    "y": -2.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 510.3,
+   "footprintPx": [
+    67,
+    16
+   ]
+  },
+  {
+   "id": "x_desks_a",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_desks_a",
+   "frameTruth": "x_desks_a_truth",
+   "place": {
+    "x": 310.4,
+    "y": 417.2
+   },
+   "world": {
+    "x": -3.6,
+    "y": 0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 417.2,
+   "footprintPx": [
+    78,
+    19
+   ]
+  },
+  {
+   "id": "x_desks_b",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_desks_b",
+   "frameTruth": "x_desks_b_truth",
+   "place": {
+    "x": 500.8,
+    "y": 458.9
+   },
+   "world": {
+    "x": -0.2,
+    "y": -0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 458.9,
+   "footprintPx": [
+    78,
+    19
+   ]
+  },
+  {
+   "id": "x_bookcase",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bookcase",
+   "frameTruth": "x_bookcase_truth",
+   "place": {
+    "x": 181.6,
+    "y": 317.6
+   },
+   "world": {
+    "x": -5.9,
+    "y": 3.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 317.6,
+   "footprintPx": [
+    45,
+    13
+   ]
+  },
+  {
+   "id": "x_stove",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_stove",
+   "frameTruth": "x_stove_truth",
+   "place": {
+    "x": 859.2,
+    "y": 413.9
+   },
+   "world": {
+    "x": 6.2,
+    "y": 0.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 413.9,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_easel",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_easel",
+   "frameTruth": "x_easel_truth",
+   "place": {
+    "x": 176.0,
+    "y": 494.2
+   },
+   "world": {
+    "x": -6.0,
+    "y": -2.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 494.2,
+   "footprintPx": [
+    28,
+    10
+   ]
+  }
+ ]
+}

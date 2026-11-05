@@ -4,6 +4,8 @@ import { bus } from '../core/bus';
 import { createActor, updateActor, type Actor } from '../game/actors';
 import { CTX_KEY, type GameContext } from '../game/context';
 import { TruthFx, truthLevel } from '../game/truthFx';
+import { equippedAura } from '../ui/shop';
+import { perksOf } from '../game/perks';
 
 interface RoomObject {
   id: string;
@@ -113,7 +115,7 @@ export class HouseScene extends Phaser.Scene {
       const depth = 10 + o.sortY * k;
       const img = this.add.image(x, y, `objs:${id}`, o.frame).setOrigin(a.x, a.y).setScale(k).setDepth(depth);
       this.truthImgs.push(this.add.image(x, y, `objsT:${id}`, o.frameTruth).setOrigin(a.x, a.y).setScale(k).setDepth(depth + 0.2).setAlpha(0).setVisible(false));
-      if (o.interactive && img.postFX) this.glows.set(o.id, img.postFX.addGlow(0xffd27a, 0, 0, false, 0.1, 10));
+      if (o.interactive && img.postFX && this.ctx.quality.profile.glow) this.glows.set(o.id, img.postFX.addGlow(0xffd27a, 0, 0, false, 0.1, 10));
       if (!o.wall && o.footprintPx) this.blockers.push([o.place.x - o.footprintPx[0] / 2, o.place.y - o.footprintPx[1], o.footprintPx[0], o.footprintPx[1]]);
     }
 
@@ -126,9 +128,12 @@ export class HouseScene extends Phaser.Scene {
     this.py = 548;
     this.player = createActor(this, char, this.ox + this.px * k, this.oy + this.py * k, undefined, k);
     this.placePlayer(0, 0);
+    const aura = equippedAura(this.ctx.save);
+    if (aura?.color && this.ctx.quality.profile.glow) this.player.sprite.postFX?.addGlow(aura.color, 4, 0, false, 0.1, 14);
     this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
 
     this.fx = new TruthFx(this.cameras.main);
+    this.fx.enabled = this.ctx.quality.profile.postFx;
     this.offs.push(
       bus.on('interact:use', ({ id: use }) => this.onUse(use)),
       bus.on('sight:toggle', ({ on }) => (this.sight = on)),
@@ -188,7 +193,7 @@ export class HouseScene extends Phaser.Scene {
         vy /= len;
       }
     }
-    const speed = 190;
+    const speed = 190 * perksOf(this.ctx.save).speed;
     const nx = this.px + vx * speed * dt;
     const ny = this.py + vy * speed * dt;
     if (this.walkable(nx, this.py)) this.px = nx;
@@ -206,7 +211,7 @@ export class HouseScene extends Phaser.Scene {
     for (const o of this.layout.objects) {
       if (!o.interactive) continue;
       const d = Math.hypot(o.place.x - this.px, o.place.y - this.py + 20);
-      const near = d < 95;
+      const near = d < 95 * perksOf(this.ctx.save).reach;
       const glow = this.glows.get(o.id);
       if (glow) glow.outerStrength = near ? 3 + Math.sin(this.time.now / 180) : 0;
       if (near && (!best || d < best.d)) best = { id: `obj:${this.contentId}:${o.id}`, label: this.names.get(o.id) ?? o.nameHe, d };

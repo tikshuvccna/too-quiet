@@ -1,0 +1,278 @@
+{
+ "frames": {
+  "i_board_truth": {
+   "frame": {
+    "x": 161,
+    "y": 0,
+    "w": 205,
+    "h": 147
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 205,
+    "h": 147
+   },
+   "sourceSize": {
+    "w": 205,
+    "h": 147
+   },
+   "anchor": {
+    "x": 0.3317,
+    "y": 0.966
+   }
+  },
+  "i_key_truth": {
+   "frame": {
+    "x": 432,
+    "y": 0,
+    "w": 112,
+    "h": 116
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 116
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 116
+   },
+   "anchor": {
+    "x": 0.4107,
+    "y": 0.9741
+   }
+  },
+  "i_rules_truth": {
+   "frame": {
+    "x": 264,
+    "y": 220,
+    "w": 58,
+    "h": 67
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 58,
+    "h": 67
+   },
+   "sourceSize": {
+    "w": 58,
+    "h": 67
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9254
+   }
+  },
+  "i_guestbook_truth": {
+   "frame": {
+    "x": 0,
+    "y": 220,
+    "w": 72,
+    "h": 86
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 72,
+    "h": 86
+   },
+   "sourceSize": {
+    "w": 72,
+    "h": 86
+   },
+   "anchor": {
+    "x": 0.4167,
+    "y": 0.8488
+   }
+  },
+  "i_kettle_truth": {
+   "frame": {
+    "x": 879,
+    "y": 0,
+    "w": 101,
+    "h": 89
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 101,
+    "h": 89
+   },
+   "sourceSize": {
+    "w": 101,
+    "h": 89
+   },
+   "anchor": {
+    "x": 0.6931,
+    "y": 0.8764
+   }
+  },
+  "i_lost_truth": {
+   "frame": {
+    "x": 158,
+    "y": 220,
+    "w": 104,
+    "h": 82
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 104,
+    "h": 82
+   },
+   "sourceSize": {
+    "w": 104,
+    "h": 82
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6707
+   }
+  },
+  "x_hearth_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 159,
+    "h": 218
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 159,
+    "h": 218
+   },
+   "sourceSize": {
+    "w": 159,
+    "h": 218
+   },
+   "anchor": {
+    "x": 0.4717,
+    "y": 0.9128
+   }
+  },
+  "x_long_table_truth": {
+   "frame": {
+    "x": 546,
+    "y": 0,
+    "w": 240,
+    "h": 94
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 94
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 94
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6277
+   }
+  },
+  "x_barrels_truth": {
+   "frame": {
+    "x": 788,
+    "y": 0,
+    "w": 89,
+    "h": 93
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 89,
+    "h": 93
+   },
+   "sourceSize": {
+    "w": 89,
+    "h": 93
+   },
+   "anchor": {
+    "x": 0.4719,
+    "y": 0.8495
+   }
+  },
+  "x_coat_rack_truth": {
+   "frame": {
+    "x": 368,
+    "y": 0,
+    "w": 62,
+    "h": 117
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 62,
+    "h": 117
+   },
+   "sourceSize": {
+    "w": 62,
+    "h": 117
+   },
+   "anchor": {
+    "x": 0.4194,
+    "y": 0.8974
+   }
+  },
+  "x_plant_truth": {
+   "frame": {
+    "x": 74,
+    "y": 220,
+    "w": 82,
+    "h": 85
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 82,
+    "h": 85
+   },
+   "sourceSize": {
+    "w": 82,
+    "h": 85
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8824
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 512
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

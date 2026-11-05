@@ -109,6 +109,16 @@ export function openLesson(data: LessonData, save: SaveStore, opts: { onClose(do
     return box;
   }
 
+  function renderVideo(step: LessonStep): HTMLElement | '' {
+    if (!step.video) return '';
+    const v = el('video', 'lrn-video');
+    v.src = `${import.meta.env.BASE_URL}${step.video.src}`;
+    v.controls = true;
+    v.preload = 'none';
+    v.playsInline = true;
+    return el('section', 'lrn-short', '', [el('h3', '', step.video.title), v]) as HTMLElement;
+  }
+
   function render(): void {
     const step = steps[index];
     if (!step) return;
@@ -121,7 +131,7 @@ export function openLesson(data: LessonData, save: SaveStore, opts: { onClose(do
     const widgetBox = el('section', 'lrn-widget', '', [el('h3', '', step.widget.title), host]);
     const done = el('p', 'lrn-widget-done', '');
     widgetBox.append(done);
-    body.replaceChildren(el('h2', 'lrn-step-title', step.title), text, widgetBox, renderCheck(step));
+    body.replaceChildren(el('h2', 'lrn-step-title', step.title), text, renderVideo(step), widgetBox, renderCheck(step));
     widgetCleanup = mountWidget(step.widget, host, {
       done: () => { widgetBox.classList.add('complete'); done.textContent = '✓ עשיתם את זה'; },
     });

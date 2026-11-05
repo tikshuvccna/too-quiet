@@ -1,9 +1,15 @@
 import type Phaser from 'phaser';
+import { WORLD_NPC_INFO, conversationFor } from '../content/world';
+import { NPC_GAMES, openNpcGame } from '../ui/npcgames';
+import { openShop } from '../ui/shop';
+import { openSettings } from '../ui/settings';
+import { perksOf } from './perks';
 import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
 import { openCollection } from '../ui/collection';
 import { el, uiRoot } from '../ui/dom';
 import { BUILDINGS, TOWER_SPAWN } from '../world/layout';
+import { WORLD_BUILDINGS } from '../world/worldMap';
 import type { GameContext } from './context';
 import { SceneRunner } from './sceneRunner';
 
@@ -45,6 +51,19 @@ export class Controller {
     });
     bus.on('interact:use', ({ id }) => this.onUse(id));
     ctx.hud.onCollection = () => void this.collection();
+    ctx.hud.onSettings = () => {
+      if (this.ctx.modal) return;
+      this.ctx.modal = true;
+      this.ctx.session.pause();
+      openSettings(this.ctx.save, this.ctx.quality, {
+        onChange: () => (this.ctx as unknown as { fpsMeter?: { show(on: boolean): void } }).fpsMeter?.show(this.ctx.save.data.settings.showFps),
+        onClose: () => {
+          this.ctx.dialogue.subtitles = this.ctx.save.data.settings.subtitles;
+          this.ctx.modal = false;
+          this.ctx.session.resume();
+        },
+      });
+    };
     this.refreshObjective();
   }
 
@@ -122,7 +141,7 @@ export class Controller {
 
   private exitHouse(houseId: string): void {
     if (this.ctx.modal) return;
-    const b = BUILDINGS.find((x) => x.id === houseId);
+    const b = BUILDINGS.find((x) => x.id === houseId) ?? WORLD_BUILDINGS.find((x) => `house-${x.id}` === houseId);
     this.ctx.modal = true;
     this.fade(() => {
       this.ctx.modal = false;
@@ -181,6 +200,42 @@ export class Controller {
   async talk(npcId: string): Promise<void> {
     const save = this.ctx.save;
     await this.withModal(async () => {
+      const wn = WORLD_NPC_INFO.find((n) => n.id === npcId);
+      if (wn) {
+        const key = `met_${wn.id}`;
+        const ids = conversationFor(wn, save.hasFlag(key) ? 'later' : 'first');
+        save.setFlag(key);
+        save.save();
+        if (ids.length) {
+          await this.ctx.dialogue.say(ids.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text.split('{name}').join(save.data.name || 'אורח') })));
+        } else await this.ctx.dialogue.say([{ speaker: wn.speaker, text: '...' }]);
+        if (wn.id === 'npc_tailor') {
+          this.ctx.dialogue.close();
+          const go = await this.ctx.dialogue.choose({ speaker: wn.speaker, text: 'רוצים להסתכל בחנות?' }, [
+            { text: 'כן, לראות', value: 'yes' },
+            { text: 'אולי אחר כך', value: 'no' },
+          ]);
+          if (go === 'yes') {
+            await openShop(save, {
+              onChange: () => {
+                this.ctx.session.bonus = perksOf(save).timeBonus;
+                (this.scene().get('World') as unknown as { applyAura?: () => void } | null)?.applyAura?.();
+              },
+            });
+          }
+          return;
+        }
+        const game = NPC_GAMES[wn.id];
+        if (game) {
+          this.ctx.dialogue.close();
+          const yes = await this.ctx.dialogue.choose({ speaker: wn.speaker, text: `רוצים לשחק ב"${game.title}"?` }, [
+            { text: 'כן, בואו', value: 'yes' },
+            { text: 'אולי אחר כך', value: 'no' },
+          ]);
+          if (yes === 'yes') await openNpcGame(game, save, false);
+        }
+        return;
+      }
       if (npcId === 'dvora') return this.towerFlow();
       if (npcId === 'baker') {
         if (FIXES.every((x) => this.has(x.flag)) && !this.has('bakery_fixed')) return this.runScene('bakery_fixed');
@@ -263,7 +318,28 @@ export class Controller {
       if (info.legend_he) lines.unshift({ speaker: '', text: info.legend_he });
       await this.ctx.dialogue.say(lines);
       if (first) this.ctx.hud.toast(`נוסף לאוסף: ${info.name_he}`, 'good', 3600);
+      await this.offerFood(key, info.name_he, info.legendary);
     });
+  }
+
+  /** Any creature food will do: fixed and simple. A fed creature becomes a friend and follows the player. */
+  private async offerFood(key: string, name: string, legendary: boolean): Promise<void> {
+    const save = this.ctx.save;
+    const foods = Object.entries(save.data.inv).filter(([, n]) => n > 0);
+    const flag = `friend_${key}`;
+    if (legendary || key === 'the_head' || save.data.collected[flag] || !foods.length) return;
+    this.ctx.dialogue.close();
+    const yes = await this.ctx.dialogue.choose({ speaker: '', text: `להאכיל את ${name}? (יש לכם אוכל ליצורים)` }, [
+      { text: 'כן, בעדינות', value: 'yes' },
+      { text: 'לא עכשיו', value: 'no' },
+    ]);
+    if (yes !== 'yes') return;
+    const [food] = foods[0] as [string, number];
+    save.data.inv[food] = (save.data.inv[food] ?? 1) - 1;
+    save.data.collected[flag] = true;
+    save.save();
+    (this.scene().get('World') as unknown as { refreshFriends?: () => void } | null)?.refreshFriends?.();
+    this.ctx.hud.toast(`${name} התיידד איתכם ויתלווה אליכם`, 'good', 4200);
   }
 
   private async onCollected(id: string): Promise<void> {

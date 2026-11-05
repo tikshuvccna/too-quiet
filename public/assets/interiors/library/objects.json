@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "l_catalog": {
+   "frame": {
+    "x": 596,
+    "y": 0,
+    "w": 106,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 121
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8926
+   }
+  },
+  "l_ladder": {
+   "frame": {
+    "x": 340,
+    "y": 0,
+    "w": 48,
+    "h": 163
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 48,
+    "h": 163
+   },
+   "sourceSize": {
+    "w": 48,
+    "h": 163
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9816
+   }
+  },
+  "l_table": {
+   "frame": {
+    "x": 466,
+    "y": 0,
+    "w": 128,
+    "h": 129
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 129
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 129
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6822
+   }
+  },
+  "l_cover": {
+   "frame": {
+    "x": 959,
+    "y": 0,
+    "w": 56,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 75
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8
+   }
+  },
+  "l_stamp": {
+   "frame": {
+    "x": 883,
+    "y": 0,
+    "w": 74,
+    "h": 90
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 74,
+    "h": 90
+   },
+   "sourceSize": {
+    "w": 74,
+    "h": 90
+   },
+   "anchor": {
+    "x": 0.4865,
+    "y": 0.5889
+   }
+  },
+  "x_shelves_a": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 168,
+    "h": 185
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 168,
+    "h": 185
+   },
+   "sourceSize": {
+    "w": 168,
+    "h": 185
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9459
+   }
+  },
+  "x_shelves_b": {
+   "frame": {
+    "x": 170,
+    "y": 0,
+    "w": 168,
+    "h": 185
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 168,
+    "h": 185
+   },
+   "sourceSize": {
+    "w": 168,
+    "h": 185
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9459
+   }
+  },
+  "x_spool_rack": {
+   "frame": {
+    "x": 704,
+    "y": 0,
+    "w": 90,
+    "h": 119
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 90,
+    "h": 119
+   },
+   "sourceSize": {
+    "w": 90,
+    "h": 119
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9244
+   }
+  },
+  "x_reading_chair": {
+   "frame": {
+    "x": 796,
+    "y": 0,
+    "w": 85,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 85,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 85,
+    "h": 99
+   },
+   "anchor": {
+    "x": 0.4941,
+    "y": 0.8283
+   }
+  },
+  "x_lamp": {
+   "frame": {
+    "x": 390,
+    "y": 0,
+    "w": 74,
+    "h": 138
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 74,
+    "h": 138
+   },
+   "sourceSize": {
+    "w": 74,
+    "h": 138
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9275
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

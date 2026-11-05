@@ -1,0 +1,251 @@
+{
+ "house": "fisher",
+ "name": "בית הדייג",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  332.8,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "f_net",
+   "interactive": true,
+   "nameHe": "רשת דייגים",
+   "frame": "f_net",
+   "frameTruth": "f_net_truth",
+   "place": {
+    "x": 624.0,
+    "y": 245.8
+   },
+   "world": {
+    "x": 2.0,
+    "y": 4.45,
+    "z": 0.9
+   },
+   "wall": true,
+   "sortY": 245.8,
+   "footprintPx": null
+  },
+  {
+   "id": "f_map",
+   "interactive": true,
+   "nameHe": "מפת הים",
+   "frame": "f_map",
+   "frameTruth": "f_map_truth",
+   "place": {
+    "x": 506.4,
+    "y": 199.9
+   },
+   "world": {
+    "x": -0.1,
+    "y": 4.45,
+    "z": 1.9
+   },
+   "wall": true,
+   "sortY": 199.9,
+   "footprintPx": null
+  },
+  {
+   "id": "f_lamp",
+   "interactive": true,
+   "nameHe": "פנס הדייג",
+   "frame": "f_lamp",
+   "frameTruth": "f_lamp_truth",
+   "place": {
+    "x": 848.0,
+    "y": 320.8
+   },
+   "world": {
+    "x": 6.0,
+    "y": 3.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 320.8,
+   "footprintPx": [
+    17,
+    8
+   ]
+  },
+  {
+   "id": "f_log",
+   "interactive": true,
+   "nameHe": "יומן הדייג",
+   "frame": "f_log",
+   "frameTruth": "f_log_truth",
+   "place": {
+    "x": 215.2,
+    "y": 365.8
+   },
+   "world": {
+    "x": -5.3,
+    "y": 2.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 365.8,
+   "footprintPx": [
+    31,
+    14
+   ]
+  },
+  {
+   "id": "f_boat",
+   "interactive": true,
+   "nameHe": "סירה קשורה",
+   "frame": "f_boat",
+   "frameTruth": "f_boat_truth",
+   "place": {
+    "x": 657.6,
+    "y": 481.4
+   },
+   "world": {
+    "x": 2.6,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    101,
+    26
+   ]
+  },
+  {
+   "id": "x_barrels",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_barrels",
+   "frameTruth": "x_barrels_truth",
+   "place": {
+    "x": 176.0,
+    "y": 458.9
+   },
+   "world": {
+    "x": -6.0,
+    "y": -0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 458.9,
+   "footprintPx": [
+    45,
+    16
+   ]
+  },
+  {
+   "id": "x_fish_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_fish_rack",
+   "frameTruth": "x_fish_rack_truth",
+   "place": {
+    "x": 478.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": -0.6,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    67,
+    13
+   ]
+  },
+  {
+   "id": "x_rods",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_rods",
+   "frameTruth": "x_rods_truth",
+   "place": {
+    "x": 870.4,
+    "y": 397.9
+   },
+   "world": {
+    "x": 6.4,
+    "y": 1.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 397.9,
+   "footprintPx": [
+    17,
+    8
+   ]
+  },
+  {
+   "id": "x_buoys",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_buoys",
+   "frameTruth": "x_buoys_truth",
+   "place": {
+    "x": 310.4,
+    "y": 516.7
+   },
+   "world": {
+    "x": -3.6,
+    "y": -2.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 516.7,
+   "footprintPx": [
+    39,
+    13
+   ]
+  },
+  {
+   "id": "x_bucket",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bucket",
+   "frameTruth": "x_bucket_truth",
+   "place": {
+    "x": 456.0,
+    "y": 523.1
+   },
+   "world": {
+    "x": -1.0,
+    "y": -2.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 523.1,
+   "footprintPx": [
+    22,
+    10
+   ]
+  }
+ ]
+}

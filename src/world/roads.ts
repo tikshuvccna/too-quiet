@@ -23,6 +23,19 @@ export const ROADS: RoadDef[] = [
   { pts: [[900, 1010], [740, 1030], [600, 1080], [566, 1200], [558, 1340], [556, 1504]], width: 54 },
   // south-east to the bridge and the mill
   { pts: [[1782, 1018], [1850, 1130], [1930, 1240], [1968, 1292], [2060, 1382], [2150, 1448], [2172, 1500]], width: 54 },
+  // highways of the big valley
+  // east: bakery road to the market row, bell hill and the stone moor
+  { pts: [[1900, 982], [2250, 1010], [2600, 930], [2950, 800], [3300, 700], [3700, 640], [4100, 560], [4500, 520], [5000, 640], [5500, 800]], width: 56 },
+  // market square down the valley to the mill road and on to the great tower gate
+  { pts: [[3300, 700], [3240, 1050], [3290, 1400], [3380, 1800], [3600, 2100], [3950, 2260], [4300, 2250]], width: 54 },
+  // mill to the valley road
+  { pts: [[2172, 1500], [2500, 1650], [2900, 1780], [3380, 1800]], width: 54 },
+  // print house south to the orchard and the whisper woods
+  { pts: [[556, 1504], [620, 1900], [760, 2350], [880, 2800], [820, 3300], [760, 3700]], width: 54 },
+  // Hed's bench south: orchard, then the coast road to the lighthouse and harbour
+  { pts: [[1262, 1480], [1290, 1900], [1380, 2350], [1700, 2800], [2300, 3150], [3000, 3330], [3600, 3380], [4300, 3340], [5000, 3300]], width: 56 },
+  // orchard crossroads to the woods
+  { pts: [[880, 2800], [1250, 3200], [1500, 3500]], width: 46 },
 ];
 
 function stamp(g: Phaser.GameObjects.Graphics, pts: Phaser.Math.Vector2[], radius: number): void {

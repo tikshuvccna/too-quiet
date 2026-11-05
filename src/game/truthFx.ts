@@ -15,6 +15,8 @@ export class TruthFx {
   private target = 0;
   private flashLeft = 0;
   private flickerClock = 0;
+  /** Low quality turns the full-screen colour grading off. */
+  enabled = true;
   private readonly cm: Phaser.FX.ColorMatrix | null;
   private readonly vig: Phaser.FX.Vignette | null;
 
@@ -57,6 +59,11 @@ export class TruthFx {
 
   private apply(v: number): void {
     if (!this.cm || !this.vig) return;
+    if (!this.enabled) {
+      this.cm.active = false;
+      this.vig.active = false;
+      return;
+    }
     // the facade needs no post-processing at all: skip two full-screen passes (matters on phones)
     const active = v > 0.01;
     this.cm.active = active;

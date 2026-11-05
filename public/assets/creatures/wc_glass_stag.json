@@ -1,0 +1,125 @@
+{
+ "frames": {
+  "idle_0": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 384
+   }
+  },
+  "idle_1": {
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 384
+   }
+  },
+  "idle_2": {
+   "frame": {
+    "x": 768,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 384
+   }
+  },
+  "idle_3": {
+   "frame": {
+    "x": 1152,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 384,
+    "h": 384
+   },
+   "sourceSize": {
+    "w": 384,
+    "h": 384
+   }
+  }
+ },
+ "anims": {
+  "idle": {
+   "frames": [
+    "idle_0",
+    "idle_1",
+    "idle_2",
+    "idle_3"
+   ],
+   "frameRate": 3,
+   "repeat": -1,
+   "yoyo": true
+  }
+ },
+ "meta": {
+  "cell": [
+   384,
+   384
+  ],
+  "origin": {
+   "x": 0.5,
+   "y": 0.9375
+  },
+  "world_scale": 1.0,
+  "note": "Legendary: one facing, idle only (yoyo). origin = ground point under it.",
+  "app": "too-quiet art pipeline v2 (wc)",
+  "image": "wc_glass_stag.png",
+  "size": {
+   "w": 1536,
+   "h": 384
+  },
+  "scale": "1",
+  "name_he": "איל הזכוכית",
+  "concept_he": "סיב אופטי (Fiber): אור שעובר בתוך חוט זכוכית דק, מהר ורחוק, כמעט בלי להתעייף.",
+  "legend_he": "מספרים שהוא נולד ממגדלור כשהאור עבר דרך עין זכוכית. רץ בין חופים בלי להשאיר עקבות, ובקרניו נשאר אור ישן.",
+  "movement": null,
+  "legendary": true,
+  "codex": {
+   "atlas": "wc_codex.png",
+   "frame": "wc_glass_stag"
+  }
+ }
+}

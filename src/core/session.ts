@@ -8,19 +8,23 @@ export interface SessionOptions {
   onStorm?: () => void;
 }
 
-export const DEFAULT_CAP_SECONDS = 600;
-export const DEFAULT_WARN_SECONDS = 480;
+export const DEFAULT_CAP_SECONDS = 420;
+export const DEFAULT_WARN_SECONDS = 360;
 
 export class Session {
-  readonly cap: number;
-  readonly warnAt: number;
+  private readonly baseCap: number;
+  private readonly baseWarn: number;
+  /** Extra seconds bought in the shop. */
+  bonus = 0;
+  get cap(): number { return this.baseCap + this.bonus; }
+  get warnAt(): number { return this.baseWarn + this.bonus; }
   elapsed = 0;
   phase: SessionPhase = 'free';
   private paused = false;
 
   constructor(private readonly opts: SessionOptions = {}) {
-    this.cap = opts.capSeconds ?? DEFAULT_CAP_SECONDS;
-    this.warnAt = Math.min(opts.warnAtSeconds ?? DEFAULT_WARN_SECONDS, this.cap - 1);
+    this.baseCap = opts.capSeconds ?? DEFAULT_CAP_SECONDS;
+    this.baseWarn = Math.min(opts.warnAtSeconds ?? DEFAULT_WARN_SECONDS, this.baseCap - 1);
   }
 
   get remaining(): number {

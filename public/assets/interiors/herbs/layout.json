@@ -1,0 +1,248 @@
+{
+ "house": "herbs",
+ "name": "גן העשבים",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "h_room1",
+   "interactive": true,
+   "nameHe": "החדר הפתוח",
+   "frame": "h_room1",
+   "frameTruth": "h_room1_truth",
+   "place": {
+    "x": 232.0,
+    "y": 287.1
+   },
+   "world": {
+    "x": -5.0,
+    "y": 4.45,
+    "z": 0.0
+   },
+   "wall": true,
+   "sortY": 287.1,
+   "footprintPx": null
+  },
+  {
+   "id": "h_room2",
+   "interactive": true,
+   "nameHe": "חדר המורשים",
+   "frame": "h_room2",
+   "frameTruth": "h_room2_truth",
+   "place": {
+    "x": 377.6,
+    "y": 287.1
+   },
+   "world": {
+    "x": -2.4,
+    "y": 4.45,
+    "z": 0.0
+   },
+   "wall": true,
+   "sortY": 287.1,
+   "footprintPx": null
+  },
+  {
+   "id": "h_room3",
+   "interactive": true,
+   "nameHe": "חדר המנהלת",
+   "frame": "h_room3",
+   "frameTruth": "h_room3_truth",
+   "place": {
+    "x": 523.2,
+    "y": 287.1
+   },
+   "world": {
+    "x": 0.2,
+    "y": 4.45,
+    "z": 0.0
+   },
+   "wall": true,
+   "sortY": 287.1,
+   "footprintPx": null
+  },
+  {
+   "id": "h_pot",
+   "interactive": true,
+   "nameHe": "סיר פרחי זכרני",
+   "frame": "h_pot",
+   "frameTruth": "h_pot_truth",
+   "place": {
+    "x": 612.8,
+    "y": 385.0
+   },
+   "world": {
+    "x": 1.8,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "h_labels",
+   "interactive": true,
+   "nameHe": "תוויות העשבים",
+   "frame": "h_labels",
+   "frameTruth": "h_labels_truth",
+   "place": {
+    "x": 702.4,
+    "y": 452.5
+   },
+   "world": {
+    "x": 3.4,
+    "y": -0.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 452.5,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_herb_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_herb_rack",
+   "frameTruth": "x_herb_rack_truth",
+   "place": {
+    "x": 310.4,
+    "y": 378.6
+   },
+   "world": {
+    "x": -3.6,
+    "y": 1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 378.6,
+   "footprintPx": [
+    73,
+    16
+   ]
+  },
+  {
+   "id": "x_potting_bench",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_potting_bench",
+   "frameTruth": "x_potting_bench_truth",
+   "place": {
+    "x": 836.8,
+    "y": 478.2
+   },
+   "world": {
+    "x": 5.8,
+    "y": -1.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 478.2,
+   "footprintPx": [
+    56,
+    16
+   ]
+  },
+  {
+   "id": "x_watering_can",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_watering_can",
+   "frameTruth": "x_watering_can_truth",
+   "place": {
+    "x": 176.0,
+    "y": 458.9
+   },
+   "world": {
+    "x": -6.0,
+    "y": -0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 458.9,
+   "footprintPx": [
+    22,
+    10
+   ]
+  },
+  {
+   "id": "x_rain_barrel",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_rain_barrel",
+   "frameTruth": "x_rain_barrel_truth",
+   "place": {
+    "x": 870.4,
+    "y": 324.0
+   },
+   "world": {
+    "x": 6.4,
+    "y": 3.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 324.0,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_planter_bed",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_planter_bed",
+   "frameTruth": "x_planter_bed_truth",
+   "place": {
+    "x": 456.0,
+    "y": 510.3
+   },
+   "world": {
+    "x": -1.0,
+    "y": -2.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 510.3,
+   "footprintPx": [
+    90,
+    19
+   ]
+  }
+ ]
+}

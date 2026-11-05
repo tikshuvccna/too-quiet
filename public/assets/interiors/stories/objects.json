@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "st_fire": {
+   "frame": {
+    "x": 220,
+    "y": 0,
+    "w": 140,
+    "h": 144
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 140,
+    "h": 144
+   },
+   "sourceSize": {
+    "w": 140,
+    "h": 144
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6944
+   }
+  },
+  "st_curtain": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 218,
+    "h": 210
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 218,
+    "h": 210
+   },
+   "sourceSize": {
+    "w": 218,
+    "h": 210
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8667
+   }
+  },
+  "st_book": {
+   "frame": {
+    "x": 622,
+    "y": 0,
+    "w": 50,
+    "h": 82
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 50,
+    "h": 82
+   },
+   "sourceSize": {
+    "w": 50,
+    "h": 82
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8293
+   }
+  },
+  "st_puppets": {
+   "frame": {
+    "x": 473,
+    "y": 0,
+    "w": 73,
+    "h": 94
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 73,
+    "h": 94
+   },
+   "sourceSize": {
+    "w": 73,
+    "h": 94
+   },
+   "anchor": {
+    "x": 0.5068,
+    "y": 0.8404
+   }
+  },
+  "st_drum": {
+   "frame": {
+    "x": 548,
+    "y": 0,
+    "w": 72,
+    "h": 91
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 72,
+    "h": 91
+   },
+   "sourceSize": {
+    "w": 72,
+    "h": 91
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8791
+   }
+  },
+  "x_bench_front": {
+   "frame": {
+    "x": 774,
+    "y": 0,
+    "w": 184,
+    "h": 44
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 184,
+    "h": 44
+   },
+   "sourceSize": {
+    "w": 184,
+    "h": 44
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7955
+   }
+  },
+  "x_bench_left": {
+   "frame": {
+    "x": 401,
+    "y": 0,
+    "w": 34,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 102
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6373
+   }
+  },
+  "x_bench_right": {
+   "frame": {
+    "x": 437,
+    "y": 0,
+    "w": 34,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 102
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6373
+   }
+  },
+  "x_log_stack": {
+   "frame": {
+    "x": 674,
+    "y": 0,
+    "w": 98,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 73
+   },
+   "anchor": {
+    "x": 0.4286,
+    "y": 0.5616
+   }
+  },
+  "x_lantern": {
+   "frame": {
+    "x": 362,
+    "y": 0,
+    "w": 37,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 37,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 37,
+    "h": 107
+   },
+   "anchor": {
+    "x": 0.3514,
+    "y": 0.9252
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

@@ -1,0 +1,251 @@
+{
+ "house": "tailor",
+ "name": "חנות החייט",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  344.0,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "t_shop",
+   "interactive": true,
+   "nameHe": "שלט החנות",
+   "frame": "t_shop",
+   "frameTruth": "t_shop_truth",
+   "place": {
+    "x": 528.8,
+    "y": 181.6
+   },
+   "world": {
+    "x": 0.3,
+    "y": 4.45,
+    "z": 2.3
+   },
+   "wall": true,
+   "sortY": 181.6,
+   "footprintPx": null
+  },
+  {
+   "id": "t_list",
+   "interactive": true,
+   "nameHe": "רשימת הזמנות",
+   "frame": "t_list",
+   "frameTruth": "t_list_truth",
+   "place": {
+    "x": 458.8,
+    "y": 199.9
+   },
+   "world": {
+    "x": -0.95,
+    "y": 4.45,
+    "z": 1.9
+   },
+   "wall": true,
+   "sortY": 199.9,
+   "footprintPx": null
+  },
+  {
+   "id": "t_threads",
+   "interactive": true,
+   "nameHe": "קופסת חוטים",
+   "frame": "t_threads",
+   "frameTruth": "t_threads_truth",
+   "place": {
+    "x": 192.8,
+    "y": 352.9
+   },
+   "world": {
+    "x": -5.7,
+    "y": 2.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 352.9,
+   "footprintPx": [
+    31,
+    13
+   ]
+  },
+  {
+   "id": "t_mannequin",
+   "interactive": true,
+   "nameHe": "בובת החייט",
+   "frame": "t_mannequin",
+   "frameTruth": "t_mannequin_truth",
+   "place": {
+    "x": 461.6,
+    "y": 369.0
+   },
+   "world": {
+    "x": -0.9,
+    "y": 1.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 369.0,
+   "footprintPx": [
+    22,
+    10
+   ]
+  },
+  {
+   "id": "t_basket",
+   "interactive": true,
+   "nameHe": "סל על חבל",
+   "frame": "t_basket",
+   "frameTruth": "t_basket_truth",
+   "place": {
+    "x": 842.4,
+    "y": 317.6
+   },
+   "world": {
+    "x": 5.9,
+    "y": 3.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 317.6,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_cloth_shelf",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_cloth_shelf",
+   "frameTruth": "x_cloth_shelf_truth",
+   "place": {
+    "x": 680.0,
+    "y": 298.3
+   },
+   "world": {
+    "x": 3.0,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    78,
+    13
+   ]
+  },
+  {
+   "id": "x_cutting_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_cutting_table",
+   "frameTruth": "x_cutting_table_truth",
+   "place": {
+    "x": 612.8,
+    "y": 458.9
+   },
+   "world": {
+    "x": 1.8,
+    "y": -0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 458.9,
+   "footprintPx": [
+    67,
+    18
+   ]
+  },
+  {
+   "id": "x_sewing",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_sewing",
+   "frameTruth": "x_sewing_truth",
+   "place": {
+    "x": 299.2,
+    "y": 423.6
+   },
+   "world": {
+    "x": -3.8,
+    "y": 0.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 423.6,
+   "footprintPx": [
+    45,
+    16
+   ]
+  },
+  {
+   "id": "x_mirror",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_mirror",
+   "frameTruth": "x_mirror_truth",
+   "place": {
+    "x": 198.4,
+    "y": 484.6
+   },
+   "world": {
+    "x": -5.6,
+    "y": -1.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 484.6,
+   "footprintPx": [
+    34,
+    10
+   ]
+  },
+  {
+   "id": "x_hat_stand",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_hat_stand",
+   "frameTruth": "x_hat_stand_truth",
+   "place": {
+    "x": 864.8,
+    "y": 391.5
+   },
+   "world": {
+    "x": 6.3,
+    "y": 1.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 391.5,
+   "footprintPx": [
+    17,
+    8
+   ]
+  }
+ ]
+}

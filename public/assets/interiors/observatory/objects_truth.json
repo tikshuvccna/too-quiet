@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "o_chart_truth": {
+   "frame": {
+    "x": 687,
+    "y": 0,
+    "w": 118,
+    "h": 84
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 118,
+    "h": 84
+   },
+   "sourceSize": {
+    "w": 118,
+    "h": 84
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.869
+   }
+  },
+  "o_telescope_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 167,
+    "h": 244
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 167,
+    "h": 244
+   },
+   "sourceSize": {
+    "w": 167,
+    "h": 244
+   },
+   "anchor": {
+    "x": 0.2934,
+    "y": 0.8689
+   }
+  },
+  "o_orrery_truth": {
+   "frame": {
+    "x": 537,
+    "y": 0,
+    "w": 84,
+    "h": 93
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 84,
+    "h": 93
+   },
+   "sourceSize": {
+    "w": 84,
+    "h": 93
+   },
+   "anchor": {
+    "x": 0.3929,
+    "y": 0.8817
+   }
+  },
+  "o_log_truth": {
+   "frame": {
+    "x": 221,
+    "y": 0,
+    "w": 92,
+    "h": 125
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 92,
+    "h": 125
+   },
+   "sourceSize": {
+    "w": 92,
+    "h": 125
+   },
+   "anchor": {
+    "x": 0.5109,
+    "y": 0.672
+   }
+  },
+  "o_tea_truth": {
+   "frame": {
+    "x": 169,
+    "y": 0,
+    "w": 50,
+    "h": 152
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 50,
+    "h": 152
+   },
+   "sourceSize": {
+    "w": 50,
+    "h": 152
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9408
+   }
+  },
+  "x_chart_table_truth": {
+   "frame": {
+    "x": 315,
+    "y": 0,
+    "w": 128,
+    "h": 113
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 113
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 113
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6195
+   }
+  },
+  "x_armillary_truth": {
+   "frame": {
+    "x": 623,
+    "y": 0,
+    "w": 62,
+    "h": 93
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 62,
+    "h": 93
+   },
+   "sourceSize": {
+    "w": 62,
+    "h": 93
+   },
+   "anchor": {
+    "x": 0.4194,
+    "y": 0.871
+   }
+  },
+  "x_stool_truth": {
+   "frame": {
+    "x": 894,
+    "y": 0,
+    "w": 34,
+    "h": 49
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 49
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 49
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7551
+   }
+  },
+  "x_book_cart_truth": {
+   "frame": {
+    "x": 807,
+    "y": 0,
+    "w": 85,
+    "h": 84
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 85,
+    "h": 84
+   },
+   "sourceSize": {
+    "w": 85,
+    "h": 84
+   },
+   "anchor": {
+    "x": 0.5059,
+    "y": 0.869
+   }
+  },
+  "x_blanket_chair_truth": {
+   "frame": {
+    "x": 445,
+    "y": 0,
+    "w": 90,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 90,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 90,
+    "h": 101
+   },
+   "anchor": {
+    "x": 0.4667,
+    "y": 0.8317
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

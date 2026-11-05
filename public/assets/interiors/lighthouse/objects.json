@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "lh_lamp": {
+   "frame": {
+    "x": 143,
+    "y": 0,
+    "w": 136,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 136,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 136,
+    "h": 158
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8418
+   }
+  },
+  "lh_telegraph": {
+   "frame": {
+    "x": 532,
+    "y": 0,
+    "w": 118,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 118,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 118,
+    "h": 73
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9178
+   }
+  },
+  "lh_mirror": {
+   "frame": {
+    "x": 281,
+    "y": 0,
+    "w": 92,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 92,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 92,
+    "h": 118
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8729
+   }
+  },
+  "lh_log": {
+   "frame": {
+    "x": 414,
+    "y": 0,
+    "w": 59,
+    "h": 85
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 59,
+    "h": 85
+   },
+   "sourceSize": {
+    "w": 59,
+    "h": 85
+   },
+   "anchor": {
+    "x": 0.5932,
+    "y": 0.8471
+   }
+  },
+  "lh_tea": {
+   "frame": {
+    "x": 475,
+    "y": 0,
+    "w": 55,
+    "h": 75
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 55,
+    "h": 75
+   },
+   "sourceSize": {
+    "w": 55,
+    "h": 75
+   },
+   "anchor": {
+    "x": 0.4727,
+    "y": 0.88
+   }
+  },
+  "x_spiral_stair": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 141,
+    "h": 274
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 141,
+    "h": 274
+   },
+   "sourceSize": {
+    "w": 141,
+    "h": 274
+   },
+   "anchor": {
+    "x": 0.5035,
+    "y": 0.8686
+   }
+  },
+  "x_rope_coil": {
+   "frame": {
+    "x": 813,
+    "y": 0,
+    "w": 93,
+    "h": 47
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 47
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 47
+   },
+   "anchor": {
+    "x": 0.3011,
+    "y": 0.6383
+   }
+  },
+  "x_oil_barrels": {
+   "frame": {
+    "x": 652,
+    "y": 0,
+    "w": 79,
+    "h": 59
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 79,
+    "h": 59
+   },
+   "sourceSize": {
+    "w": 79,
+    "h": 59
+   },
+   "anchor": {
+    "x": 0.481,
+    "y": 0.7797
+   }
+  },
+  "x_sea_chest": {
+   "frame": {
+    "x": 733,
+    "y": 0,
+    "w": 78,
+    "h": 57
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 57
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 57
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7018
+   }
+  },
+  "x_brass_lantern": {
+   "frame": {
+    "x": 375,
+    "y": 0,
+    "w": 37,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 37,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 37,
+    "h": 98
+   },
+   "anchor": {
+    "x": 0.3514,
+    "y": 0.9184
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 512
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

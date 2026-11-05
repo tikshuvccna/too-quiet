@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "f_net_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 196,
+    "h": 171
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 196,
+    "h": 171
+   },
+   "sourceSize": {
+    "w": 196,
+    "h": 171
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 1.0234
+   }
+  },
+  "f_map_truth": {
+   "frame": {
+    "x": 759,
+    "y": 0,
+    "w": 111,
+    "h": 85
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 111,
+    "h": 85
+   },
+   "sourceSize": {
+    "w": 111,
+    "h": 85
+   },
+   "anchor": {
+    "x": 0.4505,
+    "y": 0.8588
+   }
+  },
+  "f_lamp_truth": {
+   "frame": {
+    "x": 259,
+    "y": 0,
+    "w": 130,
+    "h": 115
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 130,
+    "h": 115
+   },
+   "sourceSize": {
+    "w": 130,
+    "h": 115
+   },
+   "anchor": {
+    "x": 0.1462,
+    "y": 0.8957
+   }
+  },
+  "f_log_truth": {
+   "frame": {
+    "x": 872,
+    "y": 0,
+    "w": 97,
+    "h": 81
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 97,
+    "h": 81
+   },
+   "sourceSize": {
+    "w": 97,
+    "h": 81
+   },
+   "anchor": {
+    "x": 0.7216,
+    "y": 0.716
+   }
+  },
+  "f_boat_truth": {
+   "frame": {
+    "x": 515,
+    "y": 0,
+    "w": 242,
+    "h": 88
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 242,
+    "h": 88
+   },
+   "sourceSize": {
+    "w": 242,
+    "h": 88
+   },
+   "anchor": {
+    "x": 0.4091,
+    "y": 0.7841
+   }
+  },
+  "x_barrels_truth": {
+   "frame": {
+    "x": 0,
+    "y": 173,
+    "w": 82,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 82,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 82,
+    "h": 63
+   },
+   "anchor": {
+    "x": 0.4756,
+    "y": 0.7937
+   }
+  },
+  "x_fish_rack_truth": {
+   "frame": {
+    "x": 391,
+    "y": 0,
+    "w": 122,
+    "h": 94
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 94
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 94
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9255
+   }
+  },
+  "x_rods_truth": {
+   "frame": {
+    "x": 198,
+    "y": 0,
+    "w": 59,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 59,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 59,
+    "h": 122
+   },
+   "anchor": {
+    "x": 0.4915,
+    "y": 0.9016
+   }
+  },
+  "x_buoys_truth": {
+   "frame": {
+    "x": 122,
+    "y": 173,
+    "w": 71,
+    "h": 50
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 71,
+    "h": 50
+   },
+   "sourceSize": {
+    "w": 71,
+    "h": 50
+   },
+   "anchor": {
+    "x": 0.4789,
+    "y": 0.62
+   }
+  },
+  "x_bucket_truth": {
+   "frame": {
+    "x": 84,
+    "y": 173,
+    "w": 36,
+    "h": 51
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 36,
+    "h": 51
+   },
+   "sourceSize": {
+    "w": 36,
+    "h": 51
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7647
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

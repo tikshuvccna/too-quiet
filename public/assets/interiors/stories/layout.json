@@ -1,0 +1,254 @@
+{
+ "house": "stories",
+ "name": "אולם הסיפורים",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  299.2,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "st_fire",
+   "interactive": true,
+   "nameHe": "האח",
+   "frame": "st_fire",
+   "frameTruth": "st_fire_truth",
+   "place": {
+    "x": 512.0,
+    "y": 407.5
+   },
+   "world": {
+    "x": 0.0,
+    "y": 0.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 407.5,
+   "footprintPx": [
+    78,
+    32
+   ]
+  },
+  {
+   "id": "st_curtain",
+   "interactive": true,
+   "nameHe": "פרוכת הבמה",
+   "frame": "st_curtain",
+   "frameTruth": "st_curtain_truth",
+   "place": {
+    "x": 713.6,
+    "y": 287.1
+   },
+   "world": {
+    "x": 3.6,
+    "y": 4.45,
+    "z": 0.0
+   },
+   "wall": true,
+   "sortY": 287.1,
+   "footprintPx": null
+  },
+  {
+   "id": "st_book",
+   "interactive": true,
+   "nameHe": "ספר הסיפורים",
+   "frame": "st_book",
+   "frameTruth": "st_book_truth",
+   "place": {
+    "x": 400.0,
+    "y": 327.2
+   },
+   "world": {
+    "x": -2.0,
+    "y": 3.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 327.2,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "st_puppets",
+   "interactive": true,
+   "nameHe": "ארגז בובות",
+   "frame": "st_puppets",
+   "frameTruth": "st_puppets_truth",
+   "place": {
+    "x": 836.8,
+    "y": 385.0
+   },
+   "world": {
+    "x": 5.8,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "st_drum",
+   "interactive": true,
+   "nameHe": "תוף הקהל",
+   "frame": "st_drum",
+   "frameTruth": "st_drum_truth",
+   "place": {
+    "x": 204.0,
+    "y": 446.1
+   },
+   "world": {
+    "x": -5.5,
+    "y": -0.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 446.1,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_bench_front",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bench_front",
+   "frameTruth": "x_bench_front_truth",
+   "place": {
+    "x": 512.0,
+    "y": 516.7
+   },
+   "world": {
+    "x": 0.0,
+    "y": -2.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 516.7,
+   "footprintPx": [
+    95,
+    13
+   ]
+  },
+  {
+   "id": "x_bench_left",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bench_left",
+   "frameTruth": "x_bench_left_truth",
+   "place": {
+    "x": 321.6,
+    "y": 401.1
+   },
+   "world": {
+    "x": -3.4,
+    "y": 0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 401.1,
+   "footprintPx": [
+    22,
+    39
+   ]
+  },
+  {
+   "id": "x_bench_right",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_bench_right",
+   "frameTruth": "x_bench_right_truth",
+   "place": {
+    "x": 702.4,
+    "y": 401.1
+   },
+   "world": {
+    "x": 3.4,
+    "y": 0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 401.1,
+   "footprintPx": [
+    22,
+    39
+   ]
+  },
+  {
+   "id": "x_log_stack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_log_stack",
+   "frameTruth": "x_log_stack_truth",
+   "place": {
+    "x": 170.4,
+    "y": 327.2
+   },
+   "world": {
+    "x": -6.1,
+    "y": 3.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 327.2,
+   "footprintPx": [
+    45,
+    16
+   ]
+  },
+  {
+   "id": "x_lantern",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_lantern",
+   "frameTruth": "x_lantern_truth",
+   "place": {
+    "x": 864.8,
+    "y": 503.9
+   },
+   "world": {
+    "x": 6.3,
+    "y": -2.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 503.9,
+   "footprintPx": [
+    17,
+    8
+   ]
+  }
+ ]
+}

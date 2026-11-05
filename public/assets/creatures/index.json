@@ -103,5 +103,103 @@
   "legend_he": null,
   "legendary": false,
   "kb": 34
+ },
+ "wc_address_turtle": {
+  "name_he": "צב הכתובת",
+  "concept_he": "כתובת IP (IP address): על השריון שלו ארבעה מספרים, ולכן הדואר תמיד מוצא אותו.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 37
+ },
+ "wc_backup_lizard": {
+  "name_he": "לטאת הגיבוי",
+  "concept_he": "גיבוי ונתיב חלופי (Redundancy): אם הזנב נקטע, יש עוד אחד שמחכה.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 28
+ },
+ "wc_bit_rabbit": {
+  "name_he": "ארנבון הביט",
+  "concept_he": "ביט (Bit): שתי אוזניים, או למעלה או למטה. שני מצבים בלבד, ומהם בונים הכול.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 41
+ },
+ "wc_bridge_beetle": {
+  "name_he": "חיפושית הגשר",
+  "concept_he": "התנגשות (Collision): שתי חיפושיות נפגשות באמצע גשר צר, מתרחקות, וממתינות זמן אקראי לפני שמנסות שוב.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 27
+ },
+ "wc_cocoon_worm": {
+  "name_he": "זחל הפקעות",
+  "concept_he": "עטיפה (Encapsulation): פקעת בתוך פקעת בתוך פקעת, ובכל פקעת כתובת אחרת.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 31
+ },
+ "wc_count_butterfly": {
+  "name_he": "פרפר הספירה",
+  "concept_he": "זמן חיים (TTL): על כנפיו כמה ספרות. בכל תחנה הוא מאבד אחת, ובאפס הוא נעלם.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 39
+ },
+ "wc_door_mouse": {
+  "name_he": "עכבר הדלתות",
+  "concept_he": "פתח (Port): בבית אחד הרבה דלתות, ולכל דלת מספר. לכל שירות דלת משלו.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 28
+ },
+ "wc_gateway_doe": {
+  "name_he": "איילת השער",
+  "concept_he": "שער ברירת מחדל (Default gateway): היא עומדת בפתח הגדר, וכל מי שרוצה לצאת מהכפר עובר דרכה.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 29
+ },
+ "wc_glass_stag": {
+  "name_he": "איל הזכוכית",
+  "concept_he": "סיב אופטי (Fiber): אור שעובר בתוך חוט זכוכית דק, מהר ורחוק, כמעט בלי להתעייף.",
+  "legend_he": "מספרים שהוא נולד ממגדלור כשהאור עבר דרך עין זכוכית. רץ בין חופים בלי להשאיר עקבות, ובקרניו נשאר אור ישן.",
+  "legendary": true,
+  "kb": 134
+ },
+ "wc_handshake_dove": {
+  "name_he": "יונת הלחיצה",
+  "concept_he": "לחיצת יד (Handshake): היא אומרת שלום, מקבלת תשובה, ורק אז מתחילה לדבר.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 24
+ },
+ "wc_path_oak": {
+  "name_he": "אלון הנתיבים",
+  "concept_he": "נתיבים חלופיים (Alternate paths): אם ענף נשבר, יש עוד ענף ועוד דרך אל העלה.",
+  "legend_he": "אלון עתיק שהולך כשאף אחד לא רואה. כל ענף נושא שביל, וכל שביל מגיע לכפר אחר. כשנחתך בו ענף, צמח אחר.",
+  "legendary": true,
+  "kb": 348
+ },
+ "wc_queue_squirrel": {
+  "name_he": "סנאי התור",
+  "concept_he": "תור (Queue): הוא מסדר אצטרובלים בשורה ומעביר אחד אחד, כדי שלא יפלו.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 36
+ },
+ "wc_stream_fish": {
+  "name_he": "דג הזרם",
+  "concept_he": "רוחב פס (Bandwidth): כמה דגים חולפים בשנייה תלוי ברוחב הנחל.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 48
+ },
+ "wc_thunder_frog": {
+  "name_he": "צפרדע הברק",
+  "concept_he": "השהיה (Latency): היא רואה את הברק, ורק אחרי רגע שומעת את הרעם. הזמן ביניהם הוא ההשהיה.",
+  "legend_he": null,
+  "legendary": false,
+  "kb": 28
  }
 }

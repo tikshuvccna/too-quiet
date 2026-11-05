@@ -1,0 +1,17 @@
+SMALL:
+wc_address_turtle
+wc_backup_lizard
+wc_bit_rabbit
+wc_bridge_beetle
+wc_cocoon_worm
+wc_count_butterfly
+wc_door_mouse
+wc_gateway_doe
+wc_handshake_dove
+wc_queue_squirrel
+wc_stream_fish
+wc_thunder_frog
+
+LEGENDARY:
+wc_glass_stag
+wc_path_oak

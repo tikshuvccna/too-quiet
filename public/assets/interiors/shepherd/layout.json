@@ -1,0 +1,248 @@
+{
+ "house": "shepherd",
+ "name": "צריף הרועה",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  691.2,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "sh_window",
+   "interactive": true,
+   "nameHe": "חלון הגבעה",
+   "frame": "sh_window",
+   "frameTruth": "sh_window_truth",
+   "place": {
+    "x": 254.4,
+    "y": 218.3
+   },
+   "world": {
+    "x": -4.6,
+    "y": 4.45,
+    "z": 1.5
+   },
+   "wall": true,
+   "sortY": 218.3,
+   "footprintPx": null
+  },
+  {
+   "id": "sh_names",
+   "interactive": true,
+   "nameHe": "לוח שמות הכבשים",
+   "frame": "sh_names",
+   "frameTruth": "sh_names_truth",
+   "place": {
+    "x": 388.8,
+    "y": 218.3
+   },
+   "world": {
+    "x": -2.2,
+    "y": 4.45,
+    "z": 1.5
+   },
+   "wall": true,
+   "sortY": 218.3,
+   "footprintPx": null
+  },
+  {
+   "id": "sh_flute",
+   "interactive": true,
+   "nameHe": "החליל",
+   "frame": "sh_flute",
+   "frameTruth": "sh_flute_truth",
+   "place": {
+    "x": 528.8,
+    "y": 190.7
+   },
+   "world": {
+    "x": 0.3,
+    "y": 4.45,
+    "z": 2.1
+   },
+   "wall": true,
+   "sortY": 190.7,
+   "footprintPx": null
+  },
+  {
+   "id": "sh_bed",
+   "interactive": true,
+   "nameHe": "מיטת קש",
+   "frame": "sh_bed",
+   "frameTruth": "sh_bed_truth",
+   "place": {
+    "x": 265.6,
+    "y": 404.3
+   },
+   "world": {
+    "x": -4.4,
+    "y": 0.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 404.3,
+   "footprintPx": [
+    73,
+    26
+   ]
+  },
+  {
+   "id": "sh_blanket",
+   "interactive": true,
+   "nameHe": "שמיכת צמר",
+   "frame": "sh_blanket",
+   "frameTruth": "sh_blanket_truth",
+   "place": {
+    "x": 780.8,
+    "y": 417.2
+   },
+   "world": {
+    "x": 4.8,
+    "y": 0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 417.2,
+   "footprintPx": [
+    50,
+    19
+   ]
+  },
+  {
+   "id": "x_stove",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_stove",
+   "frameTruth": "x_stove_truth",
+   "place": {
+    "x": 848.0,
+    "y": 314.4
+   },
+   "world": {
+    "x": 6.0,
+    "y": 3.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 314.4,
+   "footprintPx": [
+    34,
+    13
+   ]
+  },
+  {
+   "id": "x_wool_bales",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_wool_bales",
+   "frameTruth": "x_wool_bales_truth",
+   "place": {
+    "x": 444.8,
+    "y": 314.4
+   },
+   "world": {
+    "x": -1.2,
+    "y": 3.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 314.4,
+   "footprintPx": [
+    50,
+    16
+   ]
+  },
+  {
+   "id": "x_staff_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_staff_rack",
+   "frameTruth": "x_staff_rack_truth",
+   "place": {
+    "x": 164.8,
+    "y": 494.2
+   },
+   "world": {
+    "x": -6.2,
+    "y": -2.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 494.2,
+   "footprintPx": [
+    22,
+    10
+   ]
+  },
+  {
+   "id": "x_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_table",
+   "frameTruth": "x_table_truth",
+   "place": {
+    "x": 556.8,
+    "y": 430.0
+   },
+   "world": {
+    "x": 0.8,
+    "y": 0.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 430.0,
+   "footprintPx": [
+    45,
+    19
+   ]
+  },
+  {
+   "id": "x_hay",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_hay",
+   "frameTruth": "x_hay_truth",
+   "place": {
+    "x": 702.4,
+    "y": 503.9
+   },
+   "world": {
+    "x": 3.4,
+    "y": -2.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 503.9,
+   "footprintPx": [
+    45,
+    16
+   ]
+  }
+ ]
+}

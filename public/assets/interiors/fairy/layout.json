@@ -1,0 +1,251 @@
+{
+ "house": "fairy",
+ "name": "בית העץ של הפיות",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "fy_doors",
+   "interactive": true,
+   "nameHe": "שורת הדלתות",
+   "frame": "fy_doors",
+   "frameTruth": "fy_doors_truth",
+   "place": {
+    "x": 344.0,
+    "y": 232.0
+   },
+   "world": {
+    "x": -3.0,
+    "y": 4.45,
+    "z": 1.2
+   },
+   "wall": true,
+   "sortY": 232.0,
+   "footprintPx": null
+  },
+  {
+   "id": "fy_blank",
+   "interactive": true,
+   "nameHe": "הדלת בלי מספר",
+   "frame": "fy_blank",
+   "frameTruth": "fy_blank_truth",
+   "place": {
+    "x": 523.2,
+    "y": 250.4
+   },
+   "world": {
+    "x": 0.2,
+    "y": 4.45,
+    "z": 0.8
+   },
+   "wall": true,
+   "sortY": 250.4,
+   "footprintPx": null
+  },
+  {
+   "id": "fy_post",
+   "interactive": true,
+   "nameHe": "תיבת דואר",
+   "frame": "fy_post",
+   "frameTruth": "fy_post_truth",
+   "place": {
+    "x": 198.4,
+    "y": 365.8
+   },
+   "world": {
+    "x": -5.6,
+    "y": 2.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 365.8,
+   "footprintPx": [
+    22,
+    10
+   ]
+  },
+  {
+   "id": "fy_lamps",
+   "interactive": true,
+   "nameHe": "פנסי הפיות",
+   "frame": "fy_lamps",
+   "frameTruth": "fy_lamps_truth",
+   "place": {
+    "x": 668.8,
+    "y": 346.5
+   },
+   "world": {
+    "x": 2.8,
+    "y": 2.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 346.5,
+   "footprintPx": [
+    22,
+    10
+   ]
+  },
+  {
+   "id": "fy_stairs",
+   "interactive": true,
+   "nameHe": "מדרגות הגזע",
+   "frame": "fy_stairs",
+   "frameTruth": "fy_stairs_truth",
+   "place": {
+    "x": 848.0,
+    "y": 359.3
+   },
+   "world": {
+    "x": 6.0,
+    "y": 2.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 359.3,
+   "footprintPx": [
+    50,
+    22
+   ]
+  },
+  {
+   "id": "x_mushrooms_a",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_mushrooms_a",
+   "frameTruth": "x_mushrooms_a_truth",
+   "place": {
+    "x": 377.6,
+    "y": 481.4
+   },
+   "world": {
+    "x": -2.4,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_mushrooms_b",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_mushrooms_b",
+   "frameTruth": "x_mushrooms_b_truth",
+   "place": {
+    "x": 713.6,
+    "y": 487.8
+   },
+   "world": {
+    "x": 3.6,
+    "y": -1.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 487.8,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_acorn_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_acorn_table",
+   "frameTruth": "x_acorn_table_truth",
+   "place": {
+    "x": 534.4,
+    "y": 410.7
+   },
+   "world": {
+    "x": 0.4,
+    "y": 0.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 410.7,
+   "footprintPx": [
+    34,
+    14
+   ]
+  },
+  {
+   "id": "x_leaf_chair",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_leaf_chair",
+   "frameTruth": "x_leaf_chair_truth",
+   "place": {
+    "x": 422.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": -1.6,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    25,
+    11
+   ]
+  },
+  {
+   "id": "x_fern",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_fern",
+   "frameTruth": "x_fern_truth",
+   "place": {
+    "x": 176.0,
+    "y": 442.8
+   },
+   "world": {
+    "x": -6.0,
+    "y": -0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 442.8,
+   "footprintPx": [
+    28,
+    13
+   ]
+  }
+ ]
+}

@@ -201,3 +201,11 @@ body.modal .joy, body.modal .interact { display: none !important; }
 .col-item.has-thumb { grid-template-columns: 72px 1fr; column-gap: 12px; align-items: center; }
 .col-item.has-thumb b, .col-item.has-thumb span { grid-column: 2; }
 .col-thumb { grid-column: 1; grid-row: 1 / span 2; width: 72px; height: 72px; background-repeat: no-repeat; border-radius: 10px; }
+
+.title .name-row { margin: 16px 0 12px; }
+.name-input { font: inherit; font-size: 1.2rem; padding: 10px 16px; border-radius: 12px; border: 2px solid var(--gold); background: rgba(8, 9, 24, .85); color: #fff; text-align: center; width: min(260px, 80vw); }
+.name-input:focus { outline: none; box-shadow: 0 0 18px rgba(255, 210, 122, .5); }
+
+.fps-badge { position: fixed; left: 8px; bottom: 8px; z-index: 9999; padding: 3px 8px; border-radius: 8px; background: rgba(8, 9, 24, .8); color: #5cf0d0; font: 12px/1.3 monospace; pointer-events: none; direction: ltr; }
+.fps-badge.bad { color: #ff8aa0; }
+.hud .gear { padding-inline: 10px; }

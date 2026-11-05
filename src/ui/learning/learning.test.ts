@@ -75,8 +75,8 @@ describe('minigame rules', () => {
 
   it('reads lives, limits and counts from the content', () => {
     expect(easy).toMatchObject({ lives: 5, timeLimit: null, total: 8 });
-    expect(medium).toMatchObject({ lives: 3, timeLimit: 25, total: 10 });
-    expect(hard).toMatchObject({ lives: 3, timeLimit: 20, total: 10 });
+    expect(medium).toMatchObject({ lives: 3, timeLimit: 60, total: 10 });
+    expect(hard).toMatchObject({ lives: 3, timeLimit: 70, total: 10 });
   });
 
   it('computes pass minimums (70 percent, hard 80)', () => {

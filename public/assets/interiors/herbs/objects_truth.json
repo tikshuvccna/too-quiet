@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "h_room1_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 166
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 166
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 166
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8253
+   }
+  },
+  "h_room2_truth": {
+   "frame": {
+    "x": 162,
+    "y": 0,
+    "w": 162,
+    "h": 149
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 162,
+    "h": 149
+   },
+   "sourceSize": {
+    "w": 162,
+    "h": 149
+   },
+   "anchor": {
+    "x": 0.3272,
+    "y": 0.9195
+   }
+  },
+  "h_room3_truth": {
+   "frame": {
+    "x": 326,
+    "y": 0,
+    "w": 106,
+    "h": 147
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 147
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 147
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9388
+   }
+  },
+  "h_pot_truth": {
+   "frame": {
+    "x": 694,
+    "y": 0,
+    "w": 65,
+    "h": 74
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 65,
+    "h": 74
+   },
+   "sourceSize": {
+    "w": 65,
+    "h": 74
+   },
+   "anchor": {
+    "x": 0.4154,
+    "y": 0.7838
+   }
+  },
+  "h_labels_truth": {
+   "frame": {
+    "x": 629,
+    "y": 0,
+    "w": 63,
+    "h": 84
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 63,
+    "h": 84
+   },
+   "sourceSize": {
+    "w": 63,
+    "h": 84
+   },
+   "anchor": {
+    "x": 0.4286,
+    "y": 0.8333
+   }
+  },
+  "x_herb_rack_truth": {
+   "frame": {
+    "x": 493,
+    "y": 0,
+    "w": 134,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 103
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.932
+   }
+  },
+  "x_potting_bench_truth": {
+   "frame": {
+    "x": 761,
+    "y": 0,
+    "w": 112,
+    "h": 74
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 74
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 74
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8108
+   }
+  },
+  "x_watering_can_truth": {
+   "frame": {
+    "x": 157,
+    "y": 168,
+    "w": 55,
+    "h": 36
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 55,
+    "h": 36
+   },
+   "sourceSize": {
+    "w": 55,
+    "h": 36
+   },
+   "anchor": {
+    "x": 0.3636,
+    "y": 0.75
+   }
+  },
+  "x_rain_barrel_truth": {
+   "frame": {
+    "x": 434,
+    "y": 0,
+    "w": 57,
+    "h": 136
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 57,
+    "h": 136
+   },
+   "sourceSize": {
+    "w": 57,
+    "h": 136
+   },
+   "anchor": {
+    "x": 0.4561,
+    "y": 0.8897
+   }
+  },
+  "x_planter_bed_truth": {
+   "frame": {
+    "x": 0,
+    "y": 168,
+    "w": 155,
+    "h": 57
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 155,
+    "h": 57
+   },
+   "sourceSize": {
+    "w": 155,
+    "h": 57
+   },
+   "anchor": {
+    "x": 0.4839,
+    "y": 0.7193
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

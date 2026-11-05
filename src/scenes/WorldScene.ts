@@ -2,7 +2,16 @@ import Phaser from 'phaser';
 import { bus } from '../core/bus';
 import { createActor, setIdleFacing, updateActor, type Actor } from '../game/actors';
 import { TruthFx, truthLevel } from '../game/truthFx';
-import { drawRoads } from '../world/roads';
+import { ROADS } from '../world/roads';
+import { ChunkGround } from '../world/chunkGround';
+import { Culler } from '../world/culler';
+import { REGIONS, inSea, regionAt } from '../world/regions';
+import { equippedAura } from '../ui/shop';
+import { perksOf } from '../game/perks';
+import { WORLD_BUILDINGS, WORLD_CREATURE_SPAWNS, WORLD_NPCS, WORLD_PICKUPS, WORLD_PROPS } from '../world/worldMap';
+import { distanceToRegion, loadsForRegion, type RegionLoad } from '../world/regionAssets';
+import type { CreatureSpawn } from '../world/creatures';
+import { makeCreatureAnims, makeNpcAnims } from './BootScene';
 import { Atmosphere } from '../world/atmosphere';
 import { CreatureManager } from '../world/creatures';
 import { CREATURES } from '../content';
@@ -24,6 +33,9 @@ const ANCHOR: Record<string, [number, number]> = {
   well: [0.5, 0.8542], market_stall: [0.4643, 0.875],
 };
 
+/** Regions whose assets are in the texture cache. Module level: a restarted scene keeps them. */
+const readyRegions = new Set<string>();
+
 interface Target { id: string; x: number; y: number; label: string; range?: number }
 
 function closestOnSegment(a: { x: number; y: number }, b: { x: number; y: number }, p: { x: number; y: number }): { x: number; y: number; t: number } {
@@ -41,10 +53,13 @@ export class WorldScene extends Phaser.Scene {
   private keys!: Record<string, Phaser.Input.Keyboard.Key>;
   private blockers: Array<{ x: number; y: number; r: number }> = [];
   private walls = wallRects();
+  private readonly allNpcs = [...NPCS, ...WORLD_NPCS];
+  private readonly allPickups = [...PICKUPS, ...WORLD_PICKUPS];
   private pickups = new Map<string, Phaser.GameObjects.Image>();
   private fx!: TruthFx;
   private truthLayer!: TruthLayer;
   private npcRefs: Array<{ actor: Actor; def: (typeof NPCS)[number]; baseTint: number | undefined }> = [];
+  private truthSwapBuildings: Array<{ img: Phaser.GameObjects.Image }> = [];
   private swaps: Swappable[] = [];
   private truthBuildings: Phaser.GameObjects.Image[] = [];
   private atmos!: Atmosphere;
@@ -58,6 +73,17 @@ export class WorldScene extends Phaser.Scene {
   private spawn: { x: number; y: number } = START_SPAWN;
   private lastTarget: string | null = null;
   private pickupClock = 0;
+  private ground!: ChunkGround;
+  private treeCount = 0;
+  private spawned = new Set<string>();
+  private queued: string[] = [];
+  private loadingRegion: string | null = null;
+  private regionClock = 0;
+  private pending: { smoke: Array<{ x: number; y: number; off: Array<{ x: number; y: number }> }>; creatures: CreatureSpawn[] } = { smoke: [], creatures: [] };
+  private hiddenTrees: Array<{ id: string; x: number; y: number; glint: Phaser.GameObjects.Image }> = [];
+  private culler = new Culler();
+  private regionId = '';
+  private roadPts: Array<[number, number]> = [];
 
   constructor() {
     super('World');
@@ -71,29 +97,53 @@ export class WorldScene extends Phaser.Scene {
     this.ctx = this.registry.get(CTX_KEY) as GameContext;
     this.sightOn = false;
     this.blockers = [];
+    this.walls = wallRects();
     this.pickups.clear();
     this.faultLabels.clear();
     this.dots = [];
     this.npcRefs = [];
     this.swaps = [];
     this.truthBuildings = [];
+    // a restarted scene is the same object: forget what the previous run created
+    this.creatures = undefined as unknown as CreatureManager;
+    this.atmos = undefined as unknown as Atmosphere;
+    this.culler = new Culler();
+    this.regionId = '';
+    this.treeCount = 0;
+    this.hiddenTrees = [];
     this.buildGround();
     this.buildProps();
     this.buildNpcs();
+    this.spawned = new Set();
+    this.queued = [];
+    this.loadingRegion = null;
+    this.pending = { smoke: [], creatures: [] };
+    this.enqueueNear(this.spawn.x, this.spawn.y);
+    for (const id of readyRegions) this.spawnRegion(id);
     this.refreshPickups();
     this.buildPlayer();
     this.buildSight();
     this.truthLayer = new TruthLayer(this, this.npcRefs, this.swaps, { x: 2180, y: 420 });
     const bmeta = (this.cache.json.get('buildings:meta') as { frames: Record<string, { anchor: { x: number; y: number }; smoke?: Array<{ x: number; y: number }>; hub?: { x: number; y: number } }> }).frames;
     this.creatures = new CreatureManager(this);
+    this.creatures.addSpawns(this.pending.creatures);
+    this.pending.creatures = [];
+    this.refreshFriends();
     this.atmos = new Atmosphere(this, (this.registry.get('tod') as number | undefined) ?? 0.4, bmeta);
+    for (const sm of this.pending.smoke) this.atmos.addSmoke(sm.x, sm.y, sm.off);
+    this.pending.smoke = [];
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, WORLD.w, WORLD.h);
     cam.startFollow(this.player.sprite, true, 0.12, 0.12, 0, -40);
     this.fx = new TruthFx(cam);
+    this.applyQuality();
+    this.offs.push(this.ctx.quality.onChange(() => this.applyQuality()));
     this.applyZoom();
     this.scale.on('resize', () => this.applyZoom());
+    cam.preRender();
+    this.ground.update(cam.worldView, 99);
+    this.culler.update(0, cam.worldView, true);
 
     const kb = this.input.keyboard;
     this.keys = (kb?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
@@ -106,6 +156,7 @@ export class WorldScene extends Phaser.Scene {
     this.events.once('shutdown', () => {
       this.registry.set('tod', this.atmos.tod);
       this.atmos.destroy();
+      this.ground.destroy();
       this.offs.forEach((o) => o());
       this.offs = [];
       bus.emit('interact:available', null);
@@ -122,39 +173,12 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private buildGround(): void {
-    this.add.tileSprite(0, 0, WORLD.w, WORLD.h, 'grass').setOrigin(0).setDepth(-1000);
-    const g = this.add.graphics().setDepth(-900);
-    const stroke = (pts: Array<[number, number]>, w: number, col: number): void => {
-      g.lineStyle(w, col, 1);
-      g.beginPath();
-      pts.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
-      g.strokePath();
-    };
-    const road = (pts: Array<[number, number]>, w: number): void => {
-      stroke(pts, w + 14, 0x6b5a45);
-      stroke(pts, w, 0xc6aa7c);
-    };
-    // the stream crosses the south-east road at the bridge (perpendicular, so it reads as a crossing)
-    const stream: Array<[number, number]> = [[2300, 1080], [2140, 1190], [1968, 1292], [1830, 1380], [1740, 1520], [1700, 1780]];
-    stroke(stream, 84, 0x2c5a72);
-    stroke(stream, 66, 0x3f86a6);
-    stroke(stream, 22, 0x7fc4de);
-    drawRoads(g);
-    // wooden bridge along the road direction
-    const ang = Math.atan2(1382 - 1292, 2060 - 1968);
-    this.add.rectangle(1968, 1292, 150, 70, 0x3a2a1a).setRotation(ang).setDepth(-850);
-    this.add.rectangle(1968, 1292, 140, 60, 0x8a6a46).setRotation(ang).setDepth(-849);
-    for (let i = -6; i <= 6; i++) {
-      this.add.rectangle(1968 + Math.cos(ang) * i * 10, 1292 + Math.sin(ang) * i * 10, 3, 58, 0x4a331f).setRotation(ang).setDepth(-848);
-    }
-    // flowers and tufts, deterministic
-    let s = 11;
-    const r = (): number => ((s = (s * 16807) % 2147483647) / 2147483647);
-    for (let i = 0; i < 420; i++) {
-      const x = r() * WORLD.w;
-      const y = r() * WORLD.h;
-      g.fillStyle([0xffe9a8, 0xffb3c6, 0xd6c8ff, 0xffffff][Math.floor(r() * 4)] as number, 0.85);
-      g.fillCircle(x, y, 2 + r() * 2);
+    this.ground = new ChunkGround(this);
+    // sample the roads once: trees keep away from them
+    this.roadPts = [];
+    for (const r of ROADS) {
+      const sp = new Phaser.Curves.Spline(r.pts.map(([x, y]) => new Phaser.Math.Vector2(x, y)));
+      for (const p of sp.getSpacedPoints(Math.ceil(sp.getLength() / 40))) this.roadPts.push([p.x, p.y]);
     }
   }
 
@@ -180,33 +204,153 @@ export class WorldScene extends Phaser.Scene {
       if (d.frame === 'lamppost') this.swaps.push({ img: di, frame: d.frame, atlas: 'props' });
       if (d.block) this.blockers.push({ x: d.x, y: d.y - 6, r: d.block });
     }
-    // trees around the edge and a few inside, seeded
-    let s = 3;
-    const r = (): number => ((s = (s * 16807) % 2147483647) / 2147483647);
+    // trees: density per region, never on roads, buildings, the plaza or the sea
+    let sd = 3;
+    const r = (): number => ((sd = (sd * 16807) % 2147483647) / 2147483647);
+    const nearRoad = (x: number, y: number): boolean => {
+      for (const [rx, ry] of this.roadPts) if (Math.abs(rx - x) < 70 && Math.abs(ry - y) < 70) return true;
+      return false;
+    };
     const keepClear = (x: number, y: number): boolean =>
       BUILDINGS.some((b) => Math.abs(b.x - x) < 260 && y > b.y - 200 && y < b.y + 260) ||
-      (x > 900 && x < 1900 && y > 880 && y < 1500) || (x > 1800 && x < 2150 && y > 1000 && y < 1800) || (x > 480 && x < 1000 && y > 960 && y < 1560);
-    for (let i = 0; i < 190; i++) {
-      const edge = r() < 0.7;
-      const x = edge ? (r() < 0.5 ? r() * 320 : WORLD.w - r() * 320) : 160 + r() * (WORLD.w - 320);
-      const y = edge && r() < 0.5 ? (r() < 0.5 ? r() * 260 : WORLD.h - r() * 260) : 160 + r() * (WORLD.h - 320);
-      if (keepClear(x, y)) continue;
+      WORLD_BUILDINGS.some((b) => Math.abs(b.x - x) < 260 && y > b.y - 260 && y < b.y + 220) ||
+      WORLD_PROPS.some((p) => Math.abs(p.x - x) < 90 && Math.abs(p.y - y) < 70) ||
+      this.allPickups.some((p) => Math.abs(p.x - x) < 70 && Math.abs(p.y - y) < 70) ||
+      this.allNpcs.some((n) => Math.abs(n.x - x) < 70 && Math.abs(n.y - y) < 70) ||
+      WORLD_CREATURE_SPAWNS.some((c) => Math.abs(c.x - x) < 110 && Math.abs(c.y - y) < 90) ||
+      (x > 900 && x < 1900 && y > 880 && y < 1500) || (x > 1800 && x < 2150 && y > 1000 && y < 1800) || (x > 480 && x < 1000 && y > 960 && y < 1560) ||
+      inSea(x, Math.min(y + 60, 3990)) || nearRoad(x, y);
+    const plant = (x: number, y: number, frame: string): void => {
       const sc = 0.75 + r() * 0.4;
-      const frame = r() < 0.65 ? 'tree_round' : 'tree_pine';
-      this.add.image(x, y - 2, 'blob').setScale(sc * 1.4).setDepth(y - 1);
-      this.swaps.push({ img: this.prop(frame, x, y, sc), frame, atlas: 'props' });
+      const sh = this.add.image(x, y - 2, 'blob').setScale(sc * 1.4).setDepth(y - 1);
+      const tr = this.prop(frame, x, y, sc);
+      this.culler.add(sh, x, y, true);
+      this.culler.add(tr, x, y);
+      this.swaps.push({ img: tr, frame, atlas: 'props' });
       this.blockers.push({ x, y: y - 6, r: 20 * sc });
+      // every 14th tree hides something small: a fixed spot, never random
+      if (this.treeCount++ % 14 === 6 && !this.ctx.save.data.collected[`tree_${this.treeCount}`]) {
+        const glint = this.add.image(x + 12, y - 60 * sc, 'dot_gold').setScale(0.45).setAlpha(0).setDepth(y + 1).setBlendMode(Phaser.BlendModes.ADD);
+        this.hiddenTrees.push({ id: `tree_${this.treeCount}`, x, y, glint });
+      }
+    };
+    for (const reg of REGIONS) {
+      const [rx, ry, rw, rh] = reg.rect;
+      if (reg.treeStyle === 'rows') {
+        // orchard: tidy rows
+        for (let y = ry + 80; y < ry + rh - 60; y += 150) {
+          for (let x = rx + 100; x < rx + rw - 60; x += 130) {
+            if (!keepClear(x, y) && r() < 0.8) plant(x, y, 'tree_round');
+          }
+        }
+        continue;
+      }
+      const n = Math.round((reg.trees * rw * rh) / 1e6);
+      let placed = 0;
+      for (let tries = 0; placed < n && tries < n * 6; tries++) {
+        const x = rx + 60 + r() * (rw - 120);
+        const y = ry + 90 + r() * (rh - 160);
+        if (keepClear(x, y)) continue;
+        const frame = reg.treeStyle === 'pine' ? 'tree_pine' : reg.treeStyle === 'round' ? 'tree_round' : r() < 0.65 ? 'tree_round' : 'tree_pine';
+        plant(x, y, frame);
+        placed++;
+      }
+    }
+    // the edge of the world: a dense ring so nobody wonders what is beyond
+    for (let i = 0; i < 520; i++) {
+      const side = Math.floor(r() * 4);
+      const x = side === 0 ? r() * WORLD.w : side === 1 ? WORLD.w - r() * 260 : side === 2 ? r() * WORLD.w : r() * 260;
+      const y = side === 0 ? r() * 260 : side === 1 ? r() * WORLD.h : side === 2 ? WORLD.h - r() * 240 : r() * WORLD.h;
+      if (keepClear(x, y)) continue;
+      plant(x, Math.max(60, y), r() < 0.5 ? 'tree_pine' : 'tree_round');
     }
   }
 
   private buildNpcs(): void {
-    for (const n of NPCS) {
-      const a = createActor(this, n.char, n.x, n.y, undefined, n.scale ?? 1);
-      updateActor(a, n.x, n.y, 0, 0);
-      setIdleFacing(a, n.x > 1500 ? 'SW' : 'SE');
-      this.npcRefs.push({ actor: a, def: n, baseTint: undefined });
-      this.blockers.push({ x: n.x, y: n.y - 4, r: 20 });
+    for (const n of NPCS) this.addNpc(n);
+  }
+
+  private addNpc(n: (typeof NPCS)[number]): void {
+    const a = createActor(this, n.char, n.x, n.y, undefined, n.scale ?? 1);
+    updateActor(a, n.x, n.y, 0, 0);
+    setIdleFacing(a, n.x > 1500 && n.x < 4200 ? 'SW' : 'SE');
+    this.npcRefs.push({ actor: a, def: n, baseTint: undefined });
+    this.blockers.push({ x: n.x, y: n.y - 4, r: 20 });
+  }
+
+  /** Start loading every region the player is close to (once each, one load at a time). */
+  private enqueueNear(x: number, y: number): void {
+    for (const r of REGIONS) {
+      if (readyRegions.has(r.id) || this.queued.includes(r.id) || this.loadingRegion === r.id) continue;
+      if (distanceToRegion(r, x, y) < 1200) this.queued.push(r.id);
     }
+    this.pump();
+  }
+
+  private pump(): void {
+    if (this.loadingRegion || !this.queued.length || !this.sys.isActive()) return;
+    const id = this.queued.shift() as string;
+    const load = loadsForRegion(id, import.meta.env.BASE_URL);
+    const atlases = load.atlases.filter((a) => !this.textures.exists(a.key));
+    const jsons = load.jsons.filter((j) => !this.cache.json.exists(j.key));
+    if (!atlases.length && !jsons.length) {
+      this.regionReady(id, load);
+      this.pump();
+      return;
+    }
+    this.loadingRegion = id;
+    for (const a of atlases) this.load.atlas(a.key, a.png, a.json);
+    for (const j of jsons) this.load.json(j.key, j.url);
+    this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+      this.loadingRegion = null;
+      this.regionReady(id, load);
+      this.pump();
+    });
+    this.load.start();
+  }
+
+  private regionReady(id: string, load: RegionLoad): void {
+    for (const sheet of load.npcSheets) makeNpcAnims(this, sheet);
+    for (const c of load.creatures) makeCreatureAnims(this, c);
+    readyRegions.add(id);
+    if (this.sys.isActive()) this.spawnRegion(id);
+  }
+
+  /** Create the buildings, scenery, villagers and creatures of one region, once its assets are in. */
+  private spawnRegion(id: string): void {
+    if (this.spawned.has(id)) return;
+    this.spawned.add(id);
+    const inRegion = (x: number, y: number): boolean => regionAt(x, y)?.id === id;
+    for (const wb of WORLD_BUILDINGS) {
+      if (!inRegion(wb.x, wb.y)) continue;
+      const meta = (this.cache.json.get(`${wb.atlas}:meta`) as { frames: Record<string, { anchor: { x: number; y: number }; frame: { w: number; h: number }; smoke?: Array<{ x: number; y: number }> }> } | undefined)?.frames[wb.id];
+      if (!meta) continue;
+      const foot = { w: meta.frame.w * (wb.footW ?? 0.62), h: 64 };
+      this.add.image(wb.x, wb.y - 6, 'blob').setScale((foot.w / 64) * 1.5, (foot.h / 32) * 1.6).setAlpha(0.85).setDepth(wb.y - 1);
+      this.add.image(wb.x, wb.y, wb.atlas, wb.id).setOrigin(meta.anchor.x, meta.anchor.y).setDepth(wb.y);
+      const truth = this.add.image(wb.x, wb.y, `${wb.atlas}_truth`, `${wb.id}_truth`).setOrigin(meta.anchor.x, meta.anchor.y).setDepth(wb.y + 0.5).setAlpha(0).setVisible(false);
+      this.truthBuildings.push(truth);
+      this.walls.push([wb.x - foot.w / 2, wb.y - foot.h + 8, foot.w, foot.h]);
+      if (meta.smoke) {
+        if (this.atmos) this.atmos.addSmoke(wb.x, wb.y, meta.smoke);
+        else this.pending.smoke.push({ x: wb.x, y: wb.y, off: meta.smoke });
+      }
+    }
+    const truthProps = new Set(['fairy_door_tree', 'giant_tree_hollow', 'lantern_post_b', 'flower_bush', 'mushroom_ring', 'reeds']);
+    const propMeta = (this.cache.json.get('props2:meta') as { frames: Record<string, { anchor: { x: number; y: number } }> } | undefined)?.frames;
+    for (const wp of WORLD_PROPS) {
+      if (!inRegion(wp.x, wp.y) || !propMeta) continue;
+      const sc = wp.scale ?? 1;
+      const a = propMeta[wp.frame]?.anchor ?? { x: 0.5, y: 0.9 };
+      this.add.image(wp.x, wp.y - 3, 'blob').setScale(sc * 1.2).setDepth(wp.y - 1);
+      const img = this.add.image(wp.x, wp.y, 'props2', wp.frame).setOrigin(a.x, a.y).setScale(sc).setDepth(wp.y);
+      if (truthProps.has(wp.frame)) this.swaps.push({ img, frame: wp.frame, atlas: 'props2', truthAtlas: 'props2_truth' });
+      if (wp.block) this.blockers.push({ x: wp.x, y: wp.y - 6, r: wp.block });
+    }
+    for (const n of WORLD_NPCS) if (inRegion(n.x, n.y) && this.textures.exists(n.char)) this.addNpc(n);
+    const spawns = WORLD_CREATURE_SPAWNS.filter((c) => inRegion(c.x, c.y) && this.textures.exists(`cr_${c.key}`));
+    if (this.creatures) this.creatures.addSpawns(spawns);
+    else this.pending.creatures.push(...spawns);
   }
 
   private pickupAllowed(p: PickupDef): boolean {
@@ -216,7 +360,7 @@ export class WorldScene extends Phaser.Scene {
 
   /** Spawn pickups whose story requirement has just been met. */
   private refreshPickups(): void {
-    for (const p of PICKUPS) {
+    for (const p of this.allPickups) {
       if (this.pickups.has(p.id) || !this.pickupAllowed(p)) continue;
       const key = p.kind === 'card' ? 'dot_gold' : p.kind === 'diary' ? 'dot_pink' : 'dot_teal';
       const img = this.add.image(p.x, p.y - 10, key).setDepth(p.y).setScale(1.2);
@@ -229,8 +373,29 @@ export class WorldScene extends Phaser.Scene {
     const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
     this.px = this.spawn.x;
     this.py = this.spawn.y;
+    this.unstick();
     this.player = createActor(this, char, this.px, this.py);
     updateActor(this.player, this.px, this.py, 0, 0);
+    this.applyAura();
+  }
+
+  /** The aura bought in the tailor's shop: a soft coloured glow around the player. */
+  applyAura(): void {
+    const fx = this.player?.sprite.postFX;
+    if (!fx) return;
+    fx.clear();
+    const a = equippedAura(this.ctx.save);
+    if (a?.color && this.ctx.quality.profile.glow) fx.addGlow(a.color, 4, 0, false, 0.1, 14);
+  }
+
+  /** Apply the picture-quality level to everything this scene owns. */
+  private applyQuality(): void {
+    const p = this.ctx.quality.profile;
+    this.fx.enabled = p.postFx;
+    this.atmos?.setQuality(p);
+    this.culler.setShadows(p.shadows);
+    this.culler.update(0, this.cameras.main.worldView, true);
+    this.applyAura();
   }
 
   private buildSight(): void {
@@ -260,8 +425,11 @@ export class WorldScene extends Phaser.Scene {
     for (const b of BUILDINGS) {
       if (b.id.startsWith('house-') || b.id === 'tower') out.push({ id: `door:${b.id}`, x: b.door.x, y: b.door.y, label: b.label, range: 70 });
     }
-    for (const n of NPCS) out.push({ id: `npc:${n.id}`, x: n.x, y: n.y, label: n.label });
-    for (const p of PICKUPS) if (this.pickups.has(p.id)) out.push({ id: `pickup:${p.id}`, x: p.x, y: p.y, label: 'לאסוף' });
+    for (const wb of WORLD_BUILDINGS) {
+      if (wb.id !== 'great_tower') out.push({ id: `door:house-${wb.id}`, x: wb.door.x, y: wb.door.y, label: `כניסה: ${wb.name}`, range: 80 });
+    }
+    for (const n of this.npcRefs.map((r) => r.def)) out.push({ id: `npc:${n.id}`, x: n.x, y: n.y, label: n.label });
+    for (const p of this.allPickups) if (this.pickups.has(p.id)) out.push({ id: `pickup:${p.id}`, x: p.x, y: p.y, label: 'לאסוף' });
     const save = this.ctx.save;
     for (const c of this.creatures.targets(this.atmos.tod)) {
       const info = CREATURES[c.key];
@@ -272,6 +440,9 @@ export class WorldScene extends Phaser.Scene {
     for (const s of SPOTS) {
       if (s.id === 'bridge' && save.hasFlag('bakery_fixed') && !save.hasFlag('p1_complete')) out.push({ id: `spot:${s.id}`, x: s.x, y: s.y, label: s.label, range: s.range });
       if (s.id === 'sky') out.push({ id: `spot:${s.id}`, x: s.x, y: s.y, label: s.label, range: s.range });
+    }
+    for (const t of this.hiddenTrees) {
+      if (!save.data.collected[t.id]) out.push({ id: `tree:${t.id}`, x: t.x, y: t.y + 14, label: 'לחפש בעץ', range: 62 });
     }
     if (this.sightOn) {
       const power = save.data.power;
@@ -286,6 +457,8 @@ export class WorldScene extends Phaser.Scene {
     if (this.ctx.modal || !this.scene.isActive()) return;
     if (id.startsWith('door:house-')) {
       bus.emit('world:enter-house', { houseId: id.slice(5) });
+    } else if (id.startsWith('tree:')) {
+      this.searchTree(id.slice(5));
     } else if (id.startsWith('pickup:')) {
       const pid = id.slice(7);
       const img = this.pickups.get(pid);
@@ -304,6 +477,33 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
+  /** Fixed rewards by tree number: small coins most of the time, creature food now and then. */
+  private searchTree(tid: string): void {
+    const t = this.hiddenTrees.find((x) => x.id === tid);
+    const save = this.ctx.save;
+    if (!t || save.data.collected[tid]) return;
+    const n = Number(tid.slice(5));
+    const table: Array<{ text: string; give: () => void }> = [
+      { text: '5 מטבעות בין העלים', give: () => { save.data.coins += 5; } },
+      { text: 'פירות יער ליצורים', give: () => { save.data.inv.food_berries = (save.data.inv.food_berries ?? 0) + 1; } },
+      { text: '8 מטבעות בחור של הגזע', give: () => { save.data.coins += 8; } },
+      { text: 'פירורי לחם ליצורים', give: () => { save.data.inv.food_bread = (save.data.inv.food_bread ?? 0) + 1; } },
+      { text: '5 מטבעות בין הענפים', give: () => { save.data.coins += 5; } },
+      { text: 'טיפת דבש ליצורים', give: () => { save.data.inv.food_honey = (save.data.inv.food_honey ?? 0) + 1; } },
+      { text: '12 מטבעות בקן ישן', give: () => { save.data.coins += 12; } },
+      { text: 'גרגירים ליצורים', give: () => { save.data.inv.food_grains = (save.data.inv.food_grains ?? 0) + 1; } },
+    ];
+    const prize = table[n % table.length] as { text: string; give: () => void };
+    prize.give();
+    save.data.collected[tid] = true;
+    save.save();
+    this.tweens.add({ targets: t.glint, scale: 3, alpha: 0, duration: 400, onComplete: () => t.glint.destroy() });
+    this.hiddenTrees = this.hiddenTrees.filter((x) => x.id !== tid);
+    this.ctx.hud.toast(`מצאתם בעץ: ${prize.text}`, 'good', 3200);
+    bus.emit('interact:available', null);
+    this.lastTarget = null;
+  }
+
   private tryFix(f: FaultDef | undefined): void {
     if (!f || this.isFixed(f)) return;
     if (this.ctx.save.data.power < f.needsPower) {
@@ -318,8 +518,28 @@ export class WorldScene extends Phaser.Scene {
     bus.emit('fault:fixed', { id: f.id, evidence: f.evidence });
   }
 
+  /** If the spawn point sits inside a wall or next to an NPC, move to the nearest free spot so the player is never trapped. */
+  private unstick(): void {
+    if (!this.blocked(this.px, this.py)) return;
+    for (let r = 8; r <= 240; r += 8) {
+      for (let k = 0; k < 16; k++) {
+        const a = (k / 16) * Math.PI * 2;
+        const x = this.px + Math.cos(a) * r;
+        const y = this.py + Math.sin(a) * r;
+        if (!this.blocked(x, y)) {
+          this.px = x;
+          this.py = y;
+          return;
+        }
+      }
+    }
+  }
+
   private blocked(x: number, y: number): boolean {
     if (x < 30 || y < 30 || x > WORLD.w - 30 || y > WORLD.h - 30) return true;
+    if (inSea(x, y)) return true;
+    const reg = regionAt(x, y);
+    if (reg?.lockedUntil && !this.ctx.save.hasFlag(reg.lockedUntil)) return true;
     for (const [rx, ry, rw, rh] of this.walls) {
       if (x > rx - PLAYER_R && x < rx + rw + PLAYER_R && y > ry - 6 && y < ry + rh + 6) return true;
     }
@@ -351,7 +571,7 @@ export class WorldScene extends Phaser.Scene {
         vy /= len;
       }
     }
-    const speed = SPEED * (this.sightOn ? 0.8 : 1);
+    const speed = SPEED * (this.sightOn ? 0.8 : 1) * perksOf(c.save).speed;
     const nx = this.px + vx * speed * dt;
     const ny = this.py + vy * speed * dt;
     if (!this.blocked(nx, this.py)) this.px = nx;
@@ -373,7 +593,7 @@ export class WorldScene extends Phaser.Scene {
     const tv = this.fx.value;
     for (const tb of this.truthBuildings) tb.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
     this.atmos.update(dtMs, tv, this.px, this.py);
-    this.creatures.update(dtMs, this.atmos.tod);
+    this.creatures.update(dtMs, this.atmos.tod, this.px, this.py);
     this.ctx.head.setTruth(tv, dt);
 
     this.pickupClock += dt;
@@ -381,8 +601,35 @@ export class WorldScene extends Phaser.Scene {
       this.pickupClock = 0;
       this.refreshPickups();
     }
+    this.ground.update(this.cameras.main.worldView, 1);
+    this.culler.update(dtMs, this.cameras.main.worldView);
+    this.watchRegion();
+    const pulse = 0.5 + Math.sin(this.time.now / 260) * 0.3;
+    for (const t of this.hiddenTrees) t.glint.setAlpha(Math.hypot(t.x - this.px, t.y - this.py) < 380 * perksOf(this.ctx.save).reach ? pulse : 0);
+    // real time, not game time: a slow device must not postpone loading what it is about to need
+    if (this.time.now - this.regionClock > 600) {
+      this.regionClock = this.time.now;
+      this.enqueueNear(this.px, this.py);
+    }
+    if (this.queued.length && !this.loadingRegion) this.pump();
     this.updateTarget();
     if (this.sightOn) this.drawSight();
+  }
+
+  /** Name of the region on entering it (a quiet toast, never during dialogue). */
+  /** Befriended creatures (fed once) follow the player. Called after feeding too. */
+  refreshFriends(): void {
+    const friends = Object.keys(this.ctx.save.data.collected).filter((k) => k.startsWith('friend_')).map((k) => k.slice(7));
+    this.creatures.setFriends(friends);
+  }
+
+  private watchRegion(): void {
+    const id = regionAt(this.px, this.py)?.id ?? '';
+    if (id === this.regionId) return;
+    const first = this.regionId === '';
+    this.regionId = id;
+    const reg = REGIONS.find((x) => x.id === id);
+    if (!first && reg && !this.ctx.modal) this.ctx.hud.toast(reg.name, '', 2600);
   }
 
   private updateTarget(): void {
@@ -395,7 +642,7 @@ export class WorldScene extends Phaser.Scene {
     let bd = Infinity;
     for (const t of this.targets()) {
       const d = Math.hypot(t.x - this.px, t.y - this.py);
-      if (d < (t.range ?? INTERACT_RANGE) && d < bd) {
+      if (d < (t.range ?? INTERACT_RANGE) * perksOf(this.ctx.save).reach && d < bd) {
         best = t;
         bd = d;
       }
@@ -466,7 +713,7 @@ export class WorldScene extends Phaser.Scene {
         label?.setVisible(false);
         continue;
       }
-      const near = Math.hypot(f.x - this.px, f.y - this.py) < 190;
+      const near = Math.hypot(f.x - this.px, f.y - this.py) < perksOf(this.ctx.save).faultRadius;
       const known = power >= f.needsPower;
       const pulse = 1 + Math.sin(time * 5) * 0.12;
       g.fillStyle(known ? 0xff6b7d : 0x9aa0c8, 0.5);

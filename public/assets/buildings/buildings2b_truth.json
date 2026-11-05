@@ -1,0 +1,314 @@
+{
+ "frames": {
+  "stories_truth": {
+   "frame": {
+    "x": 458,
+    "y": 900,
+    "w": 504,
+    "h": 322
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 504,
+    "h": 322
+   },
+   "sourceSize": {
+    "w": 504,
+    "h": 322
+   },
+   "anchor": {
+    "x": 0.4994,
+    "y": 0.6708
+   },
+   "cellBeforeTrim": [
+    544,
+    408
+   ],
+   "smoke": [
+    {
+     "x": 56.0,
+     "y": -217.7
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "stories hall",
+   "anchorPx": {
+    "x": 251.7,
+    "y": 216.0
+   }
+  },
+  "farm_truth": {
+   "frame": {
+    "x": 1474,
+    "y": 0,
+    "w": 570,
+    "h": 406
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 570,
+    "h": 406
+   },
+   "sourceSize": {
+    "w": 570,
+    "h": 406
+   },
+   "anchor": {
+    "x": 0.4465,
+    "y": 0.6938
+   },
+   "cellBeforeTrim": [
+    608,
+    464
+   ],
+   "smoke": [
+    {
+     "x": -128.8,
+     "y": -188.1
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "farm (barn, house, silo)",
+   "anchorPx": {
+    "x": 254.5,
+    "y": 281.7
+   }
+  },
+  "shepherd_truth": {
+   "frame": {
+    "x": 1374,
+    "y": 900,
+    "w": 445,
+    "h": 274
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 445,
+    "h": 274
+   },
+   "sourceSize": {
+    "w": 445,
+    "h": 274
+   },
+   "anchor": {
+    "x": 0.4964,
+    "y": 0.5865
+   },
+   "cellBeforeTrim": [
+    488,
+    328
+   ],
+   "smoke": [
+    {
+     "x": 67.2,
+     "y": -158.7
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "shepherd's wagon + pen",
+   "anchorPx": {
+    "x": 220.9,
+    "y": 160.7
+   }
+  },
+  "herbs_truth": {
+   "frame": {
+    "x": 964,
+    "y": 900,
+    "w": 408,
+    "h": 301
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 408,
+    "h": 301
+   },
+   "sourceSize": {
+    "w": 408,
+    "h": 301
+   },
+   "anchor": {
+    "x": 0.4934,
+    "y": 0.6003
+   },
+   "cellBeforeTrim": [
+    448,
+    376
+   ],
+   "label": "herb glasshouse",
+   "anchorPx": {
+    "x": 201.3,
+    "y": 180.7
+   }
+  },
+  "fairy_truth": {
+   "frame": {
+    "x": 1052,
+    "y": 0,
+    "w": 420,
+    "h": 526
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 420,
+    "h": 526
+   },
+   "sourceSize": {
+    "w": 420,
+    "h": 526
+   },
+   "anchor": {
+    "x": 0.5221,
+    "y": 0.82
+   },
+   "cellBeforeTrim": [
+    456,
+    600
+   ],
+   "label": "fairy tree house",
+   "anchorPx": {
+    "x": 219.3,
+    "y": 431.3
+   }
+  },
+  "guild_truth": {
+   "frame": {
+    "x": 0,
+    "y": 900,
+    "w": 456,
+    "h": 402
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 456,
+    "h": 402
+   },
+   "sourceSize": {
+    "w": 456,
+    "h": 402
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6659
+   },
+   "cellBeforeTrim": [
+    496,
+    480
+   ],
+   "smoke": [
+    {
+     "x": 128.8,
+     "y": -265.6
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "weavers' guild hall",
+   "anchorPx": {
+    "x": 228.0,
+    "y": 267.7
+   }
+  },
+  "lighthouse_truth": {
+   "frame": {
+    "x": 512,
+    "y": 0,
+    "w": 538,
+    "h": 601
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 538,
+    "h": 601
+   },
+   "sourceSize": {
+    "w": 538,
+    "h": 601
+   },
+   "anchor": {
+    "x": 0.6191,
+    "y": 0.8626
+   },
+   "cellBeforeTrim": [
+    592,
+    680
+   ],
+   "smoke": [
+    {
+     "x": -145.6,
+     "y": -160.6
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "lighthouse",
+   "anchorPx": {
+    "x": 333.1,
+    "y": 518.4
+   }
+  },
+  "great_tower_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 510,
+    "h": 898
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 510,
+    "h": 898
+   },
+   "sourceSize": {
+    "w": 510,
+    "h": 898
+   },
+   "anchor": {
+    "x": 0.5212,
+    "y": 0.8347
+   },
+   "cellBeforeTrim": [
+    568,
+    960
+   ],
+   "label": "the great tower (locked)",
+   "anchorPx": {
+    "x": 265.8,
+    "y": 749.6
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "buildings2b_truth.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 2048,
+   "h": 1302
+  },
+  "scale": "1",
+  "note": "anchor = footprint centre on the ground (setOrigin(anchor.x, anchor.y)); same convention as buildings.json. The truth atlas has identical silhouettes/anchors; frame name = <id>_truth."
+ }
+}

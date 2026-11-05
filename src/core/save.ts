@@ -1,6 +1,8 @@
 export const SAVE_KEY = 'too-quiet.save.v1';
 export const SAVE_VERSION = 1;
 
+import type { QualitySetting } from './quality';
+
 export type Look = 'girl' | 'boy';
 
 export interface LessonProgress {
@@ -15,6 +17,7 @@ export interface SaveData {
   v: number;
   started: boolean;
   look: Look;
+  name: string;
   flags: Record<string, boolean>;
   collected: Record<string, boolean>;
   evidence: Record<string, 'natural' | 'hand'>;
@@ -22,14 +25,16 @@ export interface SaveData {
   lessons: Record<string, LessonProgress>;
   power: number;
   coins: number;
+  /** Stackable items such as creature food. */
+  inv: Record<string, number>;
   playSeconds: number;
-  settings: { subtitles: boolean; sound: boolean };
+  settings: { subtitles: boolean; sound: boolean; quality: QualitySetting; showFps: boolean };
 }
 
 export function emptySave(): SaveData {
   return {
-    v: SAVE_VERSION, started: false, look: 'girl', flags: {}, collected: {}, evidence: {}, fixed: {},
-    lessons: {}, power: 0, coins: 0, playSeconds: 0, settings: { subtitles: true, sound: false },
+    v: SAVE_VERSION, started: false, look: 'girl', name: '', flags: {}, collected: {}, evidence: {}, fixed: {},
+    lessons: {}, power: 0, coins: 0, inv: {}, playSeconds: 0, settings: { subtitles: true, sound: false, quality: 'auto', showFps: false },
   };
 }
 

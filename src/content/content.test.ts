@@ -2,6 +2,15 @@ import { describe, expect, it } from 'vitest';
 import { COLLECTIBLES, HOUSES, HOUSE_FOR_BUILDING, ITEMS_IN_OBJECT, LINES, SCENES, SPEAKER_NAMES, allItems, itemById } from './index';
 import { BUILDINGS, FAULTS, NPCS, PICKUPS, THREADS, WORLD } from '../world/layout';
 import { STOP_AFTER } from '../game/sceneRunner';
+import { WORLD_BUILDINGS, WORLD_NPCS, WORLD_PICKUPS, WORLD_PROPS } from '../world/worldMap';
+import { regionAt, inSea } from '../world/regions';
+import { WORLD_NPC_INFO, conversationFor } from './world';
+import { mix } from '../ui/npcgames/dye';
+import { NPC_GAMES } from '../ui/npcgames';
+import { WORLD_CREATURE_SPAWNS } from '../world/worldMap';
+import { CREATURES } from './index';
+import { SHOP_ITEMS, buy, equip, equippedAura } from '../ui/shop';
+import { SaveStore } from '../core/save';
 
 describe('story content', () => {
   it('every scene line exists and every jump resolves', () => {
@@ -46,7 +55,7 @@ describe('collectibles and houses', () => {
 
   it('every item can be found exactly once, either in a house object or as a world pickup', () => {
     const inHouses = Object.values(ITEMS_IN_OBJECT).flat();
-    const inWorld = PICKUPS.map((p) => p.id);
+    const inWorld = [...PICKUPS, ...WORLD_PICKUPS].map((p) => p.id);
     const found = [...inHouses, ...inWorld];
     expect(new Set(found).size).toBe(found.length);
     for (const i of allItems()) expect(found.includes(i.id), `${i.id} is not placed anywhere`).toBe(true);
@@ -66,13 +75,39 @@ describe('collectibles and houses', () => {
     for (const b of BUILDINGS.filter((x) => x.id.startsWith('house-'))) {
       expect(HOUSES.some((h) => h.id === HOUSE_FOR_BUILDING[b.id]), b.id).toBe(true);
     }
-    expect(HOUSES).toHaveLength(3);
+    expect(HOUSES).toHaveLength(18);
+    for (const wb of WORLD_BUILDINGS.filter((x) => x.id !== 'great_tower')) expect(HOUSES.some((h) => h.id === HOUSE_FOR_BUILDING[`house-${wb.id}`]), wb.id).toBe(true);
+  });
+});
+
+describe('world conversations', () => {
+  it('every world NPC has a first conversation made of existing lines', () => {
+    for (const n of WORLD_NPC_INFO) {
+      const ids = conversationFor(n, 'first');
+      expect(ids.length, n.id).toBeGreaterThan(0);
+      for (const id of ids) expect(LINES[id], id).toBeDefined();
+    }
+  });
+});
+
+describe('big world placement', () => {
+  it('nothing stands in the sea and every building is in a region', () => {
+    for (const b of WORLD_BUILDINGS) {
+      expect(inSea(b.x, b.y), b.id).toBe(false);
+      expect(regionAt(b.x, b.y), b.id).toBeDefined();
+    }
+    for (const p of [...WORLD_PICKUPS, ...WORLD_NPCS]) expect(inSea(p.x, p.y), p.id).toBe(false);
+  });
+  it('unique ids', () => {
+    for (const list of [WORLD_BUILDINGS.map((b) => b.id), WORLD_NPCS.map((n) => n.id), WORLD_PICKUPS.map((p) => p.id)]) {
+      expect(new Set(list).size).toBe(list.length);
+    }
   });
 });
 
 describe('world layout', () => {
   it('keeps everything inside the world', () => {
-    const pts = [...BUILDINGS, ...NPCS, ...PICKUPS, ...FAULTS];
+    const pts = [...BUILDINGS, ...WORLD_BUILDINGS, ...NPCS, ...WORLD_NPCS, ...PICKUPS, ...WORLD_PICKUPS, ...WORLD_PROPS, ...FAULTS];
     for (const p of pts) {
       expect(p.x).toBeGreaterThan(0);
       expect(p.x).toBeLessThan(WORLD.w);
@@ -83,12 +118,53 @@ describe('world layout', () => {
 
   it('faults referenced by threads exist, and NPC speakers have names', () => {
     for (const t of THREADS) if (t.faultId) expect(FAULTS.some((f) => f.id === t.faultId), t.id).toBe(true);
-    for (const n of NPCS) expect(SPEAKER_NAMES[n.speaker], n.id).toBeDefined();
+    for (const n of [...NPCS, ...WORLD_NPCS]) expect(SPEAKER_NAMES[n.speaker], n.id).toBeDefined();
   });
 
   it('unique ids', () => {
     for (const list of [BUILDINGS.map((b) => b.id), NPCS.map((n) => n.id), PICKUPS.map((p) => p.id), FAULTS.map((f) => f.id)]) {
       expect(new Set(list).size).toBe(list.length);
+    }
+  });
+});
+
+describe('npc mini-games', () => {
+  it('every game is offered by an existing NPC and has rewards for all levels', () => {
+    for (const [npc, g] of Object.entries(NPC_GAMES)) {
+      expect(WORLD_NPC_INFO.some((n) => n.id === npc), npc).toBe(true);
+      for (const l of ['easy', 'medium', 'hard'] as const) expect(g.rewards[l].coins, `${g.id} ${l}`).toBeGreaterThan(0);
+    }
+  });
+  it('dye mixing is deterministic', () => {
+    expect(mix([0, 2, 1])).toEqual(mix([0, 2, 1]));
+    expect(mix([0, 0, 0])[0]).toBeGreaterThan(200);
+  });
+});
+
+describe('tailor shop', () => {
+  it('spends coins once, equips one aura at a time', () => {
+    const save = new SaveStore(null);
+    save.load();
+    save.data.coins = 100;
+    const gold = SHOP_ITEMS.find((i) => i.id === 'aura_gold')!;
+    const teal = SHOP_ITEMS.find((i) => i.id === 'aura_teal')!;
+    expect(buy(save, gold)).toBe(true);
+    expect(buy(save, gold)).toBe(false);
+    expect(save.data.coins).toBe(60);
+    expect(buy(save, teal)).toBe(true);
+    expect(equippedAura(save)?.id).toBe('aura_teal');
+    equip(save, null);
+    expect(equippedAura(save)).toBeUndefined();
+    expect(buy(save, SHOP_ITEMS.find((i) => i.id === 'extra_time')!)).toBe(false);
+  });
+});
+
+describe('new creatures', () => {
+  it('all 14 are placed on land, in their own region, with an index entry', () => {
+    expect(WORLD_CREATURE_SPAWNS).toHaveLength(14);
+    for (const c of WORLD_CREATURE_SPAWNS) {
+      expect(inSea(c.x, c.y), c.key).toBe(false);
+      expect(CREATURES[c.key], c.key).toBeDefined();
     }
   });
 });

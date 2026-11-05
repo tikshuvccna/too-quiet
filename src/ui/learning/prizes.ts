@@ -11,7 +11,7 @@ export const PRIZE_COINS: Record<Level, number> = { easy: 10, medium: 20, hard: 
 export const PRIZE_FLAGS: Record<Level, string[]> = {
   easy: ['prize.easy', 'cosmetic.scarf_blue', 'unlock.lesson02', 'power.messenger_voice'],
   medium: ['prize.medium', 'cosmetic.hat_weaver_blue', 'upgrade.needle_range'],
-  hard: ['prize.hard', 'cosmetic.cloak_gold', 'badge.network_weaver'],
+  hard: ['prize.hard', 'cosmetic.cloak_gold', 'badge.network_weaver', 'equip.aura_gold'],
 };
 export const FLAWLESS_FLAG = 'badge.good_evening';
 
@@ -22,7 +22,7 @@ export function prizeFor(level: Level, prizes: MinigameData['prizes'] = defaultP
 export interface PrizeOutcome { granted: boolean; coins: number; flawlessBadge: boolean }
 
 /** Deterministic, first pass only. The hard level also has a one-time badge for a run with no lost life. */
-export function applyPrize(save: SaveStore, level: Level, opts: { flawless?: boolean } = {}): PrizeOutcome {
+export function applyPrize(save: SaveStore, level: Level, opts: { flawless?: boolean; lessonId?: string } = {}): PrizeOutcome {
   const flags = PRIZE_FLAGS[level];
   const marker = flags[0] as string;
   const first = !save.hasFlag(marker);

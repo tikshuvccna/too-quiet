@@ -1,3 +1,4 @@
+import './learning.css';
 import { el, uiRoot } from '../dom';
 
 export interface Overlay { root: HTMLElement; destroy(): void }

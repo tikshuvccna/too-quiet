@@ -11,7 +11,7 @@ function lerpColor(a: number, b: number, t: number): number {
   return Phaser.Display.Color.GetColor(c.r, c.g, c.b);
 }
 
-export interface Swappable { img: Phaser.GameObjects.Image; frame: string; atlas: string }
+export interface Swappable { img: Phaser.GameObjects.Image; frame: string; atlas: string; truthAtlas?: string }
 
 /**
  * The cold face of the valley, on top of the cheerful one while the needle looks: drifting fog,
@@ -91,7 +91,7 @@ export class TruthLayer {
     if (want !== this.swapped) {
       this.swapped = want;
       for (const s of this.swaps) {
-        if (want) s.img.setTexture('buildings_truth', `${s.frame}_truth`);
+        if (want) s.img.setTexture(s.truthAtlas ?? 'buildings_truth', `${s.frame}_truth`);
         else s.img.setTexture(s.atlas, s.frame);
       }
     }

@@ -1,0 +1,254 @@
+{
+ "house": "observatory",
+ "name": "מצפה הכוכבים",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  713.6,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "o_chart",
+   "interactive": true,
+   "nameHe": "מפת הענן",
+   "frame": "o_chart",
+   "frameTruth": "o_chart_truth",
+   "place": {
+    "x": 321.6,
+    "y": 213.7
+   },
+   "world": {
+    "x": -3.4,
+    "y": 4.45,
+    "z": 1.6
+   },
+   "wall": true,
+   "sortY": 213.7,
+   "footprintPx": null
+  },
+  {
+   "id": "o_telescope",
+   "interactive": true,
+   "nameHe": "המשקפת הגדולה",
+   "frame": "o_telescope",
+   "frameTruth": "o_telescope_truth",
+   "place": {
+    "x": 523.2,
+    "y": 391.5
+   },
+   "world": {
+    "x": 0.2,
+    "y": 1.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 391.5,
+   "footprintPx": [
+    45,
+    19
+   ]
+  },
+  {
+   "id": "o_orrery",
+   "interactive": true,
+   "nameHe": "מודל כוכבים",
+   "frame": "o_orrery",
+   "frameTruth": "o_orrery_truth",
+   "place": {
+    "x": 265.6,
+    "y": 417.2
+   },
+   "world": {
+    "x": -4.4,
+    "y": 0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 417.2,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "o_log",
+   "interactive": true,
+   "nameHe": "יומן ההבהובים",
+   "frame": "o_log",
+   "frameTruth": "o_log_truth",
+   "place": {
+    "x": 204.0,
+    "y": 356.1
+   },
+   "world": {
+    "x": -5.5,
+    "y": 2.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 356.1,
+   "footprintPx": [
+    39,
+    14
+   ]
+  },
+  {
+   "id": "o_tea",
+   "interactive": true,
+   "nameHe": "תה קר",
+   "frame": "o_tea",
+   "frameTruth": "o_tea_truth",
+   "place": {
+    "x": 786.4,
+    "y": 365.8
+   },
+   "world": {
+    "x": 4.9,
+    "y": 2.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 365.8,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_chart_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_chart_table",
+   "frameTruth": "x_chart_table_truth",
+   "place": {
+    "x": 646.4,
+    "y": 491.0
+   },
+   "world": {
+    "x": 2.4,
+    "y": -1.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 491.0,
+   "footprintPx": [
+    67,
+    22
+   ]
+  },
+  {
+   "id": "x_armillary",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_armillary",
+   "frameTruth": "x_armillary_truth",
+   "place": {
+    "x": 366.4,
+    "y": 487.8
+   },
+   "world": {
+    "x": -2.6,
+    "y": -1.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 487.8,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_stool",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_stool",
+   "frameTruth": "x_stool_truth",
+   "place": {
+    "x": 836.8,
+    "y": 455.7
+   },
+   "world": {
+    "x": 5.8,
+    "y": -0.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 455.7,
+   "footprintPx": [
+    20,
+    10
+   ]
+  },
+  {
+   "id": "x_book_cart",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_book_cart",
+   "frameTruth": "x_book_cart_truth",
+   "place": {
+    "x": 456.0,
+    "y": 311.2
+   },
+   "world": {
+    "x": -1.0,
+    "y": 3.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 311.2,
+   "footprintPx": [
+    45,
+    13
+   ]
+  },
+  {
+   "id": "x_blanket_chair",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_blanket_chair",
+   "frameTruth": "x_blanket_chair_truth",
+   "place": {
+    "x": 859.2,
+    "y": 311.2
+   },
+   "world": {
+    "x": 6.2,
+    "y": 3.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 311.2,
+   "footprintPx": [
+    39,
+    16
+   ]
+  }
+ ]
+}

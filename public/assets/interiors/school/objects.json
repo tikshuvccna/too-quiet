@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "s_board": {
+   "frame": {
+    "x": 254,
+    "y": 0,
+    "w": 202,
+    "h": 103
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 202,
+    "h": 103
+   },
+   "sourceSize": {
+    "w": 202,
+    "h": 103
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9126
+   }
+  },
+  "s_drawings": {
+   "frame": {
+    "x": 0,
+    "y": 135,
+    "w": 134,
+    "h": 43
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 43
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 43
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.0465
+   }
+  },
+  "s_notes": {
+   "frame": {
+    "x": 140,
+    "y": 0,
+    "w": 112,
+    "h": 106
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 112,
+    "h": 106
+   },
+   "sourceSize": {
+    "w": 112,
+    "h": 106
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8396
+   }
+  },
+  "s_globe": {
+   "frame": {
+    "x": 458,
+    "y": 0,
+    "w": 67,
+    "h": 87
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 87
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 87
+   },
+   "anchor": {
+    "x": 0.5075,
+    "y": 0.8621
+   }
+  },
+  "s_bench": {
+   "frame": {
+    "x": 585,
+    "y": 0,
+    "w": 118,
+    "h": 73
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 118,
+    "h": 73
+   },
+   "sourceSize": {
+    "w": 118,
+    "h": 73
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7808
+   }
+  },
+  "x_desks_a": {
+   "frame": {
+    "x": 705,
+    "y": 0,
+    "w": 122,
+    "h": 68
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 68
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 68
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7794
+   }
+  },
+  "x_desks_b": {
+   "frame": {
+    "x": 829,
+    "y": 0,
+    "w": 122,
+    "h": 68
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 68
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 68
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7794
+   }
+  },
+  "x_bookcase": {
+   "frame": {
+    "x": 44,
+    "y": 0,
+    "w": 94,
+    "h": 121
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 121
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 121
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9174
+   }
+  },
+  "x_stove": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 42,
+    "h": 133
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 42,
+    "h": 133
+   },
+   "sourceSize": {
+    "w": 42,
+    "h": 133
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9474
+   }
+  },
+  "x_easel": {
+   "frame": {
+    "x": 527,
+    "y": 0,
+    "w": 56,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 56,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 56,
+    "h": 83
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9518
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

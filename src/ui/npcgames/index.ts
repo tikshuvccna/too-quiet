@@ -1,0 +1,17 @@
+import { BELL_GAME } from './bell';
+import { BOATS_GAME } from './boats';
+import { DYE_GAME } from './dye';
+import { FISHING_GAME } from './fishing';
+import type { NpcGameDef } from './framework';
+import { SPOOLS_GAME } from './spools';
+
+export { openNpcGame } from './framework';
+
+/** Which NPC offers which little game (fireflies, cake decoration and bridge building from the design file are still to be built). */
+export const NPC_GAMES: Record<string, NpcGameDef> = {
+  npc_bellBoy: BELL_GAME,
+  npc_fisher: FISHING_GAME,
+  npc_boatKid: BOATS_GAME,
+  npc_spoolWoman: SPOOLS_GAME,
+  npc_dyer: DYE_GAME,
+};

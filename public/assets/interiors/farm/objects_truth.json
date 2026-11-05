@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "fa_horn_truth": {
+   "frame": {
+    "x": 0,
+    "y": 213,
+    "w": 225,
+    "h": 109
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 225,
+    "h": 109
+   },
+   "sourceSize": {
+    "w": 225,
+    "h": 109
+   },
+   "anchor": {
+    "x": 0.4133,
+    "y": 0.8624
+   }
+  },
+  "fa_barn_truth": {
+   "frame": {
+    "x": 221,
+    "y": 0,
+    "w": 143,
+    "h": 153
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 143,
+    "h": 153
+   },
+   "sourceSize": {
+    "w": 143,
+    "h": 153
+   },
+   "anchor": {
+    "x": 0.6084,
+    "y": 0.7974
+   }
+  },
+  "fa_cart_truth": {
+   "frame": {
+    "x": 366,
+    "y": 0,
+    "w": 230,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 230,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 230,
+    "h": 134
+   },
+   "anchor": {
+    "x": 0.2565,
+    "y": 0.9254
+   }
+  },
+  "fa_ledger_truth": {
+   "frame": {
+    "x": 598,
+    "y": 0,
+    "w": 148,
+    "h": 131
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 148,
+    "h": 131
+   },
+   "sourceSize": {
+    "w": 148,
+    "h": 131
+   },
+   "anchor": {
+    "x": 0.777,
+    "y": 0.8855
+   }
+  },
+  "fa_cow_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 139,
+    "h": 211
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 139,
+    "h": 211
+   },
+   "sourceSize": {
+    "w": 139,
+    "h": 211
+   },
+   "anchor": {
+    "x": 0.5612,
+    "y": 0.9289
+   }
+  },
+  "x_stove_truth": {
+   "frame": {
+    "x": 141,
+    "y": 0,
+    "w": 78,
+    "h": 162
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 162
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 162
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9136
+   }
+  },
+  "x_kitchen_table_truth": {
+   "frame": {
+    "x": 748,
+    "y": 0,
+    "w": 90,
+    "h": 128
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 90,
+    "h": 128
+   },
+   "sourceSize": {
+    "w": 90,
+    "h": 128
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6875
+   }
+  },
+  "x_milk_cans_truth": {
+   "frame": {
+    "x": 302,
+    "y": 213,
+    "w": 67,
+    "h": 71
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 71
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 71
+   },
+   "anchor": {
+    "x": 0.5224,
+    "y": 0.7324
+   }
+  },
+  "x_sacks_truth": {
+   "frame": {
+    "x": 371,
+    "y": 213,
+    "w": 75,
+    "h": 69
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 75,
+    "h": 69
+   },
+   "sourceSize": {
+    "w": 75,
+    "h": 69
+   },
+   "anchor": {
+    "x": 0.5067,
+    "y": 0.7971
+   }
+  },
+  "x_tool_rack_truth": {
+   "frame": {
+    "x": 227,
+    "y": 213,
+    "w": 73,
+    "h": 101
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 73,
+    "h": 101
+   },
+   "sourceSize": {
+    "w": 73,
+    "h": 101
+   },
+   "anchor": {
+    "x": 0.4247,
+    "y": 0.901
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 512
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

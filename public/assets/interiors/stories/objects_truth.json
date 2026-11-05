@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "st_fire_truth": {
+   "frame": {
+    "x": 300,
+    "y": 0,
+    "w": 251,
+    "h": 137
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 251,
+    "h": 137
+   },
+   "sourceSize": {
+    "w": 251,
+    "h": 137
+   },
+   "anchor": {
+    "x": 0.4741,
+    "y": 0.6642
+   }
+  },
+  "st_curtain_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 218,
+    "h": 212
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 218,
+    "h": 212
+   },
+   "sourceSize": {
+    "w": 218,
+    "h": 212
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8585
+   }
+  },
+  "st_book_truth": {
+   "frame": {
+    "x": 829,
+    "y": 0,
+    "w": 69,
+    "h": 99
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 69,
+    "h": 99
+   },
+   "sourceSize": {
+    "w": 69,
+    "h": 99
+   },
+   "anchor": {
+    "x": 0.3623,
+    "y": 0.8586
+   }
+  },
+  "st_puppets_truth": {
+   "frame": {
+    "x": 220,
+    "y": 0,
+    "w": 78,
+    "h": 192
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 192
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 192
+   },
+   "anchor": {
+    "x": 0.4744,
+    "y": 0.9219
+   }
+  },
+  "st_drum_truth": {
+   "frame": {
+    "x": 553,
+    "y": 0,
+    "w": 160,
+    "h": 134
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 160,
+    "h": 134
+   },
+   "sourceSize": {
+    "w": 160,
+    "h": 134
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7239
+   }
+  },
+  "x_bench_front_truth": {
+   "frame": {
+    "x": 0,
+    "y": 214,
+    "w": 184,
+    "h": 53
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 184,
+    "h": 53
+   },
+   "sourceSize": {
+    "w": 184,
+    "h": 53
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.8302
+   }
+  },
+  "x_bench_left_truth": {
+   "frame": {
+    "x": 751,
+    "y": 0,
+    "w": 37,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 37,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 37,
+    "h": 102
+   },
+   "anchor": {
+    "x": 0.4595,
+    "y": 0.6373
+   }
+  },
+  "x_bench_right_truth": {
+   "frame": {
+    "x": 790,
+    "y": 0,
+    "w": 37,
+    "h": 102
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 37,
+    "h": 102
+   },
+   "sourceSize": {
+    "w": 37,
+    "h": 102
+   },
+   "anchor": {
+    "x": 0.4595,
+    "y": 0.6373
+   }
+  },
+  "x_log_stack_truth": {
+   "frame": {
+    "x": 900,
+    "y": 0,
+    "w": 98,
+    "h": 76
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 76
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 76
+   },
+   "anchor": {
+    "x": 0.4286,
+    "y": 0.5789
+   }
+  },
+  "x_lantern_truth": {
+   "frame": {
+    "x": 715,
+    "y": 0,
+    "w": 34,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 107
+   },
+   "anchor": {
+    "x": 0.3824,
+    "y": 0.9252
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 512
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

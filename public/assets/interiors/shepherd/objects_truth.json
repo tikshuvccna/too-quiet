@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "sh_window_truth": {
+   "frame": {
+    "x": 80,
+    "y": 0,
+    "w": 146,
+    "h": 146
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 146,
+    "h": 146
+   },
+   "sourceSize": {
+    "w": 146,
+    "h": 146
+   },
+   "anchor": {
+    "x": 0.5205,
+    "y": 0.8356
+   }
+  },
+  "sh_names_truth": {
+   "frame": {
+    "x": 338,
+    "y": 0,
+    "w": 128,
+    "h": 112
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 112
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 112
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6071
+   }
+  },
+  "sh_flute_truth": {
+   "frame": {
+    "x": 542,
+    "y": 0,
+    "w": 152,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 152,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 152,
+    "h": 83
+   },
+   "anchor": {
+    "x": 0.2829,
+    "y": 0.5904
+   }
+  },
+  "sh_bed_truth": {
+   "frame": {
+    "x": 696,
+    "y": 0,
+    "w": 134,
+    "h": 79
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 134,
+    "h": 79
+   },
+   "sourceSize": {
+    "w": 134,
+    "h": 79
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7722
+   }
+  },
+  "sh_blanket_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 182
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 182
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 182
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.9231
+   }
+  },
+  "x_stove_truth": {
+   "frame": {
+    "x": 228,
+    "y": 0,
+    "w": 55,
+    "h": 141
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 55,
+    "h": 141
+   },
+   "sourceSize": {
+    "w": 55,
+    "h": 141
+   },
+   "anchor": {
+    "x": 0.3818,
+    "y": 0.9149
+   }
+  },
+  "x_wool_bales_truth": {
+   "frame": {
+    "x": 928,
+    "y": 0,
+    "w": 79,
+    "h": 68
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 79,
+    "h": 68
+   },
+   "sourceSize": {
+    "w": 79,
+    "h": 68
+   },
+   "anchor": {
+    "x": 0.519,
+    "y": 0.8088
+   }
+  },
+  "x_staff_rack_truth": {
+   "frame": {
+    "x": 285,
+    "y": 0,
+    "w": 51,
+    "h": 123
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 51,
+    "h": 123
+   },
+   "sourceSize": {
+    "w": 51,
+    "h": 123
+   },
+   "anchor": {
+    "x": 0.3529,
+    "y": 0.9106
+   }
+  },
+  "x_table_truth": {
+   "frame": {
+    "x": 468,
+    "y": 0,
+    "w": 72,
+    "h": 89
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 72,
+    "h": 89
+   },
+   "sourceSize": {
+    "w": 72,
+    "h": 89
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.6067
+   }
+  },
+  "x_hay_truth": {
+   "frame": {
+    "x": 832,
+    "y": 0,
+    "w": 94,
+    "h": 70
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 94,
+    "h": 70
+   },
+   "sourceSize": {
+    "w": 94,
+    "h": 70
+   },
+   "anchor": {
+    "x": 0.5106,
+    "y": 0.6143
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 256
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

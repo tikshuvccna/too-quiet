@@ -11,14 +11,19 @@ const TABS: Array<{ kind: ItemInfo['kind'] | 'creature'; title: string; mystery:
 ];
 
 /** The collection screen: found items show their text, missing ones stay a mystery. */
-interface CodexSheet { w: number; h: number; frames: Record<string, { x: number; y: number; w: number; h: number }> }
-let codex: Promise<CodexSheet | null> | null = null;
+interface CodexSheet { w: number; h: number; url: string; frames: Record<string, { x: number; y: number; w: number; h: number }> }
+let codex: Promise<CodexSheet[]> | null = null;
 
-function loadCodex(): Promise<CodexSheet | null> {
-  codex ??= fetch(`${import.meta.env.BASE_URL}assets/creatures/codex.json`)
+function loadOne(name: string): Promise<CodexSheet | null> {
+  return fetch(`${import.meta.env.BASE_URL}assets/creatures/${name}.json`)
     .then((r) => (r.ok ? r.json() : null))
-    .then((j: { frames: Parameters<typeof flatten>[0]; meta: { size: { w: number; h: number } } } | null) => (j ? { w: j.meta.size.w, h: j.meta.size.h, frames: flatten(j.frames) } : null))
+    .then((j: { frames: Parameters<typeof flatten>[0]; meta: { size: { w: number; h: number } } } | null) => (j ? { w: j.meta.size.w, h: j.meta.size.h, frames: flatten(j.frames), url: `${import.meta.env.BASE_URL}assets/creatures/${name}.png` } : null))
     .catch(() => null);
+}
+
+/** The first codex sheet is the original creatures, the second one the creatures of the big world. */
+function loadCodex(): Promise<CodexSheet[]> {
+  codex ??= Promise.all([loadOne('codex'), loadOne('wc_codex')]).then((l) => l.filter((x): x is CodexSheet => !!x));
   return codex;
 }
 
@@ -51,12 +56,13 @@ export function openCollection(save: SaveStore, onClose: () => void): void {
           const thumb = el('div', 'col-thumb');
           row.prepend(thumb);
           row.classList.add('has-thumb');
-          void loadCodex().then((sheet) => {
+          void loadCodex().then((sheets) => {
+            const sheet = sheets.find((s) => s.frames[key]);
             const f = sheet?.frames[key];
             if (!sheet || !f) return thumb.remove();
             const k = 72 / f.w;
             Object.assign(thumb.style, {
-              backgroundImage: `url(${import.meta.env.BASE_URL}assets/creatures/codex.png)`,
+              backgroundImage: `url(${sheet.url})`,
               backgroundSize: `${sheet.w * k}px ${sheet.h * k}px`,
               backgroundPosition: `-${f.x * k}px -${f.y * k}px`,
               filter: have ? 'none' : 'brightness(0) opacity(.5)',

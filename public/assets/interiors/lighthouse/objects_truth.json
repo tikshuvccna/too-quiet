@@ -1,0 +1,254 @@
+{
+ "frames": {
+  "lh_lamp_truth": {
+   "frame": {
+    "x": 143,
+    "y": 0,
+    "w": 264,
+    "h": 200
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 264,
+    "h": 200
+   },
+   "sourceSize": {
+    "w": 264,
+    "h": 200
+   },
+   "anchor": {
+    "x": 0.2576,
+    "y": 0.875
+   }
+  },
+  "lh_telegraph_truth": {
+   "frame": {
+    "x": 409,
+    "y": 0,
+    "w": 122,
+    "h": 124
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 122,
+    "h": 124
+   },
+   "sourceSize": {
+    "w": 122,
+    "h": 124
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7823
+   }
+  },
+  "lh_mirror_truth": {
+   "frame": {
+    "x": 533,
+    "y": 0,
+    "w": 108,
+    "h": 118
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 108,
+    "h": 118
+   },
+   "sourceSize": {
+    "w": 108,
+    "h": 118
+   },
+   "anchor": {
+    "x": 0.4259,
+    "y": 0.8729
+   }
+  },
+  "lh_log_truth": {
+   "frame": {
+    "x": 643,
+    "y": 0,
+    "w": 54,
+    "h": 107
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 54,
+    "h": 107
+   },
+   "sourceSize": {
+    "w": 54,
+    "h": 107
+   },
+   "anchor": {
+    "x": 0.5556,
+    "y": 0.8785
+   }
+  },
+  "lh_tea_truth": {
+   "frame": {
+    "x": 735,
+    "y": 0,
+    "w": 68,
+    "h": 86
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 68,
+    "h": 86
+   },
+   "sourceSize": {
+    "w": 68,
+    "h": 86
+   },
+   "anchor": {
+    "x": 0.3824,
+    "y": 0.8953
+   }
+  },
+  "x_spiral_stair_truth": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 141,
+    "h": 274
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 141,
+    "h": 274
+   },
+   "sourceSize": {
+    "w": 141,
+    "h": 274
+   },
+   "anchor": {
+    "x": 0.5035,
+    "y": 0.8686
+   }
+  },
+  "x_rope_coil_truth": {
+   "frame": {
+    "x": 0,
+    "y": 276,
+    "w": 93,
+    "h": 54
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 93,
+    "h": 54
+   },
+   "sourceSize": {
+    "w": 93,
+    "h": 54
+   },
+   "anchor": {
+    "x": 0.3011,
+    "y": 0.6852
+   }
+  },
+  "x_oil_barrels_truth": {
+   "frame": {
+    "x": 805,
+    "y": 0,
+    "w": 79,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 79,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 79,
+    "h": 63
+   },
+   "anchor": {
+    "x": 0.481,
+    "y": 0.7937
+   }
+  },
+  "x_sea_chest_truth": {
+   "frame": {
+    "x": 886,
+    "y": 0,
+    "w": 78,
+    "h": 63
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 78,
+    "h": 63
+   },
+   "sourceSize": {
+    "w": 78,
+    "h": 63
+   },
+   "anchor": {
+    "x": 0.5,
+    "y": 0.7302
+   }
+  },
+  "x_brass_lantern_truth": {
+   "frame": {
+    "x": 699,
+    "y": 0,
+    "w": 34,
+    "h": 98
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 34,
+    "h": 98
+   },
+   "sourceSize": {
+    "w": 34,
+    "h": 98
+   },
+   "anchor": {
+    "x": 0.3824,
+    "y": 0.9184
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "objects_truth.png",
+  "size": {
+   "w": 1024,
+   "h": 512
+  },
+  "scale": "1",
+  "note": "anchor = ground contact (wall objects: bottom centre on the wall, place.y is raised by the z of the hanging height)"
+ }
+}

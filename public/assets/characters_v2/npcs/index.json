@@ -109,6 +109,121 @@
   "json": "teacher.json",
   "kb": 29
  },
+ "w_astronomer": {
+  "image": "w_astronomer.png",
+  "json": "w_astronomer.json",
+  "kb": 35
+ },
+ "w_bell_boy": {
+  "image": "w_bell_boy.png",
+  "json": "w_bell_boy.json",
+  "kb": 22
+ },
+ "w_bell_keeper": {
+  "image": "w_bell_keeper.png",
+  "json": "w_bell_keeper.json",
+  "kb": 23
+ },
+ "w_boat_kid": {
+  "image": "w_boat_kid.png",
+  "json": "w_boat_kid.json",
+  "kb": 21
+ },
+ "w_bridge_builder": {
+  "image": "w_bridge_builder.png",
+  "json": "w_bridge_builder.json",
+  "kb": 26
+ },
+ "w_cake_lady": {
+  "image": "w_cake_lady.png",
+  "json": "w_cake_lady.json",
+  "kb": 36
+ },
+ "w_dock_hand": {
+  "image": "w_dock_hand.png",
+  "json": "w_dock_hand.json",
+  "kb": 23
+ },
+ "w_dyer": {
+  "image": "w_dyer.png",
+  "json": "w_dyer.json",
+  "kb": 30
+ },
+ "w_fairy_keeper": {
+  "image": "w_fairy_keeper.png",
+  "json": "w_fairy_keeper.json",
+  "kb": 30
+ },
+ "w_farmer": {
+  "image": "w_farmer.png",
+  "json": "w_farmer.json",
+  "kb": 33
+ },
+ "w_firefly_girl": {
+  "image": "w_firefly_girl.png",
+  "json": "w_firefly_girl.json",
+  "kb": 24
+ },
+ "w_fisher": {
+  "image": "w_fisher.png",
+  "json": "w_fisher.json",
+  "kb": 25
+ },
+ "w_guild_master": {
+  "image": "w_guild_master.png",
+  "json": "w_guild_master.json",
+  "kb": 26
+ },
+ "w_herbalist": {
+  "image": "w_herbalist.png",
+  "json": "w_herbalist.json",
+  "kb": 33
+ },
+ "w_innkeeper": {
+  "image": "w_innkeeper.png",
+  "json": "w_innkeeper.json",
+  "kb": 40
+ },
+ "w_librarian": {
+  "image": "w_librarian.png",
+  "json": "w_librarian.json",
+  "kb": 27
+ },
+ "w_light_keeper": {
+  "image": "w_light_keeper.png",
+  "json": "w_light_keeper.json",
+  "kb": 24
+ },
+ "w_mender": {
+  "image": "w_mender.png",
+  "json": "w_mender.json",
+  "kb": 31
+ },
+ "w_old_shepherd": {
+  "image": "w_old_shepherd.png",
+  "json": "w_old_shepherd.json",
+  "kb": 27
+ },
+ "w_spool_woman": {
+  "image": "w_spool_woman.png",
+  "json": "w_spool_woman.json",
+  "kb": 28
+ },
+ "w_storyteller": {
+  "image": "w_storyteller.png",
+  "json": "w_storyteller.json",
+  "kb": 29
+ },
+ "w_tailor": {
+  "image": "w_tailor.png",
+  "json": "w_tailor.json",
+  "kb": 21
+ },
+ "w_teacher": {
+  "image": "w_teacher.png",
+  "json": "w_teacher.json",
+  "kb": 27
+ },
  "warden": {
   "image": "warden.png",
   "json": "warden.json",

@@ -8,14 +8,16 @@ export class Hud {
   private readonly objective = el('div', 'pill objective');
   private readonly sight = el('button', 'btn', isTouchDevice() ? 'ראיית חוטים' : 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
+  private readonly gear = el('button', 'btn gear', 'הגדרות');
   private readonly interact = el('button', 'btn primary interact');
   private readonly toasts = el('div', 'toast-box');
   private sightOn = false;
   private current: { id: string } | null = null;
   onCollection: () => void = () => {};
+  onSettings: () => void = () => {};
 
   constructor() {
-    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.cards, this.sight, this.objective);
+    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.gear, this.cards, this.sight, this.objective);
     uiRoot().append(this.bar, this.interact, this.toasts);
     // toasts sit just under the HUD, whatever height it wraps to (small phones use two or three rows)
     const measure = (): void => document.documentElement.style.setProperty('--hud-h', `${Math.ceil(this.bar.getBoundingClientRect().bottom)}px`);
@@ -24,6 +26,7 @@ export class Hud {
     requestAnimationFrame(measure);
     this.sight.addEventListener('click', () => this.toggleSight());
     this.cards.addEventListener('click', () => this.onCollection());
+    this.gear.addEventListener('click', () => this.onSettings());
     this.interact.addEventListener('click', () => this.use());
     bus.on('interact:available', (a) => {
       this.current = a;

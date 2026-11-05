@@ -1,0 +1,248 @@
+{
+ "house": "workshop",
+ "name": "בית מלאכה",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "w_gears",
+   "interactive": true,
+   "nameHe": "קיר גלגלי שיניים",
+   "frame": "w_gears",
+   "frameTruth": "w_gears_truth",
+   "place": {
+    "x": 332.8,
+    "y": 245.8
+   },
+   "world": {
+    "x": -3.2,
+    "y": 4.45,
+    "z": 0.9
+   },
+   "wall": true,
+   "sortY": 245.8,
+   "footprintPx": null
+  },
+  {
+   "id": "w_note",
+   "interactive": true,
+   "nameHe": "פתק בכתב נועם",
+   "frame": "w_note",
+   "frameTruth": "w_note_truth",
+   "place": {
+    "x": 489.6,
+    "y": 190.7
+   },
+   "world": {
+    "x": -0.4,
+    "y": 4.45,
+    "z": 2.1
+   },
+   "wall": true,
+   "sortY": 190.7,
+   "footprintPx": null
+  },
+  {
+   "id": "w_clocks",
+   "interactive": true,
+   "nameHe": "שורת שעונים",
+   "frame": "w_clocks",
+   "frameTruth": "w_clocks_truth",
+   "place": {
+    "x": 607.2,
+    "y": 181.6
+   },
+   "world": {
+    "x": 1.7,
+    "y": 4.45,
+    "z": 2.3
+   },
+   "wall": true,
+   "sortY": 181.6,
+   "footprintPx": null
+  },
+  {
+   "id": "w_bench",
+   "interactive": true,
+   "nameHe": "שולחן העבודה",
+   "frame": "w_bench",
+   "frameTruth": "w_bench_truth",
+   "place": {
+    "x": 366.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": -2.6,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    90,
+    22
+   ]
+  },
+  {
+   "id": "w_tester",
+   "interactive": true,
+   "nameHe": "מכשיר בדיקה",
+   "frame": "w_tester",
+   "frameTruth": "w_tester_truth",
+   "place": {
+    "x": 680.0,
+    "y": 372.2
+   },
+   "world": {
+    "x": 3.0,
+    "y": 1.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 372.2,
+   "footprintPx": [
+    34,
+    16
+   ]
+  },
+  {
+   "id": "x_tool_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_tool_rack",
+   "frameTruth": "x_tool_rack_truth",
+   "place": {
+    "x": 176.0,
+    "y": 317.6
+   },
+   "world": {
+    "x": -6.0,
+    "y": 3.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 317.6,
+   "footprintPx": [
+    50,
+    13
+   ]
+  },
+  {
+   "id": "x_grinder",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_grinder",
+   "frameTruth": "x_grinder_truth",
+   "place": {
+    "x": 842.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": 5.9,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "x_gear_bin",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_gear_bin",
+   "frameTruth": "x_gear_bin_truth",
+   "place": {
+    "x": 825.6,
+    "y": 491.0
+   },
+   "world": {
+    "x": 5.6,
+    "y": -1.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 491.0,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_anvil",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_anvil",
+   "frameTruth": "x_anvil_truth",
+   "place": {
+    "x": 545.6,
+    "y": 491.0
+   },
+   "world": {
+    "x": 0.6,
+    "y": -1.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 491.0,
+   "footprintPx": [
+    34,
+    13
+   ]
+  },
+  {
+   "id": "x_parts_shelf",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_parts_shelf",
+   "frameTruth": "x_parts_shelf_truth",
+   "place": {
+    "x": 187.2,
+    "y": 484.6
+   },
+   "world": {
+    "x": -5.8,
+    "y": -1.7,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 484.6,
+   "footprintPx": [
+    45,
+    13
+   ]
+  }
+ ]
+}

@@ -1,0 +1,251 @@
+{
+ "house": "farm",
+ "name": "החווה",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  747.2,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "fa_horn",
+   "interactive": true,
+   "nameHe": "חצוצרת הנחושת",
+   "frame": "fa_horn",
+   "frameTruth": "fa_horn_truth",
+   "place": {
+    "x": 444.8,
+    "y": 177.0
+   },
+   "world": {
+    "x": -1.2,
+    "y": 4.45,
+    "z": 2.4
+   },
+   "wall": true,
+   "sortY": 177.0,
+   "footprintPx": null
+  },
+  {
+   "id": "fa_barn",
+   "interactive": true,
+   "nameHe": "המחסן הפרטי",
+   "frame": "fa_barn",
+   "frameTruth": "fa_barn_truth",
+   "place": {
+    "x": 254.4,
+    "y": 287.1
+   },
+   "world": {
+    "x": -4.6,
+    "y": 4.45,
+    "z": 0.0
+   },
+   "wall": true,
+   "sortY": 287.1,
+   "footprintPx": null
+  },
+  {
+   "id": "fa_cart",
+   "interactive": true,
+   "nameHe": "עגלת הדוכן",
+   "frame": "fa_cart",
+   "frameTruth": "fa_cart_truth",
+   "place": {
+    "x": 825.6,
+    "y": 391.5
+   },
+   "world": {
+    "x": 5.6,
+    "y": 1.2,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 391.5,
+   "footprintPx": [
+    78,
+    22
+   ]
+  },
+  {
+   "id": "fa_ledger",
+   "interactive": true,
+   "nameHe": "פנקס החשבונות",
+   "frame": "fa_ledger",
+   "frameTruth": "fa_ledger_truth",
+   "place": {
+    "x": 400.0,
+    "y": 346.5
+   },
+   "world": {
+    "x": -2.0,
+    "y": 2.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 346.5,
+   "footprintPx": [
+    34,
+    13
+   ]
+  },
+  {
+   "id": "fa_cow",
+   "interactive": true,
+   "nameHe": "גבירה, הפרה",
+   "frame": "fa_cow",
+   "frameTruth": "fa_cow_truth",
+   "place": {
+    "x": 456.0,
+    "y": 487.8
+   },
+   "world": {
+    "x": -1.0,
+    "y": -1.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 487.8,
+   "footprintPx": [
+    62,
+    19
+   ]
+  },
+  {
+   "id": "x_stove",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_stove",
+   "frameTruth": "x_stove_truth",
+   "place": {
+    "x": 568.0,
+    "y": 298.3
+   },
+   "world": {
+    "x": 1.0,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    50,
+    13
+   ]
+  },
+  {
+   "id": "x_kitchen_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_kitchen_table",
+   "frameTruth": "x_kitchen_table_truth",
+   "place": {
+    "x": 668.8,
+    "y": 458.9
+   },
+   "world": {
+    "x": 2.8,
+    "y": -0.9,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 458.9,
+   "footprintPx": [
+    56,
+    22
+   ]
+  },
+  {
+   "id": "x_milk_cans",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_milk_cans",
+   "frameTruth": "x_milk_cans_truth",
+   "place": {
+    "x": 859.2,
+    "y": 507.1
+   },
+   "world": {
+    "x": 6.2,
+    "y": -2.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 507.1,
+   "footprintPx": [
+    34,
+    13
+   ]
+  },
+  {
+   "id": "x_sacks",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_sacks",
+   "frameTruth": "x_sacks_truth",
+   "place": {
+    "x": 176.0,
+    "y": 410.7
+   },
+   "world": {
+    "x": -6.0,
+    "y": 0.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 410.7,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_tool_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_tool_rack",
+   "frameTruth": "x_tool_rack_truth",
+   "place": {
+    "x": 864.8,
+    "y": 307.9
+   },
+   "world": {
+    "x": 6.3,
+    "y": 3.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 307.9,
+   "footprintPx": [
+    39,
+    10
+   ]
+  }
+ ]
+}

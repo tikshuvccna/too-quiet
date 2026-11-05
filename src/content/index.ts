@@ -3,6 +3,7 @@ import scenesJson from '../../content/he/scenes.json';
 import housesJson from '../../content/he/houses.json';
 import collectiblesJson from '../../content/he/collectibles.json';
 import creaturesJson from '../../public/assets/creatures/index.json';
+import { WORLD_HOUSES, WORLD_ITEMS, WORLD_LINES, WORLD_SPEAKERS } from './world';
 
 export interface LineDef { speaker: string; text: string; textF?: string }
 
@@ -33,9 +34,9 @@ export interface Curiosity { id: string; name: string; description: string; wher
 
 export interface CollectibleSet { conceptCards: ConceptCard[]; diaryPages: DiaryPage[]; curiosities: Curiosity[] }
 
-export const LINES = linesJson as unknown as Record<string, LineDef>;
+export const LINES = { ...(linesJson as unknown as Record<string, LineDef>), ...(WORLD_LINES as unknown as Record<string, LineDef>) };
 export const SCENES = scenesJson as unknown as Record<string, SceneDef>;
-export const HOUSES = (housesJson as unknown as { houses: HouseDef[] }).houses;
+export const HOUSES: HouseDef[] = [...(housesJson as unknown as { houses: HouseDef[] }).houses, ...(WORLD_HOUSES as unknown as HouseDef[])];
 export const COLLECTIBLES = collectiblesJson as unknown as CollectibleSet;
 
 /** Names shown on the subtitle box. Narrator has no name box. */
@@ -52,6 +53,7 @@ export const SPEAKER_NAMES: Record<string, string> = {
   villager2: 'תושבת',
   villager3: 'תושב',
   hubGrandpa: 'סבא הד',
+  ...WORLD_SPEAKERS,
 };
 
 /** Which layout building opens which house file. */
@@ -59,6 +61,7 @@ export const HOUSE_FOR_BUILDING: Record<string, string> = {
   'house-grandma': 'house_grandma',
   'house-clinic': 'house_clinic',
   'house-print': 'house_print',
+  ...Object.fromEntries(WORLD_HOUSES.map((h) => [`house-${h.id}`, h.id])),
 };
 
 /**
@@ -78,6 +81,10 @@ export const ITEMS_IN_OBJECT: Record<string, string[]> = {
   'house_print:p_cal': ['cur_hourglass'],
 };
 
+for (const it of WORLD_ITEMS) {
+  if (it.houseId && it.objectId) (ITEMS_IN_OBJECT[`${it.houseId}:${it.objectId}`] ??= []).push(it.id);
+}
+
 export interface ItemInfo { id: string; kind: 'card' | 'diary' | 'curio'; title: string; text: string }
 
 export function allItems(): ItemInfo[] {
@@ -85,6 +92,7 @@ export function allItems(): ItemInfo[] {
     ...COLLECTIBLES.conceptCards.map((c): ItemInfo => ({ id: c.id, kind: 'card', title: c.name, text: c.concept })),
     ...COLLECTIBLES.diaryPages.map((d): ItemInfo => ({ id: d.id, kind: 'diary', title: `דף יומן ${d.order}`, text: d.text })),
     ...COLLECTIBLES.curiosities.map((c): ItemInfo => ({ id: c.id, kind: 'curio', title: c.name, text: c.description })),
+    ...WORLD_ITEMS.map((i): ItemInfo => ({ id: i.id, kind: i.kind, title: i.title, text: i.text })),
   ];
 }
 

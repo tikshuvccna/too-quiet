@@ -1,0 +1,572 @@
+{
+ "w1.inn.innkeeper.0001": {
+  "speaker": "innkeeper",
+  "text": "תראו, ברוכים הבאים! יש תה תפוחים, וחדר ארבע תמיד מוכן.",
+  "conv": "a"
+ },
+ "w1.inn.player.0002": {
+  "speaker": "player",
+  "text": "תודה. מי גר בחדר ארבע?",
+  "conv": "a"
+ },
+ "w1.inn.innkeeper.0003": {
+  "speaker": "innkeeper",
+  "text": "תראו, עוד אין לו אורח. אבל מי יודע, אולי היום.",
+  "conv": "a"
+ },
+ "w1.inn.innkeeper.0004": {
+  "speaker": "innkeeper",
+  "text": "תקראו בספר האורחים. החתימות שם הן הסיפור שלי.",
+  "conv": "a"
+ },
+ "w1.inn.innkeeper.0005": {
+  "speaker": "innkeeper",
+  "text": "תראו, מישהו ישב פעם בדיוק במקום שלכם. שילם חודש מראש.",
+  "conv": "b"
+ },
+ "w1.inn.innkeeper.0006": {
+  "speaker": "innkeeper",
+  "text": "אמר שיחזור בשביל התה. אני עדיין מחכה.",
+  "conv": "b"
+ },
+ "w1.bell_tower.bellKeeper.0001": {
+  "speaker": "bellKeeper",
+  "text": "מאה ושתים-עשרה מדרגות. אני סופר אותן כל פעם.",
+  "conv": "a"
+ },
+ "w1.bell_tower.player.0002": {
+  "speaker": "player",
+  "text": "למה החבל קצר כל כך?",
+  "conv": "a"
+ },
+ "w1.bell_tower.bellKeeper.0003": {
+  "speaker": "bellKeeper",
+  "text": "החבל קצר. ככה זה.",
+  "conv": "a"
+ },
+ "w1.bell_tower.bellKeeper.0004": {
+  "speaker": "bellKeeper",
+  "text": "נקישה, היונה, יודעת הכול. תשאלו אותה.",
+  "conv": "a"
+ },
+ "w1.bell_tower.bellKeeper.0005": {
+  "speaker": "bellKeeper",
+  "text": "פעם הפעמון דיבר עם כל העמק.",
+  "conv": "b"
+ },
+ "w1.bell_tower.bellKeeper.0006": {
+  "speaker": "bellKeeper",
+  "text": "עכשיו הוא רק מקשיב. וגם זה לא תמיד.",
+  "conv": "b"
+ },
+ "w1.tailor.tailor.0001": {
+  "speaker": "tailor",
+  "text": "מידה, מידה ושוב מידה! כאן כל בגד צנוע ונוח.",
+  "conv": "a"
+ },
+ "w1.tailor.player.0002": {
+  "speaker": "player",
+  "text": "אפשר לשלם במטבעות?",
+  "conv": "a"
+ },
+ "w1.tailor.tailor.0003": {
+  "speaker": "tailor",
+  "text": "בוודאי. כובעים, צעיפים, שמלות ארוכות. תבחרו בנחת.",
+  "conv": "a"
+ },
+ "w1.tailor.tailor.0004": {
+  "speaker": "tailor",
+  "text": "רק מעיל אחד אצלי תמיד קטן מדי. אל תשאלו של מי.",
+  "conv": "a"
+ },
+ "w1.tailor.tailor.0005": {
+  "speaker": "tailor",
+  "text": "פעם בחודש הסל יורד מהצריח. אני רק תופר.",
+  "conv": "b"
+ },
+ "w1.tailor.tailor.0006": {
+  "speaker": "tailor",
+  "text": "בלי שאלות. כך הסכמנו.",
+  "conv": "b"
+ },
+ "w1.school.teacher.0001": {
+  "speaker": "teacher",
+  "text": "שקט, ילדים! יש לנו אורחים. סליחה, הם תמיד כך.",
+  "conv": "a"
+ },
+ "w1.school.player.0002": {
+  "speaker": "player",
+  "text": "הציורים יפים. מה הענן הגדול בכל אחד?",
+  "conv": "a"
+ },
+ "w1.school.teacher.0003": {
+  "speaker": "teacher",
+  "text": "סתם ענן. הילדים אוהבים אותו. אל תתנו להם להתעכב.",
+  "conv": "a"
+ },
+ "w1.school.teacher.0004": {
+  "speaker": "teacher",
+  "text": "והלוח? הם כותבים עליו כל בוקר, בכתב שונה.",
+  "conv": "a"
+ },
+ "w1.school.teacher.0005": {
+  "speaker": "teacher",
+  "text": "אורי אומר שהענן מזיז את העיניים.",
+  "conv": "b"
+ },
+ "w1.school.teacher.0006": {
+  "speaker": "teacher",
+  "text": "ילדים מדמיינים, נכון?",
+  "conv": "b"
+ },
+ "w1.fisher.fisher.0001": {
+  "speaker": "fisher",
+  "text": "בים תפסתי פעם דג גדול כמו הסירה. סיפור אמיתי.",
+  "conv": "a"
+ },
+ "w1.fisher.player.0002": {
+  "speaker": "player",
+  "text": "ולמה כבר לא יוצאים לים?",
+  "conv": "a"
+ },
+ "w1.fisher.fisher.0003": {
+  "speaker": "fisher",
+  "text": "הנחל נוח יותר. הים כבר לא מה שהיה.",
+  "conv": "a"
+ },
+ "w1.fisher.fisher.0004": {
+  "speaker": "fisher",
+  "text": "רוצים לדוג? בואו, אראה לכם. זה קל.",
+  "conv": "a"
+ },
+ "w1.fisher.fisher.0005": {
+  "speaker": "fisher",
+  "text": "בלילה אחד ראיתי דבר, ולא סיפרתי.",
+  "conv": "b"
+ },
+ "w1.fisher.fisher.0006": {
+  "speaker": "fisher",
+  "text": "תחזרו כשהרשתות יהיו שלמות. אז.",
+  "conv": "b"
+ },
+ "w1.workshop.mender.0001": {
+  "speaker": "mender",
+  "text": "תנו לי רגע, אני מדברת עם הגלגל. הוא עקשן.",
+  "conv": "a"
+ },
+ "w1.workshop.player.0002": {
+  "speaker": "player",
+  "text": "אפשר לעזור?",
+  "conv": "a"
+ },
+ "w1.workshop.mender.0003": {
+  "speaker": "mender",
+  "text": "אל תיגעו בלי לשאול. כל בורג יודע את מקומו.",
+  "conv": "a"
+ },
+ "w1.workshop.mender.0004": {
+  "speaker": "mender",
+  "text": "השעונים לא רבים. הם רק לא מסכימים.",
+  "conv": "a"
+ },
+ "w1.workshop.mender.0005": {
+  "speaker": "mender",
+  "text": "פעם השאיר אצלי משהו בחור צעיר. שמרתי.",
+  "conv": "b"
+ },
+ "w1.workshop.mender.0006": {
+  "speaker": "mender",
+  "text": "מי שיבוא עם מחט, יקבל.",
+  "conv": "b"
+ },
+ "w1.library.librarian.0001": {
+  "speaker": "librarian",
+  "text": "ששש... ברוכים הבאים. לכל דבר כאן תווית. אל תזיזו ספר.",
+  "conv": "a"
+ },
+ "w1.library.player.0002": {
+  "speaker": "player",
+  "text": "אפשר לראות את הקטלוג?",
+  "conv": "a"
+ },
+ "w1.library.librarian.0003": {
+  "speaker": "librarian",
+  "text": "בוודאי. שימו לב: ספר אחד רשום בלי מדף.",
+  "conv": "a"
+ },
+ "w1.library.librarian.0004": {
+  "speaker": "librarian",
+  "text": "איפה הוא, אני לא יודעת. את כל השאר אני יודעת.",
+  "conv": "a"
+ },
+ "w1.library.librarian.0005": {
+  "speaker": "librarian",
+  "text": "החותמת האדומה לא שלי. מישהו הביא אותה.",
+  "conv": "b"
+ },
+ "w1.library.librarian.0006": {
+  "speaker": "librarian",
+  "text": "חיתוך נקי כזה אני לא יודעת לעשות.",
+  "conv": "b"
+ },
+ "w1.observatory.astronomer.0001": {
+  "speaker": "astronomer",
+  "text": "אני כותבת בקול מה שאני רואה. כוכב, כוכב, ענן.",
+  "conv": "a"
+ },
+ "w1.observatory.player.0002": {
+  "speaker": "player",
+  "text": "ענן? מה מיוחד בו?",
+  "conv": "a"
+ },
+ "w1.observatory.astronomer.0003": {
+  "speaker": "astronomer",
+  "text": "הוא לא זז. תשע שנים. ענן עצלן, כנראה.",
+  "conv": "a"
+ },
+ "w1.observatory.astronomer.0004": {
+  "speaker": "astronomer",
+  "text": "תסתכלו במשקפת. רק לא יותר מדקה.",
+  "conv": "a"
+ },
+ "w1.observatory.astronomer.0005": {
+  "speaker": "astronomer",
+  "text": "כוכב אחד נדלק ונכבה בקצב. אני מחכה לשמוע אות.",
+  "conv": "b"
+ },
+ "w1.observatory.astronomer.0006": {
+  "speaker": "astronomer",
+  "text": "אולי אני מדמיינת. לפעמים נדמה שהענן מביט.",
+  "conv": "b"
+ },
+ "w1.stories.storyteller.0001": {
+  "speaker": "storyteller",
+  "text": "ברוכים הבאים! שבו, שבו. את הסיפור הזה שמעתם? בטח שלא!",
+  "conv": "a"
+ },
+ "w1.stories.player.0002": {
+  "speaker": "player",
+  "text": "על מה הוא?",
+  "conv": "a"
+ },
+ "w1.stories.storyteller.0003": {
+  "speaker": "storyteller",
+  "text": "על חג גדול, קול גדול, ואדם בגלימה שהביא... שקט.",
+  "conv": "a"
+ },
+ "w1.stories.storyteller.0004": {
+  "speaker": "storyteller",
+  "text": "מה היה בסוף? שאלה טובה. אני תמיד עוצר כאן.",
+  "conv": "a"
+ },
+ "w1.stories.storyteller.0005": {
+  "speaker": "storyteller",
+  "text": "הסוף כתוב בספר, אבל הדף קרוע.",
+  "conv": "b"
+ },
+ "w1.stories.storyteller.0006": {
+  "speaker": "storyteller",
+  "text": "אני ממשיך לספר, כמו שמספרים כשאין סוף.",
+  "conv": "b"
+ },
+ "w1.farm.farmer.0001": {
+  "speaker": "farmer",
+  "text": "שלום! ירקות? ביצים? בדיחה? יש לי מכולם!",
+  "conv": "a"
+ },
+ "w1.farm.player.0002": {
+  "speaker": "player",
+  "text": "ומה החצוצרה על הגג?",
+  "conv": "a"
+ },
+ "w1.farm.farmer.0003": {
+  "speaker": "farmer",
+  "text": "ככה היא תמיד. מנגנת בעצמה. אולי זה השחר.",
+  "conv": "a"
+ },
+ "w1.farm.farmer.0004": {
+  "speaker": "farmer",
+  "text": "רות אומרת שאני מדבר יותר מדי. רות צודקת.",
+  "conv": "a"
+ },
+ "w1.farm.farmer.0005": {
+  "speaker": "farmer",
+  "text": "כל החוות כאלה. כולן באותה שנייה. נו, שכנים.",
+  "conv": "b"
+ },
+ "w1.farm.farmer.0006": {
+  "speaker": "farmer",
+  "text": "הפרה כבר לא מתרגשת. אני כן.",
+  "conv": "b"
+ },
+ "w1.shepherd.oldShepherd.0001": {
+  "speaker": "oldShepherd",
+  "text": "ששש... הן כמעט ישנות. ברוכים הבאים.",
+  "conv": "a"
+ },
+ "w1.shepherd.player.0002": {
+  "speaker": "player",
+  "text": "אפשר לשמוע את החליל?",
+  "conv": "a"
+ },
+ "w1.shepherd.oldShepherd.0003": {
+  "speaker": "oldShepherd",
+  "text": "אפשר. הוא קורא להן, והן באות. תמיד.",
+  "conv": "a"
+ },
+ "w1.shepherd.oldShepherd.0004": {
+  "speaker": "oldShepherd",
+  "text": "רק בלילה הן הולכות בלי שקראתי.",
+  "conv": "a"
+ },
+ "w1.shepherd.oldShepherd.0005": {
+  "speaker": "oldShepherd",
+  "text": "הן צועדות כולן יחד אל הגבעה.",
+  "conv": "b"
+ },
+ "w1.shepherd.oldShepherd.0006": {
+  "speaker": "oldShepherd",
+  "text": "אני לא קורא להן. מישהו אחר קורא.",
+  "conv": "b"
+ },
+ "w1.herbs.herbalist.0001": {
+  "speaker": "herbalist",
+  "text": "סליחה, ירוק קטן, אני קוטפת. ברוכים הבאים לגן.",
+  "conv": "a"
+ },
+ "w1.herbs.player.0002": {
+  "speaker": "player",
+  "text": "הפרחים הכחולים בסיר, מי שתל אותם?",
+  "conv": "a"
+ },
+ "w1.herbs.herbalist.0003": {
+  "speaker": "herbalist",
+  "text": "ילד, לפני שנים. שתל והלך. אני משקה אותם עד היום.",
+  "conv": "a"
+ },
+ "w1.herbs.herbalist.0004": {
+  "speaker": "herbalist",
+  "text": "לכל חדר אצלי מפתח אחר. ככה העשבים בטוחים.",
+  "conv": "a"
+ },
+ "w1.herbs.herbalist.0005": {
+  "speaker": "herbalist",
+  "text": "הוא ביקש שלא אגלה. אבל אני רואה שיש לכם מחט.",
+  "conv": "b"
+ },
+ "w1.herbs.herbalist.0006": {
+  "speaker": "herbalist",
+  "text": "תבדקו מתחת לאדמה. בעדינות.",
+  "conv": "b"
+ },
+ "w1.fairy.fairyKeeper.0001": {
+  "speaker": "fairyKeeper",
+  "text": "ששש! הפיות ישנות. ברוכים הבאים, אבל בלחש.",
+  "conv": "a"
+ },
+ "w1.fairy.player.0002": {
+  "speaker": "player",
+  "text": "מה הדלת הכחולה בלי מספר?",
+  "conv": "a"
+ },
+ "w1.fairy.fairyKeeper.0003": {
+  "speaker": "fairyKeeper",
+  "text": "דלת שמישהו ביקש לשמור. אני שומרת, ולא פותחת.",
+  "conv": "a"
+ },
+ "w1.fairy.fairyKeeper.0004": {
+  "speaker": "fairyKeeper",
+  "text": "ארבעה מספרים לכל דלת. אני זוכרת את כולם.",
+  "conv": "a"
+ },
+ "w1.fairy.fairyKeeper.0005": {
+  "speaker": "fairyKeeper",
+  "text": "הוא אמר: רק למי שמחזיק מחט.",
+  "conv": "b"
+ },
+ "w1.fairy.fairyKeeper.0006": {
+  "speaker": "fairyKeeper",
+  "text": "אתם מחזיקים. אז בבקשה, בעדינות.",
+  "conv": "b"
+ },
+ "w1.guild.guildMaster.0001": {
+  "speaker": "guildMaster",
+  "text": "הגילדה מקבלת אתכם. נא לא לגעת בדגלים.",
+  "conv": "a"
+ },
+ "w1.guild.player.0002": {
+  "speaker": "player",
+  "text": "מה עושים כאן היום?",
+  "conv": "a"
+ },
+ "w1.guild.guildMaster.0003": {
+  "speaker": "guildMaster",
+  "text": "אותו דבר שעשינו אתמול. שיחות ארוכות, בעיקר.",
+  "conv": "a"
+ },
+ "w1.guild.guildMaster.0004": {
+  "speaker": "guildMaster",
+  "text": "הכיסא העשירי שמור. כך נקבע.",
+  "conv": "a"
+ },
+ "w1.guild.guildMaster.0005": {
+  "speaker": "guildMaster",
+  "text": "הצבעה אחת נעלמה. אני מחפש אותה עשר שנים.",
+  "conv": "b"
+ },
+ "w1.guild.guildMaster.0006": {
+  "speaker": "guildMaster",
+  "text": "החצוצרה שלנו. טעות? אולי לא. תבדקו.",
+  "conv": "b"
+ },
+ "w1.lighthouse.lightKeeper.0001": {
+  "speaker": "lightKeeper",
+  "text": "פנס, ים, שמיים. זה העולם שלי. מה אתם צריכים?",
+  "conv": "a"
+ },
+ "w1.lighthouse.player.0002": {
+  "speaker": "player",
+  "text": "האור פונה לפעמים לשמיים. למה?",
+  "conv": "a"
+ },
+ "w1.lighthouse.lightKeeper.0003": {
+  "speaker": "lightKeeper",
+  "text": "ככה זה. אני לא מסתכל.",
+  "conv": "a"
+ },
+ "w1.lighthouse.lightKeeper.0004": {
+  "speaker": "lightKeeper",
+  "text": "אל תסתכלו גם אתם. תשתו תה.",
+  "conv": "a"
+ },
+ "w1.lighthouse.lightKeeper.0005": {
+  "speaker": "lightKeeper",
+  "text": "פעם מישהו ענה לי. בלי מילים, בהבהוב.",
+  "conv": "b"
+ },
+ "w1.lighthouse.lightKeeper.0006": {
+  "speaker": "lightKeeper",
+  "text": "ומאז אני סופר ולא עונה.",
+  "conv": "b"
+ },
+ "w1.market.bellBoy.0001": {
+  "speaker": "bellBoy",
+  "text": "אני יוסי! הפעמון הקטן שלי מצלצל. רוצים לצלצל איתי?",
+  "conv": "a"
+ },
+ "w1.market.bellBoy.0002": {
+  "speaker": "bellBoy",
+  "text": "תחזרו אחרי הרצף שלי. קל. כמעט.",
+  "conv": "a"
+ },
+ "w1.market.bellBoy.0003": {
+  "speaker": "bellBoy",
+  "text": "אם טעיתם, ננסה שוב. אין עונש.",
+  "conv": "a"
+ },
+ "w1.market.cakeLady.0001": {
+  "speaker": "cakeLady",
+  "text": "עוגה! לכל עוגה יש סיפור. רוצים לקשט אחת?",
+  "conv": "a"
+ },
+ "w1.market.cakeLady.0002": {
+  "speaker": "cakeLady",
+  "text": "פזרו בשקט. לא על הסינר שלי.",
+  "conv": "a"
+ },
+ "w1.market.cakeLady.0003": {
+  "speaker": "cakeLady",
+  "text": "אני נותנת שמות לעוגות. זאת נקראת: תקווה.",
+  "conv": "a"
+ },
+ "w1.mill.boatKid.0001": {
+  "speaker": "boatKid",
+  "text": "סירות נייר! הכי מהירה מנצחת. אני אלוף הנחל.",
+  "conv": "a"
+ },
+ "w1.mill.boatKid.0002": {
+  "speaker": "boatKid",
+  "text": "רוצים מרוץ? הנחל מחליט.",
+  "conv": "a"
+ },
+ "w1.mill.boatKid.0003": {
+  "speaker": "boatKid",
+  "text": "התאמנתי כל הקיץ. הנחל מכיר אותי.",
+  "conv": "a"
+ },
+ "w1.moor.fireflyGirl.0001": {
+  "speaker": "fireflyGirl",
+  "text": "גחליליות! יש כאן אלף, ואף אחת לא נתפסת.",
+  "conv": "a"
+ },
+ "w1.moor.fireflyGirl.0002": {
+  "speaker": "fireflyGirl",
+  "text": "צריך להיות שקט כמו אבן.",
+  "conv": "a"
+ },
+ "w1.moor.fireflyGirl.0003": {
+  "speaker": "fireflyGirl",
+  "text": "הן מאירות בקצב. נראה לי שיש להן שפה.",
+  "conv": "a"
+ },
+ "w1.orchard.dyer.0001": {
+  "speaker": "dyer",
+  "text": "צבעים! כחול מעלה אינדיגו, ירוק מעשב. רוצים לצבוע?",
+  "conv": "a"
+ },
+ "w1.orchard.dyer.0002": {
+  "speaker": "dyer",
+  "text": "הצמר שותה צבע. הוא יוצא כמו חלום.",
+  "conv": "a"
+ },
+ "w1.orchard.dyer.0003": {
+  "speaker": "dyer",
+  "text": "רק אל תצבעו את החתול.",
+  "conv": "a"
+ },
+ "w1.orchard.spoolWoman.0001": {
+  "speaker": "spoolWoman",
+  "text": "סלילים בכל צבע, והם מתערבבים בכל לילה.",
+  "conv": "a"
+ },
+ "w1.orchard.spoolWoman.0002": {
+  "speaker": "spoolWoman",
+  "text": "עזרו לי למיין. אני אסירת תודה.",
+  "conv": "a"
+ },
+ "w1.orchard.spoolWoman.0003": {
+  "speaker": "spoolWoman",
+  "text": "כל צבע לסל שלו. כמו בחיים.",
+  "conv": "a"
+ },
+ "w1.woods.bridgeBuilder.0001": {
+  "speaker": "bridgeBuilder",
+  "text": "נחל, שני צדדים. גשר אחד חסר.",
+  "conv": "a"
+ },
+ "w1.woods.bridgeBuilder.0002": {
+  "speaker": "bridgeBuilder",
+  "text": "רוצים לבנות? הקרשים אצלי.",
+  "conv": "a"
+ },
+ "w1.woods.bridgeBuilder.0003": {
+  "speaker": "bridgeBuilder",
+  "text": "גשר טוב מחבר ולא נופל. כמו שיחה.",
+  "conv": "a"
+ },
+ "w1.coast.dockHand.0001": {
+  "speaker": "dockHand",
+  "text": "ספינות? כבר הרבה זמן לא ראיתי חדשה.",
+  "conv": "a"
+ },
+ "w1.coast.dockHand.0002": {
+  "speaker": "dockHand",
+  "text": "הנמל ישן, אבל החבלים שלי חזקים.",
+  "conv": "a"
+ },
+ "w1.coast.dockHand.0003": {
+  "speaker": "dockHand",
+  "text": "מה שבחוץ נשאר בחוץ. ככה אומרים.",
+  "conv": "a"
+ }
+}

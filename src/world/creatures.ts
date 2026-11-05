@@ -42,6 +42,9 @@ class Creature {
   private wait = Math.random() * 3;
   private facing: 'S' | 'SE' | 'E' | 'N' = 'S';
   private moving = false;
+  /** Befriended: walks behind the player instead of staying home. */
+  follow = false;
+  slot = 0;
 
   constructor(private readonly scene: Phaser.Scene, readonly spawn: CreatureSpawn) {
     const key = `cr_${spawn.key}`;
@@ -62,7 +65,35 @@ class Creature {
     this.sprite.setFlipX(flip);
   }
 
-  update(dt: number, tod: number): void {
+  /** Trail behind the player at a respectful distance. */
+  private trail(dt: number, px: number, py: number): void {
+    const tx = px - 46 - this.slot * 40;
+    const ty = py + 14 + (this.slot % 2) * 12;
+    const dx = tx - this.baseX;
+    const dy = ty - this.baseY;
+    const d = Math.hypot(dx, dy);
+    this.sprite.setVisible(true).setAlpha(1);
+    this.shadow.setVisible(true).setAlpha(0.8);
+    if (d > 28) {
+      const sp = Math.min(150, 40 + d * 1.6);
+      this.baseX += (dx / d) * sp * dt;
+      this.baseY += (dy / d) * sp * dt;
+      const dir = Math.abs(dy) > Math.abs(dx) * 1.3 ? (dy > 0 ? 'S' : 'N') : 'E';
+      this.anim('walk', dir, dx < 0);
+    } else {
+      this.anim('idle', 'S', this.sprite.flipX);
+    }
+    const flier = this.spawn.mode === 'fly' || this.spawn.mode === 'night-fly';
+    const bob = flier ? Math.sin(this.scene.time.now / 260 + this.slot) * 5 - 34 : 0;
+    this.sprite.setPosition(this.baseX, this.baseY + bob).setDepth(this.baseY);
+    this.shadow.setPosition(this.baseX, this.baseY - 2).setDepth(this.baseY - 1);
+  }
+
+  update(dt: number, tod: number, plx = 0, ply = 0): void {
+    if (this.follow && !this.spawn.legendary) {
+      this.trail(dt, plx, ply);
+      return;
+    }
     const s = this.spawn;
     const night = nightness(tod);
     const flier = s.mode === 'fly' || s.mode === 'night-fly';
@@ -115,19 +146,34 @@ export interface CreatureTarget { key: string; x: number; y: number; legendary: 
 export class CreatureManager {
   private readonly list: Creature[];
 
-  constructor(scene: Phaser.Scene) {
+  constructor(private readonly scene: Phaser.Scene) {
     this.list = CREATURE_SPAWNS.map((s) => new Creature(scene, s));
   }
 
-  update(dtMs: number, tod: number): void {
+  /** Creatures of a region whose assets just finished loading. */
+  addSpawns(spawns: CreatureSpawn[]): void {
+    for (const sp of spawns) if (!this.list.some((c) => c.spawn.key === sp.key)) this.list.push(new Creature(this.scene, sp));
+  }
+
+  /** Friends (keys) walk behind the player, at most three at a time. */
+  setFriends(keys: string[]): void {
+    const mine = keys.slice(-3);
+    for (const c of this.list) {
+      const slot = mine.indexOf(c.spawn.key);
+      c.follow = slot >= 0;
+      c.slot = Math.max(0, slot);
+    }
+  }
+
+  update(dtMs: number, tod: number, plx = 0, ply = 0): void {
     const dt = Math.min(dtMs, 50) / 1000;
-    for (const c of this.list) c.update(dt, tod);
+    for (const c of this.list) c.update(dt, tod, plx, ply);
   }
 
   /** Creatures the player could meet right now (not hidden by the time of day). */
   targets(tod: number): CreatureTarget[] {
     return this.list
-      .filter((c) => !c.spawn.mode.startsWith('night') || nightness(tod) > 0.3)
+      .filter((c) => c.follow || !c.spawn.mode.startsWith('night') || nightness(tod) > 0.3)
       .map((c) => ({ key: c.spawn.key, x: c.baseX, y: c.baseY, legendary: !!c.spawn.legendary }));
   }
 }

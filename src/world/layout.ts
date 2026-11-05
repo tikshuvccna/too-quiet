@@ -1,6 +1,6 @@
-/** Hearth village (כפר האח): the demo area. All coordinates are world pixels. */
+/** The whole valley. Hearth village (כפר האח) sits in the north-west corner at its original coordinates. All coordinates are world pixels. */
 
-export const WORLD = { w: 2600, h: 1900 } as const;
+export const WORLD = { w: 6200, h: 4000 } as const;
 
 export type BuildingFrame = 'cottage_shoshana' | 'clinic' | 'print_house' | 'bakery' | 'mill' | 'tower';
 
@@ -135,5 +135,5 @@ export function wallRects(): Array<[number, number, number, number]> {
   return BUILDINGS.map((b) => [b.x - b.foot.w / 2, b.y - b.foot.h + 8, b.foot.w, b.foot.h] as [number, number, number, number]);
 }
 
-export const TOWER_SPAWN = { x: 2130, y: 640 };
+export const TOWER_SPAWN = { x: 2180, y: 700 };
 export const START_SPAWN = { x: 1280, y: 1040 };

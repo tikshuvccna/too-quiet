@@ -1,16 +1,14 @@
 import Phaser from 'phaser';
+import { NPCS } from '../world/layout';
 
 export const CHARS = ['apprentice_girl', 'apprentice_boy', 'dvora'] as const;
 export type CharKey = (typeof CHARS)[number];
 
-/** Villager sheets (idle only, 5 directions, frame 3 is a blink). */
-export const NPC_SHEETS = [
-  'asaf', 'bard', 'bell_ringer', 'child_girl', 'dvora', 'elder_cane', 'fisherman', 'gardener', 'hed', 'hillel', 'innkeeper',
-  'lamplighter', 'merchant', 'messenger', 'miller', 'miriam', 'noam', 'potter', 'shepherd', 'shoshana', 'spool_gatherer',
-  'teacher', 'warden',
-] as const;
+/** Villager sheets of the starting village (idle only, 5 directions, frame 3 is a blink). The rest load with their region. */
+export const NPC_SHEETS: string[] = [...new Set(NPCS.map((n) => n.char.replace(/^npc_/, '')))];
 export const NPC_DIRS = ['S', 'SE', 'E', 'SW', 'W'] as const;
 
+/** Creatures of the starting village. The creatures of the big world load with their region. */
 export const CREATURE_KEYS = [
   'ant_swarm', 'cloud_sheep', 'echo_parrot', 'gargar_cat', 'glow_worm', 'lantern_moth', 'librarian_owl', 'paper_crane',
   'slow_snail', 'spinner_spider', 'spool_hedgehog', 'trail_fox',
@@ -57,6 +55,27 @@ const drawShadow: Draw = (c, w, h) => {
   c.fillRect(0, 0, w, h);
 };
 
+/** Villagers: breathing and a blink on the last frame. Safe to call again. */
+export function makeNpcAnims(scene: Phaser.Scene, k: string): void {
+  for (const d of NPC_DIRS) {
+    const key = `npc_${k}:idle_${d}`;
+    if (scene.anims.exists(key)) continue;
+    const seq = [0, 1, 2, 1, 0, 0, 0, 0, 3].map((i) => ({ key: `npc_${k}`, frame: `idle_${d}_${i}` }));
+    scene.anims.create({ key, frames: seq, frameRate: 4, repeat: -1 });
+  }
+}
+
+/** Creature animations from the atlas json that was loaded under `cr_<k>:anims`. */
+export function makeCreatureAnims(scene: Phaser.Scene, k: string): void {
+  const data = scene.cache.json.get(`cr_${k}:anims`) as { anims?: Record<string, AnimDef> } | undefined;
+  for (const [name, a] of Object.entries(data?.anims ?? {})) {
+    const key = `cr_${k}:${name}`;
+    if (scene.anims.exists(key)) continue;
+    const frames = name === 'idle' ? [...a.frames, ...a.frames.slice(1, -1).reverse()] : a.frames;
+    scene.anims.create({ key, frames: frames.map((f) => ({ key: `cr_${k}`, frame: f })), frameRate: a.frameRate, repeat: -1 });
+  }
+}
+
 export class BootScene extends Phaser.Scene {
   constructor() {
     super('Boot');
@@ -95,24 +114,8 @@ export class BootScene extends Phaser.Scene {
         this.anims.create({ key, frames: a.frames.map((f) => ({ key: k, frame: f })), frameRate: a.frameRate, repeat: a.repeat });
       }
     }
-    // villagers: breathing and a blink on the last frame
-    for (const k of NPC_SHEETS) {
-      for (const d of NPC_DIRS) {
-        const key = `npc_${k}:idle_${d}`;
-        if (this.anims.exists(key)) continue;
-        const seq = [0, 1, 2, 1, 0, 0, 0, 0, 3].map((i) => ({ key: `npc_${k}`, frame: `idle_${d}_${i}` }));
-        this.anims.create({ key, frames: seq, frameRate: 4, repeat: -1 });
-      }
-    }
-    for (const k of [...CREATURE_KEYS, ...LEGENDARY_KEYS]) {
-      const data = this.cache.json.get(`cr_${k}:anims`) as { anims?: Record<string, AnimDef> } | undefined;
-      for (const [name, a] of Object.entries(data?.anims ?? {})) {
-        const key = `cr_${k}:${name}`;
-        if (this.anims.exists(key)) continue;
-        const frames = name === 'idle' ? [...a.frames, ...a.frames.slice(1, -1).reverse()] : a.frames;
-        this.anims.create({ key, frames: frames.map((f) => ({ key: `cr_${k}`, frame: f })), frameRate: a.frameRate, repeat: -1 });
-      }
-    }
+    for (const k of NPC_SHEETS) makeNpcAnims(this, k);
+    for (const k of [...CREATURE_KEYS, ...LEGENDARY_KEYS]) makeCreatureAnims(this, k);
     for (const [name, frames] of [['benevolent', ['the_head_benevolent_0', 'the_head_benevolent_1']], ['truth', ['the_head_truth_0', 'the_head_truth_1']]] as const) {
       this.anims.create({ key: `the_head:${name}`, frames: frames.map((f) => ({ key: 'the_head', frame: f })), frameRate: 0.5, repeat: -1, yoyo: true });
     }

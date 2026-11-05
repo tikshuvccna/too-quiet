@@ -1,0 +1,332 @@
+{
+ "frames": {
+  "inn": {
+   "frame": {
+    "x": 311,
+    "y": 0,
+    "w": 500,
+    "h": 484
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 500,
+    "h": 484
+   },
+   "sourceSize": {
+    "w": 500,
+    "h": 484
+   },
+   "anchor": {
+    "x": 0.504,
+    "y": 0.8035
+   },
+   "cellBeforeTrim": [
+    536,
+    528
+   ],
+   "smoke": [
+    {
+     "x": -140.0,
+     "y": -376.8
+    },
+    {
+     "x": 134.4,
+     "y": -376.8
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "inn with the lantern sign",
+   "anchorPx": {
+    "x": 252.0,
+    "y": 388.9
+   }
+  },
+  "bell_tower": {
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 309,
+    "h": 649
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 309,
+    "h": 649
+   },
+   "sourceSize": {
+    "w": 309,
+    "h": 649
+   },
+   "anchor": {
+    "x": 0.5113,
+    "y": 0.8712
+   },
+   "cellBeforeTrim": [
+    360,
+    720
+   ],
+   "label": "bell tower (open belfry)",
+   "anchorPx": {
+    "x": 158.0,
+    "y": 565.4
+   }
+  },
+  "tailor": {
+   "frame": {
+    "x": 890,
+    "y": 651,
+    "w": 344,
+    "h": 360
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 344,
+    "h": 360
+   },
+   "sourceSize": {
+    "w": 344,
+    "h": 360
+   },
+   "anchor": {
+    "x": 0.4866,
+    "y": 0.7658
+   },
+   "cellBeforeTrim": [
+    384,
+    408
+   ],
+   "smoke": [
+    {
+     "x": 67.2,
+     "y": -271.6
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "tailor shop",
+   "anchorPx": {
+    "x": 167.4,
+    "y": 275.7
+   }
+  },
+  "school": {
+   "frame": {
+    "x": 813,
+    "y": 0,
+    "w": 482,
+    "h": 431
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 482,
+    "h": 431
+   },
+   "sourceSize": {
+    "w": 482,
+    "h": 431
+   },
+   "anchor": {
+    "x": 0.4774,
+    "y": 0.6452
+   },
+   "cellBeforeTrim": [
+    520,
+    496
+   ],
+   "smoke": [
+    {
+     "x": 128.8,
+     "y": -229.4
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "school",
+   "anchorPx": {
+    "x": 230.1,
+    "y": 278.1
+   }
+  },
+  "fisher": {
+   "frame": {
+    "x": 1236,
+    "y": 651,
+    "w": 408,
+    "h": 312
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 408,
+    "h": 312
+   },
+   "sourceSize": {
+    "w": 408,
+    "h": 312
+   },
+   "anchor": {
+    "x": 0.4931,
+    "y": 0.6718
+   },
+   "cellBeforeTrim": [
+    448,
+    376
+   ],
+   "smoke": [
+    {
+     "x": -39.2,
+     "y": -207.8
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "fisher's shack",
+   "anchorPx": {
+    "x": 201.2,
+    "y": 209.6
+   }
+  },
+  "workshop": {
+   "frame": {
+    "x": 478,
+    "y": 651,
+    "w": 410,
+    "h": 387
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 410,
+    "h": 387
+   },
+   "sourceSize": {
+    "w": 410,
+    "h": 387
+   },
+   "anchor": {
+    "x": 0.4863,
+    "y": 0.7346
+   },
+   "cellBeforeTrim": [
+    448,
+    440
+   ],
+   "smoke": [
+    {
+     "x": -128.8,
+     "y": -284.4
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "workshop",
+   "anchorPx": {
+    "x": 199.4,
+    "y": 284.3
+   }
+  },
+  "library": {
+   "frame": {
+    "x": 1297,
+    "y": 0,
+    "w": 346,
+    "h": 405
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 346,
+    "h": 405
+   },
+   "sourceSize": {
+    "w": 346,
+    "h": 405
+   },
+   "anchor": {
+    "x": 0.5014,
+    "y": 0.7449
+   },
+   "cellBeforeTrim": [
+    384,
+    480
+   ],
+   "smoke": [
+    {
+     "x": 61.6,
+     "y": -286.3
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "spool library",
+   "anchorPx": {
+    "x": 173.5,
+    "y": 301.7
+   }
+  },
+  "observatory": {
+   "frame": {
+    "x": 0,
+    "y": 651,
+    "w": 476,
+    "h": 396
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 476,
+    "h": 396
+   },
+   "sourceSize": {
+    "w": 476,
+    "h": 396
+   },
+   "anchor": {
+    "x": 0.4124,
+    "y": 0.7593
+   },
+   "cellBeforeTrim": [
+    512,
+    488
+   ],
+   "smoke": [
+    {
+     "x": 235.2,
+     "y": -141.7
+    }
+   ],
+   "smokeNote": "emitter offsets in px from the anchor (+y down)",
+   "label": "observatory",
+   "anchorPx": {
+    "x": 196.3,
+    "y": 300.7
+   }
+  }
+ },
+ "meta": {
+  "app": "too-quiet art pipeline",
+  "image": "buildings2a.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 2048,
+   "h": 1047
+  },
+  "scale": "1",
+  "note": "anchor = footprint centre on the ground (setOrigin(anchor.x, anchor.y)); same convention as buildings.json. The truth atlas has identical silhouettes/anchors; frame name = <id>_truth."
+ }
+}

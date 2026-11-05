@@ -6,6 +6,8 @@ import { confirmDialog, createOverlay } from './overlay';
 import { applyPrize, prizeFor } from './prizes';
 import { mulberry32 } from './util';
 import { reducedMotion } from './widgetKit';
+import { openGameShell } from './gameShell';
+import { wiringGame } from './wiring';
 
 export const LEVEL_NAME: Record<Level, string> = { easy: 'קל', medium: 'בינוני', hard: 'קשה' };
 
@@ -24,7 +26,7 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
   let elapsed = 0;
   let timing = false;
   let raf = 0;
-  let pendingTimeout: (() => void) | null = null;
+  let stageKey: ((k: string) => boolean) | null = null;
   let closed = false;
   let last: MinigameResult = { level, points: 0, passed: false, prizeGranted: false };
 
@@ -64,65 +66,176 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
     showTask();
   }
 
-  function stopTimer(): void {
-    timing = false;
-    cancelAnimationFrame(raf);
-  }
-
-  function startTimer(onTimeout: () => void, keepElapsed = false): void {
-    stopTimer();
-    pendingTimeout = onTimeout;
-    if (!keepElapsed) elapsed = 0;
-    const limit = rules.timeLimit;
-    if (!limit) return;
-    timing = true;
-    let prev = performance.now();
-    const tick = (now: number): void => {
-      if (!timing) return;
-      // A hidden tab must not eat the time: one frame never counts for more than a quarter second.
-      elapsed += Math.min(0.25, (now - prev) / 1000);
-      prev = now;
-      const left = Math.max(0, 1 - elapsed / limit);
-      timerFill.style.width = `${left * 100}%`;
-      timerFill.classList.toggle('low', left < 0.25);
-      if (elapsed >= limit) { stopTimer(); onTimeout(); return; }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-  }
+  /** Gate-runner stage: a paper-crane messenger flies up the valley, one gate per task, one lane per answer. */
+  const LANE_COLORS = ['#ff9f7a', '#7ad6ff', '#c6a2ff', '#ffd36b'];
+  let stageStop: (() => void) | null = null;
+  let stagePaused = false;
 
   function showTask(): void {
     const task = tasks[state.index];
     if (!task) return;
+    stageStop?.();
+    const n = task.options.length;
+    const approach = rules.timeLimit ? rules.timeLimit * (level === 'hard' ? 0.8 : 0.6) : 13;
+    const stage = el('div', 'lrn-stage');
+    const canvas = el('canvas', 'lrn-canvas');
+    const banner = el('div', 'lrn-banner', '', [
+      el('span', 'lrn-banner-n', `משימה ${state.index + 1} מתוך ${rules.total}`),
+      el('p', '', task.scenario),
+    ]);
+    const gate = el('div', 'lrn-gate', '', task.options.map((t, i) => {
+      const c = el('div', 'lrn-gate-cell', t);
+      c.style.setProperty('--c', LANE_COLORS[i % LANE_COLORS.length] ?? '#fff');
+      return c;
+    }));
+    const hint = el('div', 'lrn-stage-hint', 'גררו, לחצו על מסלול, או השתמשו בחצים');
+    stage.append(canvas, banner, gate, hint);
+    arena.replaceChildren(stage);
+    timer.hidden = false;
+    timerFill.style.width = '0%';
+    timerFill.classList.remove('low');
+
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    let W = 0;
+    let H = 0;
+    const fit = (): void => {
+      W = stage.clientWidth;
+      H = stage.clientHeight;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(stage);
+
+    let lane = Math.floor((n - 1) / 2);
+    let px = (lane + 0.5) / n;
+    let touched = false;
+    let t = 0;
+    let lastChange = 0;
+    let resolved = false;
+    const rng = mulberry32((state.index * 7919 + 13) >>> 0);
+    const coins = Array.from({ length: 5 }, (_, k) => ({ lane: Math.floor(rng() * n), at: 0.1 + k * 0.17, got: false }));
+    let coinsGot = 0;
+    const setLane = (l: number): void => {
+      const nl = Math.max(0, Math.min(n - 1, l));
+      if (nl !== lane) { lane = nl; lastChange = t; }
+      touched = true;
+      hint.classList.add('gone');
+    };
+    const laneAt = (clientX: number): number => {
+      const r = stage.getBoundingClientRect();
+      return Math.floor(((clientX - r.left) / r.width) * n);
+    };
+    let dragging = false;
+    stage.addEventListener('pointerdown', (e) => { if (!resolved) { dragging = true; setLane(laneAt(e.clientX)); } });
+    stage.addEventListener('pointermove', (e) => { if (dragging && !resolved) setLane(laneAt(e.clientX)); });
+    const up = (): void => { dragging = false; };
+    window.addEventListener('pointerup', up);
+    stageKey = (k: string): boolean => {
+      if (resolved) return false;
+      if (k === 'ArrowLeft' || k === 'a') { setLane(lane - 1); return true; }
+      if (k === 'ArrowRight' || k === 'd') { setLane(lane + 1); return true; }
+      const num = Number(k);
+      if (num >= 1 && num <= n) { setLane(num - 1); return true; }
+      return false;
+    };
+
+    const ctx2 = canvas.getContext('2d');
+    const crane = (c: CanvasRenderingContext2D, x: number, y: number, flap: number, tilt: number): void => {
+      c.save();
+      c.translate(x, y);
+      c.fillStyle = 'rgba(0,0,0,.25)';
+      c.beginPath(); c.ellipse(0, 34, 22, 7, 0, 0, Math.PI * 2); c.fill();
+      c.rotate(tilt);
+      const w = 26 + flap * 12;
+      c.fillStyle = '#fff4d6'; c.strokeStyle = '#6d4a10'; c.lineWidth = 2; c.lineJoin = 'round';
+      for (const s of [-1, 1]) {
+        c.beginPath(); c.moveTo(0, -4); c.lineTo(s * w, -14 - flap * 10); c.lineTo(s * (w - 8), 12); c.lineTo(0, 8); c.closePath(); c.fill(); c.stroke();
+      }
+      c.fillStyle = '#ffd36b';
+      c.beginPath(); c.moveTo(0, -26); c.lineTo(8, 4); c.lineTo(0, 20); c.lineTo(-8, 4); c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = '#ff7a59';
+      c.beginPath(); c.moveTo(0, -26); c.lineTo(5, -33); c.lineTo(-5, -26); c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = '#2b2150'; c.beginPath(); c.arc(-2, -20, 1.6, 0, 7); c.fill();
+      c.restore();
+    };
+
+    const gateH = 74;
+    let prev = performance.now();
+    const frame = (now: number): void => {
+      raf = requestAnimationFrame(frame);
+      const dt = Math.min(0.25, (now - prev) / 1000);
+      prev = now;
+      if (!ctx2 || resolved) return;
+      if (!stagePaused) {
+        const hover = !rules.timeLimit && !touched && t >= approach * 0.8;
+        if (!hover) t += dt;
+      }
+      const prog = Math.min(1, t / approach);
+      const catchY = H * 0.78;
+      const gateY = -gateH + prog * (catchY - 14 + gateH);
+      gate.style.transform = `translateY(${gateY}px)`;
+      gate.style.height = `${gateH}px`;
+      timerFill.style.width = `${prog * 100}%`;
+      timerFill.classList.toggle('low', prog > 0.8);
+      px += ((lane + 0.5) / n - px) * Math.min(1, dt * 10);
+      const c = ctx2;
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const g = c.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#2a2468'); g.addColorStop(0.55, '#6a5aa8'); g.addColorStop(1, '#f2b985');
+      c.fillStyle = g; c.fillRect(0, 0, W, H);
+      const scroll = (now / 1000) * 90;
+      for (let i = 0; i < n; i++) {
+        const x0 = (i / n) * W;
+        const lw = W / n;
+        c.fillStyle = i % 2 ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.08)';
+        c.fillRect(x0, 0, lw, H);
+        c.strokeStyle = 'rgba(255,230,160,.5)'; c.lineWidth = 2; c.setLineDash([14, 16]); c.lineDashOffset = scroll;
+        c.beginPath(); c.moveTo(x0 + lw / 2, 0); c.lineTo(x0 + lw / 2, H); c.stroke(); c.setLineDash([]);
+      }
+      // coins ride between the gate and the messenger; catch them by standing in their lane
+      for (const co of coins) {
+        if (co.got) continue;
+        const y = gateY + gateH + 20 + (catchY - gateY - gateH - 20) * co.at * 1.1;
+        if (y > catchY + 30) { co.got = true; continue; }
+        const cx = ((co.lane + 0.5) / n) * W;
+        if (Math.abs(y - catchY) < 26 && co.lane === lane) {
+          co.got = true;
+          coinsGot++;
+          floatText(stage, '+10', 'good');
+          continue;
+        }
+        c.fillStyle = '#ffd36b'; c.strokeStyle = '#8a5a12'; c.lineWidth = 2;
+        c.beginPath(); c.arc(cx, y, 9, 0, 7); c.fill(); c.stroke();
+        c.strokeStyle = '#fff3b0'; c.beginPath(); c.arc(cx, y, 4, 0, 7); c.stroke();
+      }
+      const flap = (Math.sin(now / 90) + 1) / 2;
+      crane(c, px * W, catchY, flap, ((lane + 0.5) / n - px) * 1.4);
+      if (prog >= 1) resolve(lane);
+    };
+    raf = requestAnimationFrame(frame);
+
     const fb = el('div', 'lrn-feedback');
     fb.setAttribute('aria-live', 'polite');
-    const buttons = task.options.map((text, i) => {
-      const b = el('button', 'lrn-opt lrn-big-opt', text);
-      b.type = 'button';
-      b.addEventListener('click', () => resolve(i, b));
-      return b;
-    });
-    const card = el('section', 'lrn-task lrn-in', '', [
-      el('p', 'lrn-task-n', `משימה ${state.index + 1} מתוך ${rules.total}`),
-      el('p', 'lrn-scenario', task.scenario),
-      el('div', 'lrn-opts', '', buttons),
-      fb,
-    ]);
-    arena.replaceChildren(card);
 
-    function resolve(pick: number | null, btn: HTMLElement | null): void {
-      stopTimer();
-      pendingTimeout = null;
+    function resolve(pick: number): void {
+      if (resolved) return;
+      resolved = true;
+      stageStop?.();
       const ok = pick === task?.correct;
       const before = state;
-      const res = answerTask(state, rules, ok, elapsed);
-      state = res.state;
-      buttons.forEach((b, i) => { b.disabled = true; b.classList.toggle('right', i === task?.correct); });
-      if (!ok && btn) btn.classList.add('wrong');
+      const used = (lastChange / approach) * (rules.timeLimit ?? 0);
+      const res = answerTask(state, rules, ok, used);
+      state = { ...res.state, points: res.state.points + coinsGot * 10 };
       const lostLife = state.lives < before.lives;
+      gate.querySelectorAll('.lrn-gate-cell').forEach((cell, i) => {
+        cell.classList.toggle('right', i === task?.correct);
+        if (i === pick && !ok) cell.classList.add('wrong');
+      });
       if (ok) {
         flash('good');
-        floatText(btn ?? card, `+${res.gained}`, 'good');
+        floatText(gate, `+${res.gained}`, 'good');
         fb.className = 'lrn-feedback good';
         fb.textContent = `נכון! ${task?.why ?? ''}`;
       } else {
@@ -131,21 +244,24 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
         void arena.offsetWidth;
         arena.classList.add('shake');
         fb.className = 'lrn-feedback warn';
-        fb.textContent = pick === null ? `הזמן נגמר, זה בסדר. ${task?.why ?? ''}` : `לא הפעם. ${task?.why ?? ''}`;
+        fb.textContent = `לא הפעם. ${task?.why ?? ''}`;
       }
       paintHud();
       if (lostLife) hearts.children[state.lives]?.classList.add('breaking');
       const final = state.over || state.finished;
-      const more = el('button', 'btn primary lrn-more', final ? (state.over ? 'להמשך ←' : 'לתוצאות ←') : 'המשימה הבאה ←');
+      const more = el('button', 'btn primary lrn-more', final ? (state.over ? 'להמשך ←' : 'לתוצאות ←') : 'השער הבא ←');
       more.type = 'button';
       more.addEventListener('click', () => { if (final) showEnd(); else showTask(); });
-      card.append(more);
+      stage.append(el('div', 'lrn-stage-result', '', [fb, more]));
       more.focus();
     }
 
-    timerFill.style.width = '100%';
-    timerFill.classList.remove('low');
-    if (rules.timeLimit) startTimer(() => resolve(null, null));
+    stageStop = () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener('pointerup', up);
+      stageStop = null;
+    };
   }
 
   function flash(kind: 'good' | 'bad'): void {
@@ -166,7 +282,7 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
   }
 
   function showEnd(): void {
-    stopTimer();
+    stageStop?.();
     timer.hidden = true;
     const sum = summarize(state, rules);
     const prev = save.lesson(lessonId()).games[level];
@@ -212,7 +328,7 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
   function teardown(): void {
     if (closed) return;
     closed = true;
-    stopTimer();
+    stageStop?.();
     document.removeEventListener('keydown', onKey, true);
     ov.destroy();
   }
@@ -225,24 +341,16 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
 
   async function askClose(): Promise<void> {
     if (state.finished || state.over || state.index === 0) { close(); return; }
-    const wasTiming = timing;
-    stopTimer();
-    if (await confirmDialog(ov.root, 'לצאת מהמשחקון? הריצה הזאת לא תישמר, אפשר להתחיל מחדש בחינם.', 'כן, לצאת', 'להמשיך לשחק')) {
-      close();
-    } else if (wasTiming && pendingTimeout) {
-      // The time spent in the dialog is not counted: it must never cost a life.
-      startTimer(pendingTimeout, true);
-    }
+    stagePaused = true;
+    const leave = await confirmDialog(ov.root, 'לצאת מהמשחקון? הריצה הזאת לא תישמר, אפשר להתחיל מחדש בחינם.', 'כן, לצאת', 'להמשיך לשחק');
+    stagePaused = false;
+    if (leave) close();
   }
 
   function onKey(e: KeyboardEvent): void {
     if (ov.root.querySelector('.lrn-confirm')) return;
     if (e.key === 'Escape') { e.preventDefault(); void askClose(); return; }
-    const n = Number(e.key);
-    if (n >= 1 && n <= 4) {
-      const b = arena.querySelectorAll<HTMLButtonElement>('.lrn-opt:not([disabled])')[n - 1];
-      b?.click();
-    }
+    if (stageKey?.(e.key)) e.preventDefault();
   }
 
   closeBtn.addEventListener('click', () => { void askClose(); });
@@ -273,16 +381,15 @@ export function openMinigameMenu(data: MinigameData, save: SaveStore, opts: { on
       const play = el('button', 'btn primary', best ? 'שחקו שוב' : 'התחילו');
       play.type = 'button';
       play.addEventListener('click', () => {
-        child = openMinigame(data, level, save, {
-          onClose: (r) => { child = null; opts.onResult?.(r); render(); },
-        });
+        const onClose = (r: MinigameResult): void => { child = null; opts.onResult?.(r); render(); };
+        child = data.wiring ? openGameShell(wiringGame(data.wiring, data), data, level, save, { onClose }) : openMinigame(data, level, save, { onClose });
       });
       return el('section', `lrn-level ${level}${best?.passed ? ' passed' : ''}`, '', [
         el('h2', '', `${LEVEL_NAME[level]}${best?.passed ? ' ✓' : ''}`),
         el('ul', 'lrn-facts', '', [
           el('li', '', `♥ ${lv.lives} חיים`),
           el('li', '', lv.timeLimitPerTaskSec ? `${lv.timeLimitPerTaskSec} שניות למשימה` : 'בלי הגבלת זמן'),
-          el('li', '', `${lv.tasks.length} משימות`),
+          el('li', '', data.wiring ? `${data.wiring.levels[level].rounds.length} סיבובים, ${data.wiring.levels[level].attempts} ניסיונות בכל אחד` : `${lv.tasks.length} משימות`),
           el('li', 'best', best ? `שיא: ${best.points} נקודות` : 'עוד לא שיחקתם'),
         ]),
         el('div', 'lrn-prize', '', [el('h3', '', `פרס: ${p.name}`), el('p', '', p.description)]),

@@ -1,0 +1,257 @@
+{
+ "house": "library",
+ "name": "ספריית הסלילים",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "l_catalog",
+   "interactive": true,
+   "nameHe": "ארון הקטלוג",
+   "frame": "l_catalog",
+   "frameTruth": "l_catalog_truth",
+   "place": {
+    "x": 596.0,
+    "y": 298.3
+   },
+   "world": {
+    "x": 1.5,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    45,
+    13
+   ]
+  },
+  {
+   "id": "l_ladder",
+   "interactive": true,
+   "nameHe": "סולם הספרייה",
+   "frame": "l_ladder",
+   "frameTruth": "l_ladder_truth",
+   "place": {
+    "x": 349.6,
+    "y": 320.8
+   },
+   "world": {
+    "x": -2.9,
+    "y": 3.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 320.8,
+   "footprintPx": [
+    45,
+    13
+   ]
+  },
+  {
+   "id": "l_table",
+   "interactive": true,
+   "nameHe": "שולחן קריאה",
+   "frame": "l_table",
+   "frameTruth": "l_table_truth",
+   "place": {
+    "x": 579.2,
+    "y": 420.4
+   },
+   "world": {
+    "x": 1.2,
+    "y": 0.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 420.4,
+   "footprintPx": [
+    78,
+    26
+   ]
+  },
+  {
+   "id": "l_cover",
+   "interactive": true,
+   "nameHe": "כריכה בלי דפים",
+   "frame": "l_cover",
+   "frameTruth": "l_cover_truth",
+   "place": {
+    "x": 276.8,
+    "y": 397.9
+   },
+   "world": {
+    "x": -4.2,
+    "y": 1.0,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 397.9,
+   "footprintPx": [
+    28,
+    13
+   ]
+  },
+  {
+   "id": "l_stamp",
+   "interactive": true,
+   "nameHe": "חותמת התוויות",
+   "frame": "l_stamp",
+   "frameTruth": "l_stamp_truth",
+   "place": {
+    "x": 814.4,
+    "y": 385.0
+   },
+   "world": {
+    "x": 5.4,
+    "y": 1.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 385.0,
+   "footprintPx": [
+    39,
+    14
+   ]
+  },
+  {
+   "id": "x_shelves_a",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_shelves_a",
+   "frameTruth": "x_shelves_a_truth",
+   "place": {
+    "x": 248.8,
+    "y": 298.3
+   },
+   "world": {
+    "x": -4.7,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    78,
+    13
+   ]
+  },
+  {
+   "id": "x_shelves_b",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_shelves_b",
+   "frameTruth": "x_shelves_b_truth",
+   "place": {
+    "x": 433.6,
+    "y": 298.3
+   },
+   "world": {
+    "x": -1.4,
+    "y": 4.1,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 298.3,
+   "footprintPx": [
+    78,
+    13
+   ]
+  },
+  {
+   "id": "x_spool_rack",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_spool_rack",
+   "frameTruth": "x_spool_rack_truth",
+   "place": {
+    "x": 864.8,
+    "y": 314.4
+   },
+   "world": {
+    "x": 6.3,
+    "y": 3.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 314.4,
+   "footprintPx": [
+    45,
+    13
+   ]
+  },
+  {
+   "id": "x_reading_chair",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_reading_chair",
+   "frameTruth": "x_reading_chair_truth",
+   "place": {
+    "x": 400.0,
+    "y": 478.2
+   },
+   "world": {
+    "x": -2.0,
+    "y": -1.5,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 478.2,
+   "footprintPx": [
+    39,
+    16
+   ]
+  },
+  {
+   "id": "x_lamp",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_lamp",
+   "frameTruth": "x_lamp_truth",
+   "place": {
+    "x": 724.8,
+    "y": 503.9
+   },
+   "world": {
+    "x": 3.8,
+    "y": -2.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 503.9,
+   "footprintPx": [
+    17,
+    6
+   ]
+  }
+ ]
+}

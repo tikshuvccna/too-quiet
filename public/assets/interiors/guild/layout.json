@@ -1,0 +1,251 @@
+{
+ "house": "guild",
+ "name": "אולם הגילדה",
+ "shellSize": [
+  1024,
+  640
+ ],
+ "worldOriginPx": [
+  512,
+  430
+ ],
+ "note": "Assemble: draw shell.png at (0,0); for each object draw frame from objects.png at place with setOrigin(anchor). depth = world y (smaller y is closer to the camera): sort objects by place.y pixel. 'truth' atlas/shell have identical frames, anchors and places.",
+ "floorPolygonPx": [
+  [
+   120.0,
+   285.5
+  ],
+  [
+   904.0,
+   285.5
+  ],
+  [
+   904.0,
+   574.5
+  ],
+  [
+   120.0,
+   574.5
+  ]
+ ],
+ "windowCenterPx": [
+  758.4,
+  157.0
+ ],
+ "objects": [
+  {
+   "id": "g_banner",
+   "interactive": true,
+   "nameHe": "דגל הגילדה",
+   "frame": "g_banner",
+   "frameTruth": "g_banner_truth",
+   "place": {
+    "x": 321.6,
+    "y": 222.8
+   },
+   "world": {
+    "x": -3.4,
+    "y": 4.45,
+    "z": 1.4
+   },
+   "wall": true,
+   "sortY": 222.8,
+   "footprintPx": null
+  },
+  {
+   "id": "x_banner_b",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_banner_b",
+   "frameTruth": "x_banner_b_truth",
+   "place": {
+    "x": 500.8,
+    "y": 222.8
+   },
+   "world": {
+    "x": -0.2,
+    "y": 4.45,
+    "z": 1.4
+   },
+   "wall": true,
+   "sortY": 222.8,
+   "footprintPx": null
+  },
+  {
+   "id": "g_minutes",
+   "interactive": true,
+   "nameHe": "פרוטוקול ההצבעה",
+   "frame": "g_minutes",
+   "frameTruth": "g_minutes_truth",
+   "place": {
+    "x": 209.6,
+    "y": 352.9
+   },
+   "world": {
+    "x": -5.4,
+    "y": 2.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 352.9,
+   "footprintPx": [
+    31,
+    13
+   ]
+  },
+  {
+   "id": "g_model",
+   "interactive": true,
+   "nameHe": "דגם החצוצרה",
+   "frame": "g_model",
+   "frameTruth": "g_model_truth",
+   "place": {
+    "x": 612.8,
+    "y": 356.1
+   },
+   "world": {
+    "x": 1.8,
+    "y": 2.3,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 356.1,
+   "footprintPx": [
+    34,
+    16
+   ]
+  },
+  {
+   "id": "g_loom",
+   "interactive": true,
+   "nameHe": "נול עתיק",
+   "frame": "g_loom",
+   "frameTruth": "g_loom_truth",
+   "place": {
+    "x": 232.0,
+    "y": 417.2
+   },
+   "world": {
+    "x": -5.0,
+    "y": 0.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 417.2,
+   "footprintPx": [
+    56,
+    22
+   ]
+  },
+  {
+   "id": "g_chair",
+   "interactive": true,
+   "nameHe": "הכיסא העשירי",
+   "frame": "g_chair",
+   "frameTruth": "g_chair_truth",
+   "place": {
+    "x": 713.6,
+    "y": 481.4
+   },
+   "world": {
+    "x": 3.6,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    25,
+    13
+   ]
+  },
+  {
+   "id": "x_loom_b",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_loom_b",
+   "frameTruth": "x_loom_b_truth",
+   "place": {
+    "x": 848.0,
+    "y": 410.7
+   },
+   "world": {
+    "x": 6.0,
+    "y": 0.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 410.7,
+   "footprintPx": [
+    50,
+    19
+   ]
+  },
+  {
+   "id": "x_table",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_table",
+   "frameTruth": "x_table_truth",
+   "place": {
+    "x": 523.2,
+    "y": 481.4
+   },
+   "world": {
+    "x": 0.2,
+    "y": -1.6,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 481.4,
+   "footprintPx": [
+    157,
+    29
+   ]
+  },
+  {
+   "id": "x_candelabra",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_candelabra",
+   "frameTruth": "x_candelabra_truth",
+   "place": {
+    "x": 411.2,
+    "y": 320.8
+   },
+   "world": {
+    "x": -1.8,
+    "y": 3.4,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 320.8,
+   "footprintPx": [
+    20,
+    10
+   ]
+  },
+  {
+   "id": "x_chest",
+   "interactive": false,
+   "nameHe": "",
+   "frame": "x_chest",
+   "frameTruth": "x_chest_truth",
+   "place": {
+    "x": 859.2,
+    "y": 519.9
+   },
+   "world": {
+    "x": 6.2,
+    "y": -2.8,
+    "z": 0
+   },
+   "wall": false,
+   "sortY": 519.9,
+   "footprintPx": [
+    39,
+    13
+   ]
+  }
+ ]
+}
