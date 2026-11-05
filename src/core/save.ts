@@ -28,13 +28,13 @@ export interface SaveData {
   /** Stackable items such as creature food. */
   inv: Record<string, number>;
   playSeconds: number;
-  settings: { subtitles: boolean; sound: boolean; quality: QualitySetting; showFps: boolean };
+  settings: { subtitles: boolean; sound: boolean; quality: QualitySetting; showFps: boolean; musicOn: boolean; sfxOn: boolean; musicVol: number; sfxVol: number };
 }
 
 export function emptySave(): SaveData {
   return {
     v: SAVE_VERSION, started: false, look: 'girl', name: '', flags: {}, collected: {}, evidence: {}, fixed: {},
-    lessons: {}, power: 0, coins: 0, inv: {}, playSeconds: 0, settings: { subtitles: true, sound: false, quality: 'auto', showFps: false },
+    lessons: {}, power: 0, coins: 0, inv: {}, playSeconds: 0, settings: { subtitles: true, sound: false, quality: 'auto', showFps: false, musicOn: true, sfxOn: true, musicVol: 0.5, sfxVol: 0.8 },
   };
 }
 

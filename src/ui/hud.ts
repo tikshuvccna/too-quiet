@@ -1,5 +1,6 @@
 import { bus } from '../core/bus';
 import { el, isTouchDevice, mmss, uiRoot } from './dom';
+import { audio } from '../audio/audio';
 
 export class Hud {
   private readonly bar = el('div', 'hud');
@@ -74,7 +75,11 @@ export class Hud {
     this.timer.classList.toggle('warn', warning);
   }
 
+  private lastCoins = -1;
+
   setCoins(n: number): void {
+    if (this.lastCoins >= 0 && n > this.lastCoins) audio.sfx('coin');
+    this.lastCoins = n;
     this.coins.textContent = `מטבעות ${n}`;
   }
 

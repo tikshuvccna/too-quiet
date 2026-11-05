@@ -1,4 +1,5 @@
 import { el } from '../dom';
+import { audio } from '../../audio/audio';
 import type { SaveStore } from '../../core/save';
 import type { LessonData, LessonStep } from './types';
 import { canAdvance, checkForDisplay, clampStep, dotState, isLast, resumeIndex } from './lessonLogic';
@@ -90,6 +91,7 @@ export function openLesson(data: LessonData, save: SaveStore, opts: { onClose(do
     function choose(i: number): void {
       attempts.set(step.id, (attempts.get(step.id) ?? 0) + 1);
       const o = opts[i];
+      audio.sfx(i === c.correct ? 'success' : 'fail');
       if (i === c.correct) {
         prog.checks[step.id] = true;
         save.save();

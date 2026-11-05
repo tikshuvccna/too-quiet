@@ -4,6 +4,9 @@ import { NPC_GAMES, openNpcGame } from '../ui/npcgames';
 import { openShop } from '../ui/shop';
 import { openSettings } from '../ui/settings';
 import { perksOf } from './perks';
+import { audio } from '../audio/audio';
+import { celebrate, type CelebrateKind } from '../ui/celebrate';
+import { playCutscene } from '../ui/cutscene';
 import { PROBLEMS, PROBLEM_COINS, objectiveFor, problemForNpc, stageOf, type Probe } from './problems';
 import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
@@ -51,6 +54,11 @@ export class Controller {
     bus.on('fault:fixed', ({ evidence }) => this.faultFixed(evidence));
     bus.on('item:collected', ({ id }) => void this.onCollected(id));
     bus.on('creature:met', ({ key }) => void this.meetCreature(key));
+    bus.on('sight:toggle', ({ on }) => {
+      if (!on || this.has('first_sight') || this.ctx.save.data.started === false) return;
+      this.ctx.save.setFlag('first_sight');
+      void this.withModal(() => celebrate('sight', true));
+    });
     bus.on('boss:end', ({ won }) => void this.bossEnded(won));
     bus.on('head:seen', () => {
       // unlocked quietly: the player is not told what they saw
@@ -112,6 +120,7 @@ export class Controller {
         { speaker: 'dvora', text: 'המחט רואה אותם עכשיו. רוצו אל החוט החתוך, וחברו אותו נכון.' },
       ]);
     });
+    await playCutscene('boss_intro');
     bus.emit('boss:start', undefined);
   }
 
@@ -124,6 +133,7 @@ export class Controller {
       }
       this.ctx.save.setFlag('head_calmed');
       this.ctx.save.save();
+      await playCutscene('ending');
       const { applyPrize, prizeFor } = await import('../ui/learning');
       const { bossData } = await import('../ui/learning/bossGame');
       const out = applyPrize(this.ctx.save, 'hard', { lessonId: 'lessonboss' });
@@ -194,6 +204,7 @@ export class Controller {
 
   private enterHouse(houseId: string): void {
     if (this.ctx.modal) return;
+    audio.sfx('door');
     this.ctx.modal = true;
     this.fade(() => {
       this.ctx.modal = false;
@@ -203,6 +214,7 @@ export class Controller {
 
   private exitHouse(houseId: string): void {
     if (this.ctx.modal) return;
+    audio.sfx('door');
     const b = BUILDINGS.find((x) => x.id === houseId) ?? WORLD_BUILDINGS.find((x) => `house-${x.id}` === houseId);
     this.ctx.modal = true;
     this.fade(() => {
@@ -380,6 +392,10 @@ export class Controller {
   }
 
   private async onHouseEntered(contentHouseId: string): Promise<void> {
+    if (!this.has('first_house')) {
+      this.ctx.save.setFlag('first_house');
+      await this.withModal(() => celebrate('house', true));
+    }
     if (!this.lessonDone()) return;
     const fix = { house_grandma: FIXES[0], house_clinic: FIXES[1] }[contentHouseId as 'house_grandma' | 'house_clinic'];
     if (!fix || this.has(fix.flag)) return;
@@ -398,6 +414,12 @@ export class Controller {
     await this.withModal(async () => {
       this.ctx.save.data.collected[`creature_${key}`] = true;
       this.ctx.save.save();
+      audio.sfx('creature');
+      if (first) {
+        const firstEver = !this.has('first_creature');
+        this.ctx.save.setFlag('first_creature');
+        await celebrate('creature', firstEver, info.name_he);
+      }
       const lines = [{ speaker: '', text: `${info.name_he}. ${info.concept_he}` }];
       if (info.legend_he) lines.unshift({ speaker: '', text: info.legend_he });
       await this.ctx.dialogue.say(lines);
@@ -430,7 +452,14 @@ export class Controller {
     const item = itemById(id);
     if (!item) return;
     this.ctx.hud.toast(`נאסף: ${item.title}`, 'good', 3600);
-    await this.withModal(() => this.ctx.dialogue.say([{ speaker: '', text: `${item.title}. ${item.text}` }]));
+    audio.sfx(item.kind === 'diary' ? 'diary' : 'pickup');
+    const kind: CelebrateKind = item.kind;
+    const first = !this.has(`first_${kind}`);
+    this.ctx.save.setFlag(`first_${kind}`);
+    await this.withModal(async () => {
+      await celebrate(kind, first, item.title);
+      await this.ctx.dialogue.say([{ speaker: '', text: `${item.title}. ${item.text}` }]);
+    });
   }
 
   private async collection(): Promise<void> {

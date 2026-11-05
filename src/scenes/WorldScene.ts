@@ -9,6 +9,7 @@ import { REGIONS, inSea, regionAt } from '../world/regions';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
 import { BossWorld } from '../world/bossWorld';
+import { audio, REGION_MOOD } from '../audio/audio';
 import { WORLD_BUILDINGS, WORLD_CREATURE_SPAWNS, WORLD_NPCS, WORLD_PICKUPS, WORLD_PROPS } from '../world/worldMap';
 import { distanceToRegion, loadsForRegion, type RegionLoad } from '../world/regionAssets';
 import type { CreatureSpawn } from '../world/creatures';
@@ -414,7 +415,9 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private setSight(on: boolean): void {
+    if (on !== this.sightOn) audio.sfx(on ? 'thread' : 'close');
     this.sightOn = on;
+    audio.setSight(on);
     if (!on) {
       this.sightG.clear();
       this.dots.forEach((d) => d.setVisible(false));
@@ -657,6 +660,7 @@ export class WorldScene extends Phaser.Scene {
     const first = this.regionId === '';
     this.regionId = id;
     const reg = REGIONS.find((x) => x.id === id);
+    if (reg) audio.setBase(REGION_MOOD[reg.id] ?? 'village');
     if (!first && reg && !this.ctx.modal) this.ctx.hud.toast(reg.name, '', 2600);
   }
 

@@ -212,3 +212,27 @@ body.modal .joy, body.modal .interact { display: none !important; }
 .pill.fps-badge.bad { color: #ff8aa0; }
 /* during the fight with the Head its bar sits right under the top row: notes go below it */
 body.boss .toast-box { top: calc(var(--hud-h, 96px) + 92px); }
+
+/* sound controls */
+.vol-row { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+.vol-label { min-width: 70px; color: var(--gold); font-weight: 700; }
+.vol-range { flex: 1; accent-color: #5cf0d0; height: 28px; }
+
+/* first times and small celebrations */
+.screen.first { z-index: 70; background: radial-gradient(700px 500px at 50% 40%, rgba(92, 240, 208, .18), rgba(8, 9, 24, .92)); }
+.first-card { max-width: 440px; text-align: center; padding: 24px; border-radius: 24px; background: var(--card, rgba(22, 27, 58, .95)); border: 2px solid var(--gold); animation: first-in .6s cubic-bezier(.2, 1.4, .4, 1); }
+.first-card h2 { margin: 8px 0; color: var(--gold); font-size: 1.6rem; }
+.first-icon { width: 110px; height: 110px; margin: 0 auto; animation: first-spin 1.1s ease-out; filter: drop-shadow(0 0 18px rgba(255, 211, 107, .7)); }
+.first-icon svg, .pop-icon svg { width: 100%; height: 100%; }
+.popspin { position: fixed; left: 50%; bottom: 22%; transform: translateX(-50%); z-index: 45; display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; animation: pop-up 1.8s ease-out forwards; }
+.pop-icon { width: 64px; height: 64px; animation: first-spin .9s ease-out; filter: drop-shadow(0 0 10px rgba(255, 211, 107, .8)); }
+.pop-label { padding: 3px 10px; border-radius: 10px; background: rgba(8, 9, 24, .8); color: #fff; font-size: .9rem; }
+@keyframes first-in { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes first-spin { 0% { transform: scale(0) rotate(-540deg); } 70% { transform: scale(1.25) rotate(20deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes pop-up { 0% { opacity: 0; margin-bottom: -20px; } 12% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; margin-bottom: 60px; } }
+@media (prefers-reduced-motion: reduce) { .first-card, .first-icon, .pop-icon, .popspin { animation: none; } }
+
+/* video clips */
+.screen.cutvid { z-index: 80; background: #000; display: flex; align-items: center; justify-content: center; }
+.cutvid-video { max-width: 100vw; max-height: 100vh; width: 100%; height: 100%; object-fit: contain; background: #000; }
+.cutvid-skip { position: absolute; top: 12px; left: 12px; opacity: .85; }

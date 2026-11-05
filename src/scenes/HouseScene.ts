@@ -4,6 +4,7 @@ import { bus } from '../core/bus';
 import { createActor, updateActor, type Actor } from '../game/actors';
 import { CTX_KEY, type GameContext } from '../game/context';
 import { TruthFx, truthLevel } from '../game/truthFx';
+import { audio } from '../audio/audio';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
 
@@ -147,6 +148,7 @@ export class HouseScene extends Phaser.Scene {
     if (this.ctx.hud.isSightOn) this.sight = true;
     this.ctx.hud.setVisible(true);
     this.ctx.joystick.setVisible(true);
+    audio.setBase('house');
     this.last = null;
     bus.emit('interact:available', null);
     bus.emit('house:entered', { houseId: this.contentId });

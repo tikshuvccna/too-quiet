@@ -5,6 +5,7 @@ import { type GameState, answerTask, mergeBest, newGame, passMin, summarize } fr
 import { confirmDialog, createOverlay } from './overlay';
 import { applyPrize, prizeFor } from './prizes';
 import { reducedMotion } from './widgetKit';
+import { audio } from '../../audio/audio';
 
 export const GAME_LEVEL_NAME: Record<Level, string> = { easy: 'קל', medium: 'בינוני', hard: 'קשה' };
 
@@ -159,6 +160,8 @@ export function openGameShell(def: GameDef, data: MinigameData, level: Level, sa
         paintHud();
         if (state.lives < before.lives) hearts.children[state.lives]?.classList.add('breaking');
         flash(ok ? 'good' : 'bad');
+        audio.sfx(ok ? 'success' : 'fail');
+        if (state.lives < before.lives) audio.sfx('hurt');
         const final = state.over || state.finished;
         feedback.className = `lrn-wire-msg ${ok ? 'good' : 'warn'}`;
         feedback.textContent = `${ok ? `נכון! +${res.gained}. ` : 'לא הפעם. '}${text}`;
@@ -188,6 +191,7 @@ export function openGameShell(def: GameDef, data: MinigameData, level: Level, sa
     if (sum.passed) {
       const out = applyPrize(save, level, { flawless: sum.flawless, lessonId });
       prizeGranted = out.granted;
+      if (out.granted) audio.sfx('prize');
       const p = prizeFor(level, data.prizes);
       prizeBox = el('div', 'lrn-prize', '', [
         el('h3', '', out.granted ? `פרס חדש: ${p.name}` : `הפרס שלכם: ${p.name}`),

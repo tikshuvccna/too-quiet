@@ -4,6 +4,7 @@ import { bus } from './core/bus';
 import { QUALITY_NAME, QualityManager } from './core/quality';
 import { Session } from './core/session';
 import { FpsMeter } from './ui/fpsMeter';
+import { audio } from './audio/audio';
 import { SaveStore, type Look } from './core/save';
 import { CTX_KEY, type GameContext } from './game/context';
 import { Controller } from './game/controller';
@@ -35,6 +36,12 @@ function boot(): void {
   const dialogue = new DialogueUI();
   dialogue.subtitles = save.data.settings.subtitles;
   dialogue.look = save.data.look;
+  audio.configure({ musicOn: save.data.settings.musicOn, sfxOn: save.data.settings.sfxOn, musicVol: save.data.settings.musicVol, sfxVol: save.data.settings.sfxVol });
+  // sound can start only after a tap: the first one anywhere does it; every button also clicks softly
+  const unlock = (): void => audio.unlock();
+  window.addEventListener('pointerdown', unlock, { once: true, capture: true });
+  window.addEventListener('keydown', unlock, { once: true, capture: true });
+  document.addEventListener('click', (e) => { if ((e.target as HTMLElement | null)?.closest?.('button')) audio.sfx('click'); }, true);
   const quality = new QualityManager(save);
   const fpsMeter = new FpsMeter(hud.row);
   fpsMeter.show(save.data.settings.showFps);

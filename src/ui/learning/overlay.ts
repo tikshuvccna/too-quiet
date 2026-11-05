@@ -1,17 +1,22 @@
 import './learning.css';
 import { el, uiRoot } from '../dom';
+import { audio, type Mood } from '../../audio/audio';
 
 export interface Overlay { root: HTMLElement; destroy(): void }
 
 /** A full-screen layer that sits above the game. Keyboard handling is added by the caller. */
-export function createOverlay(cls: string): Overlay {
+export function createOverlay(cls: string, mood?: Mood | null): Overlay {
   const root = el('div', `lrn ${cls}`);
+  // learning screens are calm so the player can think; games are lighter; settings and the shop keep the world's music
+  const m: Mood | null = mood === undefined ? (/lrn-(lesson|quiz)/.test(cls) ? 'lesson' : cls.includes('boss') ? null : 'game') : mood;
+  const release = m ? audio.pushOverlay(m) : () => {};
+  audio.sfx('open');
   root.dir = 'rtl';
   root.lang = 'he';
   root.setAttribute('role', 'dialog');
   root.setAttribute('aria-modal', 'true');
   (document.getElementById('ui') ? uiRoot() : document.body).append(root);
-  return { root, destroy: () => root.remove() };
+  return { root, destroy: () => { release(); audio.sfx('close'); root.remove(); } };
 }
 
 /** Small in-page confirmation: window.confirm is ugly and sometimes blocked on phones. */

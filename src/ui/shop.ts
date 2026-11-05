@@ -53,7 +53,7 @@ export function equip(save: SaveStore, id: string | null): void {
 
 export function openShop(save: SaveStore, opts: { onChange(): void }): Promise<void> {
   return new Promise((resolve) => {
-    const ov = createOverlay('lrn-mini npcg');
+    const ov = createOverlay('lrn-mini npcg', null);
     const coins = el('span', 'lrn-points', '');
     const closeBtn = el('button', 'lrn-x', '×');
     closeBtn.type = 'button';

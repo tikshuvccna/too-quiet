@@ -1,5 +1,6 @@
 import { lessonIds, loadBundle, openLesson, openMinigameMenu, openQuiz, type LessonBundle } from '../ui/learning';
 import { el, uiRoot } from '../ui/dom';
+import { playCutscene } from '../ui/cutscene';
 import type { GameContext } from './context';
 
 const QUIZ_COINS = 15;
@@ -43,11 +44,14 @@ export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) 
 
       lessonBtn.addEventListener('click', () => {
         closeScreen();
-        openLesson(content.lesson, ctx.save, {
-          onClose: (done) => {
-            if (!done) return render();
-            void afterLesson(lessonId).then(render);
-          },
+        const no = lessonId.replace(/^lesson/, '');
+        void playCutscene(`lesson_start_${no}`).then(() => {
+          openLesson(content.lesson, ctx.save, {
+            onClose: (done) => {
+              if (!done) return render();
+              void playCutscene(`lesson_end_${no}`).then(() => afterLesson(lessonId)).then(render);
+            },
+          });
         });
       });
       quizBtn.addEventListener('click', () => {

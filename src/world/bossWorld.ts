@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { el, uiRoot } from '../ui/dom';
 import { DAMAGE, MAX_HP, PHASES, PHASE_SEQUENCE, PHASE_TOPIC, difficulty, phaseOf, type FaultType } from '../ui/learning/bossLogic';
 import type { GameContext } from '../game/context';
+import { audio } from '../audio/audio';
 
 /** Knots of the thread-web the Head attacks, in village coordinates (they hang over the roofs, like the thread-sight threads). */
 const KNOTS: Record<string, [number, number]> = {
@@ -68,6 +69,7 @@ export class BossWorld {
     this.hud = el('div', 'bosshud', '', [this.labelEl, el('div', 'boss-calm', '', [this.calmFill]), this.heartsEl]);
     uiRoot().append(this.hud);
     document.body.classList.add('boss');
+    audio.setBoss(true);
     o.ctx.session.pause();
     this.paint();
   }
@@ -118,6 +120,7 @@ export class BossWorld {
       const dx = px - this.hx;
       const dy = py - 22 - (this.hy + 60);
       const len = Math.hypot(dx, dy) || 1;
+      audio.sfx('warn');
       this.streams.push({ x0: this.hx, y0: this.hy + 60, dx: dx / len, dy: dy / len, telegraph: 1.2, travelled: 0, bits: d.bits });
     }
     for (const s of this.streams) {
@@ -155,6 +158,7 @@ export class BossWorld {
     this.panel?.remove();
     this.hud.remove();
     document.body.classList.remove('boss');
+    audio.setBoss(false);
     this.g.destroy();
     this.head.destroy();
     for (const f of this.faults.values()) f.mark?.destroy();
@@ -214,6 +218,7 @@ export class BossWorld {
   private mend(f: Fault): void {
     this.faults.delete(f.id);
     f.mark?.destroy();
+    audio.sfx('mend');
     const dmg = DAMAGE[f.type];
     const len = Math.hypot(this.hx - f.x, this.hy - f.y);
     this.shots.push({ x0: f.x, y0: f.y - 60, x1: this.hx, y1: this.hy, travelled: 0, len, dmg, count: f.type === 'choice' ? 9 : 4 });
@@ -221,6 +226,7 @@ export class BossWorld {
   }
 
   private land(s: Shot): void {
+    audio.sfx('bossHit');
     this.hp = Math.max(0, this.hp - s.dmg);
     this.scene.cameras.main.shake(180, 0.004);
     this.head.setTint(0xffffff);
@@ -237,6 +243,7 @@ export class BossWorld {
     if (this.invuln > 0 || this.ended) return;
     this.lives--;
     this.invuln = 1.4;
+    audio.sfx('hurt');
     this.scene.cameras.main.shake(160, 0.006);
     this.float(px, py - 70, 'זרם ביטים!', '#ff6b7d');
     this.paint();
@@ -251,6 +258,7 @@ export class BossWorld {
     this.taskOpen = false;
     this.o.ctx.modal = false;
     if (won) {
+      audio.sfx('fanfare');
       this.scene.tweens.add({ targets: this.head, y: this.hy - 260, alpha: 0, duration: 2600, ease: 'sine.in' });
     }
     this.scene.time.delayedCall(won ? 2800 : 600, () => this.o.onEnd({ won }));

@@ -1,4 +1,5 @@
 import { el } from '../dom';
+import { audio } from '../../audio/audio';
 import type { SaveStore } from '../../core/save';
 import type { QuizData, QuizQuestion, QuizResult } from './types';
 import { PASS_MIN_CORRECT, POINTS, type Outcome, isOrderCorrect, pointsFor, resolveAttempt, tally, togglePick } from './quizLogic';
@@ -74,6 +75,7 @@ export function openQuiz(data: QuizData, save: SaveStore, opts: { onClose(result
       b.type = 'button';
       b.addEventListener('click', () => {
         const r = resolveAttempt(attempt, i === sh.correct);
+        audio.sfx(i === sh.correct ? 'success' : 'fail');
         if (r.kind === 'again') {
           attempt++;
           b.disabled = true;

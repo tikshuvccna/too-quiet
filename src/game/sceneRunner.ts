@@ -3,6 +3,7 @@ import { bus } from '../core/bus';
 import type { SaveStore } from '../core/save';
 import type { DialogueUI } from '../ui/dialogue';
 import { el, uiRoot } from '../ui/dom';
+import { playCutscene } from '../ui/cutscene';
 
 /** After these scenes the story waits for the player to go somewhere, instead of following `next`. */
 export const STOP_AFTER = new Set(['village_houses', 'return_after_lesson', 'fix_grandma_ok', 'fix_clinic_ok', 'fix_mill_ok', 'bakery_fixed']);
@@ -74,6 +75,7 @@ export class SceneRunner {
       } else if ('flag' in st) {
         this.save.setFlag(st.flag);
         this.hooks.onFlag?.(st.flag);
+        await playCutscene(`flag_${st.flag}`);
       } else if ('cutscene' in st) {
         await this.cutscene(st.cutscene, scene.title);
       } else {
@@ -89,8 +91,9 @@ export class SceneRunner {
   }
 
   /** In-engine cutscene card. Real illustrated or video cutscenes replace this later. */
-  private cutscene(id: string, title: string): Promise<void> {
-    return new Promise((resolve) => {
+  private async cutscene(id: string, title: string): Promise<void> {
+    if (await playCutscene(id)) return;
+    await new Promise<void>((resolve) => {
       const done = (): void => {
         screen.remove();
         resolve();
