@@ -392,3 +392,5 @@
 .hot-region:hover:not(:disabled) { background: rgba(255, 211, 107, .22); border-color: var(--gold); }
 .hot-region.hot-right { background: rgba(92, 240, 160, .35); border-color: #5cf0a0; border-style: solid; }
 .hot-region.hot-wrong { background: rgba(255, 107, 125, .35); border-color: #ff6b7d; }
+
+.hot-inner { position: absolute; left: 0; right: 0; bottom: 0; top: 28px; }

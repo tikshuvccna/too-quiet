@@ -1,0 +1,1649 @@
+{
+  "id": "hotspot05",
+  "title": "איפה לוחצים?",
+  "intro": "זה תרשים של חלון הסימולטור, מצויר בקופסאות. קראו את המשימה ולחצו על האזור הנכון.",
+  "levels": {
+    "easy": {
+      "lives": 5,
+      "timeLimitPerTaskSec": null,
+      "rounds": [
+        {
+          "text": "איפה בונים את הרשת? לאן גוררים את הרכיבים?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "workspace",
+          "why": "המשטח האמצעי הוא המקום שבו בונים את הרשת."
+        },
+        {
+          "text": "איפה בוחרים סוג רכיב: מחשב, מתג או כבל?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "categories",
+          "why": "בתפריט הרכיבים בפינה בוחרים סוג, ואחר כך דגם."
+        },
+        {
+          "text": "רוצים לראות את הרשת בחדרים ובארונות תקשורת. מה לוחצים?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "views",
+          "why": "המעבר לתצוגה פיזית נמצא בבורר Logical / Physical."
+        },
+        {
+          "text": "רוצים לראות כל הודעה זזה צעד אחר צעד. מה לוחצים?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "mode",
+          "why": "מצב Simulation נבחר בבורר Realtime / Simulation."
+        },
+        {
+          "text": "בחרתם סוג רכיב: מתג. איפה בוחרים את הדגם?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "models",
+          "why": "אחרי הסוג מופיעים הדגמים."
+        },
+        {
+          "text": "איפה שומרים את הרשת כקובץ?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "menu",
+          "why": "שמירה נעשית בתפריט הראשי."
+        },
+        {
+          "text": "רוצים לתת למחשב כתובת IP. לוחצים על המחשב, ואז על איזו לשונית?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "tab-desktop",
+          "why": "הגדרת IP של מחשב נמצאת בלשונית Desktop."
+        },
+        {
+          "text": "רוצים לכתוב פקודות בנתב. באיזו לשונית?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "tab-cli",
+          "why": "פקודות כותבים בלשונית CLI."
+        }
+      ]
+    },
+    "medium": {
+      "lives": 3,
+      "timeLimitPerTaskSec": 15,
+      "rounds": [
+        {
+          "text": "הנקודה בקצה הכבל אדומה. איפה מסתכלים כדי לדעת אם הקישור עובד?",
+          "layout": "workspace",
+          "regions": [
+            {
+              "id": "pc",
+              "label": "מחשב",
+              "x": 0.04,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "switch",
+              "label": "מתג",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "router",
+              "label": "נתב",
+              "x": 0.76,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "cable",
+              "label": "כבל",
+              "x": 0.25,
+              "y": 0.3,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "light",
+              "label": "נקודה בקצה הכבל",
+              "x": 0.25,
+              "y": 0.46,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "empty",
+              "label": "שטח ריק",
+              "x": 0.04,
+              "y": 0.68,
+              "w": 0.92,
+              "h": 0.26
+            }
+          ],
+          "answer": "light",
+          "why": "הנקודות בקצוות הכבל מראות את מצב הקישור."
+        },
+        {
+          "text": "רוצים לתת כתובת למחשב. על מה לוחצים בתוך המשטח?",
+          "layout": "workspace",
+          "regions": [
+            {
+              "id": "pc",
+              "label": "מחשב",
+              "x": 0.04,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "switch",
+              "label": "מתג",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "router",
+              "label": "נתב",
+              "x": 0.76,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "cable",
+              "label": "כבל",
+              "x": 0.25,
+              "y": 0.3,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "light",
+              "label": "נקודה בקצה הכבל",
+              "x": 0.25,
+              "y": 0.46,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "empty",
+              "label": "שטח ריק",
+              "x": 0.04,
+              "y": 0.68,
+              "w": 0.92,
+              "h": 0.26
+            }
+          ],
+          "answer": "pc",
+          "why": "לוחצים על המחשב עצמו, ואז נפתח חלון ההגדרות."
+        },
+        {
+          "text": "רוצים לפתוח את הנתב כדי לכתוב בו פקודות. על מה לוחצים?",
+          "layout": "workspace",
+          "regions": [
+            {
+              "id": "pc",
+              "label": "מחשב",
+              "x": 0.04,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "switch",
+              "label": "מתג",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "router",
+              "label": "נתב",
+              "x": 0.76,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "cable",
+              "label": "כבל",
+              "x": 0.25,
+              "y": 0.3,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "light",
+              "label": "נקודה בקצה הכבל",
+              "x": 0.25,
+              "y": 0.46,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "empty",
+              "label": "שטח ריק",
+              "x": 0.04,
+              "y": 0.68,
+              "w": 0.92,
+              "h": 0.26
+            }
+          ],
+          "answer": "router",
+          "why": "לוחצים על הנתב, ואז בוחרים CLI."
+        },
+        {
+          "text": "רוצים לשלוח ping ממחשב. איפה?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "cmd-prompt",
+          "why": "ping כותבים ב-Command Prompt."
+        },
+        {
+          "text": "איפה כותבים כתובת IP, מסכה ושער ברירת מחדל של מחשב?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "ip-config",
+          "why": "ב-IP Configuration."
+        },
+        {
+          "text": "איפה רואים רשימה של מה קרה, איפה ומתי?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "event-list",
+          "why": "זו רשימת האירועים, Event List."
+        },
+        {
+          "text": "רוצים להתקדם בהודעה צעד אחד. מה לוחצים?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "step-btn",
+          "why": "כפתור Capture / Forward מקדם צעד."
+        },
+        {
+          "text": "סיימתם לעקוב אחרי ההודעה ורוצים רשת שרצה כרגיל. מה לוחצים?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "mode-switch",
+          "why": "חוזרים למצב Realtime בבורר."
+        },
+        {
+          "text": "איפה רואים באיזה ארון עומד המתג?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "views",
+          "why": "בתצוגה הפיזית, שנבחרת בבורר Logical / Physical."
+        },
+        {
+          "text": "רוצים להוסיף מתג למשטח. מה הצעד הראשון?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "categories",
+          "why": "קודם בוחרים סוג רכיב, אחר כך דגם, ואז גוררים."
+        }
+      ]
+    },
+    "hard": {
+      "lives": 3,
+      "timeLimitPerTaskSec": 10,
+      "rounds": [
+        {
+          "text": "רוצים לראות איפה עומדים הרכיבים בבניין ובחדרים, ולא רק מי מחובר למי. מה לוחצים?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "views",
+          "why": "מיקום בבניין וחדרים הוא התצוגה הפיזית. התצוגה הלוגית מראה מי מחובר למי."
+        },
+        {
+          "text": "הרשת רצה בזמן אמת. רוצים לעצור ולראות כל חבילה. מה משנים?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "mode",
+          "why": "הזמן עוצר במצב Simulation, ולא בתצוגה Physical."
+        },
+        {
+          "text": "רוצים לכבות ולהדליק נתב, כמו כפתור הפעלה. איזו לשונית?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "tab-physical",
+          "why": "כיבוי והדלקה של הציוד נעשים בלשונית Physical."
+        },
+        {
+          "text": "רוצים לכתוב enable ו-configure terminal בנתב. איזו לשונית?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "tab-cli",
+          "why": "פקודות IOS כותבים בלשונית CLI."
+        },
+        {
+          "text": "לחצתם על מחשב. מה הצעד הבא כדי להגיע ל-ping?",
+          "layout": "device-config",
+          "regions": [
+            {
+              "id": "tab-physical",
+              "label": "Physical",
+              "x": 0.02,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-config",
+              "label": "Config",
+              "x": 0.26,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-cli",
+              "label": "CLI",
+              "x": 0.5,
+              "y": 0.03,
+              "w": 0.22,
+              "h": 0.1
+            },
+            {
+              "id": "tab-desktop",
+              "label": "Desktop",
+              "x": 0.74,
+              "y": 0.03,
+              "w": 0.24,
+              "h": 0.1
+            },
+            {
+              "id": "ip-config",
+              "label": "IP Configuration",
+              "x": 0.04,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "cmd-prompt",
+              "label": "Command Prompt",
+              "x": 0.52,
+              "y": 0.22,
+              "w": 0.44,
+              "h": 0.3
+            },
+            {
+              "id": "body",
+              "label": "גוף החלון",
+              "x": 0.04,
+              "y": 0.58,
+              "w": 0.92,
+              "h": 0.36
+            }
+          ],
+          "answer": "tab-desktop",
+          "why": "קודם Desktop, ושם נמצא ה-Command Prompt."
+        },
+        {
+          "text": "רוצים לשלוח הודעת בדיקה בודדת בין שני מחשבים. איזה כלי?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "pdu-tool",
+          "why": "המעטפה (Add Simple PDU) שולחת הודעת בדיקה."
+        },
+        {
+          "text": "ההודעה עצרה בדרך. איפה בודקים אילו אירועים קרו?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "event-list",
+          "why": "ב-Event List רואים כל אירוע ומתי הוא קרה."
+        },
+        {
+          "text": "הרשת מוכנה. איפה שומרים אותה כקובץ pkt?",
+          "layout": "main",
+          "regions": [
+            {
+              "id": "menu",
+              "label": "תפריט ראשי",
+              "x": 0.02,
+              "y": 0.02,
+              "w": 0.96,
+              "h": 0.08
+            },
+            {
+              "id": "views",
+              "label": "Logical / Physical",
+              "x": 0.02,
+              "y": 0.13,
+              "w": 0.3,
+              "h": 0.09
+            },
+            {
+              "id": "workspace",
+              "label": "משטח עבודה",
+              "x": 0.02,
+              "y": 0.25,
+              "w": 0.96,
+              "h": 0.45
+            },
+            {
+              "id": "categories",
+              "label": "סוגי רכיבים",
+              "x": 0.02,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "models",
+              "label": "דגמים",
+              "x": 0.35,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            },
+            {
+              "id": "mode",
+              "label": "Realtime / Simulation",
+              "x": 0.68,
+              "y": 0.74,
+              "w": 0.3,
+              "h": 0.22
+            }
+          ],
+          "answer": "menu",
+          "why": "שמירה בתפריט הראשי. קבצי Packet Tracer נשמרים בסיומת pkt."
+        },
+        {
+          "text": "הנקודות על הכבל אדומות כי הפורט של הנתב כבוי. על מה לוחצים כדי להגדיר אותו?",
+          "layout": "workspace",
+          "regions": [
+            {
+              "id": "pc",
+              "label": "מחשב",
+              "x": 0.04,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "switch",
+              "label": "מתג",
+              "x": 0.4,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "router",
+              "label": "נתב",
+              "x": 0.76,
+              "y": 0.2,
+              "w": 0.2,
+              "h": 0.35
+            },
+            {
+              "id": "cable",
+              "label": "כבל",
+              "x": 0.25,
+              "y": 0.3,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "light",
+              "label": "נקודה בקצה הכבל",
+              "x": 0.25,
+              "y": 0.46,
+              "w": 0.14,
+              "h": 0.12
+            },
+            {
+              "id": "empty",
+              "label": "שטח ריק",
+              "x": 0.04,
+              "y": 0.68,
+              "w": 0.92,
+              "h": 0.26
+            }
+          ],
+          "answer": "router",
+          "why": "לוחצים על הנתב, ובלשונית CLI מדליקים את הפורט עם no shutdown."
+        },
+        {
+          "text": "במצב Simulation, איפה רואים את ההודעה עוברת בין ההתקנים?",
+          "layout": "simulation",
+          "regions": [
+            {
+              "id": "sim-work",
+              "label": "משטח העבודה",
+              "x": 0.02,
+              "y": 0.04,
+              "w": 0.66,
+              "h": 0.62
+            },
+            {
+              "id": "event-list",
+              "label": "Event List",
+              "x": 0.7,
+              "y": 0.04,
+              "w": 0.28,
+              "h": 0.62
+            },
+            {
+              "id": "step-btn",
+              "label": "Capture / Forward",
+              "x": 0.02,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "play-btn",
+              "label": "Play",
+              "x": 0.26,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "pdu-tool",
+              "label": "מעטפה (Add Simple PDU)",
+              "x": 0.5,
+              "y": 0.72,
+              "w": 0.22,
+              "h": 0.22
+            },
+            {
+              "id": "mode-switch",
+              "label": "Realtime / Simulation",
+              "x": 0.74,
+              "y": 0.72,
+              "w": 0.24,
+              "h": 0.22
+            }
+          ],
+          "answer": "sim-work",
+          "why": "ההודעה נעה על משטח העבודה. ברשימת האירועים רק כתוב עליה."
+        }
+      ]
+    }
+  }
+}

@@ -278,7 +278,7 @@ function mountHotspotRound(round: HotspotRound, host: HTMLElement, api: RoundApi
     b.addEventListener('click', () => pick(r.id, b));
     return b;
   });
-  const win = el('div', 'hot-window', '', [el('div', 'hot-title', LAYOUT_TITLES[round.layout] ?? 'חלון הסימולטור'), ...boxes]);
+  const win = el('div', 'hot-window', '', [el('div', 'hot-title', LAYOUT_TITLES[round.layout] ?? 'חלון הסימולטור'), el('div', 'hot-inner', '', boxes)]);
   host.append(el('div', 'lrn-wire-banner', '', [el('p', '', round.text)]), win);
   function pick(id: string | null, btn: HTMLElement | null): void {
     if (done) return;
