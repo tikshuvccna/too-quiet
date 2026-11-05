@@ -1,15 +1,15 @@
 import './learning.css';
 import lesson01 from '../../../content/he/lesson01.json';
 import quiz01 from '../../../content/he/quiz01.json';
-import minigame01 from '../../../content/he/minigame01.json';
-import wiring01 from '../../../content/he/wiring01.json';
-import type { WiringData } from './wiringLogic';
-import type { LessonContent, LessonData, MinigameData, QuizData } from './types';
+import type { LessonContent } from './types';
+import { loadBundle } from './registry';
 
 export { openLesson } from './lesson';
 export { openQuiz } from './quiz';
 export { openMinigame, openMinigameMenu } from './minigame';
 export { wiringGame } from './wiring';
+export { lessonIds, loadBundle } from './registry';
+export type { LessonBundle } from './registry';
 export { openGameShell } from './gameShell';
 export { applyPrize, prizeFor } from './prizes';
 export { mountWidget } from './widgets';
@@ -17,11 +17,9 @@ export type {
   LessonContent, LessonData, MinigameData, MinigameResult, QuizData, QuizResult, Level,
 } from './types';
 
-/** The Hebrew content of lesson 01, typed. The JSON files are the source of truth for the facts. */
+/** The content of lesson 01 (the lesson the story starts with). Other lessons come from `loadBundle(id)`. */
 export function loadLessonContent(): LessonContent {
-  return {
-    lesson: lesson01 as unknown as LessonData,
-    quiz: quiz01 as unknown as QuizData,
-    minigame: { ...(minigame01 as unknown as MinigameData), wiring: wiring01 as unknown as WiringData },
-  };
+  const b = loadBundle('lesson01');
+  if (!b) throw new Error('lesson01 content is missing');
+  return { lesson: b.lesson, quiz: b.quiz, minigame: b.minigame };
 }

@@ -392,6 +392,7 @@ export class Controller {
     this.ctx.hud.toast('הגעתם למגדל האורגים. דבורה מחכה.', 'clue');
     void LINES;
     void SPEAKER_NAMES;
-    if (!this.lessonDone()) await this.tower();
+    const { lessonIds } = await import('../ui/learning');
+    if (lessonIds().some((id) => !this.ctx.save.lesson(id).done)) await this.tower();
   }
 }

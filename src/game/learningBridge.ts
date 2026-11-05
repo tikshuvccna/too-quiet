@@ -1,16 +1,23 @@
-import { loadLessonContent, openLesson, openMinigameMenu, openQuiz } from '../ui/learning';
+import { lessonIds, loadBundle, openLesson, openMinigameMenu, openQuiz, type LessonBundle } from '../ui/learning';
 import { el, uiRoot } from '../ui/dom';
 import type { GameContext } from './context';
 
 const QUIZ_COINS = 15;
 
 /**
- * Dvora's classroom: the lesson first, then the quiz and the three-level mini-game.
- * `afterLesson` runs once, right after the lesson is finished (the story beat in the tower).
+ * Dvora's classroom: pick a lesson (they open one after the other), then the lesson itself,
+ * the summary questions, and at the end the three-level mini-game.
+ * `afterLesson` runs once, right after a lesson is finished (the story beat in the tower).
  */
-export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>): Promise<void> {
-  const content = loadLessonContent();
-  const lessonId = 'lesson01';
+export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) => Promise<void>): Promise<void> {
+  const ids = lessonIds();
+  const isDone = (id: string): boolean => ctx.save.lesson(id).done;
+  // the lesson to show first: the first one that is not finished yet, or the last one
+  let current = ids.find((id) => !isDone(id)) ?? (ids[ids.length - 1] as string);
+  const unlocked = (id: string): boolean => {
+    const i = ids.indexOf(id);
+    return i <= 0 || isDone(ids[i - 1] as string);
+  };
   return new Promise((resolve) => {
     let screen: HTMLElement | null = null;
 
@@ -21,6 +28,8 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
 
     const render = (): void => {
       closeScreen();
+      const content = loadBundle(current) as LessonBundle;
+      const lessonId = content.id;
       const l = ctx.save.lesson(lessonId);
       const best = Object.values(l.games).reduce((n, g) => Math.max(n, g.points), 0);
       const passed = Object.values(l.games).filter((g) => g.passed).length;
@@ -37,7 +46,7 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
         openLesson(content.lesson, ctx.save, {
           onClose: (done) => {
             if (!done) return render();
-            void afterLesson().then(render);
+            void afterLesson(lessonId).then(render);
           },
         });
       });
@@ -46,9 +55,10 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
         openQuiz(content.quiz, ctx.save, {
           lessonId,
           onClose: (r) => {
-            if (r.passed && !ctx.save.hasFlag('prize.quiz')) {
+            const marker = `prize.quiz.${lessonId}`;
+            if (r.passed && !ctx.save.hasFlag(marker) && !(lessonId === 'lesson01' && ctx.save.hasFlag('prize.quiz'))) {
               ctx.save.data.coins += QUIZ_COINS;
-              ctx.save.setFlag('prize.quiz');
+              ctx.save.setFlag(marker);
               ctx.hud.toast(`עברתם את שאלות הסיכום! +${QUIZ_COINS} מטבעות`, 'good');
             }
             render();
@@ -57,16 +67,27 @@ export function openClassroom(ctx: GameContext, afterLesson: () => Promise<void>
       });
       gameBtn.addEventListener('click', () => {
         closeScreen();
-        openMinigameMenu(content.minigame, ctx.save, { onClose: render });
+        openMinigameMenu(content.minigame, ctx.save, { onClose: render }, content.game);
       });
       back.addEventListener('click', () => {
         closeScreen();
         resolve();
       });
 
+      // the lessons, in order: each opens when the one before it is finished
+      const chips = ids.length > 1
+        ? el('div', 'row', '', ids.map((id, i) => {
+          const b = el('button', `btn${id === current ? ' on' : ''}`, `שיעור ${i + 1}${isDone(id) ? ' ✓' : ''}`);
+          b.disabled = !unlocked(id);
+          b.addEventListener('click', () => { current = id; render(); });
+          return b;
+        }))
+        : null;
+
       screen = el('div', 'screen', '', [
         el('div', 'card', '', [
           el('h2', '', 'הכיתה של דבורה'),
+          chips,
           el('p', '', content.lesson.title),
           el('p', 'class-status', l.done
             ? `השיעור הושלם. שאלות סיכום: ${l.quizPassed ? 'עברתם, והמשחקון פתוח' : 'עוד לא עברתם (צריך לעבור כדי לפתוח את המשחקון)'}. משחקון: ${passed} מתוך 3 רמות, שיא ${best} נקודות.`

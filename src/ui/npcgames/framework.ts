@@ -1,6 +1,7 @@
 import type { SaveStore } from '../../core/save';
 import { el } from '../dom';
 import { createOverlay } from '../learning/overlay';
+import { perksOf } from '../../game/perks';
 
 export type NpcLevel = 'easy' | 'medium' | 'hard';
 export const NPC_LEVELS: readonly NpcLevel[] = ['easy', 'medium', 'hard'];
@@ -45,19 +46,20 @@ export interface Payout { text: string; coins: number }
 export function payout(save: SaveStore, def: NpcGameDef, level: NpcLevel, passed: boolean): Payout {
   const flag = `npcgame.${def.id}.${level}`;
   if (!passed) {
-    save.data.coins += TRY_COINS;
+    save.data.coins += Math.round(TRY_COINS * perksOf(save).coinMul);
     save.save();
     return { coins: TRY_COINS, text: `לא הפעם. ${TRY_COINS} מטבעות על המאמץ, ואפשר לנסות שוב מיד.` };
   }
   if (save.hasFlag(flag)) {
-    save.data.coins += REPEAT_COINS;
+    save.data.coins += Math.round(REPEAT_COINS * perksOf(save).coinMul);
     save.save();
     return { coins: REPEAT_COINS, text: `יפה! ${REPEAT_COINS} מטבעות.` };
   }
   const r = def.rewards[level];
   save.setFlag(flag);
-  save.data.coins += r.coins;
-  const parts = [`${r.coins} מטבעות`];
+  const gained = Math.round(r.coins * perksOf(save).coinMul);
+  save.data.coins += gained;
+  const parts = [`${gained} מטבעות`];
   if (r.food) {
     save.data.inv[r.food.key] = (save.data.inv[r.food.key] ?? 0) + r.food.n;
     parts.push(`${r.food.n} ${r.food.name} ליצורים`);

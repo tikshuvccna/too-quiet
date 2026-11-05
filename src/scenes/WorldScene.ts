@@ -484,13 +484,13 @@ export class WorldScene extends Phaser.Scene {
     if (!t || save.data.collected[tid]) return;
     const n = Number(tid.slice(5));
     const table: Array<{ text: string; give: () => void }> = [
-      { text: '5 מטבעות בין העלים', give: () => { save.data.coins += 5; } },
+      { text: '5 מטבעות בין העלים', give: () => { save.data.coins += Math.round(5 * perksOf(save).coinMul); } },
       { text: 'פירות יער ליצורים', give: () => { save.data.inv.food_berries = (save.data.inv.food_berries ?? 0) + 1; } },
-      { text: '8 מטבעות בחור של הגזע', give: () => { save.data.coins += 8; } },
+      { text: '8 מטבעות בחור של הגזע', give: () => { save.data.coins += Math.round(8 * perksOf(save).coinMul); } },
       { text: 'פירורי לחם ליצורים', give: () => { save.data.inv.food_bread = (save.data.inv.food_bread ?? 0) + 1; } },
-      { text: '5 מטבעות בין הענפים', give: () => { save.data.coins += 5; } },
+      { text: '5 מטבעות בין הענפים', give: () => { save.data.coins += Math.round(5 * perksOf(save).coinMul); } },
       { text: 'טיפת דבש ליצורים', give: () => { save.data.inv.food_honey = (save.data.inv.food_honey ?? 0) + 1; } },
-      { text: '12 מטבעות בקן ישן', give: () => { save.data.coins += 12; } },
+      { text: '12 מטבעות בקן ישן', give: () => { save.data.coins += Math.round(12 * perksOf(save).coinMul); } },
       { text: 'גרגירים ליצורים', give: () => { save.data.inv.food_grains = (save.data.inv.food_grains ?? 0) + 1; } },
     ];
     const prize = table[n % table.length] as { text: string; give: () => void };
@@ -605,7 +605,7 @@ export class WorldScene extends Phaser.Scene {
     this.culler.update(dtMs, this.cameras.main.worldView);
     this.watchRegion();
     const pulse = 0.5 + Math.sin(this.time.now / 260) * 0.3;
-    for (const t of this.hiddenTrees) t.glint.setAlpha(Math.hypot(t.x - this.px, t.y - this.py) < 380 * perksOf(this.ctx.save).reach ? pulse : 0);
+    for (const t of this.hiddenTrees) t.glint.setAlpha(Math.hypot(t.x - this.px, t.y - this.py) < 380 * perksOf(this.ctx.save).reach * perksOf(this.ctx.save).glintMul ? pulse : 0);
     // real time, not game time: a slow device must not postpone loading what it is about to need
     if (this.time.now - this.regionClock > 600) {
       this.regionClock = this.time.now;

@@ -10,6 +10,8 @@ export interface ShopItem {
   kind: 'aura' | 'perk';
   /** Glow colour for auras. */
   color?: number;
+  /** A flag that gives the item for free (a mini-game prize). Items with price 0 only show once owned. */
+  rewardFlag?: string;
 }
 
 /** Everything here has a visible or felt effect in the game. Prices are fixed. */
@@ -17,12 +19,19 @@ export const SHOP_ITEMS: ShopItem[] = [
   { id: 'aura_gold', name: 'הילה זהובה', desc: 'זוהר חם סביב הדמות.', price: 40, kind: 'aura', color: 0xffd36b },
   { id: 'aura_teal', name: 'הילה תכלת', desc: 'זוהר כמו חוט שמתעורר.', price: 40, kind: 'aura', color: 0x5cf0d0 },
   { id: 'aura_rose', name: 'הילה ורודה', desc: 'זוהר רך של שקיעה.', price: 40, kind: 'aura', color: 0xff9ad0 },
+  { id: 'aura_blue', name: 'גלימת התכלת', desc: 'פרס משחקון: זוהר כחול.', price: 0, kind: 'aura', color: 0x5aa8ff, rewardFlag: 'cosmetic.cloak_blue' },
+  { id: 'aura_violet', name: 'גלימת הסגול', desc: 'פרס משחקון: זוהר סגול.', price: 0, kind: 'aura', color: 0xb58cff, rewardFlag: 'cosmetic.cloak_violet' },
+  { id: 'aura_rose2', name: 'גלימת הוורד', desc: 'פרס משחקון: זוהר ורדרד.', price: 0, kind: 'aura', color: 0xffa3c4, rewardFlag: 'cosmetic.cloak_rose' },
+  { id: 'aura_white', name: 'גלימת הלבן', desc: 'פרס משחקון: זוהר נקי.', price: 0, kind: 'aura', color: 0xffffff, rewardFlag: 'cosmetic.cloak_white' },
   { id: 'boots', name: 'נעלי דרך', desc: 'הולכים מהר יותר, 12 אחוז.', price: 60, kind: 'perk' },
   { id: 'extra_time', name: 'מחט ארוכת נשימה', desc: 'עוד דקה בין קפיצה למגדל.', price: 80, kind: 'perk' },
 ];
 
 export const ownedFlag = (id: string): string => `shop.${id}`;
-export const owns = (save: SaveStore, id: string): boolean => save.hasFlag(ownedFlag(id)) || (id === 'aura_gold' && save.hasFlag('cosmetic.cloak_gold'));
+export const owns = (save: SaveStore, id: string): boolean => {
+  const it = SHOP_ITEMS.find((i) => i.id === id);
+  return save.hasFlag(ownedFlag(id)) || !!(it?.rewardFlag && save.hasFlag(it.rewardFlag)) || (id === 'aura_gold' && save.hasFlag('cosmetic.cloak_gold'));
+};
 export const equippedAura = (save: SaveStore): ShopItem | undefined => SHOP_ITEMS.find((i) => i.kind === 'aura' && save.hasFlag(`equip.${i.id}`));
 
 export function buy(save: SaveStore, item: ShopItem): boolean {
@@ -62,7 +71,7 @@ export function openShop(save: SaveStore, opts: { onChange(): void }): Promise<v
 
     function render(): void {
       coins.textContent = String(save.data.coins);
-      const cards = SHOP_ITEMS.map((it) => {
+      const cards = SHOP_ITEMS.filter((it) => it.price > 0 || owns(save, it.id)).map((it) => {
         const have = owns(save, it.id);
         const on = save.hasFlag(`equip.${it.id}`);
         const b = el('button', `btn ${have ? '' : 'primary'}`, '');

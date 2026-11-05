@@ -6,7 +6,7 @@ import { confirmDialog, createOverlay } from './overlay';
 import { applyPrize, prizeFor } from './prizes';
 import { mulberry32 } from './util';
 import { reducedMotion } from './widgetKit';
-import { openGameShell } from './gameShell';
+import { openGameShell, type GameDef } from './gameShell';
 import { wiringGame } from './wiring';
 
 export const LEVEL_NAME: Record<Level, string> = { easy: 'קל', medium: 'בינוני', hard: 'קשה' };
@@ -360,7 +360,7 @@ export function openMinigame(data: MinigameData, level: Level, save: SaveStore, 
 }
 
 /** Level select: three levels, none locks another, every one can be replayed for free. */
-export function openMinigameMenu(data: MinigameData, save: SaveStore, opts: { onClose(): void; onResult?(r: MinigameResult): void }): () => void {
+export function openMinigameMenu(data: MinigameData, save: SaveStore, opts: { onClose(): void; onResult?(r: MinigameResult): void }, game?: GameDef): () => void {
   const ov = createOverlay('lrn-mini lrn-menu');
   const lessonId = data.id.replace(/^minigame/, 'lesson');
   let closed = false;
@@ -382,14 +382,14 @@ export function openMinigameMenu(data: MinigameData, save: SaveStore, opts: { on
       play.type = 'button';
       play.addEventListener('click', () => {
         const onClose = (r: MinigameResult): void => { child = null; opts.onResult?.(r); render(); };
-        child = data.wiring ? openGameShell(wiringGame(data.wiring, data), data, level, save, { onClose }) : openMinigame(data, level, save, { onClose });
+        child = game ? openGameShell(game, data, level, save, { onClose }) : data.wiring ? openGameShell(wiringGame(data.wiring, data), data, level, save, { onClose }) : openMinigame(data, level, save, { onClose });
       });
       return el('section', `lrn-level ${level}${best?.passed ? ' passed' : ''}`, '', [
         el('h2', '', `${LEVEL_NAME[level]}${best?.passed ? ' ✓' : ''}`),
         el('ul', 'lrn-facts', '', [
-          el('li', '', `♥ ${lv.lives} חיים`),
-          el('li', '', lv.timeLimitPerTaskSec ? `${lv.timeLimitPerTaskSec} שניות למשימה` : 'בלי הגבלת זמן'),
-          el('li', '', data.wiring ? `${data.wiring.levels[level].rounds.length} סיבובים, ${data.wiring.levels[level].attempts} ניסיונות בכל אחד` : `${lv.tasks.length} משימות`),
+          el('li', '', `♥ ${game ? game.levels[level].lives : lv.lives} חיים`),
+          el('li', '', (game ? game.levels[level].timeLimit : lv.timeLimitPerTaskSec) ? `${game ? game.levels[level].timeLimit : lv.timeLimitPerTaskSec} שניות לסיבוב` : 'בלי הגבלת זמן'),
+          el('li', '', game ? `${game.levels[level].count} סיבובים` : data.wiring ? `${data.wiring.levels[level].rounds.length} סיבובים, ${data.wiring.levels[level].attempts} ניסיונות בכל אחד` : `${lv.tasks.length} משימות`),
           el('li', 'best', best ? `שיא: ${best.points} נקודות` : 'עוד לא שיחקתם'),
         ]),
         el('div', 'lrn-prize', '', [el('h3', '', `פרס: ${p.name}`), el('p', '', p.description)]),

@@ -376,3 +376,19 @@
 .lrn-wire-msg.warn { border: 1px solid #ff6b7d; }
 .lrn-wire-msg.good { border: 1px solid #5cf0d0; }
 .lrn-wire-controls .btn { min-height: 52px; }
+
+/* belt sorter */
+.srt-belt { position: relative; height: min(46vh, 380px); border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); background: linear-gradient(180deg, #2a2440, #3b3358); }
+.srt-lane { position: absolute; left: 50%; top: 0; bottom: 0; width: min(70%, 360px); transform: translateX(-50%); background: repeating-linear-gradient(180deg, #2a2240 0 22px, #342b4d 22px 44px); border-inline: 6px solid #5a4a7a; }
+.srt-card { position: absolute; left: 50%; top: 6%; transform: translateX(-50%); min-width: 160px; max-width: 80%; padding: 14px 18px; border-radius: 14px; background: #fff4d6; color: #2b2150; font-weight: 800; font-size: 1.15rem; text-align: center; border: 3px solid #6d4a10; box-shadow: 0 6px 0 rgba(0, 0, 0, .35); }
+.srt-card.srt-ok { background: #b7f5d0; }
+.srt-card.srt-bad { background: #ffb8c2; }
+.srt-bin { min-width: 120px; min-height: 64px; border-width: 4px; font-size: 1rem; }
+
+/* hotspot (schematic simulator window) */
+.hot-window { position: relative; width: 100%; height: min(52vh, 440px); border-radius: 14px; border: 3px solid #8a86c8; background: #1d1b3a; overflow: hidden; }
+.hot-title { position: absolute; left: 0; right: 0; top: 0; height: 26px; line-height: 26px; padding-inline: 10px; background: #3a3770; color: #fff; font-size: .85rem; }
+.hot-region { position: absolute; display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px; border: 2px dashed #8a86c8; border-radius: 10px; background: rgba(122, 214, 255, .12); color: #fff; font-size: clamp(.7rem, 2.2vw, .95rem); cursor: pointer; }
+.hot-region:hover:not(:disabled) { background: rgba(255, 211, 107, .22); border-color: var(--gold); }
+.hot-region.hot-right { background: rgba(92, 240, 160, .35); border-color: #5cf0a0; border-style: solid; }
+.hot-region.hot-wrong { background: rgba(255, 107, 125, .35); border-color: #ff6b7d; }
