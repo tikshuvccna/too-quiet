@@ -78,6 +78,12 @@ describe('SaveStore', () => {
     expect(d.lessons).toEqual({});
   });
 
+  it('fills in missing lesson fields of an older save', () => {
+    const d = normalize({ lessons: { lesson01: { done: true } } });
+    expect(d.lessons.lesson01).toEqual({ done: true, checks: {}, quizBest: 0, quizPassed: false, games: {} });
+    expect(d.inv).toEqual({});
+  });
+
   it('works without any storage', () => {
     const s = new SaveStore(null);
     s.load();

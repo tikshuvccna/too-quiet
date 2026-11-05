@@ -62,7 +62,8 @@ export function normalize(raw: unknown): SaveData {
     collected: { ...(r.collected ?? {}) },
     evidence: { ...(r.evidence ?? {}) },
     fixed: { ...(r.fixed ?? {}) },
-    lessons: { ...(r.lessons ?? {}) },
+    inv: { ...(r.inv ?? {}) },
+    lessons: Object.fromEntries(Object.entries(r.lessons ?? {}).map(([id, l]) => [id, { ...emptyLesson(), ...(l ?? {}) }])),
   };
 }
 

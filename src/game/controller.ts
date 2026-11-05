@@ -173,7 +173,12 @@ export class Controller {
   refreshObjective(): void {
     const f = (n: string): boolean => this.has(n);
     let text = 'גלו את הכפר: בתים, אנשים, וחפצים שמחכים לאיסוף.';
-    if (f('p1_complete')) text = objectiveFor(this.probe()) ?? 'סוף הדוגמית. נשארו עוד חפצים וסודות בכפר.';
+    if (f('p1_complete')) {
+      text = objectiveFor(this.probe())
+        ?? (f('final_unlocked') && !f('head_calmed')
+          ? 'הכול מתוקן, חוץ מהראש. לכו למגדל האורגים וקראו לו.'
+          : 'סוף הדוגמית. נשארו עוד חפצים וסודות בכפר.');
+    }
     else if (f('bakery_fixed')) text = 'לכו אל הגשר שעל הנחל והסתכלו על החוט.';
     else if (FIXES.every((x) => f(x.flag))) text = 'חזרו לנחתום במאפייה.';
     else if (this.lessonDone()) text = 'תקנו: בית סבתא שושנה, המרפאה והטחנה.';
