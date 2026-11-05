@@ -51,6 +51,7 @@ export class Controller {
     bus.on('fault:fixed', ({ evidence }) => this.faultFixed(evidence));
     bus.on('item:collected', ({ id }) => void this.onCollected(id));
     bus.on('creature:met', ({ key }) => void this.meetCreature(key));
+    bus.on('boss:end', ({ won }) => void this.bossEnded(won));
     bus.on('head:seen', () => {
       // unlocked quietly: the player is not told what they saw
       ctx.save.data.collected['creature_the_head'] = true;
@@ -101,29 +102,38 @@ export class Controller {
     return this.ctx.save.hasFlag(flag);
   }
 
-  /** The end of the whole game: the Head asks about everything that was learned, and calms down. */
+  /** The end of the whole game: the Head comes down over the village, and the apprentice mends the web with the thread-sight. */
   private async faceTheHead(): Promise<void> {
     if (this.has('head_calmed')) return;
     await this.withModal(async () => {
       await this.ctx.dialogue.say([
-        { speaker: '', text: 'הצריח שקט. מלמעלה, ענן ענק של חוטים מביט למטה.' },
-        { speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן.' },
+        { speaker: '', text: 'הענן הענק יורד אל הכפר. החוטים בשמיים רועדים.' },
+        { speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן, והוא חותך חוטים.' },
+        { speaker: 'dvora', text: 'המחט רואה אותם עכשיו. רוצו אל החוט החתוך, וחברו אותו נכון.' },
       ]);
-      const { openBossFight } = await import('../ui/learning/bossFight');
-      const result = await new Promise<{ passed: boolean }>((resolve) => {
-        openBossFight(this.ctx.save, { onClose: (r) => resolve(r) });
-      });
-      if (!result.passed) {
-        await this.ctx.dialogue.say([{ speaker: '', text: 'הראש מחכה בסבלנות. אפשר לנסות שוב מתי שרוצים.' }]);
+    });
+    bus.emit('boss:start', undefined);
+  }
+
+  /** The fight is over (the world scene reports it). */
+  private async bossEnded(won: boolean): Promise<void> {
+    await this.withModal(async () => {
+      if (!won) {
+        await this.ctx.dialogue.say([{ speaker: '', text: 'הראש מחכה בסבלנות. אפשר לקרוא לו שוב מתי שרוצים.' }]);
         return;
       }
       this.ctx.save.setFlag('head_calmed');
       this.ctx.save.save();
+      const { applyPrize, prizeFor } = await import('../ui/learning');
+      const { bossData } = await import('../ui/learning/bossGame');
+      const out = applyPrize(this.ctx.save, 'hard', { lessonId: 'lessonboss' });
+      const prize = prizeFor('hard', bossData().prizes);
       await this.ctx.dialogue.say([
         { speaker: '', text: 'הראש מרפה את אצבעותיו. החוטים יורדים בשקט, וכל אחד נקשר לבית שלו.' },
         { speaker: '', text: 'הוא לא נעלם. הוא מביט, ושואל: מה עוד אפשר ללמוד?' },
         { speaker: '', text: 'בעמק זמזום חדש. לא קול של הד: קול של רשת.' },
       ]);
+      if (out.granted) this.ctx.hud.toast(`פרס: ${prize.name} (+${out.coins} מטבעות)`, 'good', 6000);
       this.ctx.hud.toast('סוף הסיפור הראשי. תודה ששיחקתם!', 'good', 7000);
     });
     this.refreshObjective();

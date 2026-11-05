@@ -421,3 +421,13 @@
 .boss-panel-card { max-width: 560px; width: 100%; background: var(--card); border: 2px solid var(--gold); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .boss-panel-card h2 { margin: 0; color: var(--gold); }
 .boss-q { font-size: 1.15rem; margin: 4px 0; line-height: 1.45; }
+
+/* the fight with the Head, in the village */
+body.boss .objective { display: none; }
+.bosshud { position: fixed; top: calc(var(--hud-h, 56px) + 8px); left: 50%; transform: translateX(-50%); width: min(560px, 92vw); z-index: 30; pointer-events: none; display: flex; flex-direction: column; gap: 4px; padding: 6px 12px; border-radius: 14px; background: rgba(8, 9, 24, .72); border: 1px solid var(--line); }
+.bosshud-label { font-size: .9rem; color: var(--gold); text-align: center; }
+.bosshud-label.pulse { animation: jr-bob 1s ease-in-out infinite; }
+.bosshud .boss-calm { margin: 0; height: 10px; }
+.bosshud-hearts { display: flex; justify-content: center; gap: 4px; }
+.bosstask { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; background: rgba(8, 9, 24, .8); padding: 10px; overflow: auto; }
+.bosstask-card { max-width: 760px; max-height: 94vh; overflow: auto; }

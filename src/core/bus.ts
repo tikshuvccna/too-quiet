@@ -14,6 +14,8 @@ export interface GameEvents {
   'session:warning': undefined;
   'session:storm': undefined;
   'ui:pause': { paused: boolean };
+  'boss:start': undefined;
+  'boss:end': { won: boolean };
 }
 
 type Handler<T> = (payload: T) => void;

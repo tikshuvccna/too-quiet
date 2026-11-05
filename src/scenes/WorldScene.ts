@@ -8,6 +8,7 @@ import { Culler } from '../world/culler';
 import { REGIONS, inSea, regionAt } from '../world/regions';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
+import { BossWorld } from '../world/bossWorld';
 import { WORLD_BUILDINGS, WORLD_CREATURE_SPAWNS, WORLD_NPCS, WORLD_PICKUPS, WORLD_PROPS } from '../world/worldMap';
 import { distanceToRegion, loadsForRegion, type RegionLoad } from '../world/regionAssets';
 import type { CreatureSpawn } from '../world/creatures';
@@ -74,6 +75,7 @@ export class WorldScene extends Phaser.Scene {
   private lastTarget: string | null = null;
   private pickupClock = 0;
   private ground!: ChunkGround;
+  private boss: BossWorld | null = null;
   private treeCount = 0;
   private spawned = new Set<string>();
   private queued: string[] = [];
@@ -109,6 +111,7 @@ export class WorldScene extends Phaser.Scene {
     this.atmos = undefined as unknown as Atmosphere;
     this.culler = new Culler();
     this.regionId = '';
+    this.boss = null;
     this.treeCount = 0;
     this.hiddenTrees = [];
     this.buildGround();
@@ -150,12 +153,15 @@ export class WorldScene extends Phaser.Scene {
 
     this.offs.push(
       bus.on('interact:use', ({ id }) => this.onUse(id)),
+      bus.on('boss:start', () => this.startBoss()),
       bus.on('sight:toggle', ({ on }) => this.setSight(on)),
       bus.on('truth:flash', ({ ms }) => this.fx.flash(ms)),
     );
     this.events.once('shutdown', () => {
       this.registry.set('tod', this.atmos.tod);
       this.atmos.destroy();
+      this.boss?.destroy();
+      this.boss = null;
       this.ground.destroy();
       this.offs.forEach((o) => o());
       this.offs = [];
@@ -425,7 +431,8 @@ export class WorldScene extends Phaser.Scene {
     for (const b of BUILDINGS) {
       if (b.id.startsWith('house-') || b.id === 'tower') out.push({ id: `door:${b.id}`, x: b.door.x, y: b.door.y, label: b.label, range: 70 });
     }
-    if (this.ctx.save.hasFlag('final_unlocked') && !this.ctx.save.hasFlag('head_calmed')) out.push({ id: 'boss:head', x: 5200, y: 2300, label: 'לעמוד מול הראש', range: 150 });
+    if (this.ctx.save.hasFlag('final_unlocked') && !this.ctx.save.hasFlag('head_calmed') && !this.boss?.active) out.push({ id: 'boss:head', x: 2180, y: 690, label: 'לקרוא לראש', range: 130 });
+    if (this.boss?.active) out.push(...this.boss.targets());
     for (const wb of WORLD_BUILDINGS) {
       if (wb.id !== 'great_tower') out.push({ id: `door:house-${wb.id}`, x: wb.door.x, y: wb.door.y, label: `כניסה: ${wb.name}`, range: 80 });
     }
@@ -458,6 +465,8 @@ export class WorldScene extends Phaser.Scene {
     if (this.ctx.modal || !this.scene.isActive()) return;
     if (id.startsWith('door:house-')) {
       bus.emit('world:enter-house', { houseId: id.slice(5) });
+    } else if (id.startsWith('bossfault:')) {
+      this.boss?.use(id);
     } else if (id.startsWith('tree:')) {
       this.searchTree(id.slice(5));
     } else if (id.startsWith('pickup:')) {
@@ -503,6 +512,22 @@ export class WorldScene extends Phaser.Scene {
     this.ctx.hud.toast(`מצאתם בעץ: ${prize.text}`, 'good', 3200);
     bus.emit('interact:available', null);
     this.lastTarget = null;
+  }
+
+  /** The fight with the Head, in the village: the thread-sight is turned on and the web is shown. */
+  private startBoss(): void {
+    if (this.boss?.active) return;
+    this.boss = new BossWorld(this, {
+      ctx: this.ctx,
+      isFree: (x, y) => !this.blocked(x, y),
+      onEnd: ({ won }) => {
+        this.boss?.destroy();
+        this.boss = null;
+        this.ctx.hud.toggleSight(false);
+        bus.emit('boss:end', { won });
+      },
+    });
+    this.ctx.hud.toggleSight(true);
   }
 
   private tryFix(f: FaultDef | undefined): void {
@@ -607,6 +632,7 @@ export class WorldScene extends Phaser.Scene {
     this.watchRegion();
     const pulse = 0.5 + Math.sin(this.time.now / 260) * 0.3;
     for (const t of this.hiddenTrees) t.glint.setAlpha(Math.hypot(t.x - this.px, t.y - this.py) < 380 * perksOf(this.ctx.save).reach * perksOf(this.ctx.save).glintMul ? pulse : 0);
+    this.boss?.update(dtMs, this.px, this.py);
     // real time, not game time: a slow device must not postpone loading what it is about to need
     if (this.time.now - this.regionClock > 600) {
       this.regionClock = this.time.now;
@@ -614,7 +640,8 @@ export class WorldScene extends Phaser.Scene {
     }
     if (this.queued.length && !this.loadingRegion) this.pump();
     this.updateTarget();
-    if (this.sightOn) this.drawSight();
+    if (this.boss?.active) this.sightG.clear();
+    else if (this.sightOn) this.drawSight();
   }
 
   /** Name of the region on entering it (a quiet toast, never during dialogue). */

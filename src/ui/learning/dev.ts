@@ -4,7 +4,6 @@ import { SaveStore } from '../../core/save';
 import { NPC_GAMES, openNpcGame } from '../npcgames';
 import { openShop } from '../shop';
 import { hotspotGame, sorterGame, topologyGame } from './lessonGames';
-import { openBossFight } from './bossFight';
 import { loadLessonContent, openLesson, openMinigame, openMinigameMenu, openQuiz, openGameShell, loadBundle } from './index';
 
 const q = new URLSearchParams(location.search);
@@ -41,8 +40,6 @@ if (screen === 'lesson') {
   const hot = { id: 'h', title: 'דוגמה: חלון', intro: 'בדיקה', levels: { easy: { ...lv, rounds: [{ text: 'איפה בוחרים התקן להוספה?', layout: 'main', regions: [{ id: 'tool', label: 'ארגז הכלים', x: 0.02, y: 0.12, w: 0.28, h: 0.8 }, { id: 'ws', label: 'אזור העבודה', x: 0.34, y: 0.12, w: 0.62, h: 0.8 }], answer: 'tool', why: 'ההתקנים נמצאים בארגז הכלים.' }] }, medium: { ...lv, rounds: [] }, hard: { ...lv, rounds: [] } } };
   const def = kind === 'topology' ? topologyGame(topo as never) : kind === 'hotspot' ? hotspotGame(hot as never) : sorterGame(sorter as never);
   if (b) openGameShell(def, b.minigame, 'easy', save, { onClose: (r: unknown) => out(r) });
-} else if (screen === 'boss') {
-  openBossFight(save, { onClose: (r) => out(r) });
 } else if (screen === 'shop') {
   save.data.coins = 100;
   void openShop(save, { onChange: () => out('changed') });
