@@ -4,7 +4,7 @@
  */
 export type Mood =
   | 'menu' | 'village' | 'market' | 'mill' | 'orchard' | 'woods' | 'moor' | 'coast' | 'tower'
-  | 'house' | 'lesson' | 'game' | 'truth' | 'boss';
+  | 'house' | 'lesson' | 'game' | 'truth' | 'boss' | 'intro' | 'ending';
 
 export interface SoundSettings { musicOn: boolean; sfxOn: boolean; musicVol: number; sfxVol: number }
 
@@ -46,6 +46,8 @@ export const MOODS: Record<Mood, MoodDef> = {
   game: { scale: MAJ_PENT, root: 261.6, bpm: 104, chords: [[0, 4, 7], [-3, 0, 4], [5, 9, 12], [-5, -1, 2]], density: 0.5, voice: 'pluck', octave: 1, pad: 0.25, share: 0.6 },
   truth: { scale: [0, 1, 3, 5, 6, 8], root: 164.8, bpm: 42, chords: [[0, 6, 11], [1, 6, 10], [0, 6, 11], [-1, 5, 10]], density: 0.12, voice: 'bell', octave: 1, pad: 0.9, noise: { kind: 'wind', level: 0.03 }, share: 0.9 },
   boss: { scale: MIN_PENT, root: 146.8, bpm: 118, chords: [[0, 7, 12], [-2, 5, 10], [-4, 3, 8], [-2, 5, 10]], density: 0.55, voice: 'pluck', octave: 1, pad: 0.5, pulse: 0.5, share: 0.9 },
+  intro: { scale: MAJ_PENT, root: 246.9, bpm: 72, chords: [[0, 4, 7], [-3, 0, 4], [-5, -1, 2], [0, 4, 7]], density: 0.4, voice: 'soft', octave: 0, pad: 0.6, share: 1 },
+  ending: { scale: MAJ_PENT, root: 261.6, bpm: 66, chords: [[0, 4, 7], [5, 9, 12], [-3, 0, 4], [0, 4, 7]], density: 0.4, voice: 'bell', octave: 0, pad: 0.6, share: 1 },
 };
 
 export type Sfx =
@@ -72,6 +74,8 @@ export class AudioHub {
   private sight = false;
   private boss = false;
   private held = false;
+  /** Moods that have a recorded track in assets/music (listed in index.json); the rest use the generated score. */
+  private recorded = new Set<string>();
 
   configure(s: Partial<SoundSettings>): void {
     this.settings = { ...this.settings, ...s };
@@ -114,6 +118,7 @@ export class AudioHub {
     const d = this.noiseBuf.getChannelData(0);
     for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     this.applyVolumes();
+    this.loadRecorded();
   }
 
   private applyVolumes(): void {
@@ -156,7 +161,47 @@ export class AudioHub {
       window.setTimeout(() => old.stop(), 3500);
     }
     this.moodNow = m;
-    this.layer = this.startLayer(MOODS[m]);
+    this.layer = this.recorded.has(m) ? this.startRecorded(m, MOODS[m].share) : this.startLayer(MOODS[m]);
+  }
+
+  /** A recorded track for the mood, looped and streamed (not decoded), through the same music bus. */
+  private startRecorded(m: Mood, share: number): { stop(): void; gain: GainNode } {
+    const ctx = this.ctx as AudioContext;
+    const a = new Audio(`${import.meta.env.BASE_URL}assets/music/${m}.mp3`);
+    a.loop = true;
+    const src = ctx.createMediaElementSource(a);
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    gain.gain.setTargetAtTime(share * 0.7, ctx.currentTime, 1.2);
+    src.connect(gain).connect(this.musicBus);
+    void a.play().catch(() => { /* the generated score is not restarted: the next mood change tries again */ });
+    return {
+      gain,
+      stop: () => { a.pause(); src.disconnect(); gain.disconnect(); },
+    };
+  }
+
+  /** A short recorded jingle (assets/music/win.mp3) for a finished lesson or game; false when there is none. */
+  private jingle(name: string): boolean {
+    const ctx = this.ctx;
+    if (!ctx || !this.recorded.has(name)) return false;
+    const a = new Audio(`${import.meta.env.BASE_URL}assets/music/${name}.mp3`);
+    const src = ctx.createMediaElementSource(a);
+    src.connect(this.sfxBus);
+    void a.play().catch(() => undefined);
+    a.addEventListener('ended', () => src.disconnect());
+    return true;
+  }
+
+  private loadRecorded(): void {
+    void fetch(`${import.meta.env.BASE_URL}assets/music/index.json`)
+      .then((r) => (r.ok ? (r.json() as Promise<{ ids?: string[] }>) : { ids: [] }))
+      .then((j) => {
+        this.recorded = new Set(j.ids ?? []);
+        // a track that arrived late replaces the generated score that already started
+        if (this.moodNow && this.recorded.has(this.moodNow)) { this.moodNow = null; this.resolve(); }
+      })
+      .catch(() => undefined);
   }
 
   private startLayer(def: MoodDef): { stop(): void; gain: GainNode } {
@@ -326,6 +371,7 @@ export class AudioHub {
 
   sfx(name: Sfx): void {
     if (!this.ctx || !this.settings.sfxOn) return;
+    if (name === 'fanfare' && this.jingle('win')) return;
     switch (name) {
       case 'click': this.tone(660, 0.07, 'triangle', 0.12); break;
       case 'open': this.tone(440, 0.18, 'triangle', 0.14, 0, 880); break;

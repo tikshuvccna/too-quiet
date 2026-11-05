@@ -431,3 +431,6 @@ body.boss .objective { display: none; }
 .bosshud-hearts { display: flex; justify-content: center; gap: 4px; }
 .bosstask { position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; background: rgba(8, 9, 24, .8); padding: 10px; overflow: auto; }
 .bosstask-card { max-width: 760px; max-height: 94vh; overflow: auto; }
+
+/* shop item pictures */
+.shop-ico { display: block; width: 88px; height: 88px; object-fit: contain; margin: 0 auto 6px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45)); }

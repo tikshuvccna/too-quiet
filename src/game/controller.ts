@@ -115,9 +115,9 @@ export class Controller {
     if (this.has('head_calmed')) return;
     await this.withModal(async () => {
       await this.ctx.dialogue.say([
-        { speaker: '', text: 'הענן הענק יורד אל הכפר. החוטים בשמיים רועדים.' },
-        { speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן, והוא חותך חוטים.' },
-        { speaker: 'dvora', text: 'המחט רואה אותם עכשיו. רוצו אל החוט החתוך, וחברו אותו נכון.' },
+        { id: 'boss.narrator.0001', speaker: '', text: 'הענן הענק יורד אל הכפר. החוטים בשמיים רועדים.' },
+        { id: 'boss.narrator.0002', speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן, והוא חותך חוטים.' },
+        { id: 'boss.dvora.0003', speaker: 'dvora', text: 'המחט רואה אותם עכשיו. רוצו אל החוט החתוך, וחברו אותו נכון.' },
       ]);
     });
     await playCutscene('boss_intro');
@@ -126,6 +126,7 @@ export class Controller {
 
   /** The fight is over (the world scene reports it). */
   private async bossEnded(won: boolean): Promise<void> {
+    const ending: { pop: (() => void) | null } = { pop: null };
     await this.withModal(async () => {
       if (!won) {
         await this.ctx.dialogue.say([{ speaker: '', text: 'הראש מחכה בסבלנות. אפשר לקרוא לו שוב מתי שרוצים.' }]);
@@ -133,19 +134,21 @@ export class Controller {
       }
       this.ctx.save.setFlag('head_calmed');
       this.ctx.save.save();
+      ending.pop = audio.pushOverlay('ending');
       await playCutscene('ending');
       const { applyPrize, prizeFor } = await import('../ui/learning');
       const { bossData } = await import('../ui/learning/bossGame');
       const out = applyPrize(this.ctx.save, 'hard', { lessonId: 'lessonboss' });
       const prize = prizeFor('hard', bossData().prizes);
       await this.ctx.dialogue.say([
-        { speaker: '', text: 'הראש מרפה את אצבעותיו. החוטים יורדים בשקט, וכל אחד נקשר לבית שלו.' },
-        { speaker: '', text: 'הוא לא נעלם. הוא מביט, ושואל: מה עוד אפשר ללמוד?' },
-        { speaker: '', text: 'בעמק זמזום חדש. לא קול של הד: קול של רשת.' },
+        { id: 'end.narrator.0001', speaker: '', text: 'הראש מרפה את אצבעותיו. החוטים יורדים בשקט, וכל אחד נקשר לבית שלו.' },
+        { id: 'end.narrator.0002', speaker: '', text: 'הוא לא נעלם. הוא מביט, ושואל: מה עוד אפשר ללמוד?' },
+        { id: 'end.narrator.0003', speaker: '', text: 'בעמק זמזום חדש. לא קול של הד: קול של רשת.' },
       ]);
       if (out.granted) this.ctx.hud.toast(`פרס: ${prize.name} (+${out.coins} מטבעות)`, 'good', 6000);
       this.ctx.hud.toast('סוף הסיפור הראשי. תודה ששיחקתם!', 'good', 7000);
     });
+    ending.pop?.();
     this.refreshObjective();
   }
 
@@ -321,6 +324,7 @@ export class Controller {
               onChange: () => {
                 this.ctx.session.bonus = perksOf(save).timeBonus;
                 (this.scene().get('World') as unknown as { applyAura?: () => void } | null)?.applyAura?.();
+                void (this.scene().get('World') as unknown as { applySkin?: () => Promise<void> } | null)?.applySkin?.();
               },
             });
           }

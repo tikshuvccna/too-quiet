@@ -33,6 +33,8 @@ def all_cast():
         d.update(v2_cast_npc.CAST)
         import v2_cast_t3
         d.update(v2_cast_t3.CAST)
+        import v2_skins
+        d.update(v2_skins.CAST)
     except ImportError as e:
         print("cast import failed", e)
     return d

@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 import { bus } from '../core/bus';
-import { createActor, setIdleFacing, updateActor, type Actor } from '../game/actors';
+import { createActor, setIdleFacing, swapActorChar, updateActor, type Actor } from '../game/actors';
+import { baseChar, charKey } from '../game/skins';
+import { ensureCharSheet } from '../game/skinLoader';
 import { TruthFx, truthLevel } from '../game/truthFx';
 import { ROADS } from '../world/roads';
 import { ChunkGround } from '../world/chunkGround';
@@ -377,12 +379,24 @@ export class WorldScene extends Phaser.Scene {
   }
 
   private buildPlayer(): void {
-    const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
+    const want = charKey(this.ctx.save);
+    const char = this.textures.exists(want) && this.anims.exists(`${want}:idle_S`) ? want : baseChar(this.ctx.save.data.look);
     this.px = this.spawn.x;
     this.py = this.spawn.y;
     this.unstick();
     this.player = createActor(this, char, this.px, this.py);
     updateActor(this.player, this.px, this.py, 0, 0);
+    this.applyAura();
+    if (char !== want) void this.applySkin();
+  }
+
+  /** A new outfit from the tailor's shop (its sprite sheet is loaded the first time it is worn). */
+  async applySkin(): Promise<void> {
+    const want = charKey(this.ctx.save);
+    if (!this.player || this.player.char === want) return;
+    if (!(await ensureCharSheet(this, want))) return;
+    if (this.player.char === want || charKey(this.ctx.save) !== want) return;
+    swapActorChar(this.player, want);
     this.applyAura();
   }
 

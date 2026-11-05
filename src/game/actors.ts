@@ -50,3 +50,11 @@ export function setIdleFacing(a: Actor, d: Dir): void {
   a.facing = d;
   a.sprite.play(`${a.char}:idle_${d}`, true);
 }
+
+/** Change the look of an actor that is already on screen (a new outfit from the shop). */
+export function swapActorChar(a: Actor, char: string): void {
+  a.char = char;
+  a.moving = false;
+  a.sprite.setTexture(char, 'idle_S_0');
+  a.sprite.play(`${char}:idle_${a.facing}`, true);
+}

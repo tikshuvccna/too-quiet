@@ -32,14 +32,17 @@ export async function playCutscene(id: string): Promise<boolean> {
     skip.type = 'button';
     const wrap = el('div', 'screen cutvid', '', [video, skip]);
     uiRoot().append(wrap);
-    audio.hold(true);
+    // the opening clip is silent: the opening theme plays over it; other clips pause the music
+    const popMood = id === 'cs_valley_arrival' ? audio.pushOverlay('intro') : null;
+    if (!popMood) audio.hold(true);
     let done = false;
     const end = (): void => {
       if (done) return;
       done = true;
       video.pause();
       wrap.remove();
-      audio.hold(false);
+      if (popMood) popMood();
+      else audio.hold(false);
       resolve();
     };
     skip.addEventListener('click', end);

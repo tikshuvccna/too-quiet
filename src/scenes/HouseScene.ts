@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { HOUSES, HOUSE_FOR_BUILDING } from '../content';
 import { bus } from '../core/bus';
 import { createActor, updateActor, type Actor } from '../game/actors';
+import { baseChar, charKey } from '../game/skins';
 import { CTX_KEY, type GameContext } from '../game/context';
 import { TruthFx, truthLevel } from '../game/truthFx';
 import { audio } from '../audio/audio';
@@ -124,7 +125,8 @@ export class HouseScene extends Phaser.Scene {
     const door = this.add.text(this.ox + (sw / 2) * k, this.oy + (sh - 6) * k, 'יציאה', { fontFamily: 'Segoe UI, Arial', fontSize: '18px', color: '#ffd27a', rtl: true, stroke: '#0b0c1c', strokeThickness: 4 }).setOrigin(0.5, 0).setDepth(5000);
     this.tweens.add({ targets: door, y: door.y + 6, duration: 700, yoyo: true, repeat: -1, ease: 'sine.inOut' });
 
-    const char = this.ctx.save.data.look === 'boy' ? 'apprentice_boy' : 'apprentice_girl';
+    const want = charKey(this.ctx.save);
+    const char = this.textures.exists(want) && this.anims.exists(`${want}:idle_S`) ? want : baseChar(this.ctx.save.data.look);
     this.px = sw / 2;
     this.py = 548;
     this.player = createActor(this, char, this.ox + this.px * k, this.oy + this.py * k, undefined, k);
