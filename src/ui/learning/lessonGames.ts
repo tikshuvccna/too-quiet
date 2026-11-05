@@ -394,3 +394,219 @@ function mountJourney(data: JourneyData, allowed: number, round: { text: string;
   });
   return () => {};
 }
+
+/* ------------------------------------------------------------------ network map ------------------------------------------------------------------ */
+
+type NetKind = 'lan' | 'wan' | 'internet';
+type MapRound = {
+  text: string;
+  nodes: Array<{ id: string; label: string; x: number; y: number; type: 'area' | 'cloud' }>;
+  links: Array<[string, string]>;
+  marks: Array<{ target: string; answer: NetKind; why: string }>;
+};
+export interface MapData {
+  id: string;
+  title: string;
+  intro: string;
+  howTo: string[];
+  levels: Record<Level, LevelBase & { mistakes: number; rounds: MapRound[] }>;
+}
+
+const NET_NAME: Record<NetKind, string> = { lan: 'LAN', wan: 'WAN', internet: 'האינטרנט' };
+const NET_COLOR: Record<NetKind, string> = { lan: '#5cf0d0', wan: '#ffd36b', internet: '#c6a2ff' };
+
+/** A map of places and the connections between them: tap each thing and say what kind of network it is. */
+export function mapGame(data: MapData): GameDef {
+  const out = {} as GameDef['levels'];
+  for (const lv of LEVELS_3) {
+    const l = data.levels[lv];
+    out[lv] = { count: l.rounds.length, lives: l.lives, timeLimit: l.timeLimitPerTaskSec, blurb: `${l.rounds.length} מפות. ${l.timeLimitPerTaskSec ? `${l.timeLimitPerTaskSec} שניות לכל מפה. ` : 'בלי הגבלת זמן. '}מותר ${l.mistakes} טעויות בכל מפה.` };
+  }
+  return {
+    title: data.title,
+    intro: data.intro,
+    howTo: data.howTo,
+    levels: out,
+    mountRound: (level, index, host, api) => mountMap(data.levels[level].mistakes, data.levels[level].rounds[index] as MapRound, host, api),
+  };
+}
+
+function mountMap(allowed: number, round: MapRound, host: HTMLElement, api: RoundApi): () => void {
+  const canvas = el('canvas', 'lrn-canvas');
+  const stage = el('div', 'lrn-wire-stage', '', [canvas]);
+  const msg = el('div', 'lrn-wire-msg', 'לחצו על סימן שאלה במפה, ואז על הסוג שלו.');
+  const kinds: NetKind[] = ['lan', 'wan', 'internet'];
+  const buttons = kinds.map((k, i) => {
+    const b = el('button', 'btn jr-role', `${i + 1}. ${NET_NAME[k]}`);
+    b.type = 'button';
+    b.style.borderColor = NET_COLOR[k];
+    b.addEventListener('click', () => choose(k));
+    return b;
+  });
+  host.append(el('div', 'lrn-wire-banner', '', [el('p', '', round.text)]), stage, msg, el('div', 'npcg-row', '', buttons));
+
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  let W = 0;
+  let H = 0;
+  const fit = (): void => {
+    W = stage.clientWidth;
+    H = stage.clientHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+  };
+  fit();
+  const ro = new ResizeObserver(fit);
+  ro.observe(stage);
+
+  const node = (id: string): MapRound['nodes'][number] => round.nodes.find((n) => n.id === id) as MapRound['nodes'][number];
+  const spot = (target: string): [number, number] => {
+    if (target.includes('|')) {
+      const [a, b] = target.split('|') as [string, string];
+      const na = node(a);
+      const nb = node(b);
+      return [((na.x + nb.x) / 2) * W, ((na.y + nb.y) / 2) * H];
+    }
+    const n = node(target);
+    return [n.x * W, n.y * H + Math.min(34, H * 0.07)];
+  };
+  const done = new Map<string, NetKind>();
+  let selected: string | null = null;
+  let mistakes = 0;
+  let finished = false;
+
+  canvas.addEventListener('pointerdown', (e) => {
+    if (finished) return;
+    const r = stage.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    let best: string | null = null;
+    let bd = 34;
+    for (const m of round.marks) {
+      if (done.has(m.target)) continue;
+      const [sx, sy] = spot(m.target);
+      const d = Math.hypot(x - sx, y - sy);
+      if (d < bd) { bd = d; best = m.target; }
+    }
+    if (best) { selected = best; msg.className = 'lrn-wire-msg'; msg.textContent = 'ומה זה?'; }
+  });
+
+  function choose(kind: NetKind): void {
+    if (finished) return;
+    if (!selected) { msg.textContent = 'קודם לחצו על סימן שאלה במפה.'; return; }
+    const mark = round.marks.find((m) => m.target === selected) as MapRound['marks'][number];
+    if (kind === mark.answer) {
+      done.set(mark.target, kind);
+      selected = null;
+      msg.className = 'lrn-wire-msg good';
+      msg.textContent = mark.why;
+      if (done.size >= round.marks.length) {
+        finished = true;
+        buttons.forEach((b) => (b.disabled = true));
+        api.resolve(true, `${mistakes ? 'סיימתם את המפה, עם כמה טעויות בדרך. ' : ''}${[...new Set(round.marks.map((m) => m.why))].slice(0, 2).join(' ')}`);
+      }
+      return;
+    }
+    mistakes++;
+    api.flash('bad');
+    msg.className = 'lrn-wire-msg warn';
+    msg.textContent = `לא בדיוק: זה לא ${NET_NAME[kind]}.`;
+    if (mistakes > allowed) {
+      finished = true;
+      buttons.forEach((b) => (b.disabled = true));
+      api.resolve(false, `הנכון: ${NET_NAME[mark.answer]}. ${mark.why}`);
+    }
+  }
+  api.onTimeout(() => {
+    if (finished) return;
+    finished = true;
+    buttons.forEach((b) => (b.disabled = true));
+    api.resolve(false, `הזמן נגמר. ${round.marks[0]?.why ?? ''}`);
+  });
+  const onKey = (e: KeyboardEvent): void => {
+    const n = Number(e.key);
+    if (n >= 1 && n <= 3) choose(kinds[n - 1] as NetKind);
+  };
+  document.addEventListener('keydown', onKey);
+
+  const c = canvas.getContext('2d') as CanvasRenderingContext2D;
+  let raf = 0;
+  let t = 0;
+  let prev = performance.now();
+  const frame = (now: number): void => {
+    raf = requestAnimationFrame(frame);
+    t += Math.min(0.25, (now - prev) / 1000);
+    prev = now;
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const g = c.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#24406a'); g.addColorStop(1, '#3f7a5a');
+    c.fillStyle = g;
+    c.fillRect(0, 0, W, H);
+    for (const [a, b] of round.links) {
+      const na = node(a);
+      const nb = node(b);
+      c.strokeStyle = 'rgba(255,255,255,.7)';
+      c.lineWidth = 3;
+      c.setLineDash([10, 8]);
+      c.beginPath(); c.moveTo(na.x * W, na.y * H); c.lineTo(nb.x * W, nb.y * H); c.stroke();
+      c.setLineDash([]);
+    }
+    for (const n of round.nodes) {
+      c.save();
+      c.translate(n.x * W, n.y * H);
+      if (n.type === 'cloud') {
+        c.fillStyle = '#e8ecff';
+        c.strokeStyle = '#6a5aa8';
+        c.lineWidth = 3;
+        c.beginPath();
+        c.arc(-34, 4, 26, Math.PI * 0.5, Math.PI * 1.5); c.arc(0, -16, 32, Math.PI, 0); c.arc(34, 4, 26, Math.PI * 1.5, Math.PI * 0.5); c.closePath();
+        c.fill(); c.stroke();
+        c.fillStyle = '#2b2150';
+      } else {
+        c.fillStyle = 'rgba(30,20,70,.55)';
+        c.strokeStyle = '#ffd36b';
+        c.lineWidth = 3;
+        c.beginPath(); c.roundRect(-64, -24, 128, 48, 16); c.fill(); c.stroke();
+        c.fillStyle = '#fff';
+      }
+      c.font = 'bold 14px sans-serif';
+      c.textAlign = 'center';
+      c.direction = 'rtl';
+      c.fillText(n.label, 0, 5, 118);
+      c.restore();
+    }
+    for (const m of round.marks) {
+      const [sx, sy] = spot(m.target);
+      const kind = done.get(m.target);
+      c.save();
+      c.translate(sx, sy);
+      if (kind) {
+        c.fillStyle = NET_COLOR[kind];
+        c.strokeStyle = '#1a1440';
+        c.lineWidth = 2;
+        c.beginPath(); c.roundRect(-30, -13, 60, 26, 13); c.fill(); c.stroke();
+        c.fillStyle = '#1a1440';
+        c.font = 'bold 13px sans-serif';
+        c.textAlign = 'center';
+        c.direction = 'rtl';
+        c.fillText(NET_NAME[kind], 0, 5);
+      } else {
+        const sel = selected === m.target;
+        c.fillStyle = sel ? '#ffd36b' : '#fff';
+        c.strokeStyle = sel ? '#fff' : '#6a5aa8';
+        c.lineWidth = 3;
+        c.beginPath(); c.arc(0, 0, 15 + Math.sin(t * 5) * (sel ? 2 : 0.8), 0, 7); c.fill(); c.stroke();
+        c.fillStyle = '#2b2150';
+        c.font = 'bold 18px sans-serif';
+        c.textAlign = 'center';
+        c.fillText('?', 0, 6);
+      }
+      c.restore();
+    }
+  };
+  raf = requestAnimationFrame(frame);
+  return () => {
+    cancelAnimationFrame(raf);
+    ro.disconnect();
+    document.removeEventListener('keydown', onKey);
+  };
+}

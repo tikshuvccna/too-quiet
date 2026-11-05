@@ -3,7 +3,7 @@ import { lessonIds, loadBundle } from './registry';
 import { cutOff } from './topologyLogic';
 import type { SorterData, HotspotData } from './lessonGames';
 import type { TopologyData } from './topologyLogic';
-import type { JourneyData } from './lessonGames';
+import type { JourneyData, MapData } from './lessonGames';
 
 const WIDGETS = new Set(['connect_threads', 'tap_to_classify', 'network_size_chooser', 'advantage_matcher', 'client_server_toy', 'atm_toy', 'p2p_vs_cs_toy', 'need_sorter']);
 const ids = lessonIds();
@@ -99,6 +99,21 @@ describe('game data integrity', () => {
       expect(roles[r.path[0] as string], r.text).toBe('end');
       expect(roles[r.path[r.path.length - 1] as string], r.text).toBe('end');
       r.path.slice(1, -1).forEach((lab, i) => expect(roles[lab], `${r.text}: ${lab}`).toBe(i % 2 === 0 ? 'media' : 'mid'));
+    }
+  });
+
+  it('map rounds point at real nodes and links', () => {
+    const mods = import.meta.glob('../../../content/he/map0*.json', { eager: true }) as Record<string, { default: MapData }>;
+    for (const m of Object.values(mods)) for (const l of ['easy', 'medium', 'hard'] as const) for (const r of m.default.levels[l].rounds) {
+      const ids = new Set(r.nodes.map((n) => n.id));
+      expect(r.marks.length, r.text).toBeGreaterThanOrEqual(2);
+      expect(r.marks.length, r.text).toBeLessThanOrEqual(6);
+      for (const [a, b] of r.links) expect(ids.has(a) && ids.has(b), r.text).toBe(true);
+      for (const mk of r.marks) {
+        const [a, b] = mk.target.split('|');
+        expect(ids.has(a as string) && (b === undefined || ids.has(b)), r.text + ' ' + mk.target).toBe(true);
+        if (b !== undefined) expect(r.links.some(([x, y]) => (x === a && y === b) || (x === b && y === a)), r.text + ' ' + mk.target).toBe(true);
+      }
     }
   });
 
