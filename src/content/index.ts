@@ -34,8 +34,13 @@ export interface Curiosity { id: string; name: string; description: string; wher
 
 export interface CollectibleSet { conceptCards: ConceptCard[]; diaryPages: DiaryPage[]; curiosities: Curiosity[] }
 
-export const LINES = { ...(linesJson as unknown as Record<string, LineDef>), ...(WORLD_LINES as unknown as Record<string, LineDef>) };
-export const SCENES = scenesJson as unknown as Record<string, SceneDef>;
+/** Story files for the later problems (content/he/problems_*.json), merged in when they exist. */
+const extraFiles = import.meta.glob('../../content/he/problems_*.json', { eager: true }) as Record<string, { default: { lines?: Record<string, LineDef>; scenes?: Record<string, SceneDef> } }>;
+const EXTRA_LINES: Record<string, LineDef> = Object.assign({}, ...Object.values(extraFiles).map((m) => m.default.lines ?? {}));
+const EXTRA_SCENES: Record<string, SceneDef> = Object.assign({}, ...Object.values(extraFiles).map((m) => m.default.scenes ?? {}));
+
+export const LINES = { ...EXTRA_LINES, ...(linesJson as unknown as Record<string, LineDef>), ...(WORLD_LINES as unknown as Record<string, LineDef>) };
+export const SCENES: Record<string, SceneDef> = { ...(scenesJson as unknown as Record<string, SceneDef>), ...EXTRA_SCENES };
 export const HOUSES: HouseDef[] = [...(housesJson as unknown as { houses: HouseDef[] }).houses, ...(WORLD_HOUSES as unknown as HouseDef[])];
 export const COLLECTIBLES = collectiblesJson as unknown as CollectibleSet;
 

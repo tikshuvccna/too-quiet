@@ -425,6 +425,7 @@ export class WorldScene extends Phaser.Scene {
     for (const b of BUILDINGS) {
       if (b.id.startsWith('house-') || b.id === 'tower') out.push({ id: `door:${b.id}`, x: b.door.x, y: b.door.y, label: b.label, range: 70 });
     }
+    if (this.ctx.save.hasFlag('final_unlocked') && !this.ctx.save.hasFlag('head_calmed')) out.push({ id: 'boss:head', x: 5200, y: 2300, label: 'לעמוד מול הראש', range: 150 });
     for (const wb of WORLD_BUILDINGS) {
       if (wb.id !== 'great_tower') out.push({ id: `door:house-${wb.id}`, x: wb.door.x, y: wb.door.y, label: `כניסה: ${wb.name}`, range: 80 });
     }

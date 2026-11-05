@@ -7,7 +7,10 @@ export interface LessonPrize { name: string; description: string; effect: string
  * hard prestige (a glowing cloak). Everything is fixed and permanent, and every effect is applied in `game/perks.ts`
  * or the shop (cloaks are auras). Lesson 01 keeps its own table in minigame01.json and prizes.ts.
  */
+const BOSS_PRIZE: LessonPrize = { name: 'גלימת הראש', description: 'הראש נרגע, והחוטים בעמק מזמזמים אחרת.', effect: 'הילה בצבע אור הבוקר קבועה סביב הדמות, ותג "מי שהבין את הרשת".', flags: ['prize.boss', 'cosmetic.cloak_head', 'equip.aura_head', 'badge.understood_network'], coins: 100 };
+
 export const LESSON_PRIZES: Record<string, Record<Level, LessonPrize>> = {
+  lessonboss: { easy: BOSS_PRIZE, medium: BOSS_PRIZE, hard: BOSS_PRIZE },
   lesson02: {
     easy: { name: 'כיס המטבעות', description: 'כיס קטן שמחזיק יותר: כל מטבע שתמצאו שווה קצת יותר.', effect: 'קבוע: 25 אחוז יותר מטבעות ממשחקוני צד וחיפוש בעצים.', flags: ['prize.lesson02.easy', 'perk.coin_pouch'], coins: 10 },
     medium: { name: 'צעדי שליח', description: 'שליחים לומדים לקצר דרכים, וגם אתם.', effect: 'קבוע: מהירות הליכה גדולה ב-8 אחוז.', flags: ['prize.lesson02.medium', 'perk.sure_feet'], coins: 20 },

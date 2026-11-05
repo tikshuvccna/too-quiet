@@ -22,6 +22,7 @@ export const SHOP_ITEMS: ShopItem[] = [
   { id: 'aura_blue', name: 'גלימת התכלת', desc: 'פרס משחקון: זוהר כחול.', price: 0, kind: 'aura', color: 0x5aa8ff, rewardFlag: 'cosmetic.cloak_blue' },
   { id: 'aura_violet', name: 'גלימת הסגול', desc: 'פרס משחקון: זוהר סגול.', price: 0, kind: 'aura', color: 0xb58cff, rewardFlag: 'cosmetic.cloak_violet' },
   { id: 'aura_rose2', name: 'גלימת הוורד', desc: 'פרס משחקון: זוהר ורדרד.', price: 0, kind: 'aura', color: 0xffa3c4, rewardFlag: 'cosmetic.cloak_rose' },
+  { id: 'aura_head', name: 'גלימת הראש', desc: 'פרס על הבנת הרשת כולה: אור בוקר.', price: 0, kind: 'aura', color: 0xfff2b8, rewardFlag: 'cosmetic.cloak_head' },
   { id: 'aura_white', name: 'גלימת הלבן', desc: 'פרס משחקון: זוהר נקי.', price: 0, kind: 'aura', color: 0xffffff, rewardFlag: 'cosmetic.cloak_white' },
   { id: 'boots', name: 'נעלי דרך', desc: 'הולכים מהר יותר, 12 אחוז.', price: 60, kind: 'perk' },
   { id: 'extra_time', name: 'מחט ארוכת נשימה', desc: 'עוד דקה בין קפיצה למגדל.', price: 80, kind: 'perk' },

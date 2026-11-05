@@ -407,3 +407,6 @@
 .jr-role.wrong { border-color: #ff6b7d; background: #5a2a38; }
 @keyframes jr-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @media (prefers-reduced-motion: reduce) { .jr-chip.jr-here { animation: none; } }
+
+.boss-calm { height: 12px; border-radius: 8px; background: rgba(255, 255, 255, .12); overflow: hidden; margin: 6px 0; }
+.boss-calm-fill { display: block; height: 100%; background: linear-gradient(90deg, #ffd36b, #5cf0d0); transition: width .5s ease; }

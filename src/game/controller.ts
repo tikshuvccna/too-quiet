@@ -4,6 +4,7 @@ import { NPC_GAMES, openNpcGame } from '../ui/npcgames';
 import { openShop } from '../ui/shop';
 import { openSettings } from '../ui/settings';
 import { perksOf } from './perks';
+import { PROBLEMS, PROBLEM_COINS, objectiveFor, problemForNpc, stageOf, type Probe } from './problems';
 import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
 import { openCollection } from '../ui/collection';
@@ -33,6 +34,12 @@ export class Controller {
         if (name === 'start_lesson01') this.pendingClassroom = true;
         // the prologue ends with meeting Grandpa Hed: remember it at once, so a reload does not replay it
         if (name === 'met_hubGrandpa') this.ctx.save.setFlag('prologue_done');
+        const done = PROBLEMS.find((p) => p.complete === name);
+        if (done) this.problemSolved(done.n);
+        if (name === 'p5_complete' && !this.has('final_unlocked')) {
+          this.ctx.save.setFlag('final_unlocked');
+          this.ctx.hud.toast('הדרך אל הצריח הגדול נפתחה. בצד המזרחי של העמק.', 'clue', 6000);
+        }
         this.refreshObjective();
       },
     });
@@ -94,6 +101,52 @@ export class Controller {
     return this.ctx.save.hasFlag(flag);
   }
 
+  /** The end of the whole game: the Head asks about everything that was learned, and calms down. */
+  private async faceTheHead(): Promise<void> {
+    if (this.has('head_calmed')) return;
+    await this.withModal(async () => {
+      await this.ctx.dialogue.say([
+        { speaker: '', text: 'הצריח שקט. מלמעלה, ענן ענק של חוטים מביט למטה.' },
+        { speaker: '', text: 'הוא לא נראה כועס. הוא נראה סקרן.' },
+      ]);
+      const { openGameShell } = await import('../ui/learning');
+      const { bossData, bossGame, BOSS_LEVEL } = await import('../ui/learning/bossGame');
+      const result = await new Promise<{ passed: boolean }>((resolve) => {
+        openGameShell(bossGame(), bossData(), BOSS_LEVEL, this.ctx.save, { onClose: (r) => resolve(r) });
+      });
+      if (!result.passed) {
+        await this.ctx.dialogue.say([{ speaker: '', text: 'הראש מחכה בסבלנות. אפשר לנסות שוב מתי שרוצים.' }]);
+        return;
+      }
+      this.ctx.save.setFlag('head_calmed');
+      this.ctx.save.save();
+      await this.ctx.dialogue.say([
+        { speaker: '', text: 'הראש מרפה את אצבעותיו. החוטים יורדים בשקט, וכל אחד נקשר לבית שלו.' },
+        { speaker: '', text: 'הוא לא נעלם. הוא מביט, ושואל: מה עוד אפשר ללמוד?' },
+        { speaker: '', text: 'בעמק זמזום חדש. לא קול של הד: קול של רשת.' },
+      ]);
+      this.ctx.hud.toast('סוף הסיפור הראשי. תודה ששיחקתם!', 'good', 7000);
+    });
+    this.refreshObjective();
+  }
+
+  private probe(): Probe {
+    return {
+      has: (f) => this.has(f),
+      lessonDone: (id) => this.ctx.save.lesson(id).done,
+      hasScene: (id) => !!SCENES[id],
+    };
+  }
+
+  /** A later problem was mended: a fixed reward and a short note. */
+  private problemSolved(n: number): void {
+    if (this.has(`p${n}_rewarded`)) return;
+    this.ctx.save.setFlag(`p${n}_rewarded`);
+    this.ctx.save.data.coins += PROBLEM_COINS;
+    this.ctx.save.save();
+    this.ctx.hud.toast(`הבעיה נפתרה! +${PROBLEM_COINS} מטבעות`, 'good', 4200);
+  }
+
   private lessonDone(): boolean {
     return this.ctx.save.lesson('lesson01').done;
   }
@@ -101,7 +154,7 @@ export class Controller {
   refreshObjective(): void {
     const f = (n: string): boolean => this.has(n);
     let text = 'גלו את הכפר: בתים, אנשים, וחפצים שמחכים לאיסוף.';
-    if (f('p1_complete')) text = 'סוף הדוגמית. נשארו עוד חפצים וסודות בכפר.';
+    if (f('p1_complete')) text = objectiveFor(this.probe()) ?? 'סוף הדוגמית. נשארו עוד חפצים וסודות בכפר.';
     else if (f('bakery_fixed')) text = 'לכו אל הגשר שעל הנחל והסתכלו על החוט.';
     else if (FIXES.every((x) => f(x.flag))) text = 'חזרו לנחתום במאפייה.';
     else if (this.lessonDone()) text = 'תקנו: בית סבתא שושנה, המרפאה והטחנה.';
@@ -164,6 +217,7 @@ export class Controller {
   private onUse(id: string): void {
     if (this.ctx.modal || this.busy) return;
     if (id.startsWith('npc:')) void this.talk(id.slice(4));
+    else if (id === 'boss:head') void this.faceTheHead();
     else if (id === 'door:tower') void this.tower();
     else if (id === 'spot:sky') void this.meetCreature('cloud_whale');
     else if (id === 'spot:bridge') void this.withModal(async () => {
@@ -201,6 +255,27 @@ export class Controller {
     const save = this.ctx.save;
     await this.withModal(async () => {
       const wn = WORLD_NPC_INFO.find((n) => n.id === npcId);
+      const problem = problemForNpc(npcId);
+      if (problem) {
+        const stage = stageOf(problem, this.probe());
+        if (stage === 'chaos') {
+          await this.runScene(problem.chaos);
+          save.setFlag(problem.seen);
+          save.save();
+          this.refreshObjective();
+          return;
+        }
+        if (stage === 'fix') {
+          await this.runScene(problem.fix);
+          this.refreshObjective();
+          return;
+        }
+        if (stage === 'learn') {
+          await this.ctx.dialogue.say([{ speaker: '', text: `המחט עוד מטושטשת. כדאי ללמוד קודם אצל דבורה (שיעור ${problem.n}).` }]);
+          this.refreshObjective();
+          return;
+        }
+      }
       if (wn) {
         const key = `met_${wn.id}`;
         const ids = conversationFor(wn, save.hasFlag(key) ? 'later' : 'first');
