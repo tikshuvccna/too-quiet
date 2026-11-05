@@ -1,0 +1,668 @@
+{
+ "lines": {
+  "r1.p2.narrator.0001": {
+   "speaker": "narrator",
+   "text": "בשורת השוק, מול הפונדק, ערימת חבילות בלי שם ובלי כתובת."
+  },
+  "r1.p2.innkeeper.0001": {
+   "speaker": "innkeeper",
+   "text": "תראו, שוב אבדה חבילה! הודעות לנפח, לרוקחת, לבית הספר."
+  },
+  "r1.p2.innkeeper.0002": {
+   "speaker": "innkeeper",
+   "text": "אף אחד לא יודע מי שלח, מי אמור לקבל, ובאיזו דרך."
+  },
+  "r1.p2.player.0001": {
+   "speaker": "player",
+   "text": "אני אנסה לראות את החוטים."
+  },
+  "r1.p2.narrator.0002": {
+   "speaker": "narrator",
+   "text": "המחט רואה רק כתם. אי אפשר לדעת איפה ההודעה נתקעת."
+  },
+  "r1.p2.innkeeper.0003": {
+   "speaker": "innkeeper",
+   "text": "דבורה במגדל יודעת על חוטים. אולי תשאלו אותה."
+  },
+  "r1.p2.narrator.0003": {
+   "speaker": "narrator",
+   "text": "קודם ללמוד. חוזרים אל דבורה, במגדל האורגים."
+  },
+  "r1.p2.narrator.0004": {
+   "speaker": "narrator",
+   "text": "המחט חדה עכשיו. היא מציירת קו מכל חבילה, אבל הקווים נעלמים באמצע."
+  },
+  "r1.p2.innkeeper.0004": {
+   "speaker": "innkeeper",
+   "text": "תראו, אתם רואים משהו? אני כבר לא יודעת איפה לחפש."
+  },
+  "r1.p2.dvora.0001": {
+   "speaker": "dvora",
+   "text": "בכל הודעה יש שלושה חלקים. כמה מהם חסרים כאן?"
+  },
+  "r1.p2.dvora.0002": {
+   "speaker": "dvora",
+   "text": "מי שבאמצע רק מעביר הלאה. ודרך טובה לא אומרת למי."
+  },
+  "r1.p2.innkeeper.0005": {
+   "speaker": "innkeeper",
+   "text": "תראו איזה סדר! על כל חבילה: ממי, אל מי, ובאיזו דרך."
+  },
+  "r1.p2.narrator.0005": {
+   "speaker": "narrator",
+   "text": "החבילה הישנה ביותר מגיעה ליעד. בתוכה דף מקופל, חתום: נועם."
+  },
+  "r1.p2.innkeeper.0006": {
+   "speaker": "innkeeper",
+   "text": "תראו, זה השם שבספר האורחים. הוא שילם חודש מראש."
+  },
+  "r1.p2.player.0002": {
+   "speaker": "player",
+   "text": "אשמור את הדף אצלי."
+  },
+  "r1.p3.narrator.0001": {
+   "speaker": "narrator",
+   "text": "בעמק הטחנה, בבית המלאכה, גברת אסתר מחזיקה סליל חוט חתוך."
+  },
+  "r1.p3.mender.0001": {
+   "speaker": "mender",
+   "text": "חוט אחד נחתך, והכפר שמעבר לגשר חצי שותק."
+  },
+  "r1.p3.mender.0002": {
+   "speaker": "mender",
+   "text": "חמישה בתים עוד מזמזמים. חמישה אחרים לא שומעים כלום."
+  },
+  "r1.p3.mender.0003": {
+   "speaker": "mender",
+   "text": "כולם יושבים על חוט משותף אחד. לא ברור לי איך זה קרה."
+  },
+  "r1.p3.player.0001": {
+   "speaker": "player",
+   "text": "אני לא מבין איך חוט אחד משתיק חצי כפר.",
+   "textF": "אני לא מבינה איך חוט אחד משתיק חצי כפר."
+  },
+  "r1.p3.narrator.0002": {
+   "speaker": "narrator",
+   "text": "המחט רואה רק כתם. אי אפשר להבין מי תלוי במי."
+  },
+  "r1.p3.narrator.0003": {
+   "speaker": "narrator",
+   "text": "קודם ללמוד. חוזרים אל דבורה, במגדל האורגים."
+  },
+  "r1.p3.narrator.0004": {
+   "speaker": "narrator",
+   "text": "המחט חדה עכשיו: חוט משותף אחד, וכל הבתים תלויים בו."
+  },
+  "r1.p3.mender.0004": {
+   "speaker": "mender",
+   "text": "איך מחברים אותם, שחוט חתוך לא ישתיק חצי כפר?"
+  },
+  "r1.p3.dvora.0001": {
+   "speaker": "dvora",
+   "text": "חפשו צורה שבה חוט חתוך מנתק בית אחד בלבד."
+  },
+  "r1.p3.dvora.0002": {
+   "speaker": "dvora",
+   "text": "וזכרו: חוט מכל בית לכל בית, זה יקר וקשה לניהול."
+  },
+  "r1.p3.mender.0005": {
+   "speaker": "mender",
+   "text": "עכשיו אם חוט ייחתך, רק בית אחד ישתוק. זה מספיק לי."
+  },
+  "r1.p3.narrator.0005": {
+   "speaker": "narrator",
+   "text": "היא מושיטה את החוט הישן. הקצה חלק כמו סרגל. שוב קשר בשני סיבובים."
+  },
+  "r1.p3.player.0002": {
+   "speaker": "player",
+   "text": "חוט שנקרע לא נראה כך. מישהו חתך אותו."
+  },
+  "r1.p3.mender.0006": {
+   "speaker": "mender",
+   "text": "ידעתי. שמרתי אותו, למקרה שמישהו ישאל."
+  },
+  "r1.p4.narrator.0001": {
+   "speaker": "narrator",
+   "text": "בנמל, ספינות קשורות בלי מפרש. על המזח עומד מר צבי, חבל על כתפו."
+  },
+  "r1.p4.dockHand.0001": {
+   "speaker": "dockHand",
+   "text": "בית הספר שלנו והסניף שמעבר למפרץ לא מדברים זה עם זה."
+  },
+  "r1.p4.dockHand.0002": {
+   "speaker": "dockHand",
+   "text": "וגם לא עם העולם שמעבר לים. כבר שנים."
+  },
+  "r1.p4.player.0001": {
+   "speaker": "player",
+   "text": "אין חוט שמגיע לשם?"
+  },
+  "r1.p4.dockHand.0003": {
+   "speaker": "dockHand",
+   "text": "בפנים יש חוטים. מה שבחוץ נשאר בחוץ, ככה אומרים."
+  },
+  "r1.p4.narrator.0002": {
+   "speaker": "narrator",
+   "text": "המחט רואה כתם, ואחריו מים. אי אפשר להבין איפה נגמרת רשת."
+  },
+  "r1.p4.narrator.0003": {
+   "speaker": "narrator",
+   "text": "קודם ללמוד. חוזרים אל דבורה, במגדל האורגים."
+  },
+  "r1.p4.narrator.0004": {
+   "speaker": "narrator",
+   "text": "המחט חדה עכשיו. שני אזורים קטנים, ים ביניהם, וענן רחוק."
+  },
+  "r1.p4.dockHand.0004": {
+   "speaker": "dockHand",
+   "text": "אפשר לתקן? אני רק יודע לקשור חבלים."
+  },
+  "r1.p4.dvora.0001": {
+   "speaker": "dvora",
+   "text": "LAN הוא אזור קטן. מה מחבר בין שני אזורים רחוקים?"
+  },
+  "r1.p4.dvora.0002": {
+   "speaker": "dvora",
+   "text": "האינטרנט פתוח לכולם, אבל לשער שלו מגיעים דרך ספק."
+  },
+  "r1.p4.dockHand.0005": {
+   "speaker": "dockHand",
+   "text": "תראו, הסניף עונה! ומשם גם הודעות מהעולם."
+  },
+  "r1.p4.narrator.0005": {
+   "speaker": "narrator",
+   "text": "בקצה המזח, על עמוד, קופסת מפתחות ריקה. על התווית: שער המגדל."
+  },
+  "r1.p4.player.0002": {
+   "speaker": "player",
+   "text": "מפתח של המגדל הגדול? מה הוא עושה כאן?"
+  },
+  "r1.p4.dockHand.0006": {
+   "speaker": "dockHand",
+   "text": "מישהו בא בלילות ומסתכל על הים. לא שואלים אותו כלום."
+  },
+  "r1.p5.narrator.0001": {
+   "speaker": "narrator",
+   "text": "באולם הגילדה על החוף, רשת ענקית חדשה: חוטים בכל פינה, אורות מהבהבים."
+  },
+  "r1.p5.guildMaster.0001": {
+   "speaker": "guildMaster",
+   "text": "בנינו הכול בבת אחת, בשביל החג. שום דבר לא מגיע לשום דבר."
+  },
+  "r1.p5.player.0001": {
+   "speaker": "player",
+   "text": "מי תכנן את זה? אני לא מצליח להבין.",
+   "textF": "מי תכנן את זה? אני לא מצליחה להבין."
+  },
+  "r1.p5.guildMaster.0002": {
+   "speaker": "guildMaster",
+   "text": "תכנון? רצינו להספיק. עכשיו אף אחד לא יודע איפה מה."
+  },
+  "r1.p5.narrator.0002": {
+   "speaker": "narrator",
+   "text": "המחט רואה כתם. אי אפשר להבין מה מחובר למה."
+  },
+  "r1.p5.guildMaster.0003": {
+   "speaker": "guildMaster",
+   "text": "יש לנו שולחן תכנון ישן. דבורה יודעת להפעיל אותו."
+  },
+  "r1.p5.narrator.0003": {
+   "speaker": "narrator",
+   "text": "קודם ללמוד. חוזרים אל דבורה, במגדל האורגים."
+  },
+  "r1.p5.narrator.0004": {
+   "speaker": "narrator",
+   "text": "המחט חדה עכשיו. החוטים נמתחו לפני שמישהו רשם מה מחובר למה."
+  },
+  "r1.p5.guildMaster.0004": {
+   "speaker": "guildMaster",
+   "text": "מה עושים עכשיו, לפני שקושרים עוד חוט?"
+  },
+  "r1.p5.dvora.0001": {
+   "speaker": "dvora",
+   "text": "על השולחן מותר לטעות, ושום בית לא נשבר."
+  },
+  "r1.p5.dvora.0002": {
+   "speaker": "dvora",
+   "text": "וגם שם יש סדר. מה בא קודם, ומה בסוף?"
+  },
+  "r1.p5.guildMaster.0005": {
+   "speaker": "guildMaster",
+   "text": "הודעה עוברת! מחשב אל שרת, בלי חוט אחד מיותר."
+  },
+  "r1.p5.narrator.0005": {
+   "speaker": "narrator",
+   "text": "בסימולציה, שליח אחד נע לבד. אף אחד לא שלח אותו."
+  },
+  "r1.p5.narrator.0006": {
+   "speaker": "narrator",
+   "text": "הוא עולה מהשולחן אל התקרה ונעלם. מלמעלה נשמע זמזום רחוק."
+  },
+  "r1.p5.guildMaster.0006": {
+   "speaker": "guildMaster",
+   "text": "לא ראיתם כלום. ככה עדיף."
+  }
+ },
+ "scenes": {
+  "p2_chaos": {
+   "title": "חבילות בלי כתובת",
+   "where": "שורת השוק, מול הפונדק",
+   "steps": [
+    {
+     "line": "r1.p2.narrator.0001"
+    },
+    {
+     "line": "r1.p2.innkeeper.0001"
+    },
+    {
+     "line": "r1.p2.innkeeper.0002"
+    },
+    {
+     "line": "r1.p2.player.0001"
+    },
+    {
+     "line": "r1.p2.narrator.0002"
+    },
+    {
+     "line": "r1.p2.innkeeper.0003"
+    },
+    {
+     "line": "r1.p2.narrator.0003"
+    },
+    {
+     "flag": "p2_seen"
+    }
+   ]
+  },
+  "p2_fix": {
+   "title": "התיקון: שורת השוק",
+   "where": "שורת השוק, מול הפונדק",
+   "steps": [
+    {
+     "line": "r1.p2.narrator.0004"
+    },
+    {
+     "line": "r1.p2.innkeeper.0004"
+    },
+    {
+     "choice": {
+      "prompt": "מה צריך לדעת על כל הודעה, כדי שלא תאבד?",
+      "options": [
+       {
+        "text": "לציין על כל חבילה: מי המקור, מי היעד, ואיזה ערוץ עובר ביניהם",
+        "goto": "p2_fix_ok"
+       },
+       {
+        "text": "להפוך את הצמתים שבדרך לשולחים ולמקבלים: הם כבר נמצאים בכל דרך",
+        "goto": "p2_fix_hint"
+       },
+       {
+        "text": "לסלול כבישים חדשים: אם הדרך טובה, ההודעה תמצא את דרכה",
+        "goto": "p2_fix_hint"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p2_fix_hint": {
+   "title": "רמז מהמחט",
+   "where": "שורת השוק, מול הפונדק",
+   "steps": [
+    {
+     "line": "r1.p2.dvora.0001"
+    },
+    {
+     "line": "r1.p2.dvora.0002"
+    },
+    {
+     "choice": {
+      "prompt": "לנסות שוב?",
+      "options": [
+       {
+        "text": "כן, לנסות שוב",
+        "goto": "p2_fix"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p2_fix_ok": {
+   "title": "הדף החתום",
+   "where": "שורת השוק, מול הפונדק",
+   "steps": [
+    {
+     "line": "r1.p2.innkeeper.0005"
+    },
+    {
+     "line": "r1.p2.narrator.0005"
+    },
+    {
+     "line": "r1.p2.innkeeper.0006"
+    },
+    {
+     "line": "r1.p2.player.0002"
+    },
+    {
+     "flag": "p2_complete"
+    }
+   ]
+  },
+  "p3_chaos": {
+   "title": "חצי כפר שותק",
+   "where": "בית המלאכה, עמק הטחנה",
+   "steps": [
+    {
+     "line": "r1.p3.narrator.0001"
+    },
+    {
+     "line": "r1.p3.mender.0001"
+    },
+    {
+     "line": "r1.p3.mender.0002"
+    },
+    {
+     "line": "r1.p3.mender.0003"
+    },
+    {
+     "line": "r1.p3.player.0001"
+    },
+    {
+     "line": "r1.p3.narrator.0002"
+    },
+    {
+     "line": "r1.p3.narrator.0003"
+    },
+    {
+     "flag": "p3_seen"
+    }
+   ]
+  },
+  "p3_fix": {
+   "title": "התיקון: בית המלאכה",
+   "where": "בית המלאכה, עמק הטחנה",
+   "steps": [
+    {
+     "line": "r1.p3.narrator.0004"
+    },
+    {
+     "line": "r1.p3.mender.0004"
+    },
+    {
+     "choice": {
+      "prompt": "איך מחברים את הבתים מחדש?",
+      "options": [
+       {
+        "text": "כוכב: חוט משלו לכל בית אל מתג במרכז. חוט חתוך מנתק בית אחד",
+        "goto": "p3_fix_ok"
+       },
+       {
+        "text": "להשאיר חוט משותף אחד, אבל לעבות אותו",
+        "goto": "p3_fix_hint"
+       },
+       {
+        "text": "לחבר כל בית לכל בית אחר, גם את הקטנים",
+        "goto": "p3_fix_hint"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p3_fix_hint": {
+   "title": "רמז מהמחט",
+   "where": "בית המלאכה, עמק הטחנה",
+   "steps": [
+    {
+     "line": "r1.p3.dvora.0001"
+    },
+    {
+     "line": "r1.p3.dvora.0002"
+    },
+    {
+     "choice": {
+      "prompt": "לנסות שוב?",
+      "options": [
+       {
+        "text": "כן, לנסות שוב",
+        "goto": "p3_fix"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p3_fix_ok": {
+   "title": "חוט משלו לכל בית",
+   "where": "בית המלאכה, עמק הטחנה",
+   "steps": [
+    {
+     "line": "r1.p3.mender.0005"
+    },
+    {
+     "line": "r1.p3.narrator.0005"
+    },
+    {
+     "line": "r1.p3.player.0002"
+    },
+    {
+     "line": "r1.p3.mender.0006"
+    },
+    {
+     "flag": "p3_complete"
+    }
+   ]
+  },
+  "p4_chaos": {
+   "title": "מעבר לים",
+   "where": "הנמל, על החוף",
+   "steps": [
+    {
+     "line": "r1.p4.narrator.0001"
+    },
+    {
+     "line": "r1.p4.dockHand.0001"
+    },
+    {
+     "line": "r1.p4.dockHand.0002"
+    },
+    {
+     "line": "r1.p4.player.0001"
+    },
+    {
+     "line": "r1.p4.dockHand.0003"
+    },
+    {
+     "line": "r1.p4.narrator.0002"
+    },
+    {
+     "line": "r1.p4.narrator.0003"
+    },
+    {
+     "flag": "p4_seen"
+    }
+   ]
+  },
+  "p4_fix": {
+   "title": "התיקון: הנמל",
+   "where": "הנמל, על החוף",
+   "steps": [
+    {
+     "line": "r1.p4.narrator.0004"
+    },
+    {
+     "line": "r1.p4.dockHand.0004"
+    },
+    {
+     "choice": {
+      "prompt": "איך מחברים את בית הספר, הסניף והעולם?",
+      "options": [
+       {
+        "text": "שני האזורים נשארים LAN. ספק תקשורת מחבר ביניהם (WAN), וספק אינטרנט פותח את העולם",
+        "goto": "p4_fix_ok"
+       },
+       {
+        "text": "להאריך את רשת בית הספר (LAN) עד הסניף, בכוחות עצמנו",
+        "goto": "p4_fix_hint"
+       },
+       {
+        "text": "האינטרנט לא שייך לאף אחד, אז מחברים אליו ישר, בלי ספק",
+        "goto": "p4_fix_hint"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p4_fix_hint": {
+   "title": "רמז מהמחט",
+   "where": "הנמל, על החוף",
+   "steps": [
+    {
+     "line": "r1.p4.dvora.0001"
+    },
+    {
+     "line": "r1.p4.dvora.0002"
+    },
+    {
+     "choice": {
+      "prompt": "לנסות שוב?",
+      "options": [
+       {
+        "text": "כן, לנסות שוב",
+        "goto": "p4_fix"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p4_fix_ok": {
+   "title": "הסניף עונה",
+   "where": "הנמל, על החוף",
+   "steps": [
+    {
+     "line": "r1.p4.dockHand.0005"
+    },
+    {
+     "line": "r1.p4.narrator.0005"
+    },
+    {
+     "line": "r1.p4.player.0002"
+    },
+    {
+     "line": "r1.p4.dockHand.0006"
+    },
+    {
+     "flag": "p4_complete"
+    }
+   ]
+  },
+  "p5_chaos": {
+   "title": "רשת בלי תוכנית",
+   "where": "אולם הגילדה, על החוף",
+   "steps": [
+    {
+     "line": "r1.p5.narrator.0001"
+    },
+    {
+     "line": "r1.p5.guildMaster.0001"
+    },
+    {
+     "line": "r1.p5.player.0001"
+    },
+    {
+     "line": "r1.p5.guildMaster.0002"
+    },
+    {
+     "line": "r1.p5.narrator.0002"
+    },
+    {
+     "line": "r1.p5.guildMaster.0003"
+    },
+    {
+     "line": "r1.p5.narrator.0003"
+    },
+    {
+     "flag": "p5_seen"
+    }
+   ]
+  },
+  "p5_fix": {
+   "title": "התיקון: אולם הגילדה",
+   "where": "אולם הגילדה, על החוף",
+   "steps": [
+    {
+     "line": "r1.p5.narrator.0004"
+    },
+    {
+     "line": "r1.p5.guildMaster.0004"
+    },
+    {
+     "choice": {
+      "prompt": "איך מתחילים לסדר את הרשת?",
+      "options": [
+       {
+        "text": "לתכנן על שולחן התכנון: התקנים, חוטים, כתובות IP, ובסוף בדיקה עם ping",
+        "goto": "p5_fix_ok"
+       },
+       {
+        "text": "לקשור עוד חוטים אמיתיים עד שהודעה תעבור",
+        "goto": "p5_fix_hint"
+       },
+       {
+        "text": "קודם לתת כתובות IP לכולם, ורק אחר כך להציב ולחבר",
+        "goto": "p5_fix_hint"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p5_fix_hint": {
+   "title": "רמז מהמחט",
+   "where": "אולם הגילדה, על החוף",
+   "steps": [
+    {
+     "line": "r1.p5.dvora.0001"
+    },
+    {
+     "line": "r1.p5.dvora.0002"
+    },
+    {
+     "choice": {
+      "prompt": "לנסות שוב?",
+      "options": [
+       {
+        "text": "כן, לנסות שוב",
+        "goto": "p5_fix"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  "p5_fix_ok": {
+   "title": "הודעה שאף אחד לא שלח",
+   "where": "אולם הגילדה, על החוף",
+   "steps": [
+    {
+     "line": "r1.p5.guildMaster.0005"
+    },
+    {
+     "line": "r1.p5.narrator.0005"
+    },
+    {
+     "line": "r1.p5.narrator.0006"
+    },
+    {
+     "line": "r1.p5.guildMaster.0006"
+    },
+    {
+     "flag": "p5_complete"
+    }
+   ]
+  }
+ }
+}

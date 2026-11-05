@@ -13,6 +13,17 @@ export interface RunnerHooks {
   onFlag?(name: string): void;
 }
 
+/** Fix-it questions have one right option leading to a scene named "..._ok": its place is mixed so it is not always first. */
+function shuffleIfQuiz<T extends { goto: string }>(options: T[]): T[] {
+  if (!options.some((o) => /_ok$/.test(o.goto))) return options;
+  const a = [...options];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j] as T, a[i] as T];
+  }
+  return a;
+}
+
 /** Plays a scene from scenes.json: lines, choices that jump to other scenes, flags and cutscene cards. */
 export class SceneRunner {
   private catchphrases = 0;
@@ -69,7 +80,7 @@ export class SceneRunner {
         this.dialogue.close();
         const answer = await this.dialogue.choose(
           { speaker: '', text: st.choice.prompt },
-          st.choice.options.map((o) => ({ text: o.text, value: o.goto })),
+          shuffleIfQuiz(st.choice.options).map((o) => ({ text: o.text, value: o.goto })),
         );
         return answer;
       }
