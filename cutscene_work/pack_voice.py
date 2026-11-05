@@ -3,13 +3,13 @@ File name = line id (e.g. r1.p0.narrator.0001.wav / .mp3 / .m4a). Each is trimme
 (-16 LUFS, mono) and written as public/assets/voice/<id>.mp3 (64 kbps), then index.json lists them."""
 import glob, json, os, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = r"E:\Tikshuv Games\voice_in"
+SRC = os.path.join("E:/Tikshuv Games", "voice_in", "lines")
 OUT = os.path.join(HERE, '..', 'public', 'assets', 'voice')
 os.makedirs(OUT, exist_ok=True)
 best = {}
 for f in sorted(glob.glob(os.path.join(SRC, '*'))):
     stem, ext = os.path.splitext(os.path.basename(f))
-    if ext.lower() not in ('.wav', '.mp3', '.m4a', '.ogg', '.flac'):
+    if ext.lower() not in ('.wav', '.mp3', '.m4a', '.ogg', '.flac') or stem.startswith('_'):
         continue
     # a second take is named <id>__2 or <id>_2: the last file wins unless you delete it
     lid = stem.split('__')[0]

@@ -1,0 +1,1016 @@
+{
+ "boss.dvora.0003": {
+  "recall": 0.36,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "המחט רואה אותם עכשיו."
+ },
+ "boss.narrator.0001": {
+  "recall": 0.38,
+  "precision": 0.75,
+  "ok": false,
+  "heard": "ענק יורד אל הכפר."
+ },
+ "boss.narrator.0002": {
+  "recall": 0.9,
+  "precision": 0.9,
+  "ok": true,
+  "heard": "הוא לא נראה כועס, הוא נראה סקרן, והוא חוטא חוטים."
+ },
+ "end.narrator.0001": {
+  "recall": 0.5,
+  "precision": 0.86,
+  "ok": false,
+  "heard": "הראש מרפא את אצבעותיו, החוטים יורדים בשקט."
+ },
+ "end.narrator.0002": {
+  "recall": 0.5,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "הוא לא נעלם, הוא מביט."
+ },
+ "end.narrator.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בעמק זמזום חדש, לא קול של הד, קול של רשת."
+ },
+ "r1.p0.baker.0001": {
+  "recall": 0.7,
+  "precision": 0.7,
+  "ok": false,
+  "heard": "אורחים ברגע החיר הגרוע, מחר אף חג ואין לי קמח."
+ },
+ "r1.p0.baker.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "קמח קמח איפה אתה תחזור הביתה"
+ },
+ "r1.p0.child.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אני אסף, בלילה החוטים מזמזמים, אבל אתמול הם שתקו."
+ },
+ "r1.p0.child.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אמא אמרה שזה קורה."
+ },
+ "r1.p0.child.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אני סופר שליחים עד עכשיו שלושים."
+ },
+ "r1.p0.clinicDoctor.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "המרפאה פתוחה, בבקשה לא לגעת בתיקים."
+ },
+ "r1.p0.clinicDoctor.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מי שמרגיש רע שיבוא, גם מי שמרגיש טוב מדי."
+ },
+ "r1.p0.grandma.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מתוקים, בואו לבקר, יש עוגיות."
+ },
+ "r1.p0.grandma.0002": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "זה"
+ },
+ "r1.p0.grandma.0003": {
+  "recall": 0.67,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "החתול שלי ישב על חוט כחול ואכל אותו."
+ },
+ "r1.p0.hubGrandpa.0001": {
+  "recall": 0.33,
+  "precision": 0.5,
+  "ok": false,
+  "heard": "שלום, שלום,  מגיע, מגיע."
+ },
+ "r1.p0.hubGrandpa.0002": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "בואו"
+ },
+ "r1.p0.hubGrandpa.0005": {
+  "recall": 0.83,
+  "precision": 0.83,
+  "ok": true,
+  "heard": "שלום, שלום, הכל בסדר, תמיד היה."
+ },
+ "r1.p0.miller.0001": {
+  "recall": 0.2,
+  "precision": 0.33,
+  "ok": false,
+  "heard": "אממ... נאו... טוחן."
+ },
+ "r1.p0.narrator.0001": {
+  "recall": 0.29,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "שלושה ימים של הליכה."
+ },
+ "r1.p0.narrator.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "על ספסל ליד הכניסה יושב זקן עם אוזניים גדולות ומחייך."
+ },
+ "r1.p0.narrator.0008": {
+  "recall": 0.78,
+  "precision": 0.78,
+  "ok": false,
+  "heard": "מעל הגגות מתנסי מגדל ההורגים,  בחלון העליון דולק אור."
+ },
+ "r1.p0.narrator.0011": {
+  "recall": 0.29,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "שלושה בתים פתוחים לביקור."
+ },
+ "r1.p0.narrator.0012": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מי שמסתכל מקרוב ימצא כרטיסים,  דפי יומן וגם דברים מצחיקים."
+ },
+ "r1.p0.villager1.0001": {
+  "recall": 0.75,
+  "precision": 0.86,
+  "ok": false,
+  "heard": "ברוכים הבאים לכפרך, בואו שבו, תאכלו משהו."
+ },
+ "r1.p0.villager1.0002": {
+  "recall": 0.83,
+  "precision": 0.83,
+  "ok": true,
+  "heard": "תקלות? אצלנו? הכל בסדר, תמיד היה."
+ },
+ "r1.p0.villager1.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "היום ממש שקט בשוק, יקרים נעים!"
+ },
+ "r1.p0.villager2.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "נו, אתם עומדים או הולכים?"
+ },
+ "r1.p0.villager3.0002": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "אה..."
+ },
+ "r1.p1.baker.0001": {
+  "recall": 1.0,
+  "precision": 0.91,
+  "ok": true,
+  "heard": "שלחתי הודעה לטוחן מעבר לנחל ואין לי קמח, אפילו לא לפרוסה."
+ },
+ "r1.p1.baker.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "הזמנתי, שלחתי עשרים שליחים."
+ },
+ "r1.p1.baker.0004": {
+  "recall": 0.89,
+  "precision": 0.8,
+  "ok": true,
+  "heard": "מה אחת? תנסו, תנסו, מזה כבר לא יהיה גרוע יותר."
+ },
+ "r1.p1.baker.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אל תקשיבו להם, תקשיבו לקמח, אין קמח."
+ },
+ "r1.p1.baker.0006": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "זה עובד, זה עובד, הכל בסדר, תמיד."
+ },
+ "r1.p1.baker.0007": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "לא, לא תמיד, נכון?"
+ },
+ "r1.p1.child.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אבל אתמול אף שליח לא הלך לאיבוד."
+ },
+ "r1.p1.child.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "נכון, לא תמיד."
+ },
+ "r1.p1.clinicDoctor.0001": {
+  "recall": 0.31,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "הצוות כולו צריך אותו."
+ },
+ "r1.p1.clinicDoctor.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תיק אחד, מקום אחד, סוף סוף אפשר לנשום."
+ },
+ "r1.p1.dvora.0002": {
+  "recall": 0.11,
+  "precision": 0.25,
+  "ok": false,
+  "heard": "בנית דבורה הורגת וגמורה."
+ },
+ "r1.p1.dvora.0002b": {
+  "recall": 0.31,
+  "precision": 0.8,
+  "ok": false,
+  "heard": "איכותים הם הקשרים של העמק."
+ },
+ "r1.p1.dvora.0002c": {
+  "recall": 0.46,
+  "precision": 0.86,
+  "ok": false,
+  "heard": "עמק שכל בתיו קשורים בחוטים או רשת."
+ },
+ "r1.p1.dvora.0003": {
+  "recall": 0.89,
+  "precision": 0.89,
+  "ok": true,
+  "heard": "המחט רואה רק מה שהבנתם, בינתיים היא מרה כתם."
+ },
+ "r1.p1.dvora.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "נכון, לכן קודם לומדים ואחר כך מתקנים."
+ },
+ "r1.p1.dvora.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "שאלה טובה, אולי בהמשך."
+ },
+ "r1.p1.dvora.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בואו, לומדים."
+ },
+ "r1.p1.dvora.0007": {
+  "recall": 0.54,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "היום, מהי רשת ואילו שני סוגים יש."
+ },
+ "r1.p1.dvora.0009": {
+  "recall": 0.88,
+  "precision": 0.88,
+  "ok": true,
+  "heard": "20 דקות בערך, בלי עוגיות, אבל עם תשובות."
+ },
+ "r1.p1.dvora.0010": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "עכשיו היא תראה איזה סוג רשת מתאים לכל מקום,  לפי הצורך,  לא לפי הרצון."
+ },
+ "r1.p1.dvora.0011": {
+  "recall": 0.77,
+  "precision": 0.77,
+  "ok": false,
+  "heard": "יפה, רדו לכפר, התחילו בבית הסבתא ופיקחו עיניים גם על מה שאין נוחות."
+ },
+ "r1.p1.dvora.0013": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "שני מכשירים שווים, מי צריך כאן מנהל?"
+ },
+ "r1.p1.dvora.0014": {
+  "recall": 0.7,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "הרבה אנשים, תיק אחד שחייב להיות מעודכן."
+ },
+ "r1.p1.dvora.0015": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אחד נותן הרבה מבקשים מי משרת את מי."
+ },
+ "r1.p1.dvora.0017": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "קשר כזה קושרים רק במגדל שלי."
+ },
+ "r1.p1.dvora.0018": {
+  "recall": 0.67,
+  "precision": 0.67,
+  "ok": false,
+  "heard": "זה מספיק לאיום."
+ },
+ "r1.p1.dvora.0019": {
+  "recall": 0.89,
+  "precision": 0.8,
+  "ok": true,
+  "heard": "פעם אחת מתחממת, עוד שתי דקות סערת חוטים, חזרו אליי."
+ },
+ "r1.p1.dvora.0020": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "הגעתם, שלמים, וההתקדמות שמורה, השיעור הבא מחכה על הנול."
+ },
+ "r1.p1.grandma.0002": {
+  "recall": 0.91,
+  "precision": 0.91,
+  "ok": true,
+  "heard": "בינינו 20 צעדים שהרגליים שלי כבר לא עושות,  אפשר לראות אותם."
+ },
+ "r1.p1.grandma.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אני רואה אותם, הם גדלו.  מתי הם גדלו?"
+ },
+ "r1.p1.hubGrandpa.0002": {
+  "recall": 0.4,
+  "precision": 0.4,
+  "ok": false,
+  "heard": "שערה, שערה, הכל בסדר, תמיד."
+ },
+ "r1.p1.miller.0001": {
+  "recall": 0.8,
+  "precision": 0.57,
+  "ok": false,
+  "heard": "אממ... אממ... קמח? אממ... לא הזמינו אצלי."
+ },
+ "r1.p1.miller.0002": {
+  "recall": 0.67,
+  "precision": 0.67,
+  "ok": false,
+  "heard": "הם משליחים הולכים לאיבוד, תמיד הלכו."
+ },
+ "r1.p1.miller.0003": {
+  "recall": 0.88,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "כל הכפר מזמין קמח, רק אני מכין."
+ },
+ "r1.p1.miller.0004": {
+  "recall": 0.86,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "לוח אחד, כל הזמנה בו, טוב."
+ },
+ "r1.p1.narrator.0001": {
+  "recall": 0.5,
+  "precision": 0.86,
+  "ok": false,
+  "heard": "שליחים קטנים ממעטפות זוהרות רצים לכל כיוון."
+ },
+ "r1.p1.narrator.0004": {
+  "recall": 0.6,
+  "precision": 0.86,
+  "ok": false,
+  "heard": "העולם מתעמם, חוטים זוהרים מופיעים בין הבתים."
+ },
+ "r1.p1.narrator.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מי שיכולה ללמד נמצאת בחלון המגדל,  צריך ללכת אליה."
+ },
+ "r1.p1.narrator.0007": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מרחוק דולק חלון המגדל, הגיע הזמן לבקר."
+ },
+ "r1.p1.narrator.0008": {
+  "recall": 0.36,
+  "precision": 0.57,
+  "ok": false,
+  "heard": "מגדל ההורגים, חלק הרגול, סלילי חוט צבעוניים."
+ },
+ "r1.p1.narrator.0009": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "היא מיישרת סליל על הנול."
+ },
+ "r1.p1.narrator.0010": {
+  "recall": 0.5,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "המחט בכף היד נהיית חמה."
+ },
+ "r1.p1.narrator.0011": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בבית הסבתא מכשיר אחד אצלה ועוד אחד אצל הנכדים בקצה הסמטה."
+ },
+ "r1.p1.narrator.0012": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "שני מכשירים, חוט אחד בלי מנהל, זו רשת עמית לעמית."
+ },
+ "r1.p1.narrator.0013": {
+  "recall": 0.5,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "מחשב חזק אחד שומר את התיקים."
+ },
+ "r1.p1.narrator.0014": {
+  "recall": 0.91,
+  "precision": 0.91,
+  "ok": true,
+  "heard": "הנחתום, בית הספר, האכסניה ושמונה משפחות.  כולם שולחים הזמנות לאותו תוכן."
+ },
+ "r1.p1.narrator.0015": {
+  "recall": 0.27,
+  "precision": 0.75,
+  "ok": false,
+  "heard": "התוכן מקבל הזמנות מכולם."
+ },
+ "r1.p1.narrator.0016": {
+  "recall": 0.88,
+  "precision": 0.88,
+  "ok": true,
+  "heard": "השליחים מסתדרים בשורה, הגלת קמח חוצה את הנחל."
+ },
+ "r1.p1.narrator.0017": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בפעם הראשונה מאז שהגעתם, אף אחד לא אמר, זה קורה."
+ },
+ "r1.p1.narrator.0018": {
+  "recall": 0.3,
+  "precision": 0.6,
+  "ok": false,
+  "heard": "המחט מרטיטה על יד הנחל."
+ },
+ "r1.p1.narrator.0019": {
+  "recall": 0.92,
+  "precision": 0.92,
+  "ok": true,
+  "heard": "הקצה חלק כמו סרגל ולידו קשר קטן משני סיבובים,  קשר של אורג."
+ },
+ "r1.p1.narrator.0021": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "במגדל הגדול, רחוק, דולק חלון,  דמות עומדת בו,  ואז החלון חשוך."
+ },
+ "r1.p1.narrator.0022": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "תודה."
+ },
+ "r1.p1.narrator.0023": {
+  "recall": 0.89,
+  "precision": 0.89,
+  "ok": true,
+  "heard": "החוטים מתפלים סביב הרגליים כמו סרטים חמים ואז שקט."
+ },
+ "r1.p1.villager1.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "זה קורה, יקרים, כל חג זה ככה."
+ },
+ "r1.p1.villager1.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "שום דבר, זה קורה, יקרים."
+ },
+ "r1.p1.villager1.0003": {
+  "recall": 0.67,
+  "precision": 0.8,
+  "ok": false,
+  "heard": "זה קורה! אל תבעלו, יקרים!"
+ },
+ "r1.p1.villager2.0002": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "כל חג, נו, הכל בסדר? תמיד היה."
+ },
+ "r1.p2.dvora.0001": {
+  "recall": 0.56,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "בכל הודעה יש שלושה חלקים."
+ },
+ "r1.p2.dvora.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מי שבאמצע רק מעביר הלאה, ודרך טובה לא אומרת למי."
+ },
+ "r1.p2.innkeeper.0001": {
+  "recall": 0.89,
+  "precision": 0.89,
+  "ok": true,
+  "heard": "תראו שוב עבדה חבילה הודעות לנפח לרוקחת לבית הספר."
+ },
+ "r1.p2.innkeeper.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אף אחד לא יודע מי שלח, מי אמור לקבל ובאיזו דרך."
+ },
+ "r1.p2.innkeeper.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "דבורה במגדל יודעת על חוטים? אולי תשאלו אותה."
+ },
+ "r1.p2.innkeeper.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תראו, אתם רואים משהו? אני כבר לא יודעת איפה לחפש."
+ },
+ "r1.p2.innkeeper.0005": {
+  "recall": 0.55,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "תראו איזה סדר על כל חבילה."
+ },
+ "r1.p2.innkeeper.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תראו, זה השם שבספר האורחים, הוא שילם חודש מראש."
+ },
+ "r1.p2.narrator.0001": {
+  "recall": 0.4,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "בשורת השוק מול הפונדק"
+ },
+ "r1.p2.narrator.0002": {
+  "recall": 0.4,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "המחט רואה רק כתם."
+ },
+ "r1.p2.narrator.0003": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "קודם ללמוד חוזרים אל דבורה במגדל ההורגים."
+ },
+ "r1.p2.narrator.0004": {
+  "recall": 0.67,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "המחט חדה עכשיו, היא מציירת קו מכל חבילה."
+ },
+ "r1.p2.narrator.0005": {
+  "recall": 0.9,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "החבילה הישנה ביותר מגיעה ליעד,  בתוכה דף מקופל,  חתום."
+ },
+ "r1.p3.dvora.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "חפשו צורה שבה חוט חתוך מנתק בית אחד בלבד."
+ },
+ "r1.p3.dvora.0002": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "וזכור."
+ },
+ "r1.p3.mender.0001": {
+  "recall": 0.88,
+  "precision": 0.88,
+  "ok": true,
+  "heard": "פחות אחד נחתך והכפר שמעבר לגשר חצי שותק."
+ },
+ "r1.p3.mender.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "חמישה בתים עוד מזמזמים,  חמישה אחרים לא שומעים כלום."
+ },
+ "r1.p3.mender.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "כולם יושבים על חוט משותף אחד, לא ברור לי איך זה קרה."
+ },
+ "r1.p3.mender.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "איך מחברים אותם שחוט חתוך לא ישתיק חצי כפר?"
+ },
+ "r1.p3.mender.0005": {
+  "recall": 0.91,
+  "precision": 0.91,
+  "ok": true,
+  "heard": "עכשיו אם חוט יחתך רק בית אחד ישתוק, זה מספיק לי."
+ },
+ "r1.p3.mender.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "ידעתי, שמרתי אותו למקרה שמישהו ישאל."
+ },
+ "r1.p3.narrator.0001": {
+  "recall": 0.9,
+  "precision": 0.9,
+  "ok": true,
+  "heard": "בעמק התחנה בבית המלאכה גברת אסתר מחזיקה סליל חוט חתוך."
+ },
+ "r1.p3.narrator.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "המחט רואה רק כתם, אי אפשר להבין מי תלוי במי."
+ },
+ "r1.p3.narrator.0003": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "קודם ללמוד חוזרים אל דבורה במגדל ההורגים."
+ },
+ "r1.p3.narrator.0004": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": ""
+ },
+ "r1.p3.narrator.0005": {
+  "recall": 0.92,
+  "precision": 0.92,
+  "ok": true,
+  "heard": "היא מושיטה את החוט הישן,  הקצה חלק עמו סרגל, שוב קשר בשני סיבובים."
+ },
+ "r1.p4.dockHand.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בית הספר שלנו והסניף שמעבר למפרץ לא מדברים זה עם זה."
+ },
+ "r1.p4.dockHand.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "וגם לא עם העולם שמעבר לים כבר שנים."
+ },
+ "r1.p4.dockHand.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בפנים יש חוטים, מה שבחוץ נשאר בחוץ, ככה אומרים."
+ },
+ "r1.p4.dockHand.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אפשר לתקן? אני רק יודע לקשור חבלים."
+ },
+ "r1.p4.dockHand.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תראו הסניף עונה, ומשם גם הודעות מהעולם."
+ },
+ "r1.p4.dockHand.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מישהו בא בלילות ומסתכל על הים, לא שואלים אותו כלום."
+ },
+ "r1.p4.dvora.0001": {
+  "recall": 1.0,
+  "precision": 0.9,
+  "ok": true,
+  "heard": "לאן הוא אזור קטן, מה מחבר בין שני אזורים רחוקים?"
+ },
+ "r1.p4.dvora.0002": {
+  "recall": 0.89,
+  "precision": 0.89,
+  "ok": true,
+  "heard": "האינטרנט פתוח לכולם,  אבל השאר שלו מגיעים דרך ספק."
+ },
+ "r1.p4.narrator.0001": {
+  "recall": 0.77,
+  "precision": 0.77,
+  "ok": false,
+  "heard": "בנמל ספינות קשורות בלי מפרש,  על המסח אומר דמר צבי,  חבל על כתפו."
+ },
+ "r1.p4.narrator.0002": {
+  "recall": 0.91,
+  "precision": 0.91,
+  "ok": true,
+  "heard": "מחט רואה כתם, ואחריו מים.  אי אפשר להבין איפה נגמרת רשת."
+ },
+ "r1.p4.narrator.0003": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "קודם ללמוד חוזרים אל דבורה במגדל ההורגים."
+ },
+ "r1.p4.narrator.0004": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": "תודה רבה"
+ },
+ "r1.p4.narrator.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בקצה המזח על עמוד קופסת מפתחות ריקה על התווית שער המגדל."
+ },
+ "r1.p5.dvora.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "על השולחן מותר לטעות ושום בית לא נשבר."
+ },
+ "r1.p5.dvora.0002": {
+  "recall": 0.78,
+  "precision": 0.88,
+  "ok": false,
+  "heard": "וגם שם יש סדר, מה בקודם ומה בסוף."
+ },
+ "r1.p5.guildMaster.0001": {
+  "recall": 0.42,
+  "precision": 0.83,
+  "ok": false,
+  "heard": "בנינו הכל בבת אחת בשביל החג."
+ },
+ "r1.p5.guildMaster.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תכנון?  רצינו להספיק, עכשיו אף אחד לא יודע איפה מה."
+ },
+ "r1.p5.guildMaster.0003": {
+  "recall": 0.89,
+  "precision": 0.89,
+  "ok": true,
+  "heard": "יש לנו שלוחן תכנון ישן, דבורה יודעת להפעיל אותו."
+ },
+ "r1.p5.guildMaster.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "מה עושים עכשיו לפני שקושרים עוד חוט?"
+ },
+ "r1.p5.guildMaster.0005": {
+  "recall": 0.78,
+  "precision": 0.88,
+  "ok": false,
+  "heard": "הודעה עוברת, מחשב אל שרת, בלכות אחד מיותר."
+ },
+ "r1.p5.guildMaster.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "לא ראיתם כלום, ככה עדיף."
+ },
+ "r1.p5.narrator.0001": {
+  "recall": 0.92,
+  "precision": 0.92,
+  "ok": true,
+  "heard": "באולם הגילדה על החוף רשת ענקית חדשה,  חוטים בכל פינה,  אורות מאבבים."
+ },
+ "r1.p5.narrator.0002": {
+  "recall": 0.78,
+  "precision": 0.78,
+  "ok": false,
+  "heard": "מח התורה כתם, אי אפשר להבין מה מחובר למה."
+ },
+ "r1.p5.narrator.0003": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "קודם ללמוד חוזרים אל דבורה במגדל ההורגים."
+ },
+ "r1.p5.narrator.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "המחט חדה עכשיו,  החוטים נמתחו לפני שמישהו רשם מה מחובר למה."
+ },
+ "r1.p5.narrator.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בסימולציה שליח אחד נע לבד, אף אחד לא שלח אותו."
+ },
+ "r1.p5.narrator.0006": {
+  "recall": 0.6,
+  "precision": 1.0,
+  "ok": false,
+  "heard": "הוא עולה מהשולחן אל התקרה ונעלם."
+ },
+ "w1.bell_tower.bellKeeper.0001": {
+  "recall": 0.88,
+  "precision": 0.78,
+  "ok": true,
+  "heard": "מאה ושתיים עשרים מדרגות, אני סופר אותן כל פעם."
+ },
+ "w1.bell_tower.bellKeeper.0003": {
+  "recall": 0.75,
+  "precision": 0.75,
+  "ok": false,
+  "heard": "החיבל קצר, ככה זה."
+ },
+ "w1.bell_tower.bellKeeper.0004": {
+  "recall": 0.83,
+  "precision": 0.83,
+  "ok": true,
+  "heard": "נקישה, היונה יודעת הכל, תשאלו אותה."
+ },
+ "w1.bell_tower.bellKeeper.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "פעם הפעמון דיבר עם כל העמק."
+ },
+ "w1.bell_tower.bellKeeper.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "עכשיו הוא רק מקשיב, וגם זה לא תמיד."
+ },
+ "w1.coast.dockHand.0001": {
+  "recall": 0.71,
+  "precision": 0.83,
+  "ok": false,
+  "heard": "ספינות? כבר רסבזמן לא ראיתי חדשה."
+ },
+ "w1.coast.dockHand.0002": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "הנמל ישן אבל החבלים שלי חזקים"
+ },
+ "w1.coast.dockHand.0003": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": ""
+ },
+ "w1.guild.guildMaster.0001": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "הגילדה מקבלת אתכם, נא לו לגעת בדגלים."
+ },
+ "w1.guild.guildMaster.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אותו דבר שעשינו אתמול, שיחות ארוכות בעיקר."
+ },
+ "w1.guild.guildMaster.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "הכיסא העשירי שמור, כך נקבע."
+ },
+ "w1.guild.guildMaster.0005": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "הצבעה אחת נעלמה, אני מחפש אותה עשר שנים."
+ },
+ "w1.guild.guildMaster.0006": {
+  "recall": 0.83,
+  "precision": 0.83,
+  "ok": true,
+  "heard": "התוצרה שלנו? טעות. אולי לא? תבדקו."
+ },
+ "w1.inn.innkeeper.0001": {
+  "recall": 0.9,
+  "precision": 0.9,
+  "ok": true,
+  "heard": "תראו ברוכים הבאים, יש שתי תפוחים וחדר ארבע תמיד מוכן."
+ },
+ "w1.inn.innkeeper.0003": {
+  "recall": 0.0,
+  "precision": 0.0,
+  "ok": false,
+  "heard": ""
+ },
+ "w1.inn.innkeeper.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תקראו בספר האורחים, החתימות שם הן הסיפור שלי."
+ },
+ "w1.inn.innkeeper.0005": {
+  "recall": 0.9,
+  "precision": 0.9,
+  "ok": true,
+  "heard": "תראו, מישהו יושב פעם בדיוק במקום שלכם, שילם חודש מראש."
+ },
+ "w1.inn.innkeeper.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אמר שיחזור בשביל התה, אני עדיין מחכה."
+ },
+ "w1.tailor.tailor.0001": {
+  "recall": 0.78,
+  "precision": 0.78,
+  "ok": false,
+  "heard": "מידה, מידה ושום מידה, כאן כל בגד צנוע ונוע."
+ },
+ "w1.tailor.tailor.0003": {
+  "recall": 0.86,
+  "precision": 0.86,
+  "ok": true,
+  "heard": "בוודאי, כובעים, צעיפים, שמאלות ארוכות, תבחרו בנחת."
+ },
+ "w1.tailor.tailor.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "רק מעיל אחד אצלי, תמיד קטן מדי, אל תשאלו של מי."
+ },
+ "w1.tailor.tailor.0005": {
+  "recall": 0.88,
+  "precision": 0.88,
+  "ok": true,
+  "heard": "פעם בחודש הסל יורד מהצריח, אני רק תופע."
+ },
+ "w1.tailor.tailor.0006": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "בלי שאלות, כך הסכמנו."
+ },
+ "w1.workshop.mender.0001": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "תנו לי רגע, אני מדברת עם הגלגל, הוא עקשן."
+ },
+ "w1.workshop.mender.0003": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "אל תיגעו בלי לשאול, כל בורג יודע את מקומו."
+ },
+ "w1.workshop.mender.0004": {
+  "recall": 1.0,
+  "precision": 1.0,
+  "ok": true,
+  "heard": "השעונים לא רבים, הם רק לא מסכימים."
+ },
+ "w1.workshop.mender.0005": {
+  "recall": 0.57,
+  "precision": 0.8,
+  "ok": false,
+  "heard": "פעם השאיר אצלי מישהו בחור..."
+ },
+ "w1.workshop.mender.0006": {
+  "recall": 0.8,
+  "precision": 0.8,
+  "ok": true,
+  "heard": "מי שיבוא עם אחת יקבל."
+ }
+}

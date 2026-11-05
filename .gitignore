@@ -13,3 +13,5 @@ cutscene_work/icons/*.png
 cutscene_work/icons/*.log
 cutscene_work/icons/done-*
 too-quiet-offline.zip
+public/assets/voice/_rejected/
+cutscene_work/voice_rejected/
