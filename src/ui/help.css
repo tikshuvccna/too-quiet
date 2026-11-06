@@ -1,0 +1,57 @@
+/* Hint badge, help area and the quick tutorial. Built on the tokens in src/styles.css. */
+.hint-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px 2px 8px; border-radius: 999px; flex: none;
+  background: linear-gradient(180deg, #ffe9b0, #e0a944); color: #3a2606; border: 1px solid #fff0c4; font-size: .78rem; font-weight: 800; line-height: 1.3;
+  box-shadow: 0 2px 0 #8a5f18, 0 0 12px rgba(255, 210, 122, .55); white-space: nowrap;
+}
+.hint-badge[hidden] { display: none; }
+.hint-badge svg { display: block; }
+.hint-badge .glint { animation: hint-glint 2.4s ease-in-out infinite; }
+@keyframes hint-glint { 0%, 70%, 100% { opacity: .2; } 85% { opacity: 1; } }
+
+/* on the dialogue box: a soft gold edge, and the badge in the bottom corner opposite the "tap to continue" hint */
+.dialogue .hint-badge { position: absolute; bottom: 10px; inset-inline-start: 18px; }
+.dialogue.is-hint { border-color: #ffd27a; box-shadow: var(--panel-edge), 0 0 0 1px rgba(255, 210, 122, .55), 0 0 26px rgba(255, 210, 122, .38); }
+.toast.has-hint { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.toast.has-hint .toast-text { min-width: 0; }
+.hx-hintrow { display: flex; justify-content: center; margin-bottom: 6px; }
+
+@media (prefers-reduced-motion: reduce) { .hint-badge .glint { animation: none; opacity: .8; } }
+
+/* help area */
+.help .lrn-sub { margin-block: 0 12px; margin-inline: auto; width: 100%; color: var(--mute); }
+.help-legend { display: flex; align-items: center; gap: 10px; margin-block: 0 14px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 210, 122, .08); border: 1px solid rgba(255, 210, 122, .35); line-height: 1.5; font-size: .98rem; }
+.help-list { display: grid; gap: 8px; }
+.help-sec { border-radius: 14px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); overflow: hidden; }
+.help-sec[open] { border-color: var(--teal); background: rgba(92, 240, 208, .06); }
+.help-sec summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 48px; padding: 10px 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; list-style: none; color: var(--gold); }
+.help-sec summary::-webkit-details-marker { display: none; }
+.help-sec summary::after { content: ''; flex: none; width: 9px; height: 9px; border-inline-end: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .15s; }
+.help-sec[open] summary::after { transform: rotate(-135deg); }
+.help-sec ul { margin: 0; padding: 0 14px 12px; padding-inline-start: calc(14px + 1.2em); line-height: 1.7; font-size: 1.02rem; }
+.help-sec li { margin-bottom: 4px; overflow-wrap: anywhere; }
+.help-foot { display: flex; justify-content: center; margin-block: 18px 0; }
+.help-foot .btn { max-width: 100%; white-space: normal; }
+.hud .help-btn { padding-inline: 12px; font-weight: 800; min-width: 38px; }
+
+/* quick tutorial */
+.tut { z-index: 60; align-items: center; justify-content: center; padding: 14px; overflow-y: auto; }
+.tut-wrap { width: min(440px, 100%); display: grid; gap: 14px; margin: auto; }
+.tut-card { padding: 16px 18px 14px; border-radius: 22px; text-align: center; background: var(--panel-bg); border: 1px solid rgba(255, 210, 122, .5); box-shadow: var(--panel-edge); }
+.tut-art { display: block; width: min(100%, 300px); height: auto; margin: 0 auto 8px; max-height: 26vh; }
+.tut-card h2 { margin: 0 0 8px; color: var(--gold); font-size: 1.45rem; }
+.tut-card p { margin: 0 0 6px; line-height: 1.6; font-size: 1.05rem; overflow-wrap: anywhere; }
+.tut-dots { display: flex; gap: 8px; justify-content: center; }
+.tut-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--line); }
+.tut-dot.on { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 207, 107, .6); }
+.tut-row { display: flex; gap: 10px; justify-content: center; }
+.tut-row .btn { min-width: 120px; min-height: 48px; }
+@media (max-height: 460px) {
+  .tut { padding: 8px; }
+  .tut-wrap { width: min(640px, 100%); gap: 8px; }
+  .tut-card { padding: 8px 14px; }
+  .tut-art { max-height: 15vh; margin-bottom: 2px; }
+  .tut-card h2 { font-size: 1.15rem; margin-bottom: 4px; }
+  .tut-card p { font-size: .95rem; line-height: 1.4; margin-bottom: 2px; }
+  .tut-row .btn { min-height: 44px; }
+}

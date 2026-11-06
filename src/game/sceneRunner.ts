@@ -4,6 +4,7 @@ import type { SaveStore } from '../core/save';
 import type { DialogueUI } from '../ui/dialogue';
 import { el, uiRoot } from '../ui/dom';
 import { playCutscene } from '../ui/cutscene';
+import { isHintLine } from '../content/hints';
 
 /** After these scenes the story waits for the player to go somewhere, instead of following `next`. */
 export const STOP_AFTER = new Set(['village_houses', 'return_after_lesson', 'fix_grandma_ok', 'fix_clinic_ok', 'fix_mill_ok', 'bakery_fixed']);
@@ -71,7 +72,7 @@ export class SceneRunner {
         const text = raw.split('{name}').join(this.save.data.name || 'אורח');
         // only now and then, when someone repeats the catchphrase, the truth shows through for a moment
         if (text.includes('הכול בסדר') && ++this.catchphrases % 3 === 2) bus.emit('truth:flash', { ms: 450 });
-        await this.dialogue.say([{ id: st.line, speaker: l.speaker, text }]);
+        await this.dialogue.say([{ id: st.line, speaker: l.speaker, text, hint: isHintLine(st.line) }]);
       } else if ('flag' in st) {
         this.save.setFlag(st.flag);
         this.hooks.onFlag?.(st.flag);

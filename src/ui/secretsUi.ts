@@ -2,6 +2,7 @@ import './houseActivities.css';
 import { audio } from '../audio/audio';
 import type { SecretDef } from '../world/secrets';
 import { el } from './dom';
+import { hintBadge } from './hintBadge';
 import { createOverlay } from './learning/overlay';
 
 /** A small full-screen card with one close button. Resolves when closed. */
@@ -31,7 +32,7 @@ function card(cls: string, build: () => HTMLElement[], sfx: 'prize' | 'pickup'):
 /** The scroll / note / rhyme that holds the clue. Can be opened again at the same object. */
 export function showClue(def: SecretDef, firstTime: boolean): Promise<void> {
   return card('hx-scroll', () => {
-    const out: HTMLElement[] = [el('h2', '', def.clue.title)];
+    const out: HTMLElement[] = [el('div', 'hx-hintrow', '', [hintBadge()]), el('h2', '', def.clue.title)];
     if (firstTime) out.push(el('p', '', def.clue.found));
     out.push(el('ol', '', '', def.clue.lines.map((l) => el('li', '', l))));
     if (def.clue.footer) out.push(el('p', 'hx-foot', def.clue.footer));

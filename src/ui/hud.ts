@@ -1,6 +1,7 @@
 import { bus } from '../core/bus';
 import { el, isTouchDevice, mmss, uiRoot } from './dom';
 import { audio } from '../audio/audio';
+import { hintBadge } from './hintBadge';
 
 export class Hud {
   private readonly bar = el('div', 'hud');
@@ -13,15 +14,17 @@ export class Hud {
   private readonly sight = el('button', 'btn', isTouchDevice() ? 'ראיית חוטים' : 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
   private readonly gear = el('button', 'btn gear', 'הגדרות');
+  private readonly help = el('button', 'btn help-btn', '?');
   private readonly interact = el('button', 'btn primary interact');
   private readonly toasts = el('div', 'toast-box');
   private sightOn = false;
   private current: { id: string } | null = null;
   onCollection: () => void = () => {};
   onSettings: () => void = () => {};
+  onHelp: () => void = () => {};
 
   constructor() {
-    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.gear, this.cards, this.sight, this.compass, this.objective);
+    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.help, this.gear, this.cards, this.sight, this.compass, this.objective);
     this.compass.append(this.compassArrow, this.compassText);
     this.compass.style.display = 'none';
     uiRoot().append(this.bar, this.interact, this.toasts);
@@ -32,6 +35,9 @@ export class Hud {
     requestAnimationFrame(measure);
     this.sight.addEventListener('click', () => this.toggleSight());
     this.cards.addEventListener('click', () => this.onCollection());
+    this.help.setAttribute('aria-label', 'עזרה');
+    this.help.title = 'עזרה';
+    this.help.addEventListener('click', () => this.onHelp());
     this.gear.addEventListener('click', () => this.onSettings());
     this.interact.addEventListener('click', () => this.use());
     bus.on('interact:available', (a) => {
@@ -96,8 +102,11 @@ export class Hud {
     this.coins.textContent = `מטבעות ${n}`;
   }
 
-  toast(msg: string, kind: '' | 'good' | 'clue' = '', ms = 3600): void {
-    const t = el('div', `toast ${kind}`, msg);
+  /** `hint` adds the gold "רמז" badge: use it only for notes that point at something to find, solve or learn. */
+  toast(msg: string, kind: '' | 'good' | 'clue' = '', ms = 3600, hint = false): void {
+    const t = el('div', `toast ${kind}${hint ? ' has-hint' : ''}`);
+    if (hint) t.append(hintBadge());
+    t.append(el('span', 'toast-text', msg));
     this.toasts.append(t);
     window.setTimeout(() => t.remove(), ms);
     while (this.toasts.childElementCount > 3) this.toasts.firstElementChild?.remove();

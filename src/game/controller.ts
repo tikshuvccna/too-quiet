@@ -3,6 +3,9 @@ import { WORLD_NPC_INFO, conversationFor } from '../content/world';
 import { NPC_GAMES, openNpcGame } from '../ui/npcgames';
 import { openShop } from '../ui/shop';
 import { openSettings } from '../ui/settings';
+import { openHelp } from '../ui/help';
+import { openTutorial } from '../ui/tutorial';
+import { isHintLine, isHintObject } from '../content/hints';
 import { perksOf } from './perks';
 import { equippedSkin } from './skins';
 import { audio } from '../audio/audio';
@@ -76,11 +79,13 @@ export class Controller {
     });
     bus.on('interact:use', ({ id }) => this.onUse(id));
     ctx.hud.onCollection = () => void this.collection();
+    ctx.hud.onHelp = () => this.help();
     ctx.hud.onSettings = () => {
       if (this.ctx.modal) return;
       this.ctx.modal = true;
       this.ctx.session.pause();
       openSettings(this.ctx.save, this.ctx.quality, {
+        onHelp: () => this.help(true),
         onChange: () => (this.ctx as unknown as { fpsMeter?: { show(on: boolean): void } }).fpsMeter?.show(this.ctx.save.data.settings.showFps),
         onClose: () => {
           this.ctx.dialogue.subtitles = this.ctx.save.data.settings.subtitles;
@@ -92,9 +97,32 @@ export class Controller {
     this.refreshObjective();
   }
 
+  /** Opens the help area. From the settings screen (`fromSettings`) the modal state is already held. */
+  private help(fromSettings = false): void {
+    if (!fromSettings && this.ctx.modal) return;
+    if (!fromSettings) {
+      this.ctx.modal = true;
+      this.ctx.session.pause();
+    }
+    openHelp({
+      onTutorial: () => void openTutorial(this.ctx.save, true),
+      onClose: () => {
+        if (fromSettings) return;
+        this.ctx.modal = false;
+        this.ctx.session.resume();
+      },
+    });
+  }
+
   /** Called once the player leaves the title screen. */
   async begin(): Promise<void> {
     if (!this.ctx.save.hasFlag('prologue_done')) {
+      // the quick tutorial: once, at the very first start of a new game, before the opening
+      if (!this.ctx.save.hasFlag('tutorial_seen')) {
+        this.ctx.modal = true;
+        await openTutorial(this.ctx.save, false);
+        this.ctx.modal = false;
+      }
       await this.withModal(async () => {
         // the prologue continues into village_meet by itself
         await this.runScene('prologue');
@@ -328,7 +356,7 @@ export class Controller {
           // the NPC of the problem teaches this lesson: two short lines, then the lesson menu
           const intro = TEACHER_INTRO[problem.lesson];
           if (intro) {
-            await this.ctx.dialogue.say(intro.lines.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text })));
+            await this.ctx.dialogue.say(intro.lines.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text, hint: isHintLine(id) })));
             this.ctx.dialogue.close();
           }
           await this.classroom({ only: problem.lesson, teacher: problem.teacher });
@@ -342,7 +370,7 @@ export class Controller {
         save.setFlag(key);
         save.save();
         if (ids.length) {
-          await this.ctx.dialogue.say(ids.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text.split('{name}').join(save.data.name || 'אורח') })));
+          await this.ctx.dialogue.say(ids.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text.split('{name}').join(save.data.name || 'אורח'), hint: isHintLine(id) })));
         } else await this.ctx.dialogue.say([{ speaker: wn.speaker, text: '...' }]);
         if (wn.id === 'npc_tailor') {
           this.ctx.dialogue.close();
@@ -381,7 +409,7 @@ export class Controller {
       if (npcId === 'miller' && this.lessonDone() && !this.has('fix_mill_done')) return this.runScene('fix_mill');
       const id = this.nextBark(npcId === 'villager2' || npcId === 'villager3' ? npcId : npcId);
       const line = id ? lineOf(id) : null;
-      if (line) await this.ctx.dialogue.say([{ id: id ?? undefined, speaker: line.speaker, text: line.text }]);
+      if (line) await this.ctx.dialogue.say([{ id: id ?? undefined, speaker: line.speaker, text: line.text, hint: isHintLine(id ?? undefined) }]);
       else await this.ctx.dialogue.say([{ speaker: npcId, text: '…' }]);
       void save;
     });
@@ -431,7 +459,7 @@ export class Controller {
     if (!house || !obj) return;
     this.ctx.save.setFlag(inspectedFlag(houseId, objId));
     await this.withModal(async () => {
-      await this.ctx.dialogue.say([{ speaker: '', text: `${obj.name}: ${obj.text}` }]);
+      await this.ctx.dialogue.say([{ speaker: '', text: `${obj.name}: ${obj.text}`, hint: isHintObject(houseId, objId) }]);
       const items = ITEMS_IN_OBJECT[`${houseId}:${objId}`] ?? [];
       for (const itemId of items) {
         if (this.ctx.save.data.collected[itemId]) continue;
@@ -461,7 +489,7 @@ export class Controller {
     }
     if (r === 'wrong') {
       audio.sfx('fail');
-      this.ctx.hud.toast(def.wrongHint, 'clue', 3400);
+      this.ctx.hud.toast(def.wrongHint, 'clue', 3400, true);
       return;
     }
     const prize = grantReward(this.ctx.save, def, perksOf(this.ctx.save).coinMul);
@@ -483,7 +511,7 @@ export class Controller {
     await this.withModal(async () => {
       await this.runScene(fix.scene);
       const house = HOUSES.find((h) => h.id === contentHouseId);
-      if (house?.threadSightClue) this.ctx.hud.toast('המחט מראה משהו חדש בבית הזה. (ראיית חוטים: Q)', 'clue', 5200);
+      if (house?.threadSightClue) this.ctx.hud.toast('המחט מראה משהו חדש בבית הזה. (ראיית חוטים: Q)', 'clue', 5200, true);
     });
     this.refreshObjective();
   }
@@ -574,7 +602,7 @@ export class Controller {
     if (!this.has('storm_warned') && t.targetId === 'door:tower') {
       await this.withModal(() => this.runScene('thread_storm_warning'));
     }
-    this.ctx.hud.toast(`הענן מתכנס! בעוד שתי דקות סערה. לכו אל ${t.teacher} ב${t.place}. החץ מראה את הדרך.`, 'clue', 7000);
+    this.ctx.hud.toast(`הענן מתכנס! בעוד שתי דקות סערה. לכו אל ${t.teacher} ב${t.place}. החץ מראה את הדרך.`, 'clue', 7000, true);
   }
 
   private onNotice(left: number): void {

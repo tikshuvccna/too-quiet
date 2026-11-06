@@ -1,43 +1,101 @@
-Traceback (most recent call last):
-  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 56, in <module>
-    v = thumb_id(page, i)
-  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 33, in thumb_id
-    open_videos(page)
-    ~~~~~~~~~~~^^^^^^
-  File "E:\Tikshuv Games\too-quiet\cutscene_work\upscale_all.py", line 28, in open_videos
-    page.wait_for_selector(flowgen.PROMPT_BOX, timeout=45000)
-    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\sync_api\_generated.py", line 9033, in wait_for_selector
-    self._sync(
-    ~~~~~~~~~~^
-        self._impl_obj.wait_for_selector(
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        )
-        ^
-    )
-    ^
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_sync_base.py", line 115, in _sync
-    return task.result()
-           ~~~~~~~~~~~^^
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_page.py", line 427, in wait_for_selector
-    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 394, in wait_for_selector
-    await self._channel.send(
-        "waitForSelector", self._timeout, locals_to_params(locals())
-    )
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 76, in send
-    return await self._connection.wrap_api_call(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-    )
-    ^
-  File "C:\Users\USER\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 632, in wrap_api_call
-    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
-Call log:
-  - waiting for locator("div[data-slate-editor=\"true\"], [contenteditable=\"true\"]") to be visible
-    - waiting for "https://accounts.google.com/ServiceLogin?continue=https%3A%2F%2Fflow.google.com%2F" navigation to finish...
-    - navigated to "https://flow.google.com/?pli=1"
-
+tile 0: dbde2e1b-a5cf-4d8a-956f-7e9d9956b57e
+tile 1: c02ad5b8-e6b3-4b15-aa58-e0644383fd4d
+tile 2: 5f3aa919-ba9f-4223-a0ee-64db00159545
+tile 3: 3bd5d1ca-ed09-4c37-9a5a-0e292abb7a31
+tile 4: 0bc0b8d2-b03c-4708-98b5-da6a0a3aeb81
+tile 5: 285ff352-9fc6-466d-91cb-105ecd24809b
+tile 6: 06ce271e-dcc6-4b98-8133-8585993fd5b5
+tile 7: d728c47a-7b0d-48e3-9f72-6f919c8974e7
+tile 8: b97215de-9fc3-4c6f-b189-4a9ec879e3a2
+tile 9: 3dcbd902-8750-493d-941c-50984315e511
+tile 10: 8a9cab88-cf34-4f7c-9472-19800c19069d
+tile 11: f65faf7b-6b49-439a-ac17-c046c93bb798
+tile 12: fd8774a8-6671-4c73-9767-aefbc65dd912
+tile 13: 970c944e-2aa1-4f64-adfb-5b4c3c93e597
+tile 14: 006753fc-f60a-4d16-b485-4f489e9439c2
+tile 15: 8c582d42-a17a-4484-959e-87adcb229705
+tile 16: 89b81b4f-a7dd-4f89-8ff2-7644a02ff557
+tile 17: 34fb0c0c-4fc8-453e-aa5e-bf6a95a7f200
+tile 18: ed05b144-1d32-4f50-b3a2-3c2b3d0faacc
+tile 19: 00edc95a-f635-451f-b044-843113ff6d2b
+tile 20: abfe1870-7c22-4ce1-8216-54532f84af05
+tile 21: 72e3a396-3e1b-4a9a-a60f-55f5b4077c0b
+tile 22: 4eeddf4f-c1d7-46bd-a512-96e3086f51a7
+[07:01:40] download option: 360p Original size
+[07:01:41] downloaded C:\Users\USER\AppData\Local\Temp\flow_dbde2e1b-a5cf-4d8a-956f-7e9d9956b57e.mp4 (2251748 bytes)
+[07:01:49] download option: 720p Upscaled
+[07:02:17] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_diary.mp4 (3209309 bytes)
+OK first_diary <- dbde2e1b-a5cf-4d8a-956f-7e9d9956b57e
+[07:02:25] download option: 360p Original size
+[07:02:26] downloaded C:\Users\USER\AppData\Local\Temp\flow_c02ad5b8-e6b3-4b15-aa58-e0644383fd4d.mp4 (2129313 bytes)
+[07:02:34] download option: 720p Upscaled
+[07:03:01] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\ending.mp4 (3199573 bytes)
+OK ending <- c02ad5b8-e6b3-4b15-aa58-e0644383fd4d
+[07:03:09] download option: 360p Original size
+[07:03:10] downloaded C:\Users\USER\AppData\Local\Temp\flow_5f3aa919-ba9f-4223-a0ee-64db00159545.mp4 (2434691 bytes)
+[07:03:18] download option: 720p Upscaled
+[07:03:52] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\boss_intro.mp4 (5349078 bytes)
+OK boss_intro <- 5f3aa919-ba9f-4223-a0ee-64db00159545
+[07:04:00] download option: 360p Original size
+[07:04:00] downloaded C:\Users\USER\AppData\Local\Temp\flow_3bd5d1ca-ed09-4c37-9a5a-0e292abb7a31.mp4 (2337680 bytes)
+[07:04:08] download option: 720p Upscaled
+[07:04:41] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_curio.mp4 (3357079 bytes)
+OK first_curio <- 3bd5d1ca-ed09-4c37-9a5a-0e292abb7a31
+[07:04:50] download option: 360p Original size
+[07:04:53] downloaded C:\Users\USER\AppData\Local\Temp\flow_0bc0b8d2-b03c-4708-98b5-da6a0a3aeb81.mp4 (2420900 bytes)
+[07:05:02] download option: 720p Upscaled
+[07:05:43] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_card.mp4 (3873753 bytes)
+OK first_card <- 0bc0b8d2-b03c-4708-98b5-da6a0a3aeb81
+[07:05:52] download option: 360p Original size
+[07:05:55] downloaded C:\Users\USER\AppData\Local\Temp\flow_285ff352-9fc6-466d-91cb-105ecd24809b.mp4 (2064114 bytes)
+[07:06:04] download option: 720p Upscaled
+[07:06:34] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_creature.mp4 (2516561 bytes)
+OK first_creature <- 285ff352-9fc6-466d-91cb-105ecd24809b
+[07:06:43] download option: 360p Original size
+[07:06:46] downloaded C:\Users\USER\AppData\Local\Temp\flow_06ce271e-dcc6-4b98-8133-8585993fd5b5.mp4 (2695238 bytes)
+[07:06:55] download option: 720p Upscaled
+[07:07:25] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_house.mp4 (5320885 bytes)
+OK first_house <- 06ce271e-dcc6-4b98-8133-8585993fd5b5
+[07:07:35] download option: 360p Original size
+[07:07:37] downloaded C:\Users\USER\AppData\Local\Temp\flow_d728c47a-7b0d-48e3-9f72-6f919c8974e7.mp4 (2032744 bytes)
+[07:07:46] download option: 720p Upscaled
+[07:08:21] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\first_sight.mp4 (2954690 bytes)
+OK first_sight <- d728c47a-7b0d-48e3-9f72-6f919c8974e7
+[07:08:30] download option: 360p Original size
+[07:08:33] downloaded C:\Users\USER\AppData\Local\Temp\flow_b97215de-9fc3-4c6f-b189-4a9ec879e3a2.mp4 (2814281 bytes)
+[07:08:42] download option: 720p Upscaled
+[07:09:18] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\flag_p5_complete.mp4 (6748037 bytes)
+OK flag_p5_complete <- b97215de-9fc3-4c6f-b189-4a9ec879e3a2
+[07:09:27] download option: 360p Original size
+[07:09:30] downloaded C:\Users\USER\AppData\Local\Temp\flow_3dcbd902-8750-493d-941c-50984315e511.mp4 (2073199 bytes)
+[07:09:39] download option: 720p Upscaled
+[07:10:14] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\flag_p4_complete.mp4 (3392254 bytes)
+OK flag_p4_complete <- 3dcbd902-8750-493d-941c-50984315e511
+[07:10:28] download option: 360p Original size
+[07:10:33] downloaded C:\Users\USER\AppData\Local\Temp\flow_8a9cab88-cf34-4f7c-9472-19800c19069d.mp4 (2419531 bytes)
+flag_p3_complete: upscale failed TimeoutError
+[07:11:20] download option: 360p Original size
+[07:11:23] downloaded C:\Users\USER\AppData\Local\Temp\flow_f65faf7b-6b49-439a-ac17-c046c93bb798.mp4 (2349654 bytes)
+[07:11:32] download option: 720p Upscaled
+[07:12:15] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\flag_p2_complete.mp4 (3703265 bytes)
+OK flag_p2_complete <- f65faf7b-6b49-439a-ac17-c046c93bb798
+fd8774a8-6671-4c73-9767-aefbc65dd912: original download failed TimeoutError
+[07:13:53] download option: 360p Original size
+[07:13:58] downloaded C:\Users\USER\AppData\Local\Temp\flow_970c944e-2aa1-4f64-adfb-5b4c3c93e597.mp4 (1988107 bytes)
+flag_fix_clinic_done: upscale failed TimeoutError
+[07:15:14] download option: 360p Original size
+[07:15:17] downloaded C:\Users\USER\AppData\Local\Temp\flow_006753fc-f60a-4d16-b485-4f489e9439c2.mp4 (2215666 bytes)
+[07:15:26] download option: 720p Upscaled
+[07:16:01] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\flag_fix_grandma_done.mp4 (3316800 bytes)
+OK flag_fix_grandma_done <- 006753fc-f60a-4d16-b485-4f489e9439c2
+8c582d42-a17a-4484-959e-87adcb229705: original download failed TimeoutError
+[07:17:07] download option: 360p Original size
+[07:17:09] downloaded C:\Users\USER\AppData\Local\Temp\flow_89b81b4f-a7dd-4f89-8ff2-7644a02ff557.mp4 (2480429 bytes)
+[07:17:19] download option: 720p Upscaled
+[07:17:53] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\lesson_end_02.mp4 (4090515 bytes)
+OK lesson_end_02 <- 89b81b4f-a7dd-4f89-8ff2-7644a02ff557
+[07:18:03] download option: 360p Original size
+[07:18:06] downloaded C:\Users\USER\AppData\Local\Temp\flow_34fb0c0c-4fc8-453e-aa5e-bf6a95a7f200.mp4 (1905758 bytes)
+[07:18:16] download option: 720p Upscaled
+[07:18:46] downloaded E:\Tikshuv Games\too-quiet\cutscene_work\hd\lesson_end_01.mp4 (2201433 bytes)
+OK lesson_end_01 <- 34fb0c0c-4fc8-453e-aa5e-bf6a95a7f200

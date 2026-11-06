@@ -1,11 +1,14 @@
 import { bus } from '../core/bus';
 import { el, uiRoot } from './dom';
+import { hintBadge } from './hintBadge';
 import { frameStyle, loadPortrait, moodFor, portraitFor, type PortraitSheet } from './portraits';
 
 export interface Line {
   id?: string;
   speaker: string;
   text: string;
+  /** Shows the gold "רמז" badge: this line points at something to find, solve or learn. */
+  hint?: boolean;
 }
 
 export interface Choice {
@@ -26,6 +29,7 @@ export class DialogueUI {
   private readonly txt = el('div', 'txt');
   private readonly choices = el('div', 'choices');
   private readonly hint = el('div', 'hint', 'לחצו להמשך');
+  private readonly badge = hintBadge();
   private resolve: (() => void) | null = null;
   private typing: number | null = null;
   private full = '';
@@ -41,7 +45,8 @@ export class DialogueUI {
   playerSheet: string | null = null;
 
   constructor() {
-    this.box.append(this.portrait, this.who, this.txt, this.choices, this.hint);
+    this.badge.hidden = true;
+    this.box.append(this.portrait, this.who, this.txt, this.choices, this.hint, this.badge);
     uiRoot().append(this.box);
     this.box.addEventListener('pointerdown', () => this.advance());
     window.addEventListener('keydown', (e) => {
@@ -91,7 +96,7 @@ export class DialogueUI {
   close(): void {
     this.open = false;
     this.voice?.stop();
-    this.box.classList.remove('show', 'has-portrait');
+    this.box.classList.remove('show', 'has-portrait', 'is-hint');
     if (this.blinkTimer !== null) window.clearInterval(this.blinkTimer);
     this.blinkTimer = null;
   }
@@ -106,6 +111,8 @@ export class DialogueUI {
   private fillLine(l: Line, typewriter: boolean): void {
     this.open = true;
     this.box.classList.add('show');
+    this.box.classList.toggle('is-hint', !!l.hint);
+    this.badge.hidden = !l.hint;
     this.who.textContent = this.names[l.speaker] ?? l.speaker;
     this.who.style.display = l.speaker ? '' : 'none';
     this.full = l.text;

@@ -5,7 +5,7 @@ import { el } from './dom';
 import { createOverlay } from './learning/overlay';
 
 /** Small settings screen: picture quality (recommended by default), the FPS counter and subtitles. */
-export function openSettings(save: SaveStore, quality: QualityManager, opts: { onChange(): void; onClose(): void }): void {
+export function openSettings(save: SaveStore, quality: QualityManager, opts: { onChange(): void; onClose(): void; onHelp?(): void }): void {
   const ov = createOverlay('lrn-mini npcg', null);
   const closeBtn = el('button', 'lrn-x', '×');
   closeBtn.type = 'button';
@@ -72,6 +72,12 @@ export function openSettings(save: SaveStore, quality: QualityManager, opts: { o
       el('p', 'lrn-sub', `רמה פעילה כרגע: ${QUALITY_NAME[quality.level]}. אפשר לשנות בכל זמן, וההתקדמות נשמרת.`),
       el('div', 'lrn-levels', '', cards),
       el('div', 'npcg-row', '', [fps, subs]),
+      ...(opts.onHelp ? [(() => {
+        const h = el('button', 'btn', 'עזרה: איך משחקים');
+        h.type = 'button';
+        h.addEventListener('click', () => opts.onHelp?.());
+        return el('div', 'npcg-row', '', [h]);
+      })()] : []),
     );
   }
   render();

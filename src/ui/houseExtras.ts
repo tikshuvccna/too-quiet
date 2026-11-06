@@ -22,11 +22,11 @@ export async function afterInspect(ctx: GameContext, houseId: string, objId: str
     const first = !ctx.save.hasFlag(clueFlag(c.id));
     if (first) {
       ctx.save.setFlag(clueFlag(c.id));
-      ctx.hud.toast(`נמצא: ${c.clue.title}`, 'clue', 4200);
+      ctx.hud.toast(`נמצא: ${c.clue.title}`, 'clue', 4200, true);
     }
     ctx.dialogue.close();
     await showClue(c, first);
-    if (first) ctx.hud.toast(c.hintAfterClue, 'clue', 5200);
+    if (first) ctx.hud.toast(c.hintAfterClue, 'clue', 5200, true);
   }
   await offerShort(ctx, `${houseId}:${objId}`);
   if (clues.length || (ITEMS_IN_OBJECT[`${houseId}:${objId}`] ?? []).length) return;
