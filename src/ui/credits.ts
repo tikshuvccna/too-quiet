@@ -7,15 +7,25 @@ export const CREDITS = {
   made: 'משחק זה פותח ונבנה על ידי מיכאל תקשוב מאתר מגמת תקשוב.',
   url: 'https://tikshuv-ccna.com',
   services: 'לפיתוח משחקים, סרטונים שיווקיים, תוכנות וייעוץ פנו.',
+  email: 'tikshuvccna@gmail.com',
+  escape: 'לפניות בנושא בניית חדרי בריחה דיגיטליים ופיזיים בהתאמה אישית:',
+  escapeUrl: 'https://escapebuilder.com',
   thanks: 'תודה לכל המסייעים, בטא טסטרים ומייעצים.',
 };
 
 /** A link that opens in a new tab. The address stays left-to-right inside the Hebrew text. */
-export function creditsLink(): HTMLAnchorElement {
-  const a = el('a', 'credits-link', CREDITS.url);
-  a.href = CREDITS.url;
+export function creditsLink(url: string = CREDITS.url): HTMLAnchorElement {
+  const a = el('a', 'credits-link', url);
+  a.href = url;
   a.target = '_blank';
   a.rel = 'noopener noreferrer';
+  a.dir = 'ltr';
+  return a;
+}
+
+function mailLink(): HTMLAnchorElement {
+  const a = el('a', 'credits-link', CREDITS.email);
+  a.href = `mailto:${CREDITS.email}`;
   a.dir = 'ltr';
   return a;
 }
@@ -34,6 +44,9 @@ export function openCredits(): Promise<void> {
       el('p', 'credits-main', CREDITS.made),
       el('p', 'credits-url', '', [creditsLink()]),
       el('p', 'credits-main', CREDITS.services),
+      el('p', 'credits-url', '', [mailLink()]),
+      el('p', 'credits-main credits-gap', CREDITS.escape),
+      el('p', 'credits-url', '', [creditsLink(CREDITS.escapeUrl)]),
       el('p', 'credits-thanks', CREDITS.thanks),
       el('div', 'help-foot', '', [back]),
     ]));

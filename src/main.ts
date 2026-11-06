@@ -15,7 +15,10 @@ import { WorldScene } from './scenes/WorldScene';
 import { DialogueUI } from './ui/dialogue';
 import { createVoicePlayer } from './ui/voice';
 import { equippedSkin } from './game/skins';
-import { creditsLink } from './ui/credits';
+import { creditsLink, openCredits } from './ui/credits';
+import { openSettings } from './ui/settings';
+import { openHelp } from './ui/help';
+import { openTutorial } from './ui/tutorial';
 import { el, uiRoot } from './ui/dom';
 import { Hud } from './ui/hud';
 import { Joystick } from './ui/joystick';
@@ -144,13 +147,33 @@ function titleScreen(ctx: GameContext, controller: Controller): void {
   };
   const cont = el('button', 'btn primary', 'המשך');
   cont.onclick = () => start();
+  const menuBtn = (label: string, fn: () => void): HTMLButtonElement => {
+    const b = el('button', 'btn menu-btn', label);
+    b.type = 'button';
+    b.onclick = fn;
+    return b;
+  };
+  const sub = (open: (done: () => void) => void): void => {
+    screen.style.visibility = 'hidden';
+    open(() => { screen.style.visibility = ''; });
+  };
+  const settingsBtn = menuBtn('הגדרות', () => sub((done) => openSettings(ctx.save, ctx.quality, {
+    onChange: () => (ctx as unknown as { fpsMeter?: { show(on: boolean): void } }).fpsMeter?.show(ctx.save.data.settings.showFps),
+    onClose: () => { ctx.dialogue.subtitles = ctx.save.data.settings.subtitles; done(); },
+  })));
+  const helpBtn = menuBtn('עזרה: איך משחקים', () => sub((done) => openHelp({ onTutorial: () => void openTutorial(ctx.save, true), onClose: done })));
+  const creditsBtn = menuBtn('קרדיטים', () => sub((done) => void openCredits().then(done)));
+  cont.classList.add('menu-btn');
+  go.classList.add('menu-btn');
   const screen = el('div', 'screen title', '', [
-    el('div', '', '', [
+    el('div', 'title-inner', '', [
+      el('div', 'title-eyebrow', 'משחקי תקשוב'),
       el('h1', '', 'שקט מדי'),
+      el('div', 'title-rule'),
       el('div', 'sub', 'העמק נראה מושלם. כולם אומרים שהכול בסדר.'),
-      started ? el('div', 'row', '', [cont]) : el('div', '', '', [el('p', '', 'מי מגיע לעמק?'), el('div', 'row', '', [girl, boy]), el('div', 'row name-row', '', [nameInput]), el('div', 'row', '', [go])]),
-      el('p', 'sub', 'סקיצה לבדיקה. העיצוב והתוכן עדיין בעבודה.'),
-      el('p', 'credits-line', '', [document.createTextNode('פותח על ידי מיכאל תקשוב, מגמת תקשוב: '), creditsLink()]),
+      started ? el('div', 'menu', '', [cont]) : el('div', '', '', [el('p', 'title-ask', 'מי מגיע לעמק?'), el('div', 'row', '', [girl, boy]), el('div', 'row name-row', '', [nameInput]), el('div', 'menu', '', [go])]),
+      el('div', 'menu menu-2', '', [settingsBtn, helpBtn, creditsBtn]),
+      el('p', 'credits-line', '', [document.createTextNode('פותח על ידי מיכאל תקשוב, מגמת תקשוב'), creditsLink()]),
     ]),
   ]);
   uiRoot().append(screen);

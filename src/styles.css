@@ -268,3 +268,28 @@ body.boss .toast-box { top: calc(var(--hud-h, 96px) + 92px); }
 .credits-link { color: var(--gold); font-weight: 700; text-decoration: underline; word-break: break-all; }
 .title .credits-line { margin: 18px 0 0; font-size: .85rem; color: var(--mute); }
 .title .credits-line .credits-link { font-weight: 400; display: block; word-break: normal; white-space: nowrap; }
+.credits-gap { margin-top: 8px; }
+.title-inner { display: flex; flex-direction: column; align-items: center; max-width: 520px; width: 100%; }
+.title-eyebrow { font-size: .95rem; letter-spacing: 6px; color: var(--teal); margin-bottom: 6px; text-shadow: 0 0 14px rgba(92, 240, 208, .5); }
+.title-rule { width: min(260px, 70%); height: 10px; margin: 12px 0 2px; background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold), var(--gold-deep), transparent) center / 100% 1px no-repeat, var(--knot) center / 14px no-repeat; }
+.title .sub { margin: 8px 0 22px; }
+.title-ask { margin: 0 0 8px; color: var(--ink, #fff); }
+.title .menu { display: flex; flex-direction: column; gap: 10px; width: min(300px, 86%); margin-top: 6px; }
+.title .menu-2 { margin-top: 16px; flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; gap: 8px; }
+.title .menu-2 .menu-btn { flex: 0 1 auto; font-size: .95rem; padding: 8px 14px; }
+.title .menu > .menu-btn.primary { font-size: 1.2rem; padding: 12px 20px; }
+.title .credits-line { display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 18px; }
+.title { background-color: #080819; }
+.title { overflow-y: auto; align-items: safe center; }
+@media (max-height: 520px) {
+  .title { padding: 8px; }
+  .title h1 { font-size: 2.2rem; }
+  .title-eyebrow, .title-rule, .title .sub { display: none; }
+  .title-ask { margin: 4px 0; font-size: .95rem; }
+  .title .name-row { margin: 6px 0; }
+  .title .menu { margin-top: 2px; gap: 6px; }
+  .title .menu > .menu-btn.primary { font-size: 1.05rem; padding: 8px 16px; }
+  .title .menu-2 { margin-top: 8px; }
+  .title .menu-2 .menu-btn { padding: 6px 12px; font-size: .9rem; }
+  .title .credits-line { margin-top: 8px; font-size: .75rem; flex-direction: row; gap: 6px; }
+}
