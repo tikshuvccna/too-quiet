@@ -52,7 +52,7 @@ with sync_playwright() as pw:
     page = ctx.pages[0] if ctx.pages else ctx.new_page()
     # 1) collect the edit ids of the newest tiles (our 30 clips plus a few extras from failed tries)
     i = len(ids)
-    while i < 45:
+    while i < 100:
         v = thumb_id(page, i)
         if not v:
             break
