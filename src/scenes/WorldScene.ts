@@ -10,6 +10,7 @@ import { Culler } from '../world/culler';
 import { REGIONS, inSea, regionAt } from '../world/regions';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
+import { nextLessonTarget, type LessonTarget } from '../game/lessonTarget';
 import { BossWorld } from '../world/bossWorld';
 import { SecretsWorld } from '../world/secretsWorld';
 import { audio, REGION_MOOD } from '../audio/audio';
@@ -19,11 +20,11 @@ import type { CreatureSpawn } from '../world/creatures';
 import { makeCreatureAnims, makeNpcAnims } from './BootScene';
 import { Atmosphere } from '../world/atmosphere';
 import { CreatureManager } from '../world/creatures';
-import { CREATURES } from '../content';
+import { CREATURES, SCENES } from '../content';
 import { TruthLayer, type Swappable } from '../world/truthLayer';
 import { CTX_KEY, type GameContext } from '../game/context';
 import {
-  BUILDINGS, DECOR, FAULTS, NPCS, PICKUPS, SPOTS, START_SPAWN, THREADS, WORLD, wallRects,
+  BUILDINGS, DECOR, FAULTS, NPCS, PICKUPS, SPOTS, START_SPAWN, THREADS, TOWER_SPAWN, WORLD, wallRects,
   type FaultDef, type PickupDef, type ThreadDef,
 } from '../world/layout';
 
@@ -83,6 +84,10 @@ export class WorldScene extends Phaser.Scene {
   private secrets: SecretsWorld | null = null;
   private treeCount = 0;
   private spawned = new Set<string>();
+  private stormOn = false;
+  private stormShake = 0;
+  private veil: HTMLElement | null = null;
+  private arrivedToast = false;
   private queued: string[] = [];
   private loadingRegion: string | null = null;
   private regionClock = 0;
@@ -167,6 +172,10 @@ export class WorldScene extends Phaser.Scene {
       this.registry.set('tod', this.atmos.tod);
       this.atmos.destroy();
       this.boss?.destroy();
+      this.veil?.remove();
+      this.veil = null;
+      this.stormOn = false;
+      this.ctx.hud.setCompass(null);
       this.boss = null;
       this.secrets?.destroy();
       this.secrets = null;
@@ -596,6 +605,65 @@ export class WorldScene extends Phaser.Scene {
     return false;
   }
 
+  /** Where the next lesson waits (world position, teacher, place), or null when there is none to go to. */
+  lessonDestination(): (LessonTarget & { x: number; y: number }) | null {
+    const save = this.ctx.save;
+    const t = nextLessonTarget({ has: (f) => save.hasFlag(f), lessonDone: (id) => save.lesson(id).done, hasScene: (id) => !!SCENES[id] });
+    if (!t) return null;
+    // fixed spots from the map: the NPC may stand in a region that is not loaded yet
+    if (t.targetId === 'door:tower') return { ...t, x: TOWER_SPAWN.x, y: TOWER_SPAWN.y };
+    const npc = WORLD_NPCS.find((n) => `npc:${n.id}` === t.targetId);
+    return npc ? { ...t, x: npc.x, y: npc.y } : null;
+  }
+
+  /** The storm and the way to the lesson: the arrow, the arrival check, the spinning storm itself. */
+  private stormTick(dt: number): void {
+    const c = this.ctx;
+    const s = c.session;
+    const active = s.phase === 'warning' || s.phase === 'storm' || s.phase === 'grace';
+    const dest = active && !this.boss?.active ? this.lessonDestination() : null;
+    let on = false;
+    if (!dest) {
+      c.hud.setCompass(null);
+      if (s.safe) s.safe = false;
+    } else {
+      const dx = dest.x - this.px;
+      const dy = dest.y - this.py;
+      const d = Math.hypot(dx, dy);
+      if (!s.safe && d < 240) {
+        s.safe = true;
+        c.hud.setObjective(`הגעתם. דברו עם ${dest.teacher}.`);
+        if (!this.arrivedToast) c.hud.toast(`הגעתם בזמן! דברו עם ${dest.teacher}.`, 'good', 4200);
+        this.arrivedToast = true;
+      } else if (s.safe && d > 460) {
+        s.safe = false;
+        this.arrivedToast = false;
+        c.hud.setObjective(`הסערה מתקרבת! לכו אל ${dest.teacher}: ${dest.place}.`);
+      }
+      c.hud.setCompass(s.safe ? null : { angle: Math.atan2(dy, dx), text: `אל ${dest.teacher} · ${Math.max(1, Math.round(d / 40))} מ'` });
+      on = s.phase === 'storm' && !s.safe;
+    }
+    if (!active) this.arrivedToast = false;
+    if (on !== this.stormOn) {
+      this.stormOn = on;
+      if (!this.veil) {
+        this.veil = document.createElement('div');
+        this.veil.className = 'storm-veil';
+        document.body.append(this.veil);
+      }
+      this.veil.classList.toggle('on', on);
+      if (!on && this.player) this.player.sprite.setAngle(0);
+    }
+    if (on && this.player) {
+      this.player.sprite.angle += 760 * dt;
+      this.stormShake -= dt;
+      if (this.stormShake <= 0) {
+        this.stormShake = 0.18;
+        this.cameras.main.shake(140, 0.005);
+      }
+    }
+  }
+
   update(_t: number, dtMs: number): void {
     const dt = Math.min(dtMs, 50) / 1000;
     const c = this.ctx;
@@ -619,7 +687,14 @@ export class WorldScene extends Phaser.Scene {
         vx /= len;
         vy /= len;
       }
+      if (this.stormOn) {
+        // the cloud's storm: the wind turns round the player and only a little of the steering gets through
+        const wa = (this.time.now / 1000) * 2.6;
+        vx = vx * 0.3 + Math.cos(wa) * 0.95;
+        vy = vy * 0.3 + Math.sin(wa) * 0.95;
+      }
     }
+    this.stormTick(dt);
     const speed = SPEED * (this.sightOn ? 0.8 : 1) * perksOf(c.save).speed;
     const nx = this.px + vx * speed * dt;
     const ny = this.py + vy * speed * dt;

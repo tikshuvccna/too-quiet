@@ -9,6 +9,7 @@ import { audio } from '../audio/audio';
 import { celebrate, type CelebrateKind } from '../ui/celebrate';
 import { playCutscene } from '../ui/cutscene';
 import { PROBLEMS, PROBLEM_COINS, objectiveFor, problemForNpc, stageOf, type Probe } from './problems';
+import type { LessonTarget } from './lessonTarget';
 import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, TEACHER_INTRO, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
 import { openCollection } from '../ui/collection';
@@ -55,7 +56,10 @@ export class Controller {
     bus.on('world:exit-house', ({ houseId }) => this.exitHouse(houseId));
     bus.on('house:entered', ({ houseId }) => void this.onHouseEntered(houseId));
     bus.on('session:warning', () => void this.onWarning());
-    bus.on('session:storm', () => void this.storm());
+    bus.on('session:notice', ({ left }) => this.onNotice(left));
+    bus.on('session:storm', ({ n }) => this.onStormStart(n));
+    bus.on('session:stormend', () => this.onStormEnd());
+    bus.on('session:teleport', () => void this.storm());
     bus.on('fault:fixed', ({ evidence }) => this.faultFixed(evidence));
     bus.on('item:collected', ({ id }) => void this.onCollected(id));
     bus.on('creature:met', ({ key }) => void this.meetCreature(key));
@@ -179,6 +183,14 @@ export class Controller {
   }
 
   refreshObjective(): void {
+    const ph = this.ctx.session.phase;
+    if (ph === 'warning' || ph === 'storm' || ph === 'grace') {
+      const t = this.lessonDest();
+      if (t) {
+        this.ctx.hud.setObjective(this.ctx.session.safe ? `הגעתם. דברו עם ${t.teacher}.` : `הסערה מתקרבת! לכו אל ${t.teacher}: ${t.place}.`);
+        return;
+      }
+    }
     const f = (n: string): boolean => this.has(n);
     let text = 'גלו את הכפר: בתים, אנשים, וחפצים שמחכים לאיסוף.';
     if (f('p1_complete')) {
@@ -402,9 +414,13 @@ export class Controller {
   /** Classroom menu: lesson, quiz, mini-game. Wired to the learning screens in `learningBridge`. */
   private async classroom(opts: { only?: string; teacher?: string } = {}): Promise<void> {
     const { openClassroom } = await import('./learningBridge');
+    const doneBefore = ['lesson01', 'lesson02', 'lesson03', 'lesson04', 'lesson05'].filter((id) => this.ctx.save.lesson(id).done).length;
     await openClassroom(this.ctx, async () => {
       if (!opts.only && this.lessonDone() && !this.has('lesson01_done')) await this.runScene('return_after_lesson');
     }, opts);
+    const doneAfter = ['lesson01', 'lesson02', 'lesson03', 'lesson04', 'lesson05'].filter((id) => this.ctx.save.lesson(id).done).length;
+    // a finished lesson gives a fresh stretch of roaming time
+    if (doneAfter > doneBefore) this.ctx.session.restart();
     this.refreshObjective();
   }
 
@@ -543,34 +559,75 @@ export class Controller {
     this.ctx.hud.toast(text, 'clue', 5200);
   }
 
-  private async onWarning(): Promise<void> {
-    if (this.has('storm_warned')) {
-      this.ctx.hud.toast('העננים מתכנסים… סערת חוטים בקרוב.', 'clue', 6000);
-      return;
-    }
-    await this.withModal(() => this.runScene('thread_storm_warning'));
+  /** The next lesson to take and where it waits (null when no lesson is open: then the clouds only gather). */
+  private lessonDest(): (LessonTarget & { x: number; y: number }) | null {
+    return (this.scene().get('World') as unknown as { lessonDestination?: () => (LessonTarget & { x: number; y: number }) | null } | null)?.lessonDestination?.() ?? null;
   }
 
+  private async onWarning(): Promise<void> {
+    const t = this.lessonDest();
+    this.refreshObjective();
+    if (!t) {
+      this.ctx.hud.toast('העננים מתכנסים. אפשר להמשיך לשוטט.', 'clue', 5000);
+      return;
+    }
+    if (!this.has('storm_warned') && t.targetId === 'door:tower') {
+      await this.withModal(() => this.runScene('thread_storm_warning'));
+    }
+    this.ctx.hud.toast(`הענן מתכנס! בעוד שתי דקות סערה. לכו אל ${t.teacher} ב${t.place}. החץ מראה את הדרך.`, 'clue', 7000);
+  }
+
+  private onNotice(left: number): void {
+    const t = this.lessonDest();
+    if (!t || this.ctx.session.safe) return;
+    this.ctx.hud.toast(left >= 60 ? `עוד דקה לסערה! מהרו אל ${t.teacher}.` : `עוד ${left} שניות! ${t.teacher} מחכה.`, 'clue', 4500);
+    audio.sfx('warn');
+  }
+
+  private onStormStart(n: number): void {
+    const t = this.lessonDest();
+    if (!t) {
+      this.ctx.session.restart();
+      this.refreshObjective();
+      return;
+    }
+    this.refreshObjective();
+    audio.sfx('warn');
+    this.ctx.hud.toast(n === 1 ? 'הענן משתגע! הסערה מסובבת אתכם.' : `הענן משתגע שוב! אם לא תגיעו אל ${t.teacher}, הסערה תסחוף אתכם לשם.`, 'clue', 5000);
+  }
+
+  private onStormEnd(): void {
+    const t = this.lessonDest();
+    if (!t || this.ctx.session.safe) return;
+    this.ctx.hud.toast(`הסערה שככה. יש לכם דקה להגיע אל ${t.teacher}.`, 'clue', 5200);
+  }
+
+  /** The third trigger: the storm carries the player to the door of the next lesson. */
   private async storm(): Promise<void> {
+    const t = this.lessonDest();
+    if (!t) {
+      this.ctx.session.restart();
+      this.refreshObjective();
+      return;
+    }
     this.busy = true;
     this.ctx.modal = true;
     this.ctx.dialogue.close();
-    const msg = el('div', 'msg', 'סערת חוטים! הרוח מוליכה אתכם אל מגדל האורגים…');
+    const msg = el('div', 'msg', `סערת חוטים! הרוח סוחפת אתכם אל ${t.teacher}…`);
     const screen = el('div', 'screen storm', '', [msg]);
     uiRoot().append(screen);
     requestAnimationFrame(() => screen.classList.add('on'));
     await new Promise((r) => setTimeout(r, 3400));
-    this.scene().start('World', { spawn: TOWER_SPAWN });
+    this.scene().start('World', { spawn: { x: t.x, y: t.y + 90 } });
     this.ctx.session.restart();
     screen.classList.remove('on');
     await new Promise((r) => setTimeout(r, 1300));
     screen.remove();
     this.busy = false;
     this.ctx.modal = false;
-    this.ctx.hud.toast('הגעתם למגדל האורגים. דבורה מחכה.', 'clue');
+    this.refreshObjective();
+    this.ctx.hud.toast(`הגעתם אל ${t.place}. ${t.teacher} מחכה.`, 'clue', 5200);
     void LINES;
     void SPEAKER_NAMES;
-    const { lessonIds } = await import('../ui/learning');
-    if (lessonIds().some((id) => !this.ctx.save.lesson(id).done)) await this.tower();
   }
 }

@@ -7,6 +7,9 @@ export class Hud {
   private readonly timer = el('div', 'pill timer');
   private readonly coins = el('div', 'pill coins');
   private readonly objective = el('div', 'pill objective');
+  private readonly compass = el('div', 'pill compass');
+  private readonly compassArrow = el('span', 'compass-arrow');
+  private readonly compassText = el('span', 'compass-text');
   private readonly sight = el('button', 'btn', isTouchDevice() ? 'ראיית חוטים' : 'ראיית חוטים (Q)');
   private readonly cards = el('button', 'btn', 'אוסף');
   private readonly gear = el('button', 'btn gear', 'הגדרות');
@@ -18,7 +21,9 @@ export class Hud {
   onSettings: () => void = () => {};
 
   constructor() {
-    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.gear, this.cards, this.sight, this.objective);
+    this.bar.append(this.timer, this.coins, el('div', 'spacer'), this.gear, this.cards, this.sight, this.compass, this.objective);
+    this.compass.append(this.compassArrow, this.compassText);
+    this.compass.style.display = 'none';
     uiRoot().append(this.bar, this.interact, this.toasts);
     // toasts sit just under the HUD, whatever height it wraps to (small phones use two or three rows)
     const measure = (): void => document.documentElement.style.setProperty('--hud-h', `${Math.ceil(this.bar.getBoundingClientRect().bottom)}px`);
@@ -48,6 +53,14 @@ export class Hud {
   setObjective(text: string): void {
     this.objective.textContent = text;
     this.objective.style.display = text ? '' : 'none';
+  }
+
+  /** An arrow toward where the next lesson is (null hides it). `angle` is radians on screen, 0 = right, clockwise. */
+  setCompass(info: { angle: number; text: string } | null): void {
+    this.compass.style.display = info ? '' : 'none';
+    if (!info) return;
+    this.compassArrow.style.transform = `rotate(${info.angle + Math.PI / 2}rad)`;
+    this.compassText.textContent = info.text;
   }
 
   setVisible(v: boolean): void {

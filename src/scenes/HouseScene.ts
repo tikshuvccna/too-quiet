@@ -234,7 +234,6 @@ export class HouseScene extends Phaser.Scene {
     if (!this.player || !this.layout) return;
     const dt = Math.min(dtMs, 50) / 1000;
     const c = this.ctx;
-    if (!c.modal) c.session.tick(dt);
     c.hud.setTimer(c.session.remaining, c.session.phase !== 'free');
     c.hud.setCoins(c.save.data.coins);
 

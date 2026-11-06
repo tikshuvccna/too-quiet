@@ -44,6 +44,47 @@ describe('Session', () => {
     const s = new Session({ capSeconds: 2 });
     expect(s.warnAt).toBeLessThan(s.cap);
   });
+  it('runs storms, grace minutes and a teleport on the third trigger', () => {
+    const log: string[] = [];
+    const s = new Session({
+      capSeconds: 100, warnAtSeconds: 80,
+      onWarning: () => log.push('warn'), onNotice: (n) => log.push(`notice${n}`),
+      onStorm: (n) => log.push(`storm${n}`), onStormEnd: () => log.push('end'), onTeleport: () => log.push('teleport'),
+    });
+    for (let i = 0; i < 100; i++) s.tick(1);
+    expect(log).toEqual(['warn', 'notice60', 'notice30', 'storm1']);
+    expect(s.phase).toBe('storm');
+    for (let i = 0; i < 10; i++) s.tick(1);
+    expect(s.phase).toBe('grace');
+    expect(s.remaining).toBeCloseTo(60);
+    for (let i = 0; i < 60; i++) s.tick(1);
+    expect(s.phase).toBe('storm');
+    expect(s.stormCount).toBe(2);
+    for (let i = 0; i < 10 + 60; i++) s.tick(1);
+    expect(log.slice(-3)).toEqual(['storm2', 'end', 'teleport']);
+    expect(s.phase).toBe('teleport');
+    s.restart();
+    expect(s.phase).toBe('free');
+    expect(s.stormCount).toBe(0);
+  });
+
+  it('holds the clock and stops the storm once the player is at the lesson', () => {
+    const s = new Session({ capSeconds: 10, warnAtSeconds: 5 });
+    s.tick(10);
+    expect(s.phase).toBe('storm');
+    s.safe = true;
+    s.tick(100);
+    expect(s.phase).toBe('storm');
+    s.safe = false;
+    s.tick(11);
+    expect(s.phase).toBe('grace');
+  });
+
+  it('warns two minutes before the cap by default', () => {
+    const s = new Session({ capSeconds: 420 });
+    expect(s.warnAt).toBe(300);
+  });
+
 });
 
 describe('SaveStore', () => {

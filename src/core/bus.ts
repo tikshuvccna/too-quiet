@@ -12,7 +12,10 @@ export interface GameEvents {
   'creature:met': { key: string };
   'head:seen': undefined;
   'session:warning': undefined;
-  'session:storm': undefined;
+  'session:storm': { n: number };
+  'session:stormend': undefined;
+  'session:notice': { left: number };
+  'session:teleport': undefined;
   'ui:pause': { paused: boolean };
   'boss:start': undefined;
   'boss:end': { won: boolean };

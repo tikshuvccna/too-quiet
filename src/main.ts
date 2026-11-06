@@ -31,7 +31,10 @@ function boot(): void {
     capSeconds: cap,
     warnAtSeconds: cap ? Math.max(1, cap - 10) : undefined,
     onWarning: () => bus.emit('session:warning', undefined),
-    onStorm: () => bus.emit('session:storm', undefined),
+    onNotice: (left) => bus.emit('session:notice', { left }),
+    onStorm: (n) => bus.emit('session:storm', { n }),
+    onStormEnd: () => bus.emit('session:stormend', undefined),
+    onTeleport: () => bus.emit('session:teleport', undefined),
   });
   session.bonus = perksOf(save).timeBonus;
   const hud = new Hud();
