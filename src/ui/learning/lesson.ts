@@ -1,5 +1,6 @@
 import { el } from '../dom';
 import { audio } from '../../audio/audio';
+import { shortCard } from '../shorts';
 import type { SaveStore } from '../../core/save';
 import type { LessonData, LessonStep } from './types';
 import { canAdvance, checkForDisplay, clampStep, dotState, isLast, resumeIndex } from './lessonLogic';
@@ -112,6 +113,7 @@ export function openLesson(data: LessonData, save: SaveStore, opts: { onClose(do
   }
 
   function renderVideo(step: LessonStep): HTMLElement | '' {
+    if (step.short) return shortCard(step.short) ?? '';
     if (!step.video) return '';
     const v = el('video', 'lrn-video');
     v.src = `${import.meta.env.BASE_URL}${step.video.src}`;

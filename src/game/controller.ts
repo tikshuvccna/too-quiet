@@ -9,14 +9,18 @@ import { audio } from '../audio/audio';
 import { celebrate, type CelebrateKind } from '../ui/celebrate';
 import { playCutscene } from '../ui/cutscene';
 import { PROBLEMS, PROBLEM_COINS, objectiveFor, problemForNpc, stageOf, type Probe } from './problems';
-import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, itemById, lineOf, SPEAKER_NAMES } from '../content';
+import { CREATURES, HEAD_INFO, HOUSES, ITEMS_IN_OBJECT, LINES, SCENES, TEACHER_INTRO, itemById, lineOf, SPEAKER_NAMES } from '../content';
 import { bus } from '../core/bus';
 import { openCollection } from '../ui/collection';
+import { bookFlag, inspectedFlag } from './houseBook';
 import { el, uiRoot } from '../ui/dom';
 import { BUILDINGS, TOWER_SPAWN } from '../world/layout';
 import { WORLD_BUILDINGS } from '../world/worldMap';
 import type { GameContext } from './context';
 import { SceneRunner } from './sceneRunner';
+import { afterInspect, useActivity } from '../ui/houseExtras';
+import { showReveal } from '../ui/secretsUi';
+import { hintFor, grantReward, parseTarget, press, secretById } from '../world/secrets';
 
 const FIXES: Array<{ flag: string; scene: string }> = [
   { flag: 'fix_grandma_done', scene: 'fix_grandma' },
@@ -188,6 +192,8 @@ export class Controller {
     else if (this.lessonDone()) text = 'תקנו: בית סבתא שושנה, המרפאה והטחנה.';
     else if (f('needle_blur_seen') || f('neighbours_asked')) text = 'המחט מטושטשת. לכו למגדל האורגים כדי ללמוד.';
     else if (f('houses_unlocked')) text = 'מה קורה במאפייה? דברו עם הנחתום.';
+    const secretHint = hintFor(this.ctx.save);
+    if (secretHint && (text.startsWith('גלו את הכפר') || text.startsWith('סוף הדוגמית'))) text = `${text} ${secretHint}`;
     this.ctx.hud.setObjective(text);
   }
 
@@ -255,6 +261,8 @@ export class Controller {
       this.refreshObjective();
     });
     else if (id.startsWith('obj:')) void this.inspect(id);
+    else if (id.startsWith('act:')) void this.withModal(() => useActivity(this.ctx, id.slice(4)));
+    else if (id.startsWith('secret:')) void this.secretPress(id);
   }
 
   private async withModal(fn: () => Promise<void>): Promise<void> {
@@ -285,6 +293,10 @@ export class Controller {
     const save = this.ctx.save;
     await this.withModal(async () => {
       const wn = WORLD_NPC_INFO.find((n) => n.id === npcId);
+      // the house book: meeting an owner outdoors adds the house card
+      const bookId = wn?.house ?? ({ baker: 'bakery', miller: 'mill', dvora: 'tower' } as Record<string, string>)[npcId];
+      if (!wn) save.setFlag(`met_${npcId}`);
+      if (bookId) this.markBook(bookId);
       const problem = problemForNpc(npcId);
       if (problem) {
         const stage = stageOf(problem, this.probe());
@@ -301,7 +313,13 @@ export class Controller {
           return;
         }
         if (stage === 'learn') {
-          await this.ctx.dialogue.say([{ speaker: '', text: `המחט עוד מטושטשת. כדאי ללמוד קודם אצל דבורה (שיעור ${problem.n}).` }]);
+          // the NPC of the problem teaches this lesson: two short lines, then the lesson menu
+          const intro = TEACHER_INTRO[problem.lesson];
+          if (intro) {
+            await this.ctx.dialogue.say(intro.lines.map((id) => ({ id, speaker: lineOf(id).speaker, text: lineOf(id).text })));
+            this.ctx.dialogue.close();
+          }
+          await this.classroom({ only: problem.lesson, teacher: problem.teacher });
           this.refreshObjective();
           return;
         }
@@ -358,7 +376,16 @@ export class Controller {
     this.refreshObjective();
   }
 
+  /** Adds a house to the house book (once) with a small toast. */
+  private markBook(infoId: string): void {
+    if (this.has(bookFlag(infoId))) return;
+    this.ctx.save.setFlag(bookFlag(infoId));
+    this.ctx.save.save();
+    this.ctx.hud.toast('נוסף לספר הבתים', 'good');
+  }
+
   async tower(): Promise<void> {
+    this.markBook('tower');
     await this.withModal(() => this.towerFlow());
     this.refreshObjective();
   }
@@ -373,11 +400,11 @@ export class Controller {
   }
 
   /** Classroom menu: lesson, quiz, mini-game. Wired to the learning screens in `learningBridge`. */
-  private async classroom(): Promise<void> {
+  private async classroom(opts: { only?: string; teacher?: string } = {}): Promise<void> {
     const { openClassroom } = await import('./learningBridge');
     await openClassroom(this.ctx, async () => {
-      if (this.lessonDone() && !this.has('lesson01_done')) await this.runScene('return_after_lesson');
-    });
+      if (!opts.only && this.lessonDone() && !this.has('lesson01_done')) await this.runScene('return_after_lesson');
+    }, opts);
     this.refreshObjective();
   }
 
@@ -386,6 +413,7 @@ export class Controller {
     const house = HOUSES.find((h) => h.id === houseId);
     const obj = house?.objects.find((o) => o.id === objId);
     if (!house || !obj) return;
+    this.ctx.save.setFlag(inspectedFlag(houseId, objId));
     await this.withModal(async () => {
       await this.ctx.dialogue.say([{ speaker: '', text: `${obj.name}: ${obj.text}` }]);
       const items = ITEMS_IN_OBJECT[`${houseId}:${objId}`] ?? [];
@@ -399,10 +427,36 @@ export class Controller {
           await this.ctx.dialogue.say([{ speaker: '', text: `${item.title}. ${item.text}` }]);
         }
       }
+      await afterInspect(this.ctx, houseId, objId);
     });
   }
 
+  /** A glowing marker of a secret sequence was pressed. Wrong order: gentle reset. Right order: reveal and a fixed prize. */
+  private async secretPress(id: string): Promise<void> {
+    const t = parseTarget(id);
+    const def = t ? secretById(t.secretId) : undefined;
+    if (!t || !def || this.has(`secret.${def.id}.solved`)) return;
+    const node = def.nodes.find((n) => n.id === t.nodeId);
+    if (!node) return;
+    const r = press(def, t.nodeId);
+    if (r === 'ok') {
+      audio.sfx('pop');
+      return;
+    }
+    if (r === 'wrong') {
+      audio.sfx('fail');
+      this.ctx.hud.toast(def.wrongHint, 'clue', 3400);
+      return;
+    }
+    const prize = grantReward(this.ctx.save, def, perksOf(this.ctx.save).coinMul);
+    this.refreshObjective();
+    if (!prize) return;
+    await this.withModal(() => showReveal(def, prize));
+    this.refreshObjective();
+  }
+
   private async onHouseEntered(contentHouseId: string): Promise<void> {
+    this.markBook(contentHouseId);
     if (!this.has('first_house')) {
       this.ctx.save.setFlag('first_house');
       await this.withModal(() => celebrate('house', true));

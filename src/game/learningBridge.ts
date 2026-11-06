@@ -10,15 +10,24 @@ const QUIZ_COINS = 15;
  * the summary questions, and at the end the three-level mini-game.
  * `afterLesson` runs once, right after a lesson is finished (the story beat in the tower).
  */
-export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) => Promise<void>): Promise<void> {
-  const ids = lessonIds();
+export interface ClassroomOpts {
+  /** Show only this lesson (taught by an NPC of the story, not in the tower). */
+  only?: string;
+  /** Name of that teacher, shown in the title. */
+  teacher?: string;
+}
+
+export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) => Promise<void>, opts: ClassroomOpts = {}): Promise<void> {
+  const ids = opts.only ? [opts.only] : lessonIds();
   const isDone = (id: string): boolean => ctx.save.lesson(id).done;
-  // the lesson to show first: the first one that is not finished yet, or the last one
-  let current = ids.find((id) => !isDone(id)) ?? (ids[ids.length - 1] as string);
+  // in the tower only lesson 1 is taught; lessons 2-5 can be reviewed there once the NPC has taught them
   const unlocked = (id: string): boolean => {
+    if (opts.only) return true;
     const i = ids.indexOf(id);
-    return i <= 0 || isDone(ids[i - 1] as string);
+    return i <= 0 || isDone(id);
   };
+  // the lesson to show first: the first one that is not finished yet (and open), or the last finished one
+  let current = ids.find((id) => !isDone(id) && unlocked(id)) ?? [...ids].reverse().find((id) => isDone(id)) ?? (ids[0] as string);
   return new Promise((resolve) => {
     let screen: HTMLElement | null = null;
 
@@ -45,11 +54,13 @@ export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) 
       lessonBtn.addEventListener('click', () => {
         closeScreen();
         const no = lessonId.replace(/^lesson/, '');
-        void playCutscene(`lesson_start_${no}`).then(() => {
+        // the lesson clips show Dvora's tower: only for lesson 1 and the review in the tower
+        const clip = (id: string): Promise<unknown> => (opts.only ? Promise.resolve() : playCutscene(id));
+        void clip(`lesson_start_${no}`).then(() => {
           openLesson(content.lesson, ctx.save, {
             onClose: (done) => {
               if (!done) return render();
-              void playCutscene(`lesson_end_${no}`).then(() => afterLesson(lessonId)).then(render);
+              void clip(`lesson_end_${no}`).then(() => afterLesson(lessonId)).then(render);
             },
           });
         });
@@ -90,7 +101,7 @@ export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) 
 
       screen = el('div', 'screen', '', [
         el('div', 'card', '', [
-          el('h2', '', 'הכיתה של דבורה'),
+          el('h2', '', opts.teacher ? `השיעור אצל ${opts.teacher}` : 'הכיתה של דבורה'),
           chips,
           el('p', '', content.lesson.title),
           el('p', 'class-status', l.done

@@ -1,0 +1,14 @@
+{
+ "note": "houseId:objectId -> short id (content/he/shorts.json). Inspecting the object offers the Short.",
+ "shorts": {
+  "inn:i_rules": "sh_protocol_tcpip",
+  "inn:i_board": "sh_router",
+  "library:l_catalog": "sh_mac_address",
+  "observatory:o_log": "sh_ip_address",
+  "farm:fa_barn": "sh_ip_b",
+  "lighthouse:lh_telegraph": "sh_ip_a",
+  "guild:g_model": "sh_hub_vs_switch",
+  "workshop:w_tester": "sh_pt_demo",
+  "fisher:f_map": "sh_lan_wan"
+ }
+}

@@ -1,0 +1,57 @@
+/* Small activities inside houses and the secret-sequence reveal. Built on the tokens in src/styles.css. */
+.hx-body { display: flex; flex-direction: column; align-items: center; }
+.hx-prompt { margin: 0 0 14px; font-size: 1.1rem; line-height: 1.6; text-align: center; font-weight: 600; }
+.hx-board { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.hx-status { margin: 12px 0 4px; text-align: center; color: var(--gold); min-height: 1.4em; font-weight: 600; }
+.hx-grid { display: grid; gap: 10px; width: 100%; max-width: 560px; }
+.hx-col { grid-template-columns: 1fr; }
+.hx-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.hx-lamps { justify-content: center; width: auto; }
+.hx-item, .hx-card { min-height: 56px; line-height: 1.35; padding: 8px 12px; position: relative; }
+.hx-card { min-height: 78px; font-size: .95rem; }
+.hx-card.hx-up { border-color: var(--gold); background: rgba(255, 207, 107, .12); }
+.hx-card.hx-on { border-color: var(--teal); background: rgba(92, 240, 208, .16); }
+.hx-item.hx-on { border-color: var(--teal); opacity: 1; }
+.hx-item.hx-on::before { content: attr(data-n); position: absolute; inset-inline-end: 10px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; background: var(--teal); color: #07121a; font-weight: 800; display: grid; place-items: center; }
+.hx-lamp { min-height: 76px; border-radius: 18px; background: rgba(255, 255, 255, .05); border-color: #3a3f6b; }
+.hx-lamp.hx-lit { background: radial-gradient(circle at 50% 40%, #fff2b0, #ffcf6b 60%, #c98a2a); border-color: #ffe9a6; box-shadow: 0 0 22px rgba(255, 207, 107, .7); }
+.hx-sorthead { display: flex; gap: 10px; align-items: stretch; width: 100%; max-width: 560px; }
+.hx-chip { flex: 1; min-height: 64px; display: grid; place-items: center; text-align: center; padding: 8px 12px; border-radius: 16px; border: 2px solid var(--gold); background: rgba(255, 207, 107, .1); font-size: 1.05rem; line-height: 1.4; }
+.hx-skip { flex: none; min-width: 84px; }
+.hx-baskets { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; width: 100%; max-width: 560px; margin-top: 8px; }
+.hx-basket { flex: 1 1 140px; min-height: 64px; font-size: 1.05rem; border-width: 3px; }
+.hx-result { max-width: 520px; text-align: center; padding: 8px; }
+.hx-result h2 { margin: 0 0 8px; color: var(--teal); font-size: 1.5rem; }
+.hx-learn { font-size: 1.05rem; line-height: 1.7; margin: 0 0 10px; }
+.hx-prize { color: var(--gold); font-weight: 700; margin: 0 0 14px; }
+.hx-row { display: flex; gap: 10px; justify-content: center; }
+.hx-shake { animation: hx-shake .28s; }
+@keyframes hx-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* secret reveal / scroll reader */
+.hx-reveal .hx-card-big { max-width: 520px; margin: 8vh auto 0; padding: 22px 20px; border-radius: 22px; background: var(--card); border: 2px solid var(--gold); text-align: center; box-shadow: 0 0 40px rgba(255, 207, 107, .25); }
+.hx-card-big h2 { margin: 0 0 12px; color: var(--gold); font-size: 1.5rem; }
+.hx-reveal .hx-card-big p { margin: 0 0 8px; line-height: 1.7; font-size: 1.08rem; }
+.hx-reveal .hx-scroll { background: #e8d9ae; color: #3a2a14; border-radius: 10px; padding: 16px 18px; text-align: start; border: 2px solid #b8975a; box-shadow: 0 6px 18px rgba(0, 0, 0, .4); }
+.hx-reveal .hx-scroll h2 { color: #6a4a1a; text-align: center; }
+.hx-reveal .hx-scroll ol { margin: 0 0 8px; padding-inline-start: 1.5em; }
+.hx-reveal .hx-scroll li { margin-bottom: 8px; line-height: 1.6; font-size: 1.05rem; }
+.hx-reveal .hx-scroll .hx-foot { margin: 6px 0 0; font-style: italic; text-align: center; }
+
+@media (max-width: 420px) {
+  .hx-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hx-card { min-height: 64px; }
+  .hx-lamp { min-height: 64px; }
+}
+@media (max-height: 420px) {
+  .hx-prompt { margin-bottom: 6px; font-size: 1rem; }
+  .hx-card { min-height: 52px; }
+  .hx-lamp { min-height: 46px; }
+  .hx-item { min-height: 40px; padding-block: 4px; }
+  .hx-grid { gap: 6px; }
+  .hx-body { padding-block: 8px 12px; }
+  .hx-status { margin: 6px 0 2px; }
+  .hx-reveal .hx-card-big { margin-top: 2vh; padding: 14px; }
+  .hx-lamps { grid-template-columns: repeat(3, minmax(0, 56px)) !important; }
+}
+@media (prefers-reduced-motion: reduce) { .hx-shake { animation: none; } }

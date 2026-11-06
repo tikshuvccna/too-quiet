@@ -1,0 +1,70 @@
+{
+ "lines": {
+  "t.p2.innkeeper.0001": {
+   "speaker": "innkeeper",
+   "text": "אני מכירה את החוקים של הודעות. בואו, אלמד אתכם."
+  },
+  "t.p2.innkeeper.0002": {
+   "speaker": "innkeeper",
+   "text": "שולחן הפונדק פנוי. שבו, ונתחיל."
+  },
+  "t.p3.mender.0001": {
+   "speaker": "mender",
+   "text": "את הצורות של החוטים אני מכירה מהידיים."
+  },
+  "t.p3.mender.0002": {
+   "speaker": "mender",
+   "text": "שבו על הספסל. אראה לכם חמש צורות."
+  },
+  "t.p4.dockHand.0001": {
+   "speaker": "dockHand",
+   "text": "על הים אני יודע. על מי שמחבר בין חופים, פחות."
+  },
+  "t.p4.dockHand.0002": {
+   "speaker": "dockHand",
+   "text": "בואו על המזח. נלמד יחד."
+  },
+  "t.p5.guildMaster.0001": {
+   "speaker": "guildMaster",
+   "text": "שולחן התכנון עוד עובד. אפתח אותו בשבילכם."
+  },
+  "t.p5.guildMaster.0002": {
+   "speaker": "guildMaster",
+   "text": "קודם תכנון, אחר כך חוטים. בואו נתחיל."
+  }
+ },
+ "teachers": {
+  "lesson02": {
+   "npc": "npc_innkeeper",
+   "name": "גברת תמר",
+   "lines": [
+    "t.p2.innkeeper.0001",
+    "t.p2.innkeeper.0002"
+   ]
+  },
+  "lesson03": {
+   "npc": "npc_mender",
+   "name": "גברת אסתר",
+   "lines": [
+    "t.p3.mender.0001",
+    "t.p3.mender.0002"
+   ]
+  },
+  "lesson04": {
+   "npc": "npc_dockHand",
+   "name": "מר צבי",
+   "lines": [
+    "t.p4.dockHand.0001",
+    "t.p4.dockHand.0002"
+   ]
+  },
+  "lesson05": {
+   "npc": "npc_guildMaster",
+   "name": "מר מנחם",
+   "lines": [
+    "t.p5.guildMaster.0001",
+    "t.p5.guildMaster.0002"
+   ]
+  }
+ }
+}

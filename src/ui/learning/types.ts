@@ -48,6 +48,8 @@ export interface LessonStep {
   check: Check;
   recap?: string[];
   video?: { src: string; title: string };
+  /** A Short from content/he/shorts.json, shown as a card that plays from YouTube. */
+  short?: string;
 }
 export interface LessonData { id: string; title: string; where?: string; estimatedMinutes?: number; steps: LessonStep[] }
 

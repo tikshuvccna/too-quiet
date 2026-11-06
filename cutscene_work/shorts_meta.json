@@ -1,0 +1,122 @@
+[
+ {
+  "id": "sh_lan_wan",
+  "episode": "003-lan-wan-v2",
+  "title": "LAN מול WAN — מה ההבדל בין רשת מקומית לרשת רחבה? #Shorts",
+  "youtube": "https://youtube.com/shorts/TjG98TgkEHs",
+  "seconds": 75,
+  "mb": 2.3
+ },
+ {
+  "id": "sh_client_server",
+  "episode": "015-client-server-p2p",
+  "title": "לקוח-שרת מול עמית לעמית (Client-Server vs P2P) #Shorts",
+  "youtube": "https://youtube.com/shorts/ToaXN0MWNDM",
+  "seconds": 80,
+  "mb": 2.4
+ },
+ {
+  "id": "sh_host_end_media",
+  "episode": "016-host-end-intermediary-media",
+  "title": "התקני קצה, התקני אמצע ומדיה ברשת (End Devices) #Shorts",
+  "youtube": "https://youtube.com/shorts/8q2rsszRO_w",
+  "seconds": 67,
+  "mb": 1.7
+ },
+ {
+  "id": "sh_topologies",
+  "episode": "017-topologies",
+  "title": "טופולוגיה פיזית ולוגית: כוכב, Mesh ועוד #Shorts",
+  "youtube": "https://youtube.com/shorts/VR8bbiaSYpg",
+  "seconds": 98,
+  "mb": 2.1
+ },
+ {
+  "id": "sh_pt_intro",
+  "episode": "018-packet-tracer-intro",
+  "title": "Packet Tracer: מה זה ולמה בונים רשת בסימולטור #Shorts",
+  "youtube": "https://youtube.com/shorts/WgBBcP9cxwQ",
+  "seconds": 68,
+  "mb": 1.8
+ },
+ {
+  "id": "sh_pt_demo",
+  "episode": "019-packet-tracer-demo",
+  "title": "Packet Tracer: בונים רשת קטנה ובודקים עם ping #Shorts",
+  "youtube": "https://youtube.com/shorts/gBvT9uR5nQw",
+  "seconds": 108,
+  "mb": 2.4
+ },
+ {
+  "id": "sh_internet_home",
+  "episode": "020-internet-home-connection",
+  "title": "מה זה האינטרנט? ואיך הבית מתחבר אליו #Shorts",
+  "youtube": "https://youtube.com/shorts/TfDXa9PRbIA",
+  "seconds": 87,
+  "mb": 2.1
+ },
+ {
+  "id": "sh_hub_switch_router",
+  "episode": "008-hub-switch-router",
+  "title": "האב, סוויץ' או נתב? מי עושה מה ברשת #Shorts",
+  "youtube": "https://youtube.com/shorts/ThysRQbZ6Eg",
+  "seconds": 63,
+  "mb": 2.3
+ },
+ {
+  "id": "sh_hub_vs_switch",
+  "episode": "009-hub-vs-switch",
+  "title": "האב מול סוויץ' — מה ההבדל בין רכזת למתג? #Shorts",
+  "youtube": "https://youtube.com/shorts/L9y1UGaWP_s",
+  "seconds": 68,
+  "mb": 2.0
+ },
+ {
+  "id": "sh_router",
+  "episode": "010-router",
+  "title": "ראוטר (נתב) — מה הוא עושה ומה זה הופ? #Shorts",
+  "youtube": "https://youtube.com/shorts/IruVKlyV5As",
+  "seconds": 67,
+  "mb": 2.2
+ },
+ {
+  "id": "sh_ip_address",
+  "episode": "006-ip-address",
+  "title": "מהי כתובת IP? הסבר פשוט (IPv4, אוקטטים, 32 ביט) #Shorts",
+  "youtube": "https://youtube.com/shorts/UaTyyACPMIk",
+  "seconds": 69,
+  "mb": 2.1
+ },
+ {
+  "id": "sh_mac_address",
+  "episode": "007-mac-address",
+  "title": "כתובת MAC — מה זה ומה ההבדל בין MAC ל-IP? #Shorts",
+  "youtube": "https://youtube.com/shorts/rFYOlDG6pqI",
+  "seconds": 77,
+  "mb": 2.6
+ },
+ {
+  "id": "sh_protocol_tcpip",
+  "episode": "011-protocol-tcpip",
+  "title": "מה זה פרוטוקול? ומה זה TCP/IP #Shorts",
+  "youtube": "https://youtube.com/shorts/HI50gEYMn8w",
+  "seconds": 88,
+  "mb": 2.2
+ },
+ {
+  "id": "sh_ip_a",
+  "episode": "013-ip-address-a",
+  "title": "כתובת IP — רשת, מחשב ומסכת רשת (מחלקות A, B, C) #Shorts",
+  "youtube": "https://youtube.com/shorts/atSceauu-ac",
+  "seconds": 87,
+  "mb": 1.9
+ },
+ {
+  "id": "sh_ip_b",
+  "episode": "014-ip-address-b",
+  "title": "כתובת IP — כללים, כתובות שמורות, סטטי ודינמי (DHCP) #Shorts",
+  "youtube": "https://youtube.com/shorts/xCPWqRuYOgk",
+  "seconds": 68,
+  "mb": 4.5
+ }
+]

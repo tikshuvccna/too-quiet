@@ -11,6 +11,7 @@ import { REGIONS, inSea, regionAt } from '../world/regions';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
 import { BossWorld } from '../world/bossWorld';
+import { SecretsWorld } from '../world/secretsWorld';
 import { audio, REGION_MOOD } from '../audio/audio';
 import { WORLD_BUILDINGS, WORLD_CREATURE_SPAWNS, WORLD_NPCS, WORLD_PICKUPS, WORLD_PROPS } from '../world/worldMap';
 import { distanceToRegion, loadsForRegion, type RegionLoad } from '../world/regionAssets';
@@ -79,6 +80,7 @@ export class WorldScene extends Phaser.Scene {
   private pickupClock = 0;
   private ground!: ChunkGround;
   private boss: BossWorld | null = null;
+  private secrets: SecretsWorld | null = null;
   private treeCount = 0;
   private spawned = new Set<string>();
   private queued: string[] = [];
@@ -150,6 +152,7 @@ export class WorldScene extends Phaser.Scene {
     cam.preRender();
     this.ground.update(cam.worldView, 99);
     this.culler.update(0, cam.worldView, true);
+    this.secrets = new SecretsWorld(this, this.ctx.save);
 
     const kb = this.input.keyboard;
     this.keys = (kb?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
@@ -165,6 +168,8 @@ export class WorldScene extends Phaser.Scene {
       this.atmos.destroy();
       this.boss?.destroy();
       this.boss = null;
+      this.secrets?.destroy();
+      this.secrets = null;
       this.ground.destroy();
       this.offs.forEach((o) => o());
       this.offs = [];
@@ -450,6 +455,7 @@ export class WorldScene extends Phaser.Scene {
     }
     if (this.ctx.save.hasFlag('final_unlocked') && !this.ctx.save.hasFlag('head_calmed') && !this.boss?.active) out.push({ id: 'boss:head', x: 2180, y: 690, label: 'לקרוא לראש', range: 130 });
     if (this.boss?.active) out.push(...this.boss.targets());
+    else if (this.secrets) out.push(...this.secrets.targets(this.px, this.py));
     for (const wb of WORLD_BUILDINGS) {
       if (wb.id !== 'great_tower') out.push({ id: `door:house-${wb.id}`, x: wb.door.x, y: wb.door.y, label: `כניסה: ${wb.name}`, range: 80 });
     }
@@ -636,6 +642,7 @@ export class WorldScene extends Phaser.Scene {
     const tv = this.fx.value;
     for (const tb of this.truthBuildings) tb.setVisible(tv > 0.03).setAlpha(Math.min(1, tv * 1.25));
     this.atmos.update(dtMs, tv, this.px, this.py);
+    this.secrets?.update(this.px, this.py);
     this.creatures.update(dtMs, this.atmos.tod, this.px, this.py);
     this.ctx.head.setTruth(tv, dt);
 

@@ -495,3 +495,14 @@ body.boss .objective { display: none; }
 
 /* shop item pictures */
 .shop-ico { display: block; width: 88px; height: 88px; object-fit: contain; margin: 0 auto 6px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.45)); }
+
+/* Shorts from the channel: card in a lesson, and the full-screen player */
+.short-card { display: flex; gap: 14px; align-items: center; }
+.short-poster { width: 78px; height: 138px; object-fit: cover; border-radius: 10px; flex: none; border: 1px solid rgba(255,255,255,0.15); }
+.short-meta { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.short-meta h3 { margin: 0; }
+.short-body { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.short-stage { width: min(92vw, 52vh, 420px); aspect-ratio: 9 / 16; background: #000; border-radius: 14px; overflow: hidden; }
+.short-frame { width: 100%; height: 100%; border: 0; display: block; }
+.short-row { justify-content: center; flex-wrap: wrap; }
+@media (max-height: 420px) { .short-stage { width: min(34vh, 220px); } }

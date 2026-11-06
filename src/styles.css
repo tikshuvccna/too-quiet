@@ -200,6 +200,19 @@ body.modal .joy, body.modal .interact { display: none !important; }
 
 .col-item.has-thumb { grid-template-columns: 72px 1fr; column-gap: 12px; align-items: center; }
 .col-item.has-thumb b, .col-item.has-thumb span { grid-column: 2; }
+.house-card { grid-template-columns: 100px 1fr; column-gap: 12px; align-items: start; }
+.house-card .house-thumb { grid-column: 1; grid-row: 1 / span 3; background-repeat: no-repeat; justify-self: center; min-width: 40px; min-height: 40px; }
+.house-card b, .house-card .house-owner, .house-card .house-body { grid-column: 2; }
+.house-card .house-owner { color: var(--mute); font-size: .9rem; }
+.house-card.missing b { font-size: 1.6rem; }
+.house-body { display: grid; gap: 4px; margin-top: 4px; }
+.house-part { margin: 0; font-size: .92rem; line-height: 1.45; }
+.house-part i { color: var(--teal); font-style: normal; }
+.house-part.unknown { color: var(--mute); opacity: .8; }
+@media (max-width: 420px) {
+  .house-card { grid-template-columns: 1fr; }
+  .house-card .house-thumb, .house-card b, .house-card .house-owner, .house-card .house-body { grid-column: 1; grid-row: auto; }
+}
 .col-thumb { grid-column: 1; grid-row: 1 / span 2; width: 72px; height: 72px; background-repeat: no-repeat; border-radius: 10px; }
 
 .title .name-row { margin: 16px 0 12px; }

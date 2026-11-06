@@ -8,6 +8,8 @@ import { TruthFx, truthLevel } from '../game/truthFx';
 import { audio } from '../audio/audio';
 import { equippedAura } from '../ui/shop';
 import { perksOf } from '../game/perks';
+import { ACTIVITIES, doneFlag } from '../ui/houseActivitiesLogic';
+import { activityLabel, activityTargetId } from '../ui/houseExtras';
 
 interface RoomObject {
   id: string;
@@ -64,6 +66,8 @@ export class HouseScene extends Phaser.Scene {
   private blockers: Array<[number, number, number, number]> = [];
   /** Hebrew object names come from the bundled story content, never from a fetched file. */
   private names = new Map<string, string>();
+  /** The small activity of this house: a glowing plaque on the floor (see ui/houseActivities). */
+  private act: { x: number; y: number; g: Phaser.GameObjects.Graphics; done: boolean | null } | null = null;
 
   constructor() {
     super('House');
@@ -131,6 +135,7 @@ export class HouseScene extends Phaser.Scene {
     this.py = 548;
     this.player = createActor(this, char, this.ox + this.px * k, this.oy + this.py * k, undefined, k);
     this.placePlayer(0, 0);
+    this.buildActivity();
     const aura = equippedAura(this.ctx.save);
     if (aura?.color && this.ctx.quality.profile.glow) this.player.sprite.postFX?.addGlow(aura.color, 4, 0, false, 0.1, 14);
     this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
@@ -167,6 +172,54 @@ export class HouseScene extends Phaser.Scene {
   private onUse(id: string): void {
     if (this.ctx.modal || !this.scene.isActive()) return;
     if (id === 'exit') bus.emit('world:exit-house', { houseId: this.buildingId });
+  }
+
+  /** Picks the roomiest free spot on the floor, away from the furniture and the door, and draws the plaque. */
+  private buildActivity(): void {
+    this.act = null;
+    if (!ACTIVITIES[this.contentId]) return;
+    const [sw, sh] = this.layout.shellSize;
+    const spots = this.layout.objects.filter((o) => o.interactive).map((o) => o.place);
+    let best: { x: number; y: number; score: number } | null = null;
+    for (let y = sh * 0.3; y < sh * 0.82; y += 20) {
+      for (let x = sw * 0.22; x < sw * 0.78; x += 20) {
+        if (![[0, 0], [34, 0], [-34, 0], [0, 26], [0, -26]].every(([dx, dy]) => this.walkable(x + (dx as number), y + (dy as number)))) continue;
+        let score = Math.min(...spots.map((p) => Math.hypot(p.x - x, p.y - y)), 400);
+        score = Math.min(score, Math.hypot(x - sw / 2, y - this.py) * 1.3, Math.hypot(x - sw / 2, y - sh) * 0.8);
+        if (!best || score > best.score) best = { x, y, score };
+      }
+    }
+    if (!best) return;
+    const g = this.add.graphics().setDepth(10 + best.y * this.scaleK - 2);
+    g.setPosition(this.ox + best.x * this.scaleK, this.oy + best.y * this.scaleK).setScale(this.scaleK * 1.25);
+    this.act = { x: best.x, y: best.y, g, done: null };
+    this.drawActivity();
+  }
+
+  private drawActivity(): void {
+    const a = this.act;
+    const def = ACTIVITIES[this.contentId];
+    if (!a || !def) return;
+    const g = a.g;
+    const col = a.done ? 0x67e8a5 : 0xffd27a;
+    g.clear();
+    g.fillStyle(0x000000, 0.28).fillEllipse(0, 6, 76, 26);
+    g.fillStyle(0x1c2144, 0.95).fillEllipse(0, 0, 70, 26);
+    g.lineStyle(3, col, 1).strokeEllipse(0, 0, 70, 26);
+    g.lineStyle(3, col, 1);
+    if (a.done) {
+      g.beginPath().moveTo(-10, 0).lineTo(-2, 7).lineTo(12, -8).strokePath();
+    } else if (def.type === 'order') {
+      for (let i = 0; i < 3; i++) g.fillStyle(col, 1).fillRect(-14, -8 + i * 7, 8 + i * 8, 4);
+    } else if (def.type === 'pairs') {
+      g.strokeRect(-16, -7, 13, 14).strokeRect(3, -7, 13, 14);
+    } else if (def.type === 'toggle') {
+      g.fillStyle(col, 1).fillCircle(0, 0, 7);
+      g.lineStyle(2, col, 1).strokeCircle(0, 0, 11);
+    } else {
+      g.strokeRect(-17, -2, 14, 9).strokeRect(3, -2, 14, 9);
+      g.fillStyle(col, 1).fillCircle(0, -8, 4);
+    }
   }
 
   private walkable(x: number, y: number): boolean {
@@ -219,6 +272,14 @@ export class HouseScene extends Phaser.Scene {
       const glow = this.glows.get(o.id);
       if (glow) glow.outerStrength = near ? 3 + Math.sin(this.time.now / 180) : 0;
       if (near && (!best || d < best.d)) best = { id: `obj:${this.contentId}:${o.id}`, label: this.names.get(o.id) ?? o.nameHe, d };
+    }
+    if (this.act) {
+      const a = this.act;
+      const done = this.ctx.save.hasFlag(doneFlag(this.contentId));
+      if (a.done !== done) { a.done = done; this.drawActivity(); }
+      a.g.setAlpha(0.8 + Math.sin(this.time.now / 300) * 0.2);
+      const d = Math.hypot(a.x - this.px, a.y - this.py);
+      if (d < 85 * perksOf(this.ctx.save).reach && (!best || d < best.d)) best = { id: activityTargetId(this.contentId), label: activityLabel(this.ctx, this.contentId) ?? '', d };
     }
     const [sw, sh] = this.layout.shellSize;
     const atDoor = this.py > sh * 0.84 && Math.abs(this.px - sw / 2) < 120;

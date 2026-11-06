@@ -1,0 +1,56 @@
+no match boss.narrator.0001 0.62
+SAVED end.narrator.0001 0.92
+SAVED end.narrator.0002 1.0
+SAVED r1.p0.narrator.0001 0.86
+no match r1.p0.narrator.0008 0.78
+SAVED r1.p0.narrator.0011 1.0
+SAVED r1.p1.narrator.0001 1.0
+no match r1.p1.narrator.0004 0.8
+no match r1.p1.narrator.0008 0.78
+SAVED r1.p1.narrator.0010 1.0
+no match r1.p1.narrator.0013 0.8
+no match r1.p1.narrator.0015 0.73
+SAVED r1.p1.narrator.0018 1.0
+SAVED r1.p1.narrator.0022 1.0
+SAVED r1.p2.narrator.0001 1.0
+SAVED r1.p2.narrator.0002 1.0
+SAVED r1.p2.narrator.0004 1.0
+SAVED r1.p3.narrator.0004 1.0
+SAVED r1.p4.narrator.0001 0.92
+SAVED r1.p4.narrator.0004 1.0
+SAVED r1.p5.narrator.0002 0.89
+SAVED r1.p5.narrator.0006 1.0
+SAVED boss.dvora.0003 1.0
+SAVED r1.p1.dvora.0002 1.0
+SAVED r1.p1.dvora.0002b 1.0
+SAVED r1.p1.dvora.0002c 0.92
+SAVED r1.p1.dvora.0007 0.92
+no match r1.p1.dvora.0011 0.81
+SAVED r1.p1.dvora.0014 1.0
+SAVED r1.p1.dvora.0018 1.0
+SAVED r1.p2.dvora.0001 1.0
+SAVED r1.p3.dvora.0002 1.0
+no match r1.p5.dvora.0002 0.82
+SAVED r1.p2.innkeeper.0005 1.0
+SAVED w1.inn.innkeeper.0003 1.0
+no match w1.workshop.mender.0005 0.77
+no match w1.coast.dockHand.0001 0.77
+SAVED w1.coast.dockHand.0003 1.0
+SAVED r1.p5.guildMaster.0001 0.92
+SAVED r1.p5.guildMaster.0005 1.0
+no match r1.p0.baker.0001 0.24
+SAVED r1.p0.grandma.0002 1.0
+SAVED r1.p0.grandma.0003 1.0
+SAVED r1.p1.clinicDoctor.0001 1.0
+no match r1.p0.miller.0001 0.07
+no match r1.p1.miller.0001 0.28
+no match r1.p1.miller.0002 0.33
+SAVED r1.p0.hubGrandpa.0001 1.0
+SAVED r1.p0.hubGrandpa.0002 0.89
+no match r1.p1.hubGrandpa.0002 0.4
+SAVED r1.p0.villager1.0001 1.0
+no match r1.p1.villager1.0003 0.67
+no match r1.p0.villager3.0002 0.8
+SAVED w1.bell_tower.bellKeeper.0003 1.0
+no match w1.tailor.tailor.0001 0.64
+added 37 total 151

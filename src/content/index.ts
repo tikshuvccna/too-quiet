@@ -3,6 +3,7 @@ import scenesJson from '../../content/he/scenes.json';
 import housesJson from '../../content/he/houses.json';
 import collectiblesJson from '../../content/he/collectibles.json';
 import creaturesJson from '../../public/assets/creatures/index.json';
+import teacherIntroJson from '../../content/he/world/teacher_intro.json';
 import { WORLD_HOUSES, WORLD_ITEMS, WORLD_LINES, WORLD_SPEAKERS } from './world';
 
 export interface LineDef { speaker: string; text: string; textF?: string }
@@ -39,7 +40,10 @@ const extraFiles = import.meta.glob('../../content/he/problems_*.json', { eager:
 const EXTRA_LINES: Record<string, LineDef> = Object.assign({}, ...Object.values(extraFiles).map((m) => m.default.lines ?? {}));
 const EXTRA_SCENES: Record<string, SceneDef> = Object.assign({}, ...Object.values(extraFiles).map((m) => m.default.scenes ?? {}));
 
-export const LINES = { ...EXTRA_LINES, ...(linesJson as unknown as Record<string, LineDef>), ...(WORLD_LINES as unknown as Record<string, LineDef>) };
+/** Lessons 2-5 are taught by the NPC of the matching problem: two intro lines each. */
+export const TEACHER_INTRO = (teacherIntroJson as unknown as { teachers: Record<string, { npc: string; name: string; lines: string[] }> }).teachers;
+
+export const LINES = { ...EXTRA_LINES, ...((teacherIntroJson as unknown as { lines: Record<string, LineDef> }).lines), ...(linesJson as unknown as Record<string, LineDef>), ...(WORLD_LINES as unknown as Record<string, LineDef>) };
 export const SCENES: Record<string, SceneDef> = { ...(scenesJson as unknown as Record<string, SceneDef>), ...EXTRA_SCENES };
 export const HOUSES: HouseDef[] = [...(housesJson as unknown as { houses: HouseDef[] }).houses, ...(WORLD_HOUSES as unknown as HouseDef[])];
 export const COLLECTIBLES = collectiblesJson as unknown as CollectibleSet;
