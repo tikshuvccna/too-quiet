@@ -15,6 +15,7 @@ import { WorldScene } from './scenes/WorldScene';
 import { DialogueUI } from './ui/dialogue';
 import { createVoicePlayer } from './ui/voice';
 import { equippedSkin } from './game/skins';
+import { creditsLink } from './ui/credits';
 import { el, uiRoot } from './ui/dom';
 import { Hud } from './ui/hud';
 import { Joystick } from './ui/joystick';
@@ -149,6 +150,7 @@ function titleScreen(ctx: GameContext, controller: Controller): void {
       el('div', 'sub', 'העמק נראה מושלם. כולם אומרים שהכול בסדר.'),
       started ? el('div', 'row', '', [cont]) : el('div', '', '', [el('p', '', 'מי מגיע לעמק?'), el('div', 'row', '', [girl, boy]), el('div', 'row name-row', '', [nameInput]), el('div', 'row', '', [go])]),
       el('p', 'sub', 'סקיצה לבדיקה. העיצוב והתוכן עדיין בעבודה.'),
+      el('p', 'credits-line', '', [document.createTextNode('פותח על ידי מיכאל תקשוב, מגמת תקשוב: '), creditsLink()]),
     ]),
   ]);
   uiRoot().append(screen);

@@ -1,6 +1,7 @@
 import { QUALITY_NAME, type QualityManager, type QualitySetting } from '../core/quality';
 import { audio } from '../audio/audio';
 import type { SaveStore } from '../core/save';
+import { openCredits } from './credits';
 import { el } from './dom';
 import { createOverlay } from './learning/overlay';
 
@@ -78,6 +79,12 @@ export function openSettings(save: SaveStore, quality: QualityManager, opts: { o
         h.addEventListener('click', () => opts.onHelp?.());
         return el('div', 'npcg-row', '', [h]);
       })()] : []),
+      (() => {
+        const c = el('button', 'btn', 'קרדיטים');
+        c.type = 'button';
+        c.addEventListener('click', () => void openCredits());
+        return el('div', 'npcg-row', '', [c]);
+      })(),
     );
   }
   render();

@@ -184,6 +184,8 @@ export class Controller {
       ]);
       if (out.granted) this.ctx.hud.toast(`פרס: ${prize.name} (+${out.coins} מטבעות)`, 'good', 6000);
       this.ctx.hud.toast('סוף הסיפור הראשי. תודה ששיחקתם!', 'good', 7000);
+      const { openCredits } = await import('../ui/credits');
+      await openCredits();
     });
     ending.pop?.();
     this.refreshObjective();

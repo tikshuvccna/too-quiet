@@ -1,5 +1,6 @@
 import './help.css';
 import helpJson from '../../content/he/help.json';
+import { openCredits } from './credits';
 import { el } from './dom';
 import { hintBadge } from './hintBadge';
 import { createOverlay } from './learning/overlay';
@@ -42,7 +43,10 @@ export function openHelp(opts: { onTutorial(): void; onClose(): void }): void {
   const again = el('button', 'btn primary', HELP.tutorialButton);
   again.type = 'button';
   again.addEventListener('click', () => opts.onTutorial());
-  body.append(el('p', 'lrn-sub', HELP.intro), legend, list, el('div', 'help-foot', '', [again]));
+  const credits = el('button', 'btn', 'קרדיטים');
+  credits.type = 'button';
+  credits.addEventListener('click', () => void openCredits());
+  body.append(el('p', 'lrn-sub', HELP.intro), legend, list, el('div', 'help-foot', '', [again, credits]));
   ov.root.append(body);
 
   let closed = false;

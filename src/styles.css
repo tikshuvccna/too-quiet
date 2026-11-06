@@ -259,3 +259,12 @@ body.boss .toast-box { top: calc(var(--hud-h, 96px) + 92px); }
   background: linear-gradient(rgba(14, 12, 40, 0.45), rgba(14, 12, 40, 0.25)), repeating-linear-gradient(105deg, rgba(190, 215, 255, 0.0) 0 14px, rgba(190, 215, 255, 0.22) 14px 16px); background-size: auto, 80px 80px; animation: stormrain 0.35s linear infinite; }
 .storm-veil.on { opacity: 1; }
 @keyframes stormrain { from { background-position: 0 0, 0 0; } to { background-position: 0 0, -40px 80px; } }
+
+/* credits */
+.credits-body { text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.credits-main { font-size: 1.15rem; line-height: 1.6; margin: 0; max-width: 34em; }
+.credits-thanks { font-size: 1.15rem; margin: 10px 0 0; color: var(--gold); }
+.credits-url { margin: 0; }
+.credits-link { color: var(--gold); font-weight: 700; text-decoration: underline; word-break: break-all; }
+.title .credits-line { margin: 18px 0 0; font-size: .85rem; color: var(--mute); }
+.title .credits-line .credits-link { font-weight: 400; display: block; word-break: normal; white-space: nowrap; }
