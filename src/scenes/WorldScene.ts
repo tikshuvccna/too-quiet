@@ -153,14 +153,15 @@ export class WorldScene extends Phaser.Scene {
     this.applyQuality();
     this.offs.push(this.ctx.quality.onChange(() => this.applyQuality()));
     this.applyZoom();
-    this.scale.on('resize', () => this.applyZoom());
+    const onResize = (): void => { if (this.scene.isActive() && this.cameras?.main) this.applyZoom(); };
+    this.scale.on('resize', onResize);
     cam.preRender();
     this.ground.update(cam.worldView, 99);
     this.culler.update(0, cam.worldView, true);
     this.secrets = new SecretsWorld(this, this.ctx.save);
 
     const kb = this.input.keyboard;
-    this.keys = (kb?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
+    this.keys = (kb?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT', false) ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
 
     this.offs.push(
       bus.on('interact:use', ({ id }) => this.onUse(id)),
@@ -169,6 +170,7 @@ export class WorldScene extends Phaser.Scene {
       bus.on('truth:flash', ({ ms }) => this.fx.flash(ms)),
     );
     this.events.once('shutdown', () => {
+      this.scale.off('resize', onResize);
       this.registry.set('tod', this.atmos.tod);
       this.atmos.destroy();
       this.boss?.destroy();

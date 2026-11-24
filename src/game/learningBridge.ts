@@ -74,6 +74,7 @@ export function openClassroom(ctx: GameContext, afterLesson: (lessonId: string) 
             if (r.passed && !ctx.save.hasFlag(marker) && !(lessonId === 'lesson01' && ctx.save.hasFlag('prize.quiz'))) {
               ctx.save.data.coins += QUIZ_COINS;
               ctx.save.setFlag(marker);
+              ctx.hud.setCoins(ctx.save.data.coins);
               ctx.hud.toast(`עברתם את שאלות הסיכום! +${QUIZ_COINS} מטבעות`, 'good');
             }
             render();

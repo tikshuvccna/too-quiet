@@ -46,8 +46,11 @@ export class Hud {
       if (a) this.interact.textContent = a.label;
     });
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'q' || e.key === 'Q') this.toggleSight();
-      if (e.key === 'e' || e.key === 'E') this.use();
+      const t = e.target as HTMLElement | null;
+      if (document.body.classList.contains('modal') || (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable))) return;
+      if (e.code === 'KeyQ' || e.key === 'q' || e.key === 'Q') this.toggleSight();
+      if (e.code === 'KeyE' || e.key === 'e' || e.key === 'E') this.use();
+      if (e.code === 'Escape' && !e.repeat) this.onSettings();
     });
   }
 

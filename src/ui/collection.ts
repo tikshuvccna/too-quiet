@@ -141,10 +141,14 @@ export function openCollection(save: SaveStore, onClose: () => void): void {
     tabs.append(b);
   });
   const screen = el('div', 'screen', '', [el('div', 'card', '', [el('h2', '', 'האוסף שלי'), tabs, body, el('div', 'row', '', [close])])]);
-  close.addEventListener('click', () => {
+  const done = (): void => {
+    document.removeEventListener('keydown', onKey, true);
     screen.remove();
     onClose();
-  });
+  };
+  const onKey = (e: KeyboardEvent): void => { if (e.key === 'Escape') { e.preventDefault(); done(); } };
+  document.addEventListener('keydown', onKey, true);
+  close.addEventListener('click', done);
   uiRoot().append(screen);
   render();
 }

@@ -147,6 +147,14 @@ function titleScreen(ctx: GameContext, controller: Controller): void {
   };
   const cont = el('button', 'btn primary', 'המשך');
   cont.onclick = () => start();
+  let resetArmed = false;
+  const freshBtn = el('button', 'btn menu-btn', 'משחק חדש');
+  freshBtn.type = 'button';
+  freshBtn.onclick = () => {
+    if (!resetArmed) { resetArmed = true; freshBtn.textContent = 'בטוחים? לחצו שוב להתחיל מחדש'; return; }
+    ctx.save.reset();
+    location.reload();
+  };
   const menuBtn = (label: string, fn: () => void): HTMLButtonElement => {
     const b = el('button', 'btn menu-btn', label);
     b.type = 'button';
@@ -171,7 +179,7 @@ function titleScreen(ctx: GameContext, controller: Controller): void {
       el('h1', '', 'שקט מדי'),
       el('div', 'title-rule'),
       el('div', 'sub', 'העמק נראה מושלם. כולם אומרים שהכול בסדר.'),
-      started ? el('div', 'menu', '', [cont]) : el('div', '', '', [el('p', 'title-ask', 'מי מגיע לעמק?'), el('div', 'row', '', [girl, boy]), el('div', 'row name-row', '', [nameInput]), el('div', 'menu', '', [go])]),
+      started ? el('div', 'menu', '', [cont, freshBtn]) : el('div', '', '', [el('p', 'title-ask', 'מי מגיע לעמק?'), el('div', 'row', '', [girl, boy]), el('div', 'row name-row', '', [nameInput]), el('div', 'menu', '', [go])]),
       el('div', 'menu menu-2', '', [settingsBtn, helpBtn, creditsBtn]),
       el('p', 'credits-line', '', [document.createTextNode('פותח על ידי מיכאל תקשוב, מגמת תקשוב'), creditsLink()]),
     ]),

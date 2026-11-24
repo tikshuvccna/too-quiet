@@ -138,7 +138,7 @@ export class HouseScene extends Phaser.Scene {
     this.buildActivity();
     const aura = equippedAura(this.ctx.save);
     if (aura?.color && this.ctx.quality.profile.glow) this.player.sprite.postFX?.addGlow(aura.color, 4, 0, false, 0.1, 14);
-    this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT') ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
+    this.keys = (this.input.keyboard?.addKeys('W,A,S,D,UP,DOWN,LEFT,RIGHT', false) ?? {}) as Record<string, Phaser.Input.Keyboard.Key>;
 
     this.fx = new TruthFx(this.cameras.main);
     this.fx.enabled = this.ctx.quality.profile.postFx;

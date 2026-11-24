@@ -83,7 +83,15 @@ export function openSettings(save: SaveStore, quality: QualityManager, opts: { o
         const c = el('button', 'btn', 'קרדיטים');
         c.type = 'button';
         c.addEventListener('click', () => void openCredits());
-        return el('div', 'npcg-row', '', [c]);
+        let armed = false;
+        const reset = el('button', 'btn', 'משחק חדש (איפוס)');
+        reset.type = 'button';
+        reset.addEventListener('click', () => {
+          if (!armed) { armed = true; reset.textContent = 'בטוחים? לחצו שוב לאיפוס'; reset.classList.add('primary'); return; }
+          save.reset();
+          location.reload();
+        });
+        return el('div', 'npcg-row', '', [c, reset]);
       })(),
     );
   }
